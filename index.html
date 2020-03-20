@@ -147,6 +147,147 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-迷宫问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">迷宫问题</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-03-20T10:07:00.868Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020/3/20 18:07:12 </p>
+<h1 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h1><p>题目描述</p>
+<p>小明置身于一个迷宫，请你帮小明找出从起点到终点的最短路程。<br> 小明只能向上下左右四个方向移动。</p>
+<p>输入</p>
+<p>输入包含多组测试数据。输入的第一行是一个整数T，表示有T组测试数据。<br> 每组输入的第一行是两个整数N和M（1&lt;=N,M&lt;=100）。<br> 接下来N行，每行输入M个字符，每个字符表示迷宫中的一个小方格。<br> 字符的含义如下：<br>‘S’：起点<br>‘E’：终点<br>‘-’：空地，可以通过<br>‘#’：障碍，无法通过<br> 输入数据保证有且仅有一个起点和终点。</p>
+<p>输出</p>
+<p>对于每组输入，输出从起点到终点的最短路程，如果不存在从起点到终点的路，则输出-1。</p>
+<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><pre><code>1
+5 5
+s-###
+-----
+##---
+E#---
+---##</code></pre><h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><pre><code>9</code></pre><p>##解决代码</p>
+<blockquote>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+#include&lt;queue&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+int de[100][100];//计步数组  记录走到这个位置所需的步数 不能走到的位置标记为-1 
+char map[100][100];  //用于存放迷宫地图 
+typedef pair&lt;int,intP;  //坐标
+int to[2][4]={1,-1,0,0,0,0,1,-1};  //在当前坐标下能走的四个方向
+int sx,ex,sy,ey;  //(sx,sy)为起点坐标  （ex,ey）为终点坐标
+int x,y,nx,ny; //(x,y)为函数中当前位置坐标   （nx,ny)为接下来能到达的坐标 
+int r,l;  //r为行数 l为列数 
+int bfs()
+{
+    memset(de,-1,sizeof(de));
+    queue&lt;Pqu;
+    qu.push(P(sx,sy));   //将起点坐标放入队头 
+    de[sx][sy]=0;
+    while(!qu.empty()) 
+    {
+        P p=qu.front();   //取出队头坐标 
+        qu.pop() ;//删除对头及走过的坐标 
+        x=p.first,y=p.second; 
+        if(x==ex&amp;&amp;y==ey) break; //到达终点 跳出循环        
+         for(int i=0;i&lt;4;i++)
+        {
+            nx=x+to[0][i];//开始向四个方向移动 
+            ny=y+to[1][i];            
+                if(nx&gt;=0&amp;&amp;nx&lt;r&amp;&amp;ny&gt;=0&amp;&amp;ny&lt;l&amp;&amp;map[nx][ny]!=&apos;#&apos;&amp;&amp;de[nx][ny]==-1)
+     //判断是否越界 以及是否能走  排除走过的路 
+     {
+          qu.push(P(nx,ny));  //将能走的坐标放入队列 之后依次删除 
+                         de[nx][ny]=de[x][y]+1;  //步数加一 
+                      }                   
+            }
+    }
+    if(de[ex][ey]==-1)  return -1;  //终点的记步数组为-1 及不能到达终点 
+    else return de[ex][ey]; 
+} 
+int main()
+{
+    int n,i,j;
+    while(cin&gt;&gt;n){
+        while(n--){
+            cin&gt;&gt;r&gt;&gt;l;
+            for(i=0;i&lt;r;i++){
+                for(j=0;j&lt;l;j++){ 
+                cin&gt;&gt;map[i][j];
+                if(map[i][j]==&apos;S&apos;) //记录起点坐标 
+                 {
+                    sx=i,sy=j;
+                 } 
+                 else if(map[i][j]==&apos;E&apos;)  //记录终点坐标 
+                 {
+                     ex=i,ey=j;
+                 }
+                }
+            }
+            cout&lt;&lt;bfs()&lt;&lt;endl;
+        }
+    }
+    return 0;
+}</code></pre></blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Guestbook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -232,7 +373,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2>
+        <p>谨此纪念一下。。。</p>
+
       
 
       
