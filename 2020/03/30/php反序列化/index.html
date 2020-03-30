@@ -6,12 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>Archives | 一路走到黑</title>
+  <title>php反序列化 | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一路走到黑">
-<meta property="og:url" content="https://sunzhengyu99.github.io/archives/index.html">
+  <meta name="description" content="#PHP反序列化#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php反序列化">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="#PHP反序列化#">
+<meta property="article:published_time" content="2020-03-30T15:21:53.118Z">
+<meta property="article:modified_time" content="2020-03-30T15:26:39.058Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
   
@@ -145,185 +149,236 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-php反序列化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      php反序列化
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
+
+        
+        <a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
   	<time datetime="2020-03-30T15:21:53.118Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-30</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#PHP反序列化#</p>
+<a id="more"></a>
+<p>PHP魔术方法_ wakeup()是在反序列化操作中起作用的魔法函数， 当unserialize的时候， 会检查时候存在<em>_ wakeup()函数, 如果存在的话，会优先调用</em> _wakeup()函数。 </p>
+<p>而_ wakeup()函数漏洞就是与对象的属性个数有关，如果序列化后的字符串中表示属性个数的数字与真实属性个数一致，那么就调用_ wakeup()函数, 如果该数字大于真实属性个数，就会绕过_ _wakeup()函数。</p>
+<p>serialize()函数：用于序列化对象或数组，并返回一个字符串。序列化对象后， 可以很方便的将它传递给其他需要它的地方，且其类型和结构不会改变。</p>
+<p>unserialize()函数：用于将通过serialize()函数序列化后的对象或数组进行反序列化，并返回原始的对象结构。</p>
+<p>举例说明</p>
+<pre><code>&lt;?php
+class Student{
+public $full_name = &apos;zhangsan&apos;;
+public $score = 150;
+public $grades = array();
 
-        <div class="article-info info-on-right">
-          
-          
+function __wakeup() {
+echo &quot;__wakeup is invoked&quot;;
+}
+}
 
+$s = new Student();
+var_dump(serialize($s));
+?&gt;</code></pre><hr>
+<pre><code>O:7:&quot;Student&quot;:3:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}</code></pre><p>各个符号的含义<br><strong>变量类型：类名长度（字节）：类名：属性数量：{属性名类型：属性名长度：属性名：属性值类型：属性值长度：属性值内容}</strong></p>
+<p>其中在Stuedent类后面有一个数字3，整个3表示的就是Student类存在3个属性。<br>wakeup()漏洞就是与整个属性个数值有关。当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。</p>
+<p>当我们将上述的序列化的字符串中的对象属性个数修改为5，变为<br>O:7:”Student”:5:{s:9:”full_name”;s:8:”zhangsan”;s:5:”score”;i:150;s:6:”grades”;a:0:{}}</p>
+<p>最后执行运行的代码如下:</p>
+<pre><code>&lt;?php
+class Student{
+public $full_name = &apos;zhangsan&apos;;
+public $score = 150;
+public $grades = array();
+
+function __wakeup() {
+echo &quot;__wakeup is invoked&quot;;
+}
+function __destruct() {
+var_dump($this);
+}
+}
+
+$s = new Student();
+$stu = unserialize(&apos;O:7:&quot;Student&quot;:5:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}&apos;);
+?&gt;</code></pre><h2 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h2><p>题目</p>
+<pre><code>class xctf{
+public $flag = &apos;111&apos;;
+public function __wakeup(){
+exit(&apos;bad requests&apos;);
+}
+?code=</code></pre><hr>
+<pre><code>&lt;?php
+class xctf{  //定义一个名为xctf的类
+public $flag = &apos;111&apos;;//定义一个公有的类属性$flag，值为111
+public function __wakeup(){  //定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本
+exit(&apos;bad requests&apos;);
+}
+}
+$test = new xctf();   //使用new运算符来实例化该类（xctf）的对象为test
+echo(serialize($test));   //输出被序列化的对象（test）
+?&gt;</code></pre><p>输出结果</p>
+<pre><code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>我们要反序列化xctf类的同时还要绕过wakeup方法的执行（如果不绕过wakeup()方法，那么将会输出bad requests并退出脚本），wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。因此，需要修改序列化字符串中的属性个数：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为2，即如下所示：</p>
+<pre><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>访问url?code=O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-  	<time datetime="2020-03-30T14:19:33.336Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sql注入</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/">sql注入</a>
-    </h1>
+        
+        
+    </div>
+</aside>
+
+
+
+ 
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80OTI1Ni8yNTc1MA==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/29/upload-labs/" class="archive-article-date">
-  	<time datetime="2020-03-29T12:14:36.682Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-29</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/29/upload-labs/">upload-labs</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-03-20T10:07:00.868Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">迷宫问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/19/Guestbook/" class="archive-article-date">
-  	<time datetime="2020-03-19T10:25:56.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/19/Guestbook/">Guestbook</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/" class="archive-article-date">
-  	<time datetime="2020-03-18T13:46:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%EF%BC%81%EF%BC%81/">我的第一篇博客！！</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
 
 
           </div>
@@ -348,8 +403,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
