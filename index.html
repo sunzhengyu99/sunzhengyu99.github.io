@@ -147,6 +147,135 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-test jd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/test%20jd/">test jd</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/test%20jd/" class="archive-article-date">
+  	<time datetime="2020-07-16T14:47:51.060Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#爬取京东商品图片的小测试<br>访问的页面<br><img src="/2020/07/16/test%20jd/jd.png" alt><br>图片链接的位置<br><img src="/2020/07/16/test%20jd/link.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding &#x3D; utf - 8 -*-</span><br><span class="line">#@Time : 2020&#x2F;7&#x2F;16 14:54</span><br><span class="line">#@Author : sunzy</span><br><span class="line">#@File : jd.py</span><br><span class="line"></span><br><span class="line">import re</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">dir &#x3D; &quot;jdtp&quot;</span><br><span class="line">if not os.path.exists(dir):</span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"></span><br><span class="line">baseurl &#x3D; &quot;https:&#x2F;&#x2F;search.jd.com&#x2F;Search?keyword&#x3D;%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc&#x3D;utf-8&amp;wq&#x3D;%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid&#x3D;ryxp9pui.nhltvu&quot;</span><br><span class="line"></span><br><span class="line">head &#x3D; &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;83.0.4103.116 Safari&#x2F;537.36 Edg&#x2F;83.0.478.61&quot;</span><br><span class="line">    &#125;</span><br><span class="line">response &#x3D; requests.get(url&#x3D;baseurl, headers &#x3D; head)</span><br><span class="line">#print(response.text)</span><br><span class="line">html &#x3D; response.text</span><br><span class="line"></span><br><span class="line">findlinks &#x3D; &#39;&lt;img width&#x3D;&quot;220&quot; height&#x3D;&quot;220&quot; data-img&#x3D;&quot;\d&quot; src&#x3D;&quot;(.*?)&quot;.*?&gt;&#39;</span><br><span class="line">#&lt;img width&#x3D;&quot;220&quot; height&#x3D;&quot;220&quot; data-img&#x3D;&quot;1&quot; src&#x3D;&quot;&#x2F;&#x2F;img10.360buyimg.com&#x2F;n7&#x2F;jfs&#x2F;t22093&#x2F;305&#x2F;286523587&#x2F;498951&#x2F;2ddddbdf&#x2F;5b30b30dNd6c7eca0.jpg&quot; data-lazy-img&#x3D;&quot;done&quot; source-data-lazy-img&#x3D;&quot;&quot;&gt;</span><br><span class="line">urls &#x3D; re.findall(findlinks, html)</span><br><span class="line"></span><br><span class="line">for url in urls:</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    file_name &#x3D; url.split(&#39;&#x2F;&#39;)[-1]</span><br><span class="line">    res &#x3D; requests.get(&quot;http:&quot;+url,headers &#x3D; head)</span><br><span class="line">    with open(dir+&#39;&#x2F;&#39;+file_name, &quot;wb&quot;) as f:</span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/test%20jd/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-爬取图片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/">爬取图片</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/" class="archive-article-date">
+  	<time datetime="2020-07-16T14:42:53.398Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="用爬虫爬取小姐姐的图片"><a href="#用爬虫爬取小姐姐的图片" class="headerlink" title="用爬虫爬取小姐姐的图片"></a>用爬虫爬取小姐姐的图片</h1><p><strong>用的库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re #正则表达式</span><br><span class="line">requests #url请求</span><br><span class="line">time   #时间</span><br><span class="line">os     #用于创建文件夹，保存图片</span><br></pre></td></tr></table></figure>
+<p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/picturelink.png" alt><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
+<h2 id="完整程序"><a href="#完整程序" class="headerlink" title="完整程序"></a>完整程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding &#x3D; utf - 8 -*-</span><br><span class="line">#@Time : 2020&#x2F;7&#x2F;16 13:36</span><br><span class="line">#@Author : sunzy</span><br><span class="line">#@File : tupian.py</span><br><span class="line">import re</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">dir &#x3D; &quot;plmm&quot;        #文件夹名字</span><br><span class="line">if not os.path.exists(dir):   #首先判断是否存在当前文件夹如果没有则创建一个</span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"># 模仿浏览器的首部信息，绕过一些网站的反爬取措施</span><br><span class="line">head &#x3D; &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;83.0.4103.116 Safari&#x2F;537.36 Edg&#x2F;83.0.478.61&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;www.vmgirls.com&#x2F;13344.html&quot;</span><br><span class="line">response &#x3D; requests.get(url, headers &#x3D; head)   # 访问目标网页，获取网页内容</span><br><span class="line">html &#x3D; response.text</span><br><span class="line"></span><br><span class="line">findlinks &#x3D; &#39;&lt;a href&#x3D;&quot;(.*?)&quot; alt&#x3D;&quot;.*?&quot; title&#x3D;&quot;.*?&quot;&gt;&#39;</span><br><span class="line">urls &#x3D; re.findall(findlinks, html)   #爬取到的图片链接保存在urls中， 是一个列表</span><br><span class="line"></span><br><span class="line">for url in urls:</span><br><span class="line">    time.sleep(1)    #防止访问速度过快使服务器崩溃</span><br><span class="line">    file_name &#x3D; url.split(&#39;&#x2F;&#39;)[-1]    #保存图片的名字</span><br><span class="line"></span><br><span class="line">    res &#x3D; requests.get(url, headers &#x3D; head)   #依此访问图片链接</span><br><span class="line">    with open(dir+&#39;&#x2F;&#39;+file_name, &quot;wb&quot;) as f:   #以二进制形式保存图片</span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-php反序列化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -248,71 +377,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-upload-labs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/29/upload-labs/">upload-labs</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/29/upload-labs/" class="archive-article-date">
-  	<time datetime="2020-03-29T12:14:36.682Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="uplad-labs"><a href="#uplad-labs" class="headerlink" title="uplad-labs"></a>uplad-labs</h1>
-        
-          <a class="article-more-a" href="/2020/03/29/upload-labs/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/29/upload-labs/">展开全文 >></a>
         </p>
       
 

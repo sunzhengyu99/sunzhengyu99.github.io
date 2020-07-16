@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>迷宫问题 | 一路走到黑</title>
+  <title>爬取图片 | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2020&#x2F;3&#x2F;20 18:07:12  原题题目描述">
+  <meta name="description" content="用爬虫爬取小姐姐的图片用的库 1234re #正则表达式requests #url请求time   #时间os     #用于创建文件夹，保存图片 ##准备工作1.首先访问该链接https:&#x2F;&#x2F;www.vmgirls.com&#x2F;2.随便点击一个进入查看详情https:&#x2F;&#x2F;www.vmgirls.com&#x2F;13344.html3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式该正">
 <meta property="og:type" content="article">
-<meta property="og:title" content="迷宫问题">
-<meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="爬取图片">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="2020&#x2F;3&#x2F;20 18:07:12  原题题目描述">
-<meta property="article:published_time" content="2020-03-20T10:07:00.868Z">
-<meta property="article:modified_time" content="2020-03-20T10:10:52.804Z">
+<meta property="og:description" content="用爬虫爬取小姐姐的图片用的库 1234re #正则表达式requests #url请求time   #时间os     #用于创建文件夹，保存图片 ##准备工作1.首先访问该链接https:&#x2F;&#x2F;www.vmgirls.com&#x2F;2.随便点击一个进入查看详情https:&#x2F;&#x2F;www.vmgirls.com&#x2F;13344.html3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式该正">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/picturelink.png">
+<meta property="article:published_time" content="2020-07-16T14:42:53.398Z">
+<meta property="article:modified_time" content="2020-07-16T14:43:22.993Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/picturelink.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -149,107 +151,30 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-迷宫问题" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-爬取图片" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      迷宫问题
+      爬取图片
     </h1>
   
 
         
-        <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-03-20T10:07:00.868Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
+        <a href="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/" class="archive-article-date">
+  	<time datetime="2020-07-16T14:42:53.398Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>2020/3/20 18:07:12 </p>
-<h1 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h1><p>题目描述</p>
-<a id="more"></a>
-<p>小明置身于一个迷宫，请你帮小明找出从起点到终点的最短路程。<br> 小明只能向上下左右四个方向移动。</p>
-<p>输入</p>
-<p>输入包含多组测试数据。输入的第一行是一个整数T，表示有T组测试数据。<br> 每组输入的第一行是两个整数N和M（1&lt;=N,M&lt;=100）。<br> 接下来N行，每行输入M个字符，每个字符表示迷宫中的一个小方格。<br> 字符的含义如下：<br>‘S’：起点<br>‘E’：终点<br>‘-’：空地，可以通过<br>‘#’：障碍，无法通过<br> 输入数据保证有且仅有一个起点和终点。</p>
-<p>输出</p>
-<p>对于每组输入，输出从起点到终点的最短路程，如果不存在从起点到终点的路，则输出-1。</p>
-<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><pre><code>1
-5 5
-s-###
------
-##---
-E#---
----##</code></pre><h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><pre><code>9</code></pre><p>##解决代码</p>
-<blockquote>
-<pre><code>#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;string&gt;
-#include&lt;queue&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int de[100][100];//计步数组  记录走到这个位置所需的步数 不能走到的位置标记为-1 
-char map[100][100];  //用于存放迷宫地图 
-typedef pair&lt;int,intP;  //坐标
-int to[2][4]={1,-1,0,0,0,0,1,-1};  //在当前坐标下能走的四个方向
-int sx,ex,sy,ey;  //(sx,sy)为起点坐标  （ex,ey）为终点坐标
-int x,y,nx,ny; //(x,y)为函数中当前位置坐标   （nx,ny)为接下来能到达的坐标 
-int r,l;  //r为行数 l为列数 
-int bfs()
-{
-    memset(de,-1,sizeof(de));
-    queue&lt;Pqu;
-    qu.push(P(sx,sy));   //将起点坐标放入队头 
-    de[sx][sy]=0;
-    while(!qu.empty()) 
-    {
-        P p=qu.front();   //取出队头坐标 
-        qu.pop() ;//删除对头及走过的坐标 
-        x=p.first,y=p.second; 
-        if(x==ex&amp;&amp;y==ey) break; //到达终点 跳出循环        
-         for(int i=0;i&lt;4;i++)
-        {
-            nx=x+to[0][i];//开始向四个方向移动 
-            ny=y+to[1][i];            
-                if(nx&gt;=0&amp;&amp;nx&lt;r&amp;&amp;ny&gt;=0&amp;&amp;ny&lt;l&amp;&amp;map[nx][ny]!=&apos;#&apos;&amp;&amp;de[nx][ny]==-1)
-     //判断是否越界 以及是否能走  排除走过的路 
-     {
-          qu.push(P(nx,ny));  //将能走的坐标放入队列 之后依次删除 
-                         de[nx][ny]=de[x][y]+1;  //步数加一 
-                      }                   
-            }
-    }
-    if(de[ex][ey]==-1)  return -1;  //终点的记步数组为-1 及不能到达终点 
-    else return de[ex][ey]; 
-} 
-int main()
-{
-    int n,i,j;
-    while(cin&gt;&gt;n){
-        while(n--){
-            cin&gt;&gt;r&gt;&gt;l;
-            for(i=0;i&lt;r;i++){
-                for(j=0;j&lt;l;j++){ 
-                cin&gt;&gt;map[i][j];
-                if(map[i][j]==&apos;S&apos;) //记录起点坐标 
-                 {
-                    sx=i,sy=j;
-                 } 
-                 else if(map[i][j]==&apos;E&apos;)  //记录终点坐标 
-                 {
-                     ex=i,ey=j;
-                 }
-                }
-            }
-            cout&lt;&lt;bfs()&lt;&lt;endl;
-        }
-    }
-    return 0;
-}</code></pre></blockquote>
-
+        <h1 id="用爬虫爬取小姐姐的图片"><a href="#用爬虫爬取小姐姐的图片" class="headerlink" title="用爬虫爬取小姐姐的图片"></a>用爬虫爬取小姐姐的图片</h1><p><strong>用的库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re #正则表达式</span><br><span class="line">requests #url请求</span><br><span class="line">time   #时间</span><br><span class="line">os     #用于创建文件夹，保存图片</span><br></pre></td></tr></table></figure>
+<p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/picturelink.png" alt><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
+<h2 id="完整程序"><a href="#完整程序" class="headerlink" title="完整程序"></a>完整程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding &#x3D; utf - 8 -*-</span><br><span class="line">#@Time : 2020&#x2F;7&#x2F;16 13:36</span><br><span class="line">#@Author : sunzy</span><br><span class="line">#@File : tupian.py</span><br><span class="line">import re</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">dir &#x3D; &quot;plmm&quot;        #文件夹名字</span><br><span class="line">if not os.path.exists(dir):   #首先判断是否存在当前文件夹如果没有则创建一个</span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"># 模仿浏览器的首部信息，绕过一些网站的反爬取措施</span><br><span class="line">head &#x3D; &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;83.0.4103.116 Safari&#x2F;537.36 Edg&#x2F;83.0.478.61&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;www.vmgirls.com&#x2F;13344.html&quot;</span><br><span class="line">response &#x3D; requests.get(url, headers &#x3D; head)   # 访问目标网页，获取网页内容</span><br><span class="line">html &#x3D; response.text</span><br><span class="line"></span><br><span class="line">findlinks &#x3D; &#39;&lt;a href&#x3D;&quot;(.*?)&quot; alt&#x3D;&quot;.*?&quot; title&#x3D;&quot;.*?&quot;&gt;&#39;</span><br><span class="line">urls &#x3D; re.findall(findlinks, html)   #爬取到的图片链接保存在urls中， 是一个列表</span><br><span class="line"></span><br><span class="line">for url in urls:</span><br><span class="line">    time.sleep(1)    #防止访问速度过快使服务器崩溃</span><br><span class="line">    file_name &#x3D; url.split(&#39;&#x2F;&#39;)[-1]    #保存图片的名字</span><br><span class="line"></span><br><span class="line">    res &#x3D; requests.get(url, headers &#x3D; head)   #依此访问图片链接</span><br><span class="line">    with open(dir+&#39;&#x2F;&#39;+file_name, &quot;wb&quot;) as f:   #以二进制形式保存图片</span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -328,7 +253,7 @@ int main()
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/07/16/%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -342,18 +267,18 @@ int main()
   
 <nav id="article-nav">
   
-    <a href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/16/test%20jd/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          sql注入
+          test jd
         
       </div>
     </a>
   
   
-    <a href="/2020/03/19/Guestbook/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Guestbook</div>
+    <a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">php反序列化</div>
       <i class="icon-circle-right"></i>
     </a>
   
