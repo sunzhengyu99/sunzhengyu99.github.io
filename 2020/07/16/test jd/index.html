@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
   <title>test jd | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#爬取京东商品图片的小测试访问的页面图片链接的位置 123456789101112131415161718192021222324252627282930313233# -*- coding &#x3D; utf - 8 -*-#@Time : 2020&#x2F;7&#x2F;16 14:54#@Author : sunzy#@File : jd.pyimport reimport reques">
+  <meta name="description" content="#爬取京东商品图片的小测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="test jd">
 <meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/16/test%20jd/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="#爬取京东商品图片的小测试访问的页面图片链接的位置 123456789101112131415161718192021222324252627282930313233# -*- coding &#x3D; utf - 8 -*-#@Time : 2020&#x2F;7&#x2F;16 14:54#@Author : sunzy#@File : jd.pyimport reimport reques">
+<meta property="og:description" content="#爬取京东商品图片的小测试">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/16/test%20jd/jd.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/16/test%20jd/link.png">
 <meta property="article:published_time" content="2020-07-16T14:47:51.060Z">
-<meta property="article:modified_time" content="2020-07-16T14:48:10.390Z">
+<meta property="article:modified_time" content="2020-07-18T06:27:15.759Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/16/test%20jd/jd.png">
@@ -172,7 +172,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#爬取京东商品图片的小测试<br>访问的页面<br><img src="/2020/07/16/test%20jd/jd.png" alt><br>图片链接的位置<br><img src="/2020/07/16/test%20jd/link.png" alt></p>
+        <p>#爬取京东商品图片的小测试</p>
+<a id="more"></a>
+<p>访问的页面<br><img src="/2020/07/16/test%20jd/jd.png" alt="1"><br>图片链接的位置<br><img src="/2020/07/16/test%20jd/link.png" alt="2"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding &#x3D; utf - 8 -*-</span><br><span class="line">#@Time : 2020&#x2F;7&#x2F;16 14:54</span><br><span class="line">#@Author : sunzy</span><br><span class="line">#@File : jd.py</span><br><span class="line"></span><br><span class="line">import re</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">dir &#x3D; &quot;jdtp&quot;</span><br><span class="line">if not os.path.exists(dir):</span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"></span><br><span class="line">baseurl &#x3D; &quot;https:&#x2F;&#x2F;search.jd.com&#x2F;Search?keyword&#x3D;%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc&#x3D;utf-8&amp;wq&#x3D;%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid&#x3D;ryxp9pui.nhltvu&quot;</span><br><span class="line"></span><br><span class="line">head &#x3D; &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;83.0.4103.116 Safari&#x2F;537.36 Edg&#x2F;83.0.478.61&quot;</span><br><span class="line">    &#125;</span><br><span class="line">response &#x3D; requests.get(url&#x3D;baseurl, headers &#x3D; head)</span><br><span class="line">#print(response.text)</span><br><span class="line">html &#x3D; response.text</span><br><span class="line"></span><br><span class="line">findlinks &#x3D; &#39;&lt;img width&#x3D;&quot;220&quot; height&#x3D;&quot;220&quot; data-img&#x3D;&quot;\d&quot; src&#x3D;&quot;(.*?)&quot;.*?&gt;&#39;</span><br><span class="line">#&lt;img width&#x3D;&quot;220&quot; height&#x3D;&quot;220&quot; data-img&#x3D;&quot;1&quot; src&#x3D;&quot;&#x2F;&#x2F;img10.360buyimg.com&#x2F;n7&#x2F;jfs&#x2F;t22093&#x2F;305&#x2F;286523587&#x2F;498951&#x2F;2ddddbdf&#x2F;5b30b30dNd6c7eca0.jpg&quot; data-lazy-img&#x3D;&quot;done&quot; source-data-lazy-img&#x3D;&quot;&quot;&gt;</span><br><span class="line">urls &#x3D; re.findall(findlinks, html)</span><br><span class="line"></span><br><span class="line">for url in urls:</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    file_name &#x3D; url.split(&#39;&#x2F;&#39;)[-1]</span><br><span class="line">    res &#x3D; requests.get(&quot;http:&quot;+url,headers &#x3D; head)</span><br><span class="line">    with open(dir+&#39;&#x2F;&#39;+file_name, &quot;wb&quot;) as f:</span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>
 
       
