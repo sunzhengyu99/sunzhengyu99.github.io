@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>sql注入 | 一路走到黑</title>
+  <title>爬图 | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sqlmap使用">
+  <meta name="description" content="用爬虫爬取小姐姐的图片">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sql注入">
-<meta property="og:url" content="https://sunzhengyu99.github.io/2020/03/30/sql%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:title" content="爬图">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/07/18/%E7%88%AC%E5%9B%BE/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="sqlmap使用">
-<meta property="article:published_time" content="2020-03-30T14:19:33.336Z">
-<meta property="article:modified_time" content="2020-03-31T14:24:21.322Z">
+<meta property="og:description" content="用爬虫爬取小姐姐的图片">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/07/18/%E7%88%AC%E5%9B%BE/picturelink.png">
+<meta property="article:published_time" content="2020-07-18T09:40:51.000Z">
+<meta property="article:modified_time" content="2020-07-18T09:44:04.283Z">
 <meta property="article:author" content="sunzy">
+<meta property="article:tag" content="sunzy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/07/18/%E7%88%AC%E5%9B%BE/picturelink.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -149,45 +152,31 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-sql注入" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-爬图" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      sql注入
+      爬图
     </h1>
   
 
         
-        <a href="/2020/03/30/sql%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-  	<time datetime="2020-03-30T14:19:33.336Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-30</time>
+        <a href="/2020/07/18/%E7%88%AC%E5%9B%BE/" class="archive-article-date">
+  	<time datetime="2020-07-18T09:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="sqlmap使用"><a href="#sqlmap使用" class="headerlink" title="sqlmap使用"></a>sqlmap使用</h1><a id="more"></a>
-
-<p>第一步:</p>
-<pre><code>-u &quot;xx” --cookie= &quot;yyy&quot; //带上cookie对URL进行注入探测</code></pre><p>第二步:</p>
-<pre><code>-u &quot;xxx” --cookie= &quot;yy&quot; - current--db //对数据库名进行获取</code></pre><p>第三步:</p>
-<pre><code>-u &quot;xxx&quot; --cookie=&quot;yyy&quot; -D dvwa --tables //对数据库dvwa的表名进行枚举</code></pre><p>第四步:</p>
-<pre><code>-u &quot;xx&quot; --cookie= &quot;yyy&quot; -D dvwa -T users --columns //对dvwa库里面的名为users表的列名进行枚举</code></pre><p>第五步:</p>
-<pre><code>-u&quot;xxx&quot;--cookie=&quot;yyy&quot; -D dvwa -T users -C name,password - dump
-//探测user表name和password字段</code></pre><p>如果此时得到的密码为密文, SQLmap会自动询问，是否爆破,选择”是”即可开始使用SQLMAP自带的字<br>典进行爆破。</p>
-<p>第六步:</p>
-<pre><code>-u&quot;xxx&quot;--cookie= &quot;yy&quot; --os - shell //获取shell,选择后台语言</code></pre><h1 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h1><p>order by * </p>
-<p>group by *</p>
-<p>利用内置函数暴数据库信息</p>
-<p>version() 查看数据库版本</p>
-<p>database() 查看当前数据库名</p>
-<p>user() 查看当前用户</p>
-<p>查看表：</p>
-<pre><code>Select  TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=database()  </code></pre><p>可十六进制查看字段：</p>
-<pre><code>select COLUMN_NAME from information_schema.COLUMNS where TABLE_NAME=‘biaoming’;</code></pre>
+        <h1 id="用爬虫爬取小姐姐的图片"><a href="#用爬虫爬取小姐姐的图片" class="headerlink" title="用爬虫爬取小姐姐的图片"></a>用爬虫爬取小姐姐的图片</h1><a id="more"></a>
+<p><strong>用的库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re #正则表达式</span><br><span class="line">requests #url请求</span><br><span class="line">time   #时间</span><br><span class="line">os     #用于创建文件夹，保存图片</span><br></pre></td></tr></table></figure>
+<p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="/2020/07/18/%E7%88%AC%E5%9B%BE/picturelink.png" alt="1"><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
+<h2 id="完整程序"><a href="#完整程序" class="headerlink" title="完整程序"></a>完整程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding &#x3D; utf - 8 -*-</span><br><span class="line">#@Time : 2020&#x2F;7&#x2F;16 13:36</span><br><span class="line">#@Author : sunzy</span><br><span class="line">#@File : tupian.py</span><br><span class="line">import re</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">dir &#x3D; &quot;plmm&quot;        #文件夹名字</span><br><span class="line">if not os.path.exists(dir):   #首先判断是否存在当前文件夹如果没有则创建一个</span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"># 模仿浏览器的首部信息，绕过一些网站的反爬取措施</span><br><span class="line">head &#x3D; &#123;</span><br><span class="line">        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;83.0.4103.116 Safari&#x2F;537.36 Edg&#x2F;83.0.478.61&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;www.vmgirls.com&#x2F;13344.html&quot;</span><br><span class="line">response &#x3D; requests.get(url, headers &#x3D; head)   # 访问目标网页，获取网页内容</span><br><span class="line">html &#x3D; response.text</span><br><span class="line"></span><br><span class="line">findlinks &#x3D; &#39;&lt;a href&#x3D;&quot;(.*?)&quot; alt&#x3D;&quot;.*?&quot; title&#x3D;&quot;.*?&quot;&gt;&#39;</span><br><span class="line">urls &#x3D; re.findall(findlinks, html)   #爬取到的图片链接保存在urls中， 是一个列表</span><br><span class="line"></span><br><span class="line">for url in urls:</span><br><span class="line">    time.sleep(1)    #防止访问速度过快使服务器崩溃</span><br><span class="line">    file_name &#x3D; url.split(&#39;&#x2F;&#39;)[-1]    #保存图片的名字</span><br><span class="line"></span><br><span class="line">    res &#x3D; requests.get(url, headers &#x3D; head)   #依此访问图片链接</span><br><span class="line">    with open(dir+&#39;&#x2F;&#39;+file_name, &quot;wb&quot;) as f:   #以二进制形式保存图片</span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -216,6 +205,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">sunzy</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -266,7 +266,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/03/30/sql%E6%B3%A8%E5%85%A5/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/07/18/%E7%88%AC%E5%9B%BE/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +280,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/30/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/18/jdtest/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          php反序列化
+          jdtest
         
       </div>
     </a>
   
   
-    <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">迷宫问题</div>
+    <a href="/2020/07/18/diaoyu/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">diaoyu</div>
       <i class="icon-circle-right"></i>
     </a>
   
