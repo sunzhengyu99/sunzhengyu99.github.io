@@ -217,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-09-02 17:13:08 / 修改时间：22:23:12" itemprop="dateCreated datePublished" datetime="2020-09-02T17:13:08+08:00">2020-09-02</time>
+              <time title="创建时间：2020-09-02 17:13:08 / 修改时间：22:26:19" itemprop="dateCreated datePublished" datetime="2020-09-02T17:13:08+08:00">2020-09-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,77 +261,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="NCTF-2"><a href="#NCTF-2" class="headerlink" title="NCTF-2"></a>NCTF-2</h1><h2 id="SQL注入1"><a href="#SQL注入1" class="headerlink" title="SQL注入1"></a>SQL注入1</h2><p>题目源码给出</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>($_POST[user] &amp;&amp; $_POST[pass]) &#123;</span><br><span class="line">    mysql_connect(SAE_MYSQL_HOST_M . <span class="string">':'</span> . SAE_MYSQL_PORT,SAE_MYSQL_USER,SAE_MYSQL_PASS);</span><br><span class="line">  mysql_select_db(SAE_MYSQL_DB);</span><br><span class="line">  $user = trim($_POST[user]);</span><br><span class="line">  $pass = md5(trim($_POST[pass]));</span><br><span class="line">  $sql=<span class="string">"select user from ctf where (user='"</span>.$user.<span class="string">"') and (pw='"</span>.$pass.<span class="string">"')"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'&lt;/br&gt;'</span>.$sql;</span><br><span class="line">  $query = mysql_fetch_array(mysql_query($sql));</span><br><span class="line">  <span class="keyword">if</span>($query[user]==<span class="string">"admin"</span>) &#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"&lt;p&gt;Logged in! flag:******************** &lt;/p&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>($query[user] != <span class="string">"admin"</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="string">"&lt;p&gt;You are not admin!&lt;/p&gt;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> $query[user];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>首先post方法传递user和pass两个参数，然后带入sql语句中查询</p>
-<p>注入点在这个位置</p>
-<p><code>$sql=&quot;select user from ctf where (user=&#39;&quot;.$user.&quot;&#39;) and (pw=&#39;&quot;.$pass.&quot;&#39;)&quot;</code></p>
-<p><code>select user from ctf where (user=&#39;&#39;) and (pw=&#39;&#39;)</code></p>
-<p>构造语句</p>
-<p><code>select user from ctf where (user=&#39;admin&#39;) or 1=1 #)   and (pw=&#39;&#39;)</code> </p>
-<p>在username中填入<code>admin&#39;) or 1=1 #</code>或者<code>admin&#39;) and 1=1 #</code>，提交即可获得flag</p>
-<p><img src="/2020/09/02/nctf-2/sql1.png" alt></p>
-<h2 id="passcheck"><a href="#passcheck" class="headerlink" title="passcheck"></a>passcheck</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$pass=@$_POST[<span class="string">'pass'</span>];</span><br><span class="line">$pass1=***********;<span class="comment">//被隐藏起来的密码</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($pass))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(@!strcmp($pass,$pass1))&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"flag:nctf&#123;*&#125;"</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"the pass is wrong!"</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"please input pass!"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>strcmp() 函数比较两个字符串。</p>
-<p><strong>注释：</strong>strcmp() 函数是二进制安全的，且对大小写敏感。</p>
-<p><strong>提示：</strong>该函数与 <a href="https://www.w3school.com.cn/php/func_string_strncmp.asp" target="_blank" rel="noopener">strncmp()</a> 函数类似，不同的是，通过 strncmp() 您可以指定每个字符串用于比较的字符数。</p>
-<p><img src="/2020/09/02/nctf-2/strcmp.png" alt></p>
-<p>只有pass==pass1时才显示flag</p>
-<p>感觉跟之前的变量覆盖相似</p>
-<p><img src="/2020/09/02/nctf-2/passcheck.png" alt></p>
-<p><strong>知识点：</strong><br>　　strcmp()函数 ：php5.3之前的strcmp的漏洞，当参数中的一个字符串是对象或者数组时，函数会返回0；<br>　　hackbar的使用，post方法<br>　　php弱类型，数组的使用。</p>
-<p>参考： <a href="https://www.cnblogs.com/islsy/p/10667426.html" target="_blank" rel="noopener">https://www.cnblogs.com/islsy/p/10667426.html</a> </p>
-<h2 id="起名字真难"><a href="#起名字真难" class="headerlink" title="起名字真难"></a>起名字真难</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">noother_says_correct</span><span class="params">($number)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">       $one = ord(<span class="string">'1'</span>);</span><br><span class="line">       $nine = ord(<span class="string">'9'</span>);</span><br><span class="line">       <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; strlen($number); $i++)</span><br><span class="line">       &#123;   </span><br><span class="line">               $digit = ord($number&#123;$i&#125;);</span><br><span class="line">               <span class="keyword">if</span> ( ($digit &gt;= $one) &amp;&amp; ($digit &lt;= $nine) ) <span class="comment">//number中的数字不能在1-9</span></span><br><span class="line">               &#123;</span><br><span class="line">                       <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">               &#125;</span><br><span class="line">       &#125;</span><br><span class="line">          <span class="keyword">return</span> $number == <span class="string">'54975581388'</span>; <span class="comment">//number的值等于54975581388，与之前if语句矛盾</span></span><br><span class="line">&#125;</span><br><span class="line">$flag=<span class="string">'*******'</span>;</span><br><span class="line"><span class="keyword">if</span>(noother_says_correct($_GET[<span class="string">'key'</span>]))</span><br><span class="line">   <span class="keyword">echo</span> $flag;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">   <span class="keyword">echo</span> <span class="string">'access denied'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>尝试将54975581388转成十六进制</p>
-<p>0xccccccccc,  c的a值为12，满足if判断语句</p>
-<p><code>?key=0xccccccccc</code></p>
-<h2 id="sqlinject"><a href="#sqlinject" class="headerlink" title="sqlinject"></a>sqlinject</h2><p>查看源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line"><span class="comment">#GOAL: login as admin,then get the flag;</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">require</span> <span class="string">'db.inc.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clean</span><span class="params">($str)</span></span>&#123;  </span><br><span class="line">	<span class="keyword">if</span>(get_magic_quotes_gpc())&#123;  <span class="comment">//防止注入</span></span><br><span class="line">		$str=stripslashes($str); <span class="comment">//添加 \</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> htmlentities($str, ENT_QUOTES);<span class="comment">//过滤掉单引号，双引号，或者兼而有之</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = @clean((string)$_GET[<span class="string">'username'</span>]);<span class="comment">//对获取的参数进行了处理</span></span><br><span class="line">$password = @clean((string)$_GET[<span class="string">'password'</span>]);</span><br><span class="line"></span><br><span class="line">$query=<span class="string">'SELECT * FROM users WHERE name=\''</span>.$username.<span class="string">'\' AND pass=\''</span>.$password.<span class="string">'\';'</span>;<span class="comment">//存在注入的语句</span></span><br><span class="line">$result=mysql_query($query);</span><br><span class="line"><span class="keyword">if</span>(!$result || mysql_num_rows($result) &lt; <span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">'Invalid password!'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $flag;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-
-<p> <strong>magic_quotes_gpc函数在php中的作用是判断解析用户提示的数据，如包括有:post、get、cookie过来的数据增加转义字符“\”，以确保这些数据不会引起程序，特别是数据库语句因为特殊字符引起的污染而出现致命的错误</strong> </p>
-<p> <code>SELECT * FROM users WHERE name=\&#39;&#39;.$username.&#39;\&#39; AND pass=\&#39;&#39;.$password.&#39;\&#39;;</code> </p>
-<p> 反斜杠遇到单引号后，起到转义作用，实际sql语句如下</p>
-<p><code>SELECT * FROM users WHERE name=&#39;.$username.&#39; AND pass=&#39;.$password.&#39;;</code> </p>
-<p>这里注入与之前的注入不同，这里针对的是password</p>
-<p><code>SELECT * FROM users WHERE name=&#39; \&#39; AND pass=&#39;  or 1=1 --+&#39;;</code></p>
-<p><code>\&#39; AND pass=</code> 作为name 参数的值</p>
-<p>所以构造?name=&amp;password=or 1=1 –+</p>
-<p><img src="/2020/09/02/nctf-2/sql2.png" alt></p>
-<h2 id="SQL注入2"><a href="#SQL注入2" class="headerlink" title="SQL注入2"></a>SQL注入2</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>($_POST[user] &amp;&amp; $_POST[pass]) &#123; <span class="comment">//post 方式接收两个参数</span></span><br><span class="line">   mysql_connect(SAE_MYSQL_HOST_M . <span class="string">':'</span> . SAE_MYSQL_PORT,SAE_MYSQL_USER,SAE_MYSQL_PASS);</span><br><span class="line">  mysql_select_db(SAE_MYSQL_DB);</span><br><span class="line">  $user = $_POST[user];</span><br><span class="line">  $pass = md5($_POST[pass]);<span class="comment">//对pass  md5加密</span></span><br><span class="line">  $query = @mysql_fetch_array(mysql_query(<span class="string">"select pw from ctf where user='$user'"</span>));<span class="comment">//获取pw字段的值</span></span><br><span class="line">  <span class="keyword">if</span> (($query[pw]) &amp;&amp; (!strcasecmp($pass, $query[pw]))) &#123; <span class="comment">// 比较pass和pw</span></span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"&lt;p&gt;Logged in! Key: ntcf&#123;**************&#125; &lt;/p&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="string">"&lt;p&gt;Log in failure!&lt;/p&gt;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>poyload:</p>
-<p><code>user= &#39; union select md(1) &amp;pass=1</code></p>
-<p><code>select pw from ctf where user=&#39;&#39; union select md(1)</code> </p>
-<p>此查询语句获得我pw值为md(1),所以<code>if (($query[pw]) &amp;&amp; (!strcasecmp($pass, $query[pw])))</code>语句成立，显示flag</p>
-<p>(还没完全理解)</p>
-<h2 id="综合题"><a href="#综合题" class="headerlink" title="综合题"></a>综合题</h2><p> 首页中给出很长的<code>jsfuck</code>，可以使用浏览器的<code>console</code>解码 ,给出一个页面</p>
-<p>访问 <code>1bc29b36f623ba82aaf6724fd3b16718.php</code> </p>
-<p><img src="/2020/09/02/nctf-2/ch2.png" alt></p>
-<p>提示在header里</p>
-<p><img src="/2020/09/02/nctf-2/ch1.png" alt></p>
-<p>查看header</p>
-<p><img src="/2020/09/02/nctf-2/ch.png" alt></p>
-<p> <code>history of bash</code>使用过linux的同志会知道，如果使用的是<code>bash</code>，在家目录中会生成<code>.bash_history</code>文件用来保存历史命令。<br>访问<code>.bash_history</code>文件，可以得到这样的历史命令 </p>
-<p>url: <a href="http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/.bash_history" target="_blank" rel="noopener">http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/.bash_history</a> </p>
-<p>获得<code>zip -r flagbak.zip ./*</code></p>
-<p>访问 <a href="http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/flagbak.zip" target="_blank" rel="noopener">http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/flagbak.zip</a></p>
-<h2 id="file-get-contents"><a href="#file-get-contents" class="headerlink" title="file_get_contents"></a>file_get_contents</h2><p>查看源码获取被注释的内容</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$file = $_GET[<span class="string">'file'</span>];</span><br><span class="line"><span class="keyword">if</span>(@file_get_contents($file) == <span class="string">"meizijiu"</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $nctf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>分析可得</p>
-<p><strong>通过get方式传递<code>flle</code>=文件名</strong><br><strong>并且这个文件的内容==‘meizijiu’</strong><br><strong>如果等于就打印flag</strong> </p>
-<p>php伪协议<code>php://input</code>来构造原始数据的只读流 </p>
-<p><img src="/2020/09/02/nctf-2/file.png" alt></p>
-<h2 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="变量覆盖"></a>变量覆盖</h2><p>参考 <a href="https://blog.csdn.net/niexinming/article/details/52637773?utm_source=blogxgwz1" target="_blank" rel="noopener">https://blog.csdn.net/niexinming/article/details/52637773?utm_source=blogxgwz1</a> </p>
-<p>源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--<span class="keyword">foreach</span>($_GET <span class="keyword">as</span> $key =&gt; $value)&#123;  </span><br><span class="line">        $$key = $value;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">if</span>($name == <span class="string">"meizijiu233"</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag;</span><br><span class="line">&#125;--&gt;</span><br></pre></td></tr></table></figure>
-
-<p><code>?name=meizijiu233</code></p>
-<p><img src="/2020/09/02/nctf-2/fugai.png" alt></p>
-
+          <h1 id="NCTF-2"><a href="#NCTF-2" class="headerlink" title="NCTF-2"></a>NCTF-2</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/02/nctf-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
     <div>
