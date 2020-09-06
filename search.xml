@@ -157,7 +157,7 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
     <url>/2020/09/06/bugku1-10/</url>
     <content><![CDATA[<h1 id="bugku刷题记录"><a href="#bugku刷题记录" class="headerlink" title="bugku刷题记录"></a>bugku刷题记录</h1><a id="more"></a>
 
-<h1 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h1><p>查看源码即可</p>
+<h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>查看源码即可</p>
 <h2 id="计算器"><a href="#计算器" class="headerlink" title="计算器"></a>计算器</h2><p>修改前端代码</p>
 <p><img src="/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt></p>
 <h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><p>payload:</p>
