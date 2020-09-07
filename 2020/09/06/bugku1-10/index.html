@@ -33,8 +33,14 @@
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/host.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/stop.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/stop1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/web5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/toudengcang.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack.png">
 <meta property="article:published_time" content="2020-09-06T14:26:41.000Z">
-<meta property="article:modified_time" content="2020-09-06T15:15:11.378Z">
+<meta property="article:modified_time" content="2020-09-07T15:17:11.534Z">
 <meta property="article:author" content="sunzy">
 <meta property="article:tag" content="弱类型">
 <meta property="article:tag" content="域名解析">
@@ -228,10 +234,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-06 22:26:41 / 修改时间：23:15:11" itemprop="dateCreated datePublished" datetime="2020-09-06T22:26:41+08:00">2020-09-06</time>
+              <time title="创建时间：2020-09-06 22:26:41" itemprop="dateCreated datePublished" datetime="2020-09-06T22:26:41+08:00">2020-09-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-07 23:17:11" itemprop="dateModified" datetime="2020-09-07T23:17:11+08:00">2020-09-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -269,7 +281,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>1.8k</span>
             </span>
 
         </div>
@@ -318,6 +330,34 @@
 <p><img src="/2020/09/06/bugku1-10/stop.png" alt></p>
 <p>多go几次就出来了flag,原理还未知</p>
 <p><img src="/2020/09/06/bugku1-10/stop1.png" alt></p>
+<h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span> </span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag1.php"</span>;</span><br><span class="line">highlight_file(<span class="keyword">__file__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'args'</span>]))&#123;</span><br><span class="line">  $args = $_GET[<span class="string">'args'</span>];</span><br><span class="line">  <span class="keyword">if</span>(!preg_match(<span class="string">"/^\w+$/"</span>,$args))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"args error!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="string">"var_dump($$args);"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p> 首先看到要用get方式提交一个args参数，而在最后一行代码里又有var_dump(&amp;&amp;args)，于是传入args参数的值为GLOBALS,这样最后一行代码就变成了var_dump（&amp;GLOBALS），然后var_dump函数运行会输出所有变量，得出flag。 </p>
+<p> <strong>Global的作用是定义全局变量,但是这个全局变量不是应用于整个网站,而是应用于当前页面,包括include或require的所有文件。</strong> </p>
+<p> <strong>GLOBALS:一个包含了全部变量的全局组合数组</strong> </p>
+<p>即将include”flag.php”作为全局变量在本页面输出</p>
+<p>?args=GLOBALS</p>
+<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>源码中一串特别的代码直接放在浏览器的控制台中运行</p>
+<p><img src="/2020/09/06/bugku1-10/web5.png" alt></p>
+<h2 id="头等舱"><a href="#头等舱" class="headerlink" title="头等舱"></a>头等舱</h2><p>打开页面什么也没有</p>
+<p>扫描目录，扫出来一大堆没用的，直接抓包</p>
+<p>。。。。就出来了</p>
+<p><img src="/2020/09/06/bugku1-10/toudengcang.png" alt></p>
+<h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>名字提示了，网站被黑。</p>
+<p>打开题目，发现鼠标动不了，可能是被黑后的后遗症</p>
+<p>先扫描目录发现了<code>shell.php</code>,这可能是上次黑客留下的小马文件</p>
+<p><img src="/2020/09/06/bugku1-10/hack2.png" alt></p>
+<p>打开页面，需要密码，这就需要爆破了(查看了wp,知道了密码为hack,不知道时就需要一个足够大的密码字典才能破解)</p>
+<p>确定要爆破的变量</p>
+<p><img src="/2020/09/06/bugku1-10/hack3.png" alt></p>
+<p>加载密码字典</p>
+<p><img src="/2020/09/06/bugku1-10/hack4.png" alt></p>
+<p>出现结果（根据length确定密码）</p>
+<p><img src="/2020/09/06/bugku1-10/hack.png" alt></p>
+<p>密码为<code>hack</code></p>
+<p>登录即可</p>
 
     </div>
     <div>
@@ -411,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bugku刷题记录"><span class="nav-number">1.</span> <span class="nav-text">bugku刷题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web2"><span class="nav-number">1.1.</span> <span class="nav-text">web2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算器"><span class="nav-number">1.2.</span> <span class="nav-text">计算器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET"><span class="nav-number">1.3.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">1.4.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矛盾"><span class="nav-number">1.5.</span> <span class="nav-text">矛盾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web3"><span class="nav-number">1.6.</span> <span class="nav-text">web3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名解析"><span class="nav-number">1.7.</span> <span class="nav-text">域名解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你必须让他停下"><span class="nav-number">1.8.</span> <span class="nav-text">你必须让他停下</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bugku刷题记录"><span class="nav-number">1.</span> <span class="nav-text">bugku刷题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web2"><span class="nav-number">1.1.</span> <span class="nav-text">web2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算器"><span class="nav-number">1.2.</span> <span class="nav-text">计算器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET"><span class="nav-number">1.3.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">1.4.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矛盾"><span class="nav-number">1.5.</span> <span class="nav-text">矛盾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web3"><span class="nav-number">1.6.</span> <span class="nav-text">web3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名解析"><span class="nav-number">1.7.</span> <span class="nav-text">域名解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你必须让他停下"><span class="nav-number">1.8.</span> <span class="nav-text">你必须让他停下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量1"><span class="nav-number">1.9.</span> <span class="nav-text">变量1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web5"><span class="nav-number">1.10.</span> <span class="nav-text">web5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#头等舱"><span class="nav-number">1.11.</span> <span class="nav-text">头等舱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站被黑"><span class="nav-number">1.12.</span> <span class="nav-text">网站被黑</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -486,7 +526,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

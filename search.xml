@@ -192,6 +192,34 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 <p><img src="/2020/09/06/bugku1-10/stop.png" alt></p>
 <p>多go几次就出来了flag,原理还未知</p>
 <p><img src="/2020/09/06/bugku1-10/stop1.png" alt></p>
+<h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span> </span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag1.php"</span>;</span><br><span class="line">highlight_file(<span class="keyword">__file__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'args'</span>]))&#123;</span><br><span class="line">  $args = $_GET[<span class="string">'args'</span>];</span><br><span class="line">  <span class="keyword">if</span>(!preg_match(<span class="string">"/^\w+$/"</span>,$args))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"args error!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="string">"var_dump($$args);"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p> 首先看到要用get方式提交一个args参数，而在最后一行代码里又有var_dump(&amp;&amp;args)，于是传入args参数的值为GLOBALS,这样最后一行代码就变成了var_dump（&amp;GLOBALS），然后var_dump函数运行会输出所有变量，得出flag。 </p>
+<p> <strong>Global的作用是定义全局变量,但是这个全局变量不是应用于整个网站,而是应用于当前页面,包括include或require的所有文件。</strong> </p>
+<p> <strong>GLOBALS:一个包含了全部变量的全局组合数组</strong> </p>
+<p>即将include”flag.php”作为全局变量在本页面输出</p>
+<p>?args=GLOBALS</p>
+<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>源码中一串特别的代码直接放在浏览器的控制台中运行</p>
+<p><img src="/2020/09/06/bugku1-10/web5.png" alt></p>
+<h2 id="头等舱"><a href="#头等舱" class="headerlink" title="头等舱"></a>头等舱</h2><p>打开页面什么也没有</p>
+<p>扫描目录，扫出来一大堆没用的，直接抓包</p>
+<p>。。。。就出来了</p>
+<p><img src="/2020/09/06/bugku1-10/toudengcang.png" alt></p>
+<h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>名字提示了，网站被黑。</p>
+<p>打开题目，发现鼠标动不了，可能是被黑后的后遗症</p>
+<p>先扫描目录发现了<code>shell.php</code>,这可能是上次黑客留下的小马文件</p>
+<p><img src="/2020/09/06/bugku1-10/hack2.png" alt></p>
+<p>打开页面，需要密码，这就需要爆破了(查看了wp,知道了密码为hack,不知道时就需要一个足够大的密码字典才能破解)</p>
+<p>确定要爆破的变量</p>
+<p><img src="/2020/09/06/bugku1-10/hack3.png" alt></p>
+<p>加载密码字典</p>
+<p><img src="/2020/09/06/bugku1-10/hack4.png" alt></p>
+<p>出现结果（根据length确定密码）</p>
+<p><img src="/2020/09/06/bugku1-10/hack.png" alt></p>
+<p>密码为<code>hack</code></p>
+<p>登录即可</p>
 ]]></content>
       <categories>
         <category>ctf</category>
