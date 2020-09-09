@@ -220,6 +220,35 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 <p><img src="/2020/09/06/bugku1-10/hack.png" alt></p>
 <p>密码为<code>hack</code></p>
 <p>登录即可</p>
+<h2 id="管理员系统"><a href="#管理员系统" class="headerlink" title="管理员系统"></a>管理员系统</h2><p>随便输入一个账号发现提示IP</p>
+<p><img src="/2020/09/06/bugku1-10/admin1.png" alt></p>
+<p>想到了<code>X-FORWORADED-FOR:127.0.0.1</code></p>
+<p>抓包试试</p>
+<p>在响应包中发现一段base64编码<code>dGVzdDEyMw==</code> 解密后为test123，猜测为登录密码</p>
+<p>结果真对了</p>
+<p><img src="/2020/09/06/bugku1-10/admin2.png" alt></p>
+<p>当然这题也可以使用爆破的方法做，但是密码字典需要包含test123</p>
+<h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><p>查看源码发现一段js代码</p>
+<p>将最后的eval改成alert(),直接在浏览器中运行弹出结果</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSubmit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">"password"</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> a)&#123;</span><br><span class="line"><span class="keyword">if</span>(<span class="string">"67d709b2b54aa2aa648cf6e87a7114f1"</span>==a.value)</span><br><span class="line"><span class="keyword">return</span>!<span class="number">0</span>;</span><br><span class="line">alert(<span class="string">"Error"</span>);</span><br><span class="line">a.focus();</span><br><span class="line"><span class="keyword">return</span>!<span class="number">1</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"levelQuest"</span>).onsubmit=checkSubmit;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/06/bugku1-10/web4.png" alt></p>
+<p><code>if(&quot;67d709b2b54aa2aa648cf6e87a7114f1&quot;==a.value)</code></p>
+<p>直接输入67d709b2b54aa2aa648cf6e87a7114f1</p>
+<p><img src="/2020/09/06/bugku1-10/web41.png" alt></p>
+<h2 id="flag在index里"><a href="#flag在index里" class="headerlink" title="flag在index里"></a>flag在index里</h2><p>题目已经提示了flag的位置应该在index.php中，那么获取index.php的源码就很关键，可是查看源码什么也没有</p>
+<p>注意到了url:<a href="http://123.206.87.240:8005/post/index.php?file=show.php" target="_blank" rel="noopener">http://123.206.87.240:8005/post/index.php?file=show.php</a></p>
+<p>出现file这个参数，想到了文件包含的漏洞</p>
+<p>用下面的payload,获取index.php，源码的base64值</p>
+<p><code>?file=php://filter/read=convert.base64-encode/resource=index.php</code></p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">PGh<span class="number">0</span>bWw+DQogICAgPHRpdGxlPkJ<span class="number">1</span>Z<span class="number">2</span>t<span class="number">1</span>LWN<span class="number">0</span>ZjwvdGl<span class="number">0</span>bGU+DQogICAgDQo<span class="number">8</span>P<span class="number">3</span>BocA<span class="number">0</span>KCWVycm<span class="number">9</span>yX<span class="number">3</span>JlcG<span class="number">9</span>ydGluZygwKTsNCglpZighJF<span class="number">9</span>HRVRbZmlsZV<span class="number">0</span>pe<span class="number">2</span>VjaG<span class="number">8</span>gJzxhIGhyZWY<span class="number">9</span>I<span class="keyword">i4</span>vaW<span class="number">5</span>kZXgucGhwP<span class="number">2</span>ZpbGU<span class="number">9</span><span class="keyword">c</span><span class="number">2</span>hvdy<span class="number">5</span>waHAiPmNsaWNrIG<span class="number">1</span>lPyBubzwvYT<span class="number">4</span>nO<span class="number">30</span>NCgkkZmlsZT<span class="number">0</span>kX<span class="number">0</span>dFVFsnZmlsZSddOw<span class="number">0</span>KCWlmKHN<span class="number">0</span>cnN<span class="number">0</span>cigkZmlsZSwiL<span class="keyword">i4</span>vIil<span class="number">8</span>fHN<span class="number">0</span>cmlzdHIoJGZpbGUsICJ<span class="number">0</span>cCIpfHxzdHJpc<span class="number">3</span>RyKCRmaWxlLCJpbnB<span class="number">1</span>dCIpfHxzdHJpc<span class="number">3</span>RyKCRmaWxlLCJkYXRhIikpew<span class="number">0</span>KCQllY<span class="number">2</span>hvICJPaCBubyEiOw<span class="number">0</span>KCQlleGl<span class="number">0</span>KCk<span class="number">7</span>DQoJfQ<span class="number">0</span>KCWluY<span class="number">2</span><span class="keyword">x</span><span class="number">1</span>ZGUoJGZpbGUpOyANC<span class="keyword">i8</span>vZmxhZzpmbGFne<span class="number">2</span>VkdWxjbmlfZWxpZl<span class="number">9</span>sYWNvbF<span class="number">9</span>zaV<span class="number">9</span>zaWh<span class="number">0</span>fQ<span class="number">0</span>KPz<span class="number">4</span>NCjwvaHRtbD<span class="number">4</span>NCg==</span><br></pre></td></tr></table></figure>
+
+<p>解码为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;title&gt;Bugku-ctf&lt;&#x2F;title&gt;</span><br><span class="line">  </span><br><span class="line">&lt;?php</span><br><span class="line">	error_reporting(0);</span><br><span class="line">	if(!$_GET[file])&#123;echo &#39;&lt;a href&#x3D;&quot;.&#x2F;index.php?file&#x3D;show.php&quot;&gt;click me? no&lt;&#x2F;a&gt;&#39;;&#125;</span><br><span class="line">	$file&#x3D;$_GET[&#39;file&#39;];</span><br><span class="line">	if(strstr($file,&quot;..&#x2F;&quot;)||stristr($file, &quot;tp&quot;)||stristr($file,&quot;input&quot;)||stristr($file,&quot;data&quot;))&#123;</span><br><span class="line">		echo &quot;Oh no!&quot;;</span><br><span class="line">		exit();</span><br><span class="line">	&#125;</span><br><span class="line">	include($file); </span><br><span class="line">&#x2F;&#x2F;flag:flag&#123;edulcni_elif_lacol_si_siht&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>获取flag{edulcni_elif_lacol_si_siht}</p>
+<h2 id="请输入密码"><a href="#请输入密码" class="headerlink" title="请输入密码"></a>请输入密码</h2><p>提示了5位数的密码，直接爆破</p>
+<p><img src="/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png" alt></p>
 ]]></content>
       <categories>
         <category>ctf</category>
@@ -227,6 +256,7 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
       <tags>
         <tag>弱类型</tag>
         <tag>域名解析</tag>
+        <tag>爆破</tag>
       </tags>
   </entry>
   <entry>
