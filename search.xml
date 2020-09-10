@@ -682,7 +682,7 @@ E#---
   <entry>
     <title>bugku20</title>
     <url>/2020/09/10/bugku1/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<h1 id="bugku刷题记录2"><a href="#bugku刷题记录2" class="headerlink" title="bugku刷题记录2"></a>bugku刷题记录2</h1><a id="more"></a>
 
 <h2 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h2><p>打开页面查看源码什么也没有</p>
 <p>抓包看了看，惊喜的发现了flag字段</p>
