@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -206,7 +206,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/10/bugku1/" class="post-title-link" itemprop="url">bugku1</a>
+            <a href="/2020/09/10/bugku1/" class="post-title-link" itemprop="url">bugku20</a>
         </h2>
 
         <div class="post-meta">
@@ -217,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-09-10 09:05:12 / 修改时间：09:21:54" itemprop="dateCreated datePublished" datetime="2020-09-10T09:05:12+08:00">2020-09-10</time>
+              <time title="创建时间：2020-09-10 09:05:12 / 修改时间：23:25:02" itemprop="dateCreated datePublished" datetime="2020-09-10T09:05:12+08:00">2020-09-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>4.2k</span>
             </span>
 
         </div>
@@ -261,7 +261,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <a id="more"></a>
+
+<h2 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h2><p>打开页面查看源码什么也没有</p>
+<p>抓包看了看，惊喜的发现了flag字段</p>
+<p><img src="/2020/09/10/bugku1/%E9%80%9F%E5%BA%A61.png" alt></p>
+<p>一段base64 解码后为<code>NDQyMDIy</code></p>
+<p>提交发现并不对。。。看来另有玄机</p>
+<p>多go几次后发现了flag值一直在变，并且有一段提示</p>
+<p><code>&lt;!-- OK ,now you have to post the margin what you find --&gt;</code></p>
+<p>用post方法提交你所发现的内容，只好使用脚本（不会写）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">url=<span class="string">"http://120.24.86.145:8002/web6/"</span></span><br><span class="line">r=requests.session()</span><br><span class="line">headers=r.get(url).headers<span class="comment">#因为flag在消息头里</span></span><br><span class="line"> </span><br><span class="line">mid=base64.b64decode(headers[<span class="string">'flag'</span>])</span><br><span class="line">mid=mid.decode()<span class="comment">#为了下一步用split不报错，b64decode后操作的对象是byte类型的字符串，而split函数要用str类型的</span></span><br><span class="line"> </span><br><span class="line">flag = base64.b64decode(mid.split(<span class="string">':'</span>)[<span class="number">1</span>])<span class="comment">#获得flag:后的值</span></span><br><span class="line">data=&#123;<span class="string">'margin'</span>:flag&#125;</span><br><span class="line"><span class="keyword">print</span> (r.post(url,data).text)<span class="comment">#post方法传上去</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/10/bugku1/headers.png" alt></p>
+<h2 id="cookie欺骗"><a href="#cookie欺骗" class="headerlink" title="cookie欺骗"></a>cookie欺骗</h2><p>注意观察url<code>http://123.206.87.240:8002/web11/index.php?line=2&amp;filename=a2V5cy50eHQ=</code></p>
+<p>line=2&amp;filename=a2V5cy50eHQ=</p>
+<p><code>a2V5cy50eHQ=</code> 解密是为key.txt   line是行的意思，这里应该是查看key.txt的第line行的代码</p>
+<p>这里可以查看<code>index.php</code>源码  index.php的base64值为<code>aW5kZXgucGhw</code></p>
+<p><img src="/2020/09/10/bugku1/cookie1.png" alt></p>
+<p>改变line的值可以一行一行的查看源码，可以使用脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url1 = <span class="string">"http://123.206.87.240:8002/web11/index.php?line="</span></span><br><span class="line">url2 = <span class="string">"&amp;filename=aW5kZXgucGhw"</span></span><br><span class="line">mysession = requests.session()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">40</span>):    </span><br><span class="line">    r = mysession.get(url1+str(i)+url2)    </span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">$file=base64_decode(<span class="keyword">isset</span>($_GET[<span class="string">'filename'</span>])?$_GET[<span class="string">'filename'</span>]:<span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">$line=<span class="keyword">isset</span>($_GET[<span class="string">'line'</span>])?intval($_GET[<span class="string">'line'</span>]):<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($file==<span class="string">''</span>) header(<span class="string">"location:index.php?line=&amp;filename=a2V5cy50eHQ="</span>);</span><br><span class="line"></span><br><span class="line">$file_list = <span class="keyword">array</span>(</span><br><span class="line"></span><br><span class="line"><span class="string">'0'</span> =&gt;<span class="string">'keys.txt'</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">'1'</span> =&gt;<span class="string">'index.php'</span>,</span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_COOKIE[<span class="string">'margin'</span>]) &amp;&amp; $_COOKIE[<span class="string">'margin'</span>]==<span class="string">'margin'</span>)&#123;       <span class="comment">//看这里</span></span><br><span class="line"></span><br><span class="line">$file_list[<span class="number">2</span>]=<span class="string">'keys.php'</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(in_array($file, $file_list))&#123;</span><br><span class="line"></span><br><span class="line">$fa = file($file);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $fa[$line];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>if(isset($_COOKIE[&#39;margin&#39;]) &amp;&amp; $_COOKIE[&#39;margin&#39;]==&#39;margin&#39;)</code></p>
+<p> 这里可以判断cookie必须满足margin=margin才能访问keys.php</p>
+<p><img src="/2020/09/10/bugku1/cookie2.png" alt="bp"></p>
+<p><img src="/2020/09/10/bugku1/cookie3.png" alt="hackbar"></p>
+<h2 id="never-give-up"><a href="#never-give-up" class="headerlink" title="never give up"></a>never give up</h2><p>查看源码提示了</p>
+<p><code>&lt;!--1p.html--&gt;</code>     </p>
+<p>直接访问1p.html,发现直接跳转到了bugku的主页，先看源码，发现一段编码应该是base64</p>
+<p><img src="/2020/09/10/bugku1/never2.png" alt></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JTIyJT<span class="symbol">NCaWYlMjglMjElMjRfR0</span>VUJT<span class="attr">VCJTI3</span>aWQlMjcl<span class="symbol">NUQlMjklMEElN0</span>IlMEElMDloZWFkZXIlMjglMjdMb<span class="number">2</span><span class="symbol">NhdGlvbiUzQSUyMGhlbGxvLnBocCUzRmlkJTNEMSUyNyUyOSUzQiUwQSUwOWV4</span>aXQlMjglMjkl<span class="name">M0</span>IlMEEl<span class="symbol">N0</span>QlMEElMjRpZCUzRCUy<span class="symbol">NF9</span>HRVQl<span class="symbol">NUIlMjdpZCUyNyU1</span>RCUzQiUwQSUy<span class="symbol">NGElM0</span>QlMjRfR<span class="number">0</span>VUJT<span class="attr">VCJTI3</span>YSUy<span class="symbol">NyU1</span>RCUzQiUwQSUy<span class="symbol">NGIlM0</span>QlMjRfR<span class="number">0</span>VUJT<span class="attr">VCJTI3</span>YiUy<span class="symbol">NyU1</span>RCUzQiUwQWlmJTI<span class="number">4</span>c<span class="number">3</span>RyaXB<span class="attr">vcyUyOCUyNGElMkMlMjcuJTI3</span>JTI<span class="number">5</span>JTI<span class="number">5</span>JTBBJTdCJTBBJTA<span class="number">5</span>ZW<span class="symbol">NobyUyMCUyN25</span>vJTIwb<span class="name">m8</span>lMjBubyUyM<span class="name">G5</span>vJTIwb<span class="name">m8</span>lMjBubyUyM<span class="name">G5</span>vJTI<span class="number">3</span>JT<span class="symbol">NCJTBBJTA5</span>cmV<span class="number">0</span>dXJuJTIwJT<span class="symbol">NCJTBBJTdEJTBBJTI0</span>ZGF<span class="number">0</span>YSUyMCUzRCUyMEBmaWxlX<span class="number">2</span>dldF<span class="number">9</span>jb<span class="number">250</span>ZW<span class="number">50</span>cyUyOCUy<span class="symbol">NGElMkMlMjdyJTI3</span>JTI<span class="number">5</span>JT<span class="symbol">NCJTBBaWYlMjglMjRkYXRhJTNEJTNEJTIyYnVna3</span>UlMjBpcyUyMGElMjBuaW<span class="symbol">NlJTIwcGxhdGVmb3</span>JtJTIxJTIyJTIwYW<span class="number">5</span>kJTIwJTI<span class="number">0</span>aWQl<span class="name">M0</span>Ql<span class="name">M0</span>QwJTIwYW<span class="number">5</span>kJTIwc<span class="number">3</span>RybGVuJTI<span class="number">4</span>JTI<span class="number">0</span>YiUyOSUzRTUlMjBhbmQlMjBlcmV<span class="symbol">naSUyOCUyMjExMSUyMi5</span>zdWJzdHIlMjglMjRiJTJDMCUyQzElMjklMkMlMjIxMTE<span class="number">0</span>JTIyJTI<span class="number">5</span>JTIwYW<span class="number">5</span>kJTIwc<span class="number">3</span>Vic<span class="number">3</span>RyJTI<span class="number">4</span>JTI<span class="number">0</span>YiUyQzAlMkMxJTI<span class="number">5</span>JTIxJT<span class="symbol">NENCUyOSUwQSU3</span>QiUwQSUwOXJlcXVpcmUlMjglMjJm<span class="symbol">NGwyYTNnLnR4</span>dCUyMiUyOSUzQiUwQSU<span class="number">3</span>RCUwQW<span class="attr">Vsc2</span>UlMEEl<span class="symbol">N0</span>IlMEElMDlwcmludCUyMCUyM<span class="name">m5</span>ldmVyJTIwbmV<span class="number">2</span>ZXIlMjBuZXZlciUyMGdpdmUlMjB<span class="number">1</span>cCUyMCUyMSUyMSUyMSUyMiUzQiUwQSU<span class="number">3</span>RCUwQSUwQSUwQSUzRiUzRQ</span><br></pre></td></tr></table></figure>
+
+<p>base64解码后为url编码</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![never1](E:\myblog\szyblog\source\_posts\bugku1\never1.png)%<span class="number">22</span>%<span class="number">3</span>Bif%<span class="number">28</span>%<span class="number">21</span>%<span class="number">24</span>_GET%<span class="number">5</span>B%<span class="number">27</span>id%<span class="number">27</span>%<span class="number">5</span>D%<span class="number">29</span>%<span class="number">0</span>A%<span class="number">7</span>B%<span class="number">0</span>A%<span class="number">09</span>header%<span class="number">28</span>%<span class="number">27</span>Location%<span class="number">3</span>A%<span class="number">20</span>hello.php%<span class="number">3</span>Fid%<span class="number">3</span>D1%<span class="number">27</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">09</span>exit%<span class="number">28</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">7</span>D%<span class="number">0</span>A%<span class="number">24</span>id%<span class="number">3</span>D%<span class="number">24</span>_GET%<span class="number">5</span>B%<span class="number">27</span>id%<span class="number">27</span>%<span class="number">5</span>D%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">24</span>a%<span class="number">3</span>D%<span class="number">24</span>_GET%<span class="number">5</span>B%<span class="number">27</span>a%<span class="number">27</span>%<span class="number">5</span>D%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">24</span>b%<span class="number">3</span>D%<span class="number">24</span>_GET%<span class="number">5</span>B%<span class="number">27</span>b%<span class="number">27</span>%<span class="number">5</span>D%<span class="number">3</span>B%<span class="number">0</span>Aif%<span class="number">28</span>stripos%<span class="number">28</span>%<span class="number">24</span>a%<span class="number">2</span>C%<span class="number">27.</span>%<span class="number">27</span>%<span class="number">29</span>%<span class="number">29</span>%<span class="number">0</span>A%<span class="number">7</span>B%<span class="number">0</span>A%<span class="number">09</span>echo%<span class="number">20</span>%<span class="number">27</span>no%<span class="number">20</span>no%<span class="number">20</span>no%<span class="number">20</span>no%<span class="number">20</span>no%<span class="number">20</span>no%<span class="number">20</span>no%<span class="number">27</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">09</span><span class="keyword">return</span>%<span class="number">20</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">7</span>D%<span class="number">0</span>A%<span class="number">24</span>data%<span class="number">20</span>%<span class="number">3</span>D%<span class="symbol">20@</span>file_get_contents%<span class="number">28</span>%<span class="number">24</span>a%<span class="number">2</span>C%<span class="number">27</span>r%<span class="number">27</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">0</span>Aif%<span class="number">28</span>%<span class="number">24</span>data%<span class="number">3</span>D%<span class="number">3</span>D%<span class="number">22</span>bugku%<span class="number">20</span><span class="keyword">is</span>%<span class="number">20</span>a%<span class="number">20</span>nice%<span class="number">20</span>plateform%<span class="number">21</span>%<span class="number">22</span>%<span class="number">20</span><span class="keyword">and</span>%<span class="number">20</span>%<span class="number">24</span>id%<span class="number">3</span>D%<span class="number">3</span>D0%<span class="number">20</span><span class="keyword">and</span>%<span class="number">20</span>strlen%<span class="number">28</span>%<span class="number">24</span>b%<span class="number">29</span>%<span class="number">3E5</span>%<span class="number">20</span><span class="keyword">and</span>%<span class="number">20</span>eregi%<span class="number">28</span>%<span class="number">22111</span>%<span class="number">22.</span>substr%<span class="number">28</span>%<span class="number">24</span>b%<span class="number">2</span>C0%<span class="number">2</span>C1%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">221114</span>%<span class="number">22</span>%<span class="number">29</span>%<span class="number">20</span><span class="keyword">and</span>%<span class="number">20</span>substr%<span class="number">28</span>%<span class="number">24</span>b%<span class="number">2</span>C0%<span class="number">2</span>C1%<span class="number">29</span>%<span class="number">21</span>%<span class="number">3</span>D4%<span class="number">29</span>%<span class="number">0</span>A%<span class="number">7</span>B%<span class="number">0</span>A%<span class="number">09</span>require%<span class="number">28</span>%<span class="number">22f</span>4l2a3g.txt%<span class="number">22</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">7</span>D%<span class="number">0</span>Aelse%<span class="number">0</span>A%<span class="number">7</span>B%<span class="number">0</span>A%<span class="number">09</span>print%<span class="number">20</span>%<span class="number">22</span>never%<span class="number">20</span>never%<span class="number">20</span>never%<span class="number">20</span>give%<span class="number">20</span>up%<span class="number">20</span>%<span class="number">21</span>%<span class="number">21</span>%<span class="number">21</span>%<span class="number">22</span>%<span class="number">3</span>B%<span class="number">0</span>A%<span class="number">7</span>D%<span class="number">0</span>A%<span class="number">0</span>A%<span class="number">0</span>A%<span class="number">3</span>F%<span class="number">3</span>E</span><br></pre></td></tr></table></figure>
+
+<p>url解码为源码</p>
+<p><img src="/2020/09/10/bugku1/never1.png" alt></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">f(!$_GET[<span class="string">'id'</span>])</span><br><span class="line">&#123;</span><br><span class="line">	header(<span class="string">'Location: hello.php?id=1'</span>);</span><br><span class="line">	<span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line">$id=$_GET[<span class="string">'id'</span>];</span><br><span class="line">$a=$_GET[<span class="string">'a'</span>];</span><br><span class="line">$b=$_GET[<span class="string">'b'</span>];</span><br><span class="line"><span class="keyword">if</span>(stripos($a,<span class="string">'.'</span>))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'no no no no no no no'</span>;</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line">$data = @file_get_contents($a,<span class="string">'r'</span>);</span><br><span class="line"><span class="keyword">if</span>($data==<span class="string">"bugku is a nice plateform!"</span> <span class="keyword">and</span> $id==<span class="number">0</span> <span class="keyword">and</span> strlen($b)&gt;<span class="number">5</span> <span class="keyword">and</span> eregi(<span class="string">"111"</span>.substr($b,<span class="number">0</span>,<span class="number">1</span>),<span class="string">"1114"</span>) <span class="keyword">and</span> substr($b,<span class="number">0</span>,<span class="number">1</span>)!=<span class="number">4</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">require</span>(<span class="string">"f4l2a3g.txt"</span>); <span class="comment">//注意这里，flag应该藏在这里</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"never never never give up !!!"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>果然藏在f4l2a3g.txt</p>
+<p><img src="/2020/09/10/bugku1/never.png" alt></p>
+
       
     </div>
     <div>
@@ -413,10 +457,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-03 15:24:29 / 修改时间：16:32:27" itemprop="dateCreated datePublished" datetime="2020-09-03T15:24:29+08:00">2020-09-03</time>
+              <time title="创建时间：2020-09-03 15:24:29" itemprop="dateCreated datePublished" datetime="2020-09-03T15:24:29+08:00">2020-09-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-10 16:48:47" itemprop="dateModified" datetime="2020-09-10T16:48:47+08:00">2020-09-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -826,7 +876,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-01 17:02:26" itemprop="dateModified" datetime="2020-09-01T17:02:26+08:00">2020-09-01</time>
+                <time title="修改时间：2020-09-10 16:43:42" itemprop="dateModified" datetime="2020-09-10T16:43:42+08:00">2020-09-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1290,7 +1340,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1336,7 +1386,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">36k</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
