@@ -1,261 +1,319 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
-
-
-
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
-  <link rel="icon" type="image/png" href="/img/feiji.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/feiji32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/feiji16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sunzhengyu99.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="bugku刷题记录1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bugku1-10">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/index.html">
+<meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="bugku刷题记录1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/post.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/host.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/stop.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/stop1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/web5.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/toudengcang.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack3.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/hack.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/admin1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/admin2.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/web4.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/web41.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD1.png">
+<meta property="og:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.png">
+<meta property="article:published_time" content="2020-09-06T14:26:41.000Z">
+<meta property="article:modified_time" content="2020-10-18T15:31:44.975Z">
+<meta property="article:author" content="sunzy">
+<meta property="article:tag" content="md5">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="弱类型">
+<meta property="article:tag" content="域名解析">
+<meta property="article:tag" content="爆破">
+<meta property="article:tag" content="脚本">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png">
+
+<link rel="canonical" href="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>bugku1-10 | 一路走到黑</title>
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
-  <meta name="author" content="sunzy">
-  <meta name="keywords" content="">
-  <title>bugku1-10 - 一路走到黑</title>
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" />
-    
-  
-
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 4.2.0"></head>
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
+</head>
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>sunzy'blog</strong>&nbsp;</a>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">一路走到黑</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">九层之台，起于垒土</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">41</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
 </nav>
 
-    <div class="banner intro-2" id="background" parallax=true
-         style="background: url('/img/xueshan.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container page-header text-center fade-in-up">
-            <span class="h2" id="subtitle">
-              
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sunzhengyu99" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my.png">
+      <meta itemprop="name" content="sunzy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一路走到黑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bugku1-10
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-06 22:26:41" itemprop="dateCreated datePublished" datetime="2020-09-06T22:26:41+08:00">2020-09-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-18 23:31:44" itemprop="dateModified" datetime="2020-10-18T23:31:44+08:00">2020-10-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index"><span itemprop="name">ctf</span></a>
+                </span>
             </span>
 
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-06 22:26" pubdate>
-        2020年9月6日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      1.9k 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      25
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
           
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
     
-      
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/06/bugku1-10/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/06/bugku1-10/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto" id="post">
-            <!-- SEO header -->
-            <h1 style="display: none">bugku1-10</h1>
-            
-              <p class="note note-info">
-                
-                  本文最后更新于：5 天前
-                
-              </p>
-            
-            <div class="markdown-body" id="post-body">
-              <h1 id="bugku刷题记录1"><a href="#bugku刷题记录1" class="headerlink" title="bugku刷题记录1"></a>bugku刷题记录1</h1><a id="more"></a>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="bugku刷题记录1"><a href="#bugku刷题记录1" class="headerlink" title="bugku刷题记录1"></a>bugku刷题记录1</h1><a id="more"></a>
 
 
 
 <h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>查看源码即可</p>
 <h2 id="计算器"><a href="#计算器" class="headerlink" title="计算器"></a>计算器</h2><p>修改前端代码</p>
-<p><img src="/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt></p>
 <h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><p>payload:</p>
 <p><code>?what=flag</code></p>
-<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p><img src="/2020/09/06/bugku1-10/post.png" srcset="/img/loading.gif" alt></p>
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p><img src="/2020/09/06/bugku1-10/post.png" alt></p>
 <h2 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h2><p>payload: <code>?num=1a</code></p>
 <p>考察点：弱类型比较</p>
 <blockquote>
@@ -263,52 +321,33 @@
 <p>== 在进行比较的时候，会先将字符串类型转化成相同，再比较</p>
 </blockquote>
 <p>测试代码</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-var_dump(<span class="hljs-string">"admin"</span>==<span class="hljs-number">0</span>);  <span class="hljs-comment">//true</span>
-var_dump(<span class="hljs-string">"1admin"</span>==<span class="hljs-number">1</span>); <span class="hljs-comment">//true</span>
-var_dump(<span class="hljs-string">"admin1"</span>==<span class="hljs-number">1</span>) <span class="hljs-comment">//false</span>
-var_dump(<span class="hljs-string">"admin1"</span>==<span class="hljs-number">0</span>) <span class="hljs-comment">//true</span>
-var_dump(<span class="hljs-string">"0e123456"</span>==<span class="hljs-string">"0e4456789"</span>); <span class="hljs-comment">//true</span>
-<span class="hljs-meta">?&gt;</span>  <span class="hljs-comment">//上述代码可自行测试</span></code></pre></div>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(<span class="string">"admin"</span>==<span class="number">0</span>);  <span class="comment">//true</span></span><br><span class="line">var_dump(<span class="string">"1admin"</span>==<span class="number">1</span>); <span class="comment">//true</span></span><br><span class="line">var_dump(<span class="string">"admin1"</span>==<span class="number">1</span>) <span class="comment">//false</span></span><br><span class="line">var_dump(<span class="string">"admin1"</span>==<span class="number">0</span>) <span class="comment">//true</span></span><br><span class="line">var_dump(<span class="string">"0e123456"</span>==<span class="string">"0e4456789"</span>); <span class="comment">//true</span></span><br><span class="line"><span class="meta">?&gt;</span>  <span class="comment">//上述代码可自行测试</span></span><br></pre></td></tr></table></figure>
 
-<div class="hljs"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span>观察上述代码，<span class="hljs-string">"admin"</span>==<span class="hljs-number">0</span> 比较的时候，会将admin转化成数值，强制转化,由于admin是字符串，转化的结果是<span class="hljs-number">0</span>自然和<span class="hljs-number">0</span>相等
-<span class="hljs-symbol">2 </span><span class="hljs-string">"1admin"</span>==<span class="hljs-number">1</span> 比较的时候会将<span class="hljs-number">1</span>admin转化成数值,结果为<span class="hljs-number">1</span>，而“admin1“==<span class="hljs-number">1</span> 却等于错误，也就是<span class="hljs-string">"admin1"</span>被转化成了<span class="hljs-number">0</span>,为什么呢？？
-<span class="hljs-symbol">3 </span><span class="hljs-string">"0e123456"</span>==<span class="hljs-string">"0e456789"</span>相互比较的时候，会将<span class="hljs-number">0e</span>这类字符串识别为科学技术法的数字，<span class="hljs-number">0</span>的无论多少次方都是零，所以相等</code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span>观察上述代码，<span class="string">"admin"</span>==<span class="number">0</span> 比较的时候，会将admin转化成数值，强制转化,由于admin是字符串，转化的结果是<span class="number">0</span>自然和<span class="number">0</span>相等</span><br><span class="line"><span class="symbol">2 </span><span class="string">"1admin"</span>==<span class="number">1</span> 比较的时候会将<span class="number">1</span>admin转化成数值,结果为<span class="number">1</span>，而“admin1“==<span class="number">1</span> 却等于错误，也就是<span class="string">"admin1"</span>被转化成了<span class="number">0</span>,为什么呢？？</span><br><span class="line"><span class="symbol">3 </span><span class="string">"0e123456"</span>==<span class="string">"0e456789"</span>相互比较的时候，会将<span class="number">0e</span>这类字符串识别为科学技术法的数字，<span class="number">0</span>的无论多少次方都是零，所以相等</span><br></pre></td></tr></table></figure>
 
 <h2 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h2><p>查看源码后，在最下面看到一串编码，为unicode编码</p>
-<div class="hljs"><pre><code class="hljs c">&amp;#<span class="hljs-number">75</span>;&amp;#<span class="hljs-number">69</span>;&amp;#<span class="hljs-number">89</span>;&amp;#<span class="hljs-number">123</span>;&amp;#<span class="hljs-number">74</span>;&amp;#<span class="hljs-number">50</span>;&amp;#<span class="hljs-number">115</span>;&amp;#<span class="hljs-number">97</span>;&amp;#<span class="hljs-number">52</span>;&amp;#<span class="hljs-number">50</span>;&amp;#<span class="hljs-number">97</span>;&amp;#<span class="hljs-number">104</span>;&amp;#<span class="hljs-number">74</span>;&amp;#<span class="hljs-number">75</span>;&amp;#<span class="hljs-number">45</span>;&amp;#<span class="hljs-number">72</span>;&amp;#<span class="hljs-number">83</span>;&amp;#<span class="hljs-number">49</span>;&amp;#<span class="hljs-number">49</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">125</span>;</code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#<span class="number">75</span>;&amp;#<span class="number">69</span>;&amp;#<span class="number">89</span>;&amp;#<span class="number">123</span>;&amp;#<span class="number">74</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">115</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">52</span>;&amp;#<span class="number">50</span>;&amp;#<span class="number">97</span>;&amp;#<span class="number">104</span>;&amp;#<span class="number">74</span>;&amp;#<span class="number">75</span>;&amp;#<span class="number">45</span>;&amp;#<span class="number">72</span>;&amp;#<span class="number">83</span>;&amp;#<span class="number">49</span>;&amp;#<span class="number">49</span>;&amp;#<span class="number">73</span>;&amp;#<span class="number">73</span>;&amp;#<span class="number">73</span>;&amp;#<span class="number">125</span>;</span><br></pre></td></tr></table></figure>
 
 <p>使用工具转换为字符串</p>
-<p><img src="/2020/09/06/bugku1-10/5.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/5.png" alt></p>
 <h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p><strong>dns服务器用来解析域名为IP，很多国外的服务器不能访问，主要原因就是DNS服务器不能解析那些域名</strong></p>
 <p><strong>hosts就是本地用来解析域名为IP</strong>  </p>
 <p>因此hosts文件中有的域名记录，在本电脑浏览器中可直接使用域名访问</p>
 <p>（hosts文件需要管理员权限，修改方式为使用管理员权限运行记事本后打开hosts）</p>
 <p>路径为：</p>
-<div class="hljs"><pre><code class="hljs taggerscript">C:<span class="hljs-symbol">\W</span>indows<span class="hljs-symbol">\S</span>ystem32<span class="hljs-symbol">\d</span>rivers<span class="hljs-symbol">\e</span>tc</code></pre></div>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="symbol">\W</span>indows<span class="symbol">\S</span>ystem32<span class="symbol">\d</span>rivers<span class="symbol">\e</span>tc</span><br></pre></td></tr></table></figure>
 
 
 
-<p><img src="/2020/09/06/bugku1-10/host.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/host.png" alt></p>
 <p>文件保存后在浏览器中访问该域名 获得flag</p>
 <h2 id="你必须让他停下"><a href="#你必须让他停下" class="headerlink" title="你必须让他停下"></a>你必须让他停下</h2><p>打开页面什么也没有，源码也没有什么发现，抓包试试</p>
 <p>go完也没什么反应，有点迷惑</p>
 <p>但是多go几次后，发现有张图片在变</p>
-<p><img src="/2020/09/06/bugku1-10/stop.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/stop.png" alt></p>
 <p>多go几次就出来了flag,原理还未知</p>
-<p><img src="/2020/09/06/bugku1-10/stop1.png" srcset="/img/loading.gif" alt></p>
-<h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><div class="hljs"><pre><code class="hljs php"> <span class="hljs-meta">&lt;?php</span> 
-error_reporting(<span class="hljs-number">0</span>);
-<span class="hljs-keyword">include</span> <span class="hljs-string">"flag1.php"</span>;
-highlight_file(<span class="hljs-keyword">__file__</span>);
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'args'</span>]))&#123;
-  $args = $_GET[<span class="hljs-string">'args'</span>];
-  <span class="hljs-keyword">if</span>(!preg_match(<span class="hljs-string">"/^\w+$/"</span>,$args))&#123;
-    <span class="hljs-keyword">die</span>(<span class="hljs-string">"args error!"</span>);
-  &#125;
-  <span class="hljs-keyword">eval</span>(<span class="hljs-string">"var_dump($$args);"</span>);
-&#125;
-<span class="hljs-meta">?&gt;</span></code></pre></div>
+<p><img src="/2020/09/06/bugku1-10/stop1.png" alt></p>
+<h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span> </span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag1.php"</span>;</span><br><span class="line">highlight_file(<span class="keyword">__file__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'args'</span>]))&#123;</span><br><span class="line">  $args = $_GET[<span class="string">'args'</span>];</span><br><span class="line">  <span class="keyword">if</span>(!preg_match(<span class="string">"/^\w+$/"</span>,$args))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"args error!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="string">"var_dump($$args);"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -318,106 +357,62 @@ highlight_file(<span class="hljs-keyword">__file__</span>);
 <p>即将include”flag.php”作为全局变量在本页面输出</p>
 <p>?args=GLOBALS</p>
 <h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>源码中一串特别的代码直接放在浏览器的控制台中运行</p>
-<p><img src="/2020/09/06/bugku1-10/web5.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/web5.png" alt></p>
 <h2 id="头等舱"><a href="#头等舱" class="headerlink" title="头等舱"></a>头等舱</h2><p>打开页面什么也没有</p>
 <p>扫描目录，扫出来一大堆没用的，直接抓包</p>
 <p>。。。。就出来了</p>
-<p><img src="/2020/09/06/bugku1-10/toudengcang.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/toudengcang.png" alt></p>
 <h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>名字提示了，网站被黑。</p>
 <p>打开题目，发现鼠标动不了，可能是被黑后的后遗症</p>
 <p>先扫描目录发现了<code>shell.php</code>,这可能是上次黑客留下的小马文件</p>
-<p><img src="/2020/09/06/bugku1-10/hack2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/hack2.png" alt></p>
 <p>打开页面，需要密码，这就需要爆破了(查看了wp,知道了密码为hack,不知道时就需要一个足够大的密码字典才能破解)</p>
 <p>确定要爆破的变量</p>
-<p><img src="/2020/09/06/bugku1-10/hack3.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/hack3.png" alt></p>
 <p>加载密码字典</p>
-<p><img src="/2020/09/06/bugku1-10/hack4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/hack4.png" alt></p>
 <p>出现结果（根据length确定密码）</p>
-<p><img src="/2020/09/06/bugku1-10/hack.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/hack.png" alt></p>
 <p>密码为<code>hack</code></p>
 <p>登录即可</p>
 <h2 id="管理员系统"><a href="#管理员系统" class="headerlink" title="管理员系统"></a>管理员系统</h2><p>随便输入一个账号发现提示IP</p>
-<p><img src="/2020/09/06/bugku1-10/admin1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/admin1.png" alt></p>
 <p>想到了<code>X-FORWORADED-FOR:127.0.0.1</code></p>
 <p>抓包试试</p>
 <p>在响应包中发现一段base64编码<code>dGVzdDEyMw==</code> 解密后为test123，猜测为登录密码</p>
 <p>结果真对了</p>
-<p><img src="/2020/09/06/bugku1-10/admin2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/admin2.png" alt></p>
 <p>当然这题也可以使用爆破的方法做，但是密码字典需要包含test123</p>
 <h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><p>查看源码发现一段js代码</p>
 <p>将最后的eval改成alert(),直接在浏览器中运行弹出结果</p>
-<div class="hljs"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkSubmit</span>(<span class="hljs-params"></span>)</span>&#123;
-<span class="hljs-keyword">var</span> a=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"password"</span>);
-<span class="hljs-keyword">if</span>(<span class="hljs-string">"undefined"</span>!=<span class="hljs-keyword">typeof</span> a)&#123;
-<span class="hljs-keyword">if</span>(<span class="hljs-string">"67d709b2b54aa2aa648cf6e87a7114f1"</span>==a.value)
-<span class="hljs-keyword">return</span>!<span class="hljs-number">0</span>;
-alert(<span class="hljs-string">"Error"</span>);
-a.focus();
-<span class="hljs-keyword">return</span>!<span class="hljs-number">1</span>&#125;
-&#125;
-<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"levelQuest"</span>).onsubmit=checkSubmit;</code></pre></div>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSubmit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">"password"</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> a)&#123;</span><br><span class="line"><span class="keyword">if</span>(<span class="string">"67d709b2b54aa2aa648cf6e87a7114f1"</span>==a.value)</span><br><span class="line"><span class="keyword">return</span>!<span class="number">0</span>;</span><br><span class="line">alert(<span class="string">"Error"</span>);</span><br><span class="line">a.focus();</span><br><span class="line"><span class="keyword">return</span>!<span class="number">1</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"levelQuest"</span>).onsubmit=checkSubmit;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/09/06/bugku1-10/web4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/web4.png" alt></p>
 <p><code>if(&quot;67d709b2b54aa2aa648cf6e87a7114f1&quot;==a.value)</code></p>
 <p>直接输入67d709b2b54aa2aa648cf6e87a7114f1</p>
-<p><img src="/2020/09/06/bugku1-10/web41.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/web41.png" alt></p>
 <h2 id="flag在index里"><a href="#flag在index里" class="headerlink" title="flag在index里"></a>flag在index里</h2><p>题目已经提示了flag的位置应该在index.php中，那么获取index.php的源码就很关键，可是查看源码什么也没有</p>
 <p>注意到了url:<a href="http://123.206.87.240:8005/post/index.php?file=show.php" target="_blank" rel="noopener">http://123.206.87.240:8005/post/index.php?file=show.php</a></p>
 <p>出现file这个参数，想到了文件包含的漏洞</p>
 <p>用下面的payload,获取index.php，源码的base64值</p>
 <p><code>?file=php://filter/read=convert.base64-encode/resource=index.php</code></p>
-<div class="hljs"><pre><code class="hljs llvm">PGh<span class="hljs-number">0</span>bWw+DQogICAgPHRpdGxlPkJ<span class="hljs-number">1</span>Z<span class="hljs-number">2</span>t<span class="hljs-number">1</span>LWN<span class="hljs-number">0</span>ZjwvdGl<span class="hljs-number">0</span>bGU+DQogICAgDQo<span class="hljs-number">8</span>P<span class="hljs-number">3</span>BocA<span class="hljs-number">0</span>KCWVycm<span class="hljs-number">9</span>yX<span class="hljs-number">3</span>JlcG<span class="hljs-number">9</span>ydGluZygwKTsNCglpZighJF<span class="hljs-number">9</span>HRVRbZmlsZV<span class="hljs-number">0</span>pe<span class="hljs-number">2</span>VjaG<span class="hljs-number">8</span>gJzxhIGhyZWY<span class="hljs-number">9</span>I<span class="hljs-keyword">i4</span>vaW<span class="hljs-number">5</span>kZXgucGhwP<span class="hljs-number">2</span>ZpbGU<span class="hljs-number">9</span><span class="hljs-keyword">c</span><span class="hljs-number">2</span>hvdy<span class="hljs-number">5</span>waHAiPmNsaWNrIG<span class="hljs-number">1</span>lPyBubzwvYT<span class="hljs-number">4</span>nO<span class="hljs-number">30</span>NCgkkZmlsZT<span class="hljs-number">0</span>kX<span class="hljs-number">0</span>dFVFsnZmlsZSddOw<span class="hljs-number">0</span>KCWlmKHN<span class="hljs-number">0</span>cnN<span class="hljs-number">0</span>cigkZmlsZSwiL<span class="hljs-keyword">i4</span>vIil<span class="hljs-number">8</span>fHN<span class="hljs-number">0</span>cmlzdHIoJGZpbGUsICJ<span class="hljs-number">0</span>cCIpfHxzdHJpc<span class="hljs-number">3</span>RyKCRmaWxlLCJpbnB<span class="hljs-number">1</span>dCIpfHxzdHJpc<span class="hljs-number">3</span>RyKCRmaWxlLCJkYXRhIikpew<span class="hljs-number">0</span>KCQllY<span class="hljs-number">2</span>hvICJPaCBubyEiOw<span class="hljs-number">0</span>KCQlleGl<span class="hljs-number">0</span>KCk<span class="hljs-number">7</span>DQoJfQ<span class="hljs-number">0</span>KCWluY<span class="hljs-number">2</span><span class="hljs-keyword">x</span><span class="hljs-number">1</span>ZGUoJGZpbGUpOyANC<span class="hljs-keyword">i8</span>vZmxhZzpmbGFne<span class="hljs-number">2</span>VkdWxjbmlfZWxpZl<span class="hljs-number">9</span>sYWNvbF<span class="hljs-number">9</span>zaV<span class="hljs-number">9</span>zaWh<span class="hljs-number">0</span>fQ<span class="hljs-number">0</span>KPz<span class="hljs-number">4</span>NCjwvaHRtbD<span class="hljs-number">4</span>NCg==</code></pre></div>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PGh<span class="number">0</span>bWw+DQogICAgPHRpdGxlPkJ<span class="number">1</span>Z<span class="number">2</span>t<span class="number">1</span>LWN<span class="number">0</span>ZjwvdGl<span class="number">0</span>bGU+DQogICAgDQo<span class="number">8</span>P<span class="number">3</span>BocA<span class="number">0</span>KCWVycm<span class="number">9</span>yX<span class="number">3</span>JlcG<span class="number">9</span>ydGluZygwKTsNCglpZighJF<span class="number">9</span>HRVRbZmlsZV<span class="number">0</span>pe<span class="number">2</span>VjaG<span class="number">8</span>gJzxhIGhyZWY<span class="number">9</span>I<span class="keyword">i4</span>vaW<span class="number">5</span>kZXgucGhwP<span class="number">2</span>ZpbGU<span class="number">9</span><span class="keyword">c</span><span class="number">2</span>hvdy<span class="number">5</span>waHAiPmNsaWNrIG<span class="number">1</span>lPyBubzwvYT<span class="number">4</span>nO<span class="number">30</span>NCgkkZmlsZT<span class="number">0</span>kX<span class="number">0</span>dFVFsnZmlsZSddOw<span class="number">0</span>KCWlmKHN<span class="number">0</span>cnN<span class="number">0</span>cigkZmlsZSwiL<span class="keyword">i4</span>vIil<span class="number">8</span>fHN<span class="number">0</span>cmlzdHIoJGZpbGUsICJ<span class="number">0</span>cCIpfHxzdHJpc<span class="number">3</span>RyKCRmaWxlLCJpbnB<span class="number">1</span>dCIpfHxzdHJpc<span class="number">3</span>RyKCRmaWxlLCJkYXRhIikpew<span class="number">0</span>KCQllY<span class="number">2</span>hvICJPaCBubyEiOw<span class="number">0</span>KCQlleGl<span class="number">0</span>KCk<span class="number">7</span>DQoJfQ<span class="number">0</span>KCWluY<span class="number">2</span><span class="keyword">x</span><span class="number">1</span>ZGUoJGZpbGUpOyANC<span class="keyword">i8</span>vZmxhZzpmbGFne<span class="number">2</span>VkdWxjbmlfZWxpZl<span class="number">9</span>sYWNvbF<span class="number">9</span>zaV<span class="number">9</span>zaWh<span class="number">0</span>fQ<span class="number">0</span>KPz<span class="number">4</span>NCjwvaHRtbD<span class="number">4</span>NCg==</span><br></pre></td></tr></table></figure>
 
 <p>解码为</p>
-<div class="hljs"><pre><code class="hljs php+HTML">&lt;html&gt;
-    &lt;title&gt;Bugku-ctf&lt;&#x2F;title&gt;
-  
-&lt;?php
-	error_reporting(0);
-	if(!$_GET[file])&#123;echo &#39;&lt;a href&#x3D;&quot;.&#x2F;index.php?file&#x3D;show.php&quot;&gt;click me? no&lt;&#x2F;a&gt;&#39;;&#125;
-	$file&#x3D;$_GET[&#39;file&#39;];
-	if(strstr($file,&quot;..&#x2F;&quot;)||stristr($file, &quot;tp&quot;)||stristr($file,&quot;input&quot;)||stristr($file,&quot;data&quot;))&#123;
-		echo &quot;Oh no!&quot;;
-		exit();
-	&#125;
-	include($file); 
-&#x2F;&#x2F;flag:flag&#123;edulcni_elif_lacol_si_siht&#125;
-?&gt;
-&lt;&#x2F;html&gt;</code></pre></div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;title&gt;Bugku-ctf&lt;&#x2F;title&gt;</span><br><span class="line">  </span><br><span class="line">&lt;?php</span><br><span class="line">	error_reporting(0);</span><br><span class="line">	if(!$_GET[file])&#123;echo &#39;&lt;a href&#x3D;&quot;.&#x2F;index.php?file&#x3D;show.php&quot;&gt;click me? no&lt;&#x2F;a&gt;&#39;;&#125;</span><br><span class="line">	$file&#x3D;$_GET[&#39;file&#39;];</span><br><span class="line">	if(strstr($file,&quot;..&#x2F;&quot;)||stristr($file, &quot;tp&quot;)||stristr($file,&quot;input&quot;)||stristr($file,&quot;data&quot;))&#123;</span><br><span class="line">		echo &quot;Oh no!&quot;;</span><br><span class="line">		exit();</span><br><span class="line">	&#125;</span><br><span class="line">	include($file); </span><br><span class="line">&#x2F;&#x2F;flag:flag&#123;edulcni_elif_lacol_si_siht&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
 
 <p>获取flag{edulcni_elif_lacol_si_siht}</p>
 <h2 id="请输入密码"><a href="#请输入密码" class="headerlink" title="请输入密码"></a>请输入密码</h2><p>提示了5位数的密码，直接爆破</p>
-<p><img src="/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png" alt></p>
 <h2 id="备份是个好习惯"><a href="#备份是个好习惯" class="headerlink" title="备份是个好习惯"></a>备份是个好习惯</h2><p>打开题目后，出现一段代码，应该是md5值，可是解码为空密码</p>
 <p>扫描目录<code>python dirsearch.py  -u http://123.206.87.240:8002/web16/ -e php</code></p>
-<p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD1.png" alt></p>
 <p>发现了<code>index.php.bak</code></p>
 <blockquote>
 <p>这个应该是在编辑这个文件时，自动生成的备份文件；<br>EDITPLUS 这类的文本编辑器在编辑文件时会产生这样的备份；<br>如果编辑后没有什么问题；<br>可以删除.BAK文件             (来自百度)</p>
 </blockquote>
 <p>下载.bak文件打开后，发现源码，开始审计</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-<span class="hljs-comment">/**</span>
-<span class="hljs-comment"></span>
-<span class="hljs-comment"> * Created by PhpStorm.</span>
-<span class="hljs-comment"> * User: Norse</span>
-<span class="hljs-comment"> * Date: 2017/8/6</span>
-<span class="hljs-comment"> * Time: 20:22</span>
-<span class="hljs-comment">   */</span>
-
-<span class="hljs-keyword">include_once</span> <span class="hljs-string">"flag.php"</span>;
-ini_set(<span class="hljs-string">"display_errors"</span>, <span class="hljs-number">0</span>);
-$str = strstr($_SERVER[<span class="hljs-string">'REQUEST_URI'</span>], <span class="hljs-string">'?'</span>);
-$str = substr($str,<span class="hljs-number">1</span>);
-$str = str_replace(<span class="hljs-string">'key'</span>,<span class="hljs-string">''</span>,$str);<span class="hljs-comment">//对key进行了过滤</span>
-parse_str($str);
-<span class="hljs-keyword">echo</span> md5($key1);
-
-<span class="hljs-keyword">echo</span> md5($key2);
-<span class="hljs-keyword">if</span>(md5($key1) == md5($key2) &amp;&amp; $key1 !== $key2)&#123;<span class="hljs-comment">//这里需要使用md()函数对数组处理时的漏洞</span>
-    <span class="hljs-keyword">echo</span> $flag.<span class="hljs-string">"取得flag"</span>;
-&#125;
-<span class="hljs-meta">?&gt;</span></code></pre></div>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: Norse</span></span><br><span class="line"><span class="comment"> * Date: 2017/8/6</span></span><br><span class="line"><span class="comment"> * Time: 20:22</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include_once</span> <span class="string">"flag.php"</span>;</span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strstr($_SERVER[<span class="string">'REQUEST_URI'</span>], <span class="string">'?'</span>);</span><br><span class="line">$str = substr($str,<span class="number">1</span>);</span><br><span class="line">$str = str_replace(<span class="string">'key'</span>,<span class="string">''</span>,$str);<span class="comment">//对key进行了过滤</span></span><br><span class="line">parse_str($str);</span><br><span class="line"><span class="keyword">echo</span> md5($key1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> md5($key2);</span><br><span class="line"><span class="keyword">if</span>(md5($key1) == md5($key2) &amp;&amp; $key1 !== $key2)&#123;<span class="comment">//这里需要使用md()函数对数组处理时的漏洞</span></span><br><span class="line">    <span class="keyword">echo</span> $flag.<span class="string">"取得flag"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>url:<code>http://123.206.87.240:8002/web16/index.php?kekeyy1[]=an&amp;kekeyy2[]=ss</code></p>
 <p> 对上传的值进行了过滤key, kekeyy可以绕过</p>
@@ -425,7 +420,7 @@ parse_str($str);
 <p> 2.利用==比较漏洞</p>
 <p> 如果两个字符经MD5加密后的值为 0exxxxx形式，就会被认为是科学计数法，且表示的是0*10的xxxx次方，还是零，都是相等的。</p>
 <p> 下列的字符串的MD5值都是0e开头的：</p>
-<div class="hljs"><pre><code>QNKCDZO
+<pre><code>QNKCDZO
 
 240610708
 
@@ -435,366 +430,357 @@ s155964671a
 
 s214587387a
 
-s214587387a</code></pre></div><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.png" srcset="/img/loading.gif" alt></p>
-<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><div class="hljs"><pre><code class="hljs html">1' and 1=1 #      
-  
-1' and 1=2 #</code></pre></div>
+s214587387a</code></pre><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.png" alt></p>
+<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1' and 1=1 #      </span><br><span class="line">  </span><br><span class="line">1' and 1=2 #</span><br></pre></td></tr></table></figure>
 <p>   不显示内容，可以判断存在注入点</p>
-<h2 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h2><h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4 #可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4 #</code>可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><div class="hljs"><pre><code>` -1&apos; union select 1,database(),3,4 #`
+<h2 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h2><h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4 #可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4 #</code>可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><pre><code>` -1&apos; union select 1,database(),3,4 #`
 
-  database:skctf_flag</code></pre></div><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 # </code></pre></div><p> table:fl4g,sc</p>
-<h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre></div><p> skctf_flag</p>
+  database:skctf_flag</code></pre><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 # </code></pre><p> table:fl4g,sc</p>
+<h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre><p> skctf_flag</p>
 <p> 得到flag</p>
 <p> <code>(select skctf_flag from skctf_flag.fl4g)</code></p>
 <h2 id="秋名山车神"><a href="#秋名山车神" class="headerlink" title="秋名山车神"></a>秋名山车神</h2><p>看到题目就知道需要用python的脚本来做（菜鸡不配），网上找的脚本</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
-<span class="hljs-keyword">import</span> re
-url=<span class="hljs-string">'http://120.24.86.145:8002/qiumingshan/'</span>
-r=requests.session()
-requestpage = r.get(url)
-ans=re.findall(<span class="hljs-string">'&lt;div&gt;(.*?)=?;&lt;/div&gt;'</span>,requestpage.text)<span class="hljs-comment">#获取表达式，我正则写的好像有点问题，多匹配了最后的=?两个字符</span>
-ans=<span class="hljs-string">""</span>.join(ans)<span class="hljs-comment">#列表转为字符串</span>
-ans=ans[:<span class="hljs-number">-2</span>]<span class="hljs-comment">#去掉最后的=?</span>
-post=eval(ans)<span class="hljs-comment">#计算表达式的值</span>
-data=&#123;<span class="hljs-string">'value'</span>:post&#125;<span class="hljs-comment">#构造post的data部分</span>
-flag=r.post(url,data=data)
-print(flag.text)</code></pre></div>
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/ctf/">ctf</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
-                    
-                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%BC%B1%E7%B1%BB%E5%9E%8B/">弱类型</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/">域名解析</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E7%88%86%E7%A0%B4/">爆破</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2020/09/10/bugku1/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">bugku刷题记录2</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2020/09/03/%E7%BB%BC%E5%90%882/">
-                        <span class="hidden-mobile">综合2</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">url=<span class="string">'http://120.24.86.145:8002/qiumingshan/'</span></span><br><span class="line">r=requests.session()</span><br><span class="line">requestpage = r.get(url)</span><br><span class="line">ans=re.findall(<span class="string">'&lt;div&gt;(.*?)=?;&lt;/div&gt;'</span>,requestpage.text)<span class="comment">#获取表达式，我正则写的好像有点问题，多匹配了最后的=?两个字符</span></span><br><span class="line">ans=<span class="string">""</span>.join(ans)<span class="comment">#列表转为字符串</span></span><br><span class="line">ans=ans[:<span class="number">-2</span>]<span class="comment">#去掉最后的=?</span></span><br><span class="line">post=eval(ans)<span class="comment">#计算表达式的值</span></span><br><span class="line">data=&#123;<span class="string">'value'</span>:post&#125;<span class="comment">#构造post的data部分</span></span><br><span class="line">flag=r.post(url,data=data)</span><br><span class="line">print(flag.text)</span><br></pre></td></tr></table></figure>
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
 
-            
-              <!-- Comments -->
-              <article class="comments" id="comments">
-                
-                
-  <div id="vcomments"></div>
-  <script type="text/javascript">
-    function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
-        new Valine({
-          el: "#vcomments",
-          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
-          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
-          placeholder: "说点什么吧~~~",
-          path: window.location.pathname,
-          avatar: "retro",
-          meta: ["nick","mail","link"],
-          pageSize: "10",
-          lang: "zh-CN",
-          highlight: true,
-          recordIP: false,
-          serverURLs: "",
-        });
-      });
+      
+    </div>
+
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sunzy
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sunzhengyu99.github.io/2020/09/06/bugku1-10/" title="bugku1-10">https://sunzhengyu99.github.io/2020/09/06/bugku1-10/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/md5/" rel="tag"><i class="fa fa-tag"></i> md5</a>
+              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/%E5%BC%B1%E7%B1%BB%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 弱类型</a>
+              <a href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> 域名解析</a>
+              <a href="/tags/%E7%88%86%E7%A0%B4/" rel="tag"><i class="fa fa-tag"></i> 爆破</a>
+              <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag"><i class="fa fa-tag"></i> 脚本</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/03/%E7%BB%BC%E5%90%882/" rel="prev" title="综合2">
+      <i class="fa fa-chevron-left"></i> 综合2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/10/bugku1/" rel="next" title="bugku刷题记录2">
+      bugku刷题记录2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
     }
-    waitElementVisible('vcomments', loadValine);
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
-      powered by Valine.</a></noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-  <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container custom post-content mx-auto">
-      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
-
-
-    
-  </main>
-
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
-
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-
-  
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: '#post-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
       }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "bugku1-10&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-      icon: "❡"
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
     }
-    anchors.add(res.join(", "))
-  </script>
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bugku刷题记录1"><span class="nav-number">1.</span> <span class="nav-text">bugku刷题记录1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web2"><span class="nav-number">1.1.</span> <span class="nav-text">web2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算器"><span class="nav-number">1.2.</span> <span class="nav-text">计算器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET"><span class="nav-number">1.3.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">1.4.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矛盾"><span class="nav-number">1.5.</span> <span class="nav-text">矛盾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web3"><span class="nav-number">1.6.</span> <span class="nav-text">web3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名解析"><span class="nav-number">1.7.</span> <span class="nav-text">域名解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你必须让他停下"><span class="nav-number">1.8.</span> <span class="nav-text">你必须让他停下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量1"><span class="nav-number">1.9.</span> <span class="nav-text">变量1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web5"><span class="nav-number">1.10.</span> <span class="nav-text">web5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#头等舱"><span class="nav-number">1.11.</span> <span class="nav-text">头等舱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站被黑"><span class="nav-number">1.12.</span> <span class="nav-text">网站被黑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理员系统"><span class="nav-number">1.13.</span> <span class="nav-text">管理员系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web4"><span class="nav-number">1.14.</span> <span class="nav-text">web4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flag在index里"><span class="nav-number">1.15.</span> <span class="nav-text">flag在index里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请输入密码"><span class="nav-number">1.16.</span> <span class="nav-text">请输入密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份是个好习惯"><span class="nav-number">1.17.</span> <span class="nav-text">备份是个好习惯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成绩单"><span class="nav-number">1.18.</span> <span class="nav-text">成绩单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手工注入"><span class="nav-number">1.19.</span> <span class="nav-text">手工注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段"><span class="nav-number">1.19.1.</span> <span class="nav-text">1.1&#39; order by 4 #可正常显示可以判断存在四个字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-爆数据库"><span class="nav-number">1.19.2.</span> <span class="nav-text">2.爆数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-爆出表名"><span class="nav-number">1.19.3.</span> <span class="nav-text">3.爆出表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-字段名"><span class="nav-number">1.19.4.</span> <span class="nav-text">4.字段名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秋名山车神"><span class="nav-number">1.20.</span> <span class="nav-text">秋名山车神</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sunzy"
+      src="/images/my.png">
+  <p class="site-author-name" itemprop="name">sunzy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunzhengyu99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunzhengyu99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2632338423@qq.com" title="E-Mail → mailto:2632338423@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://aron.pub/" title="http:&#x2F;&#x2F;aron.pub&#x2F;" rel="noopener" target="_blank">long</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://chzarles.gitee.io/" title="https:&#x2F;&#x2F;chzarles.gitee.io&#x2F;" rel="noopener" target="_blank">czh</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://iyzyi.com/" title="http:&#x2F;&#x2F;iyzyi.com&#x2F;" rel="noopener" target="_blank">iyzyi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kanxz.github.io/" title="https:&#x2F;&#x2F;kanxz.github.io&#x2F;" rel="noopener" target="_blank">kunkun</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunzy</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">77k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
 
 
 
 
 
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
+
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
 
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
   
 
   
 
-  
 
-  
-
-  
-
-
-
-
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz',
+      appKey     : 'SCoIn2Qp99a7ITtPhkAi6Chw',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
