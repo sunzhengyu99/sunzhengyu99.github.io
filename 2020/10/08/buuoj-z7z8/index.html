@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="sunzy">
   <meta name="keywords" content="">
-  <title>buuoj-upload - 一路走到黑</title>
+  <title>buuoj-z7z8 - 一路走到黑</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      504 字
+      26 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      1
        分钟
     </span>
   
@@ -237,60 +237,19 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">buuoj-upload</h1>
+            <h1 style="display: none">buuoj-z7z8</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：12 分钟前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h1 id="buuoj-upload"><a href="#buuoj-upload" class="headerlink" title="buuoj-upload"></a>buuoj-upload</h1><a id="more"></a>
+              <h1 id="buuoj-杂七杂八"><a href="#buuoj-杂七杂八" class="headerlink" title="buuoj-杂七杂八"></a>buuoj-杂七杂八</h1><p>不知道怎么，就被上一篇博客给覆盖了，慢慢再补吧。。。</p>
+<a id="more"></a>
 
 
-
-<h2 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h2><p>先上传一个图片，发现上传成功了，还给出了文件的保存路径</p>
-<p>再尝试上传<code>1.php</code>但是出现了，报错提示</p>
-<p>首先尝试的是，将<code>Content-Type: image/jpeg</code>改为图片类型，但是还是无法上传</p>
-<p>再尝试一下.htaccess文件</p>
-<p>文件内容</p>
-<div class="hljs"><pre><code class="hljs <FilesMatch">SetHandler application&#x2F;x-httpd-php
-&lt;&#x2F;FilesMatch&gt;</code></pre></div>
-
-<p><img src="/2020/10/08/buuoj-z7z8/1-2.png" srcset="/img/loading.gif" alt></p>
-<p>上传成功后，再上传包含一句话木马的 a.jpg文件，<code>.htaccess</code>文件的作用就是将指定类型的文件当作php文件运行</p>
-<p>所以表面上是jpg类型的文件，但是是当作php文件</p>
-<p><img src="/2020/10/08/buuoj-z7z8/1-1.png" srcset="/img/loading.gif" alt></p>
-<p>上传成功后，蚁剑访问<code>url+/upload/3af588e32ac72180588d18d5c3b470b4/a.jpg</code></p>
-<p>密码为：cmd</p>
-<h2 id="SUCTF-2019-CheckIn"><a href="#SUCTF-2019-CheckIn" class="headerlink" title="[SUCTF 2019]CheckIn"></a>[SUCTF 2019]CheckIn</h2><p>试着上传php文件，提示非法后缀名，继续修改后缀名，发现php3,php5,phtml等可执行文件后不可上传</p>
-<p>想到上传<code>.htacess</code>文件，但是也提示了非法后缀名，这个方法行不通了</p>
-<p><img src="/2020/10/08/buuoj-z7z8/2-4.png" srcset="/img/loading.gif" alt></p>
-<p>但是之前做upload-labs中还有一个上传<code>.user.ini</code>的文件</p>
-<p><code>.user.ini</code>是什么</p>
-<blockquote>
-<p>这得从php.ini说起了。php.ini是php默认的配置文件，其中包括了很多php的配置，这些配置中，又分为几种：<code>PHP_INI_SYSTEM</code>、<code>PHP_INI_PERDIR</code>、<code>PHP_INI_ALL</code>、<code>PHP_INI_USER</code>。</p>
-</blockquote>
-<p><code>.user.ini</code>的作用</p>
-<blockquote>
-<p>可以借助.user.ini轻松让<strong>所有</strong>php文件都“自动”包含某个文件，而这个文件可以是一个正常php文件，也可以是一个包含一句话的webshell</p>
-</blockquote>
-<p><a href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener">传送门</a></p>
-<p><strong>开始做题</strong></p>
-<p>上传.user.ini文件</p>
-<p><img src="/2020/10/08/buuoj-z7z8/2-1.png" srcset="/img/loading.gif" alt></p>
-<p>GIF89a是GIF文件内容开头的几个字符，其作用是为类绕过<code>exif_imagetype()</code></p>
-<p>上传1.gif</p>
-<p><img src="/2020/10/08/buuoj-z7z8/2-2.png" srcset="/img/loading.gif" alt></p>
-<p>文件保存的路径已经给出，开始蚁剑链接的连接是</p>
-<div class="hljs"><pre><code class="hljs angelscript">url/uploads/<span class="hljs-number">04</span>b0951938d905b41348c1548f9c338b/<span class="hljs-number">1.</span>gif</code></pre></div>
-
-<p>但是一直连接不上</p>
-<p>后来链接index.php才连接上，这里想到了<code>.user.ini</code>作用，是让所有的php文件包含整个一句话木马，而这里文件路径存在一个index.php，所有说index.php中也存在这个一句话木马</p>
-<div class="hljs"><pre><code class="hljs llvm">/uploads/<span class="hljs-number">04</span>b<span class="hljs-number">0951938</span>d<span class="hljs-number">905</span>b<span class="hljs-number">41348</span><span class="hljs-keyword">c</span><span class="hljs-number">1548</span>f<span class="hljs-number">9</span><span class="hljs-keyword">c</span><span class="hljs-number">338</span>b/index.php</code></pre></div>
-
-<p><img src="/2020/10/08/buuoj-z7z8/2-3.png" srcset="/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -323,9 +282,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/10/08/buuoj-upload/">
+                      <a href="/2020/10/08/buuoj-LFI/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuoj-upload</span>
+                        <span class="hidden-mobile">buuoj-LFI</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -333,8 +292,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/10/05/buuoj/">
-                        <span class="hidden-mobile">buuoj</span>
+                      <a href="/2020/10/08/buuoj-upload/">
+                        <span class="hidden-mobile">buuoj-upload</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -534,7 +493,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "buuoj-upload&nbsp;",
+        "buuoj-z7z8&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
