@@ -391,13 +391,13 @@
       
       <tag>sql</tag>
       
-      <tag>脚本</tag>
-      
       <tag>弱类型</tag>
       
       <tag>域名解析</tag>
       
       <tag>爆破</tag>
+      
+      <tag>脚本</tag>
       
     </tags>
     
@@ -453,9 +453,9 @@
       
       <tag>sql</tag>
       
-      <tag>php</tag>
-      
       <tag>弱类型</tag>
+      
+      <tag>php</tag>
       
       <tag>变量覆盖</tag>
       
