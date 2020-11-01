@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
+  <link rel="icon" type="image/png" href="/img/feiji.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="sunzy">
+  <meta name="keywords" content="">
+  <title>正则表达式 - 一路走到黑</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-01 21:31" pubdate>
+        2020年11月1日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      38
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">正则表达式</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：几秒前
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <p>在一些代码审计的题目当中经常会出现使用正则表达过滤字符串的情况，所以有必要系统的学习一下！</p>
+<a id="more"></a>
+
+<h1 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h1><p><a href="https://www.runoob.com/regexp/regexp-example.html" target="_blank" rel="noopener">详情见这</a></p>
+<p>菜鸡教程中介绍的很详细，就不在赘述。</p>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><p>许多元字符要求在试图匹配它们时特别对待。若要匹配这些特殊字符，必须首先使字符”转义”，即，将反斜杠字符<strong>\</strong> 放在它们前面。下表列出了正则表达式中的特殊字符：</p>
+<table>
+<thead>
+<tr>
+<th align="left">特别字符</th>
+<th align="right">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">$</td>
+<td align="right">匹配输入字符串的结尾位置。如果设置了 RegExp 对象的 Multiline 属性，则 $ 也匹配 ‘\n’ 或 ‘\r’。要匹配 $ 字符本身，请使用 \$。</td>
+</tr>
+<tr>
+<td align="left">( )</td>
+<td align="right">标记一个子表达式的开始和结束位置。子表达式可以获取供以后使用。要匹配这些字符，请使用 ( 和 )。</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="right">匹配前面的子表达式零次或多次。要匹配 * 字符，请使用 \*。</td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td align="right">匹配前面的子表达式一次或多次。要匹配 + 字符，请使用 \+。</td>
+</tr>
+<tr>
+<td align="left">.</td>
+<td align="right">匹配除换行符 \n 之外的任何单字符。要匹配 . ，请使用 \. 。</td>
+</tr>
+<tr>
+<td align="left">[</td>
+<td align="right">标记一个中括号表达式的开始。要匹配 [，请使用\[。</td>
+</tr>
+<tr>
+<td align="left">?</td>
+<td align="right">匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。要匹配 ? 字符，请使用 ?。</td>
+</tr>
+<tr>
+<td align="left">\</td>
+<td align="right">将下一个字符标记为或特殊字符、或原义字符、或向后引用、或八进制转义符。例如， ‘n’ 匹配字符 ‘n’。’\n’ 匹配换行符。序列 ‘\‘ 匹配 “&quot;，而 ‘(‘ 则匹配 “(“。</td>
+</tr>
+<tr>
+<td align="left">^</td>
+<td align="right">匹配输入字符串的开始位置，除非在方括号表达式中使用，当该符号在方括号表达式中使用时，表示不接受该方括号表达式中的字符集合。要匹配 ^ 字符本身，请使用 ^。</td>
+</tr>
+<tr>
+<td align="left">{</td>
+<td align="right">标记限定符表达式的开始。要匹配 {，请使用 \{。</td>
+</tr>
+<tr>
+<td align="left">|</td>
+<td align="right">指明两项之间的一个选择。要匹配 |，请使用 \</td>
+</tr>
+</tbody></table>
+<h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><p>限定符用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配。有 <strong>*** 或 **+</strong> 或 <strong>?</strong> 或 <strong>{n}</strong> 或 <strong>{n,}</strong> 或 <strong>{n,m}</strong> 共6种。</p>
+<p>正则表达式的限定符有：</p>
+<table>
+<thead>
+<tr>
+<th align="left">字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">*</td>
+<td>匹配前面的子表达式零次或多次。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td>匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+</tr>
+<tr>
+<td align="left">?</td>
+<td>匹配前面的子表达式零次或一次。例如，”do(es)?” 可以匹配 “do” 、 “does” 中的 “does” 、 “doxy” 中的 “do” 。? 等价于 {0,1}。</td>
+</tr>
+<tr>
+<td align="left">{n}</td>
+<td>n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+</tr>
+<tr>
+<td align="left">{n,}</td>
+<td>n 是一个非负整数。至少匹配n 次。例如，’o{2,}’ 不能匹配 “Bob” 中的 ‘o’，但能匹配 “foooood” 中的所有 o。’o{1,}’ 等价于 ‘o+’。’o{0,}’ 则等价于 ‘o*’。</td>
+</tr>
+<tr>
+<td align="left">{n,m}</td>
+<td>m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。例如，”o{1,3}” 将匹配 “fooooood” 中的前三个 o。’o{0,1}’ 等价于 ‘o?’。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+</tbody></table>
+<h1 id="常用的正则表达式及含义"><a href="#常用的正则表达式及含义" class="headerlink" title="常用的正则表达式及含义"></a>常用的正则表达式及含义</h1><p><a href="https://www.cnblogs.com/zxin/archive/2013/01/26/2877765.html" target="_blank" rel="noopener">参考</a></p>
+<div class="hljs"><pre><code class="hljs markdown">一、校验数字的表达式
+
+<span class="hljs-bullet">1. </span>数字：^[0-9]*$			// ^表示字符的开始，$表示结束  [0-9] 表示字符串中的字符在0-9中
+
+<span class="hljs-bullet">2. </span>n位的数字：^\d&#123;n&#125;$    // \d与[0-9]等价 ，&#123;n&#125; n表示匹配n次，所以表示匹配n位数
+
+<span class="hljs-bullet">3. </span>至少n位的数字：^\d&#123;n,&#125;$      //&#123;n,&#125;至少n次
+
+<span class="hljs-bullet">4. </span>m-n位的数字：^\d&#123;m,n&#125;$     //&#123;n,m&#125;  n-m次
+
+<span class="hljs-bullet">5. </span>零和非零开头的数字：^(0|[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*)$  // | 是或者意思，表示匹配左右两个子表达式其中一个都可以
+
+<span class="hljs-bullet">6. </span>非零开头的最多带两位小数的数字：^([<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*)+(.[<span class="hljs-string">0-9</span>]&#123;1,2&#125;)?$    // +匹配前面的表达式一次或多次 (.[<span class="hljs-string">0-9</span>]&#123;1,2&#125;)? 表示匹配  (.[<span class="hljs-string">0-9</span>]&#123;1,2&#125;)一次或零次这子表达式代表的是0.[<span class="hljs-string">1-9</span>]或者0.[<span class="hljs-string">0-9</span>][<span class="hljs-symbol">1-9</span>]
+
+<span class="hljs-bullet">7. </span>带1-2位小数的正数或负数：^(\-)?\d+(\.\d&#123;1,2&#125;)?$     // (\-)? 匹配一次或零次负号 
+
+<span class="hljs-bullet">8. </span>正数、负数、和小数：^(\-|\+)?\d+(\.\d+)?$     // \- \+ \.是将特殊字符转义
+
+<span class="hljs-bullet">9. </span>有两位小数的正实数：^[0-9]+(.[0-9]&#123;2&#125;)?$    
+
+<span class="hljs-bullet">10. </span>有1~3位小数的正实数：^[0-9]+(.[0-9]&#123;1,3&#125;)?$
+
+<span class="hljs-bullet">11. </span>非零的正整数：^[<span class="hljs-string">1-9</span>]\d<span class="hljs-emphasis">*$ 或 ^([1-9][0-9]*</span>)&#123;1,3&#125;$ 或 ^\+?[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*$   // [1-9] 控制非零
+
+<span class="hljs-bullet">12. </span>非零的负整数：^\-[<span class="hljs-string">1-9</span>][<span class="hljs-symbol"></span>]0-9"<span class="hljs-emphasis">*$ 或 ^-[1-9]\d*</span>$  //一下的表达式的含义可以以此类推（感觉不是很常用）
+
+<span class="hljs-bullet">13. </span>非负整数：^\d+$ 或 ^[1-9]\d*|0$
+
+<span class="hljs-bullet">14. </span>非正整数：^-[1-9]\d*|0$ 或 ^((-\d+)|(0+))$
+
+<span class="hljs-bullet">15. </span>非负浮点数：^\d+(\.\d+)?$ 或 ^[1-9]\d<span class="hljs-emphasis">*\.\d*</span>|0\.\d<span class="hljs-emphasis">*[1-9]\d*</span>|0?\.0+|0$
+
+<span class="hljs-bullet">16. </span>非正浮点数：^((-\d+(\.\d+)?)|(0+(\.0+)?))$ 或 ^(-([1-9]\d<span class="hljs-emphasis">*\.\d*</span>|0\.\d<span class="hljs-emphasis">*[1-9]\d*</span>))|0?\.0+|0$
+
+<span class="hljs-bullet">17. </span>正浮点数：^[<span class="hljs-string">1-9</span>]\d<span class="hljs-emphasis">*\.\d*</span>|0\.\d<span class="hljs-emphasis">*[1-9]\d*</span>$ 或 ^(([<span class="hljs-string">0-9</span>]+\.[<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>)|([<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>\.[<span class="hljs-string">0-9</span>]+)|([<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>))$
+
+<span class="hljs-bullet">18. </span>负浮点数：^-([<span class="hljs-string">1-9</span>]\d<span class="hljs-emphasis">*\.\d*</span>|0\.\d<span class="hljs-emphasis">*[1-9]\d*</span>)$ 或 ^(-(([<span class="hljs-string">0-9</span>]+\.[<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>)|([<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>\.[<span class="hljs-string">0-9</span>]+)|([<span class="hljs-string">0-9</span>]<span class="hljs-emphasis">*[1-9][0-9]*</span>)))$
+
+<span class="hljs-bullet">19. </span>浮点数：^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d<span class="hljs-emphasis">*\.\d*</span>|0\.\d<span class="hljs-emphasis">*[1-9]\d*</span>|0?\.0+|0)$</code></pre></div>
+
+
+
+<div class="hljs"><pre><code class="hljs angelscript">二、校验字符的表达式
+<span class="hljs-number">1.</span> 汉字：^[\u4e00-\u9fa5]&#123;<span class="hljs-number">0</span>,&#125;$   <span class="hljs-comment">//u4e00是unicode中第一个汉字编码 u9fa5是最后一个</span>
+
+<span class="hljs-number">2.</span> 英文和数字：^[A-Za-z0<span class="hljs-number">-9</span>]+$ 或 ^[A-Za-z0<span class="hljs-number">-9</span>]&#123;<span class="hljs-number">4</span>,<span class="hljs-number">40</span>&#125;$  <span class="hljs-comment">//[A-Za-z0-9]可以匹配大小写字母数字 </span>
+
+<span class="hljs-number">3.</span> 长度为<span class="hljs-number">3</span><span class="hljs-number">-20</span>的所有字符：^.&#123;<span class="hljs-number">3</span>,<span class="hljs-number">20</span>&#125;$  <span class="hljs-comment">// .代表任意字符包括换行符</span>
+
+<span class="hljs-number">4.</span> 由<span class="hljs-number">26</span>个英文字母组成的字符串：^[A-Za-z]+$
+
+<span class="hljs-number">5.</span> 由<span class="hljs-number">26</span>个大写英文字母组成的字符串：^[A-Z]+$
+
+<span class="hljs-number">6.</span> 由<span class="hljs-number">26</span>个小写英文字母组成的字符串：^[a-z]+$
+
+<span class="hljs-number">7.</span> 由数字和<span class="hljs-number">26</span>个英文字母组成的字符串：^[A-Za-z0<span class="hljs-number">-9</span>]+$ <span class="hljs-comment">//与第二个表达式相同</span>
+
+<span class="hljs-number">8.</span> 由数字、<span class="hljs-number">26</span>个英文字母或者下划线组成的字符串：^\w+$ 或 ^\w&#123;<span class="hljs-number">3</span>,<span class="hljs-number">20</span>&#125;$   <span class="hljs-comment">//  \w=[0-9A-Za-z_]</span>
+
+<span class="hljs-number">9.</span> 中文、英文、数字包括下划线：^[\u4E00-\u9FA5A-Za-z0<span class="hljs-number">-9</span>_]+$
+ 
+<span class="hljs-number">10.</span> 中文、英文、数字但不包括下划线等符号：^[\u4E00-\u9FA5A-Za-z0<span class="hljs-number">-9</span>]+$ 或 ^[\u4E00-\u9FA5A-Za-z0<span class="hljs-number">-9</span>]&#123;<span class="hljs-number">2</span>,<span class="hljs-number">20</span>&#125;$
+ 
+<span class="hljs-number">11.</span> 可以输入含有^%&amp;<span class="hljs-string">',;=?$\"等字符：[^%&amp;'</span>,;=?$\x22]+ 
+
+<span class="hljs-number">12</span> 禁止输入含有~的字符：[^~\x22]+  <span class="hljs-comment">//这里的 ^是非的意思</span></code></pre></div>
+
+<p>下面这些就不一一解释了，实在太多了有的还是重复。</p>
+<div class="hljs"><pre><code class="hljs markdown">三、特殊需求表达式
+<span class="hljs-bullet">1. </span>Email地址：^\w+([-+.]\w+)<span class="hljs-emphasis">*@\w+([-.]\w+)*</span>\.\w+([-.]\w+)*$
+
+<span class="hljs-bullet">2. </span>域名：[<span class="hljs-string">a-zA-Z0-9</span>][<span class="hljs-symbol">-a-zA-Z0-9</span>]&#123;0,62&#125;(/.[<span class="hljs-string">a-zA-Z0-9</span>][<span class="hljs-symbol">-a-zA-Z0-9</span>]&#123;0,62&#125;)+/.?
+
+<span class="hljs-bullet">3. </span>InternetURL：[a-zA-z]+://[^\s]<span class="hljs-emphasis">* 或 ^http://([\w-]+\.)+[\w-]+(/[\w-./?%&amp;=]*</span>)?$
+
+<span class="hljs-bullet">4. </span>手机号码：^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d&#123;8&#125;$
+
+<span class="hljs-bullet">5. </span>电话号码("XXX-XXXXXXX"、"XXXX-XXXXXXXX"、"XXX-XXXXXXX"、"XXX-XXXXXXXX"、"XXXXXXX"和"XXXXXXXX)：^(\(\d&#123;3,4&#125;-)|\d&#123;3.4&#125;-)?\d&#123;7,8&#125;$
+
+<span class="hljs-bullet">6. </span>国内电话号码(0511-4405222、021-87888822)：\d&#123;3&#125;-\d&#123;8&#125;|\d&#123;4&#125;-\d&#123;7&#125;
+
+<span class="hljs-bullet">7. </span>身份证号(15位、18位数字)：^\d&#123;15&#125;|\d&#123;18&#125;$
+
+<span class="hljs-bullet">8. </span>短身份证号码(数字、字母x结尾)：^([0-9])&#123;7,18&#125;(x|X)?$ 或 ^\d&#123;8,18&#125;|[0-9x]&#123;8,18&#125;|[0-9X]&#123;8,18&#125;?$
+
+<span class="hljs-bullet">9. </span>帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[<span class="hljs-string">a-zA-Z</span>][<span class="hljs-symbol">a-zA-Z0-9_</span>]&#123;4,15&#125;$
+
+<span class="hljs-bullet">10. </span>密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)：^[a-zA-Z]\w&#123;5,17&#125;$
+
+<span class="hljs-bullet">11. </span>强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间)：^(?=.<span class="hljs-emphasis">*\d)(?=.*</span>[a-z])(?=.*[A-Z]).&#123;8,10&#125;$
+
+<span class="hljs-bullet">12. </span>日期格式：^\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125;
+
+<span class="hljs-bullet">13. </span>一年的12个月(01～09和1～12)：^(0?[1-9]|1[0-2])$
+
+<span class="hljs-bullet">14. </span>一个月的31天(01～09和1～31)：^((0?[1-9])|((1|2)[0-9])|30|31)$
+
+14 钱的输入格式：
+
+15    1.有四种钱的表示形式我们可以接受:"10000.00" 和 "10,000.00", 和没有 "分" 的 "10000" 和 "10,000"：^[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*$ 
+
+16    2.这表示任意一个不以0开头的数字,但是,这也意味着一个字符"0"不通过,所以我们采用下面的形式：^(0|[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*)$ 
+
+17    3.一个0或者一个不以0开头的数字.我们还可以允许开头有一个负号：^(0|-?[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]*)$ 
+
+18    4.这表示一个0或者一个可能为负的开头不为0的数字.让用户以0开头好了.把负号的也去掉,因为钱总不能是负的吧.下面我们要加的是说明可能的小数部分：^[0-9]+(.[0-9]+)?$ 
+
+19    5.必须说明的是,小数点后面至少应该有1位数,所以"10."是不通过的,但是 "10" 和 "10.2" 是通过的：^[0-9]+(.[0-9]&#123;2&#125;)?$ 
+
+20    6.这样我们规定小数点后面必须有两位,如果你认为太苛刻了,可以这样：^[0-9]+(.[0-9]&#123;1,2&#125;)?$ 
+
+21    7.这样就允许用户只写一位小数.下面我们该考虑数字中的逗号了,我们可以这样：^[0-9]&#123;1,3&#125;(,[0-9]&#123;3&#125;)*(.[0-9]&#123;1,2&#125;)?$ 
+
+22    8.1到3个数字,后面跟着任意个 逗号+3个数字,逗号成为可选,而不是必须：^([0-9]+|[0-9]&#123;1,3&#125;(,[0-9]&#123;3&#125;)*)(.[0-9]&#123;1,2&#125;)?$ 
+
+23    备注：这就是最终结果了,别忘了"+"可以用"*"替代如果你觉得空字符串也可以接受的话(奇怪,为什么?)最后,别忘了在用函数时去掉去掉那个反斜杠,一般的错误都在这里
+
+24 xml文件：^([<span class="hljs-string">a-zA-Z</span>]+-?)+[<span class="hljs-string">a-zA-Z0-9</span>]+\\.[<span class="hljs-string">x|X</span>][<span class="hljs-symbol">m|M</span>][<span class="hljs-string">l|L</span>]$
+
+25 中文字符的正则表达式：[\u4e00-\u9fa5]
+
+26 双字节字符：[^\x00-\xff]    (包括汉字在内，可以用来计算字符串的长度(一个双字节字符长度计2，ASCII字符计1))
+
+27 空白行的正则表达式：\n\s*\r    (可以用来删除空白行)
+
+28 HTML标记的正则表达式：<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">(\S*?)[^</span>&gt;</span></span>]<span class="hljs-emphasis">*&gt;.*</span>?<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">\1</span>&gt;</span></span>|<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">.*?</span> /&gt;</span></span>    (网上流传的版本太糟糕，上面这个也仅仅能部分，对于复杂的嵌套标记依旧无能为力)
+
+29 首尾空白字符的正则表达式：^\s<span class="hljs-emphasis">*|\s*</span>$或(^\s<span class="hljs-emphasis">*)|(\s*</span>$)    (可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式)
+
+30 腾讯QQ号：[<span class="hljs-string">1-9</span>][<span class="hljs-symbol">0-9</span>]&#123;4,&#125;    (腾讯QQ号从10000开始)
+
+31 中国邮政编码：[1-9]\d&#123;5&#125;(?!\d)    (中国邮政编码为6位数字)
+
+32 IP地址：\d+\.\d+\.\d+\.\d+    (提取IP地址时有用)
+
+33 IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.)&#123;3&#125;(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)) 
+
+34 将url的协议，主机名，端口号，文件路径放到数组中:
+var str = "http://www.runoob.com:80/html/html-tutorial.html";
+var patt1 = /(\w+):\/\/([^/:]+)(:\d<span class="hljs-emphasis">*)?([^# ]*</span>)/;   //四个子表达式组合在一起，(\w+): 匹配字符串开始到: ([^/:]+) 匹配非/ 非:后的内容  (:\d<span class="hljs-emphasis">*)? 匹配:后的若干数字且表达式重复一次或多次  ([^# ]*</span>) 匹配不包括#或空格字符的任何字符序列</code></pre></div>
+
+
+
+<p><strong>总结</strong></p>
+<p>正则表达式的功能还是很强大的，想要写出能准确匹配目标的表达式还是需要认真学习的，但是代码审计中的要求没那么严格，只需要能看懂表达式匹配了哪些内容即可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/25/%E5%8D%8E%E4%B8%BA%E6%9D%AF/">
+                        <span class="hidden-mobile">华为杯</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
+          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
+          placeholder: "说点什么吧~~~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "正则表达式&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
