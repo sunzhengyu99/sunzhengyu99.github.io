@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      53
+      54
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：4 天前
+                  本文最后更新于：几秒前
                 
               </p>
             
@@ -255,9 +255,14 @@
 <p>第一行输入包含一个整数T（1&lt;=T&lt;=50），代表测试用例个数。</p>
 <p>接下来T行，每行输入包含一个整数n（1&lt;=n&lt;=50），代表鲁班最终跳上了第n级台阶。</p>
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>每组测试用例对应一行输出，每行输出一个整数ans，代表鲁班最终跳上第n级台阶的跳法种数。</p>
-<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">33450</span></code></pre></div>
+<h3 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">3</span>
+<span class="hljs-number">3</span>
+<span class="hljs-number">4</span>
+<span class="hljs-number">50</span></code></pre></div>
 
-<h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">3520365011074</span></code></pre></div>
+<h3 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">3</span>
+<span class="hljs-number">5</span>
+<span class="hljs-number">20365011074</span></code></pre></div>
 
 <h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>注意结果超过int范围，请用long long类型存储ans</p>
 <div class="hljs"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
@@ -294,9 +299,14 @@
 <p>第一行输入包含一个整数T（1&lt;=T&lt;=1000），代表测试用例个数。</p>
 <p>接下来T行，每一行包含一个整数x（1&lt;=x&lt;=1500000）。</p>
 <h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p>每组测试用例对应一行输出，每行输出一个整数ans，代表最终运算结果。</p>
-<h3 id="样例输入-1"><a href="#样例输入-1" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">371433223193224</span></code></pre></div>
+<h3 id="样例输入-1"><a href="#样例输入-1" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">3</span>
+<span class="hljs-number">7</span>
+<span class="hljs-number">143</span>
+<span class="hljs-number">3223193224</span></code></pre></div>
 
-<h3 id="样例输出-1"><a href="#样例输出-1" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">10151163311433223</span></code></pre></div>
+<h3 id="样例输出-1"><a href="#样例输出-1" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">10</span>
+<span class="hljs-number">151</span>
+<span class="hljs-number">163311433223</span></code></pre></div>
 
 <h3 id="提示-1"><a href="#提示-1" class="headerlink" title="提示"></a>提示</h3><p>测试数据均大于等于1，不用特判0</p>
 <p>感觉图片等式有点问题，一开始没理解什么意思，后来看了学长的提示。本质就是进制转换。</p>
@@ -331,9 +341,18 @@
 <h2 id="问题-C-圣诞恋歌——貂蝉"><a href="#问题-C-圣诞恋歌——貂蝉" class="headerlink" title="问题 C: 圣诞恋歌——貂蝉"></a>问题 C: 圣诞恋歌——貂蝉</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>貂蝉是王者峡谷里的法师/刺客，貂蝉打法一定要注意配合技能与被动。半肉出装加上蛇皮走位，往往可以1打5，轻松拿下5杀。语花印被动描述为：技能命中会为敌人叠加花之印记，叠加满4层后印记触发被动，会给自身回复生命，同时会对周围敌人造成真实伤害并减速。<br>我们现在对貂蝉的技能及被动进行简化如下：每使用1次技能会攻击1次目标，每攻击3次目标，会自动额外攻击1次目标。<br>现在，貂蝉在游戏中使用了n次技能，请问总共会给目标带来多少次攻击。</p>
 <h3 id="输入-2"><a href="#输入-2" class="headerlink" title="输入"></a>输入</h3><p>多组测试数据，第一行输入包含一个整数T，代表测试样例个数。<br>接下来T行，每行输入包含一个整数n（1&lt;=n&lt;=100），代表貂蝉使用了n次技能。</p>
 <h3 id="输出-2"><a href="#输出-2" class="headerlink" title="输出"></a>输出</h3><p>每组测试用例对应一行输出，每行输出一个整数ans，代表貂蝉对目标进行了ans次攻击。</p>
-<h3 id="样例输入-2"><a href="#样例输入-2" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">61234581</span></code></pre></div>
+<h3 id="样例输入-2"><a href="#样例输入-2" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">6</span>
+<span class="hljs-number">1</span>
+<span class="hljs-number">2</span>
+<span class="hljs-number">3</span>
+<span class="hljs-number">45</span>
+<span class="hljs-number">81</span></code></pre></div>
 
-<h3 id="样例输出-2"><a href="#样例输出-2" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">12457121</span></code></pre></div>
+<h3 id="样例输出-2"><a href="#样例输出-2" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">1</span>
+<span class="hljs-number">2</span>
+<span class="hljs-number">4</span>
+<span class="hljs-number">57</span>
+<span class="hljs-number">121</span></code></pre></div>
 
 <h3 id="提示-2"><a href="#提示-2" class="headerlink" title="提示"></a>提示</h3><p>这题就是汽水瓶的改编。。。</p>
 <div class="hljs"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
@@ -366,9 +385,14 @@
 <h3 id="输入-3"><a href="#输入-3" class="headerlink" title="输入"></a>输入</h3><p>多组测试用例。<br>第一行输入包含一个整数T（1&lt;=T&lt;=1000），代表测试用例个数。</p>
 <p>每组测试用例第一行有两个整数m和n。（0&lt;=m&lt;=1000， 0&lt;=n&lt;=1000），分别代表船的载重重量和小朋友的个数，接下来一行为n个小朋友的体重。</p>
 <h3 id="输出-3"><a href="#输出-3" class="headerlink" title="输出"></a>输出</h3><p>每组测试用例对应一行输出，每行输出一个整数ans，代表最多能有ans个小朋友跟着一起出海。</p>
-<h3 id="样例输入-3"><a href="#样例输入-3" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">210</span> <span class="hljs-number">43</span> <span class="hljs-number">5</span> <span class="hljs-number">2</span> <span class="hljs-number">420</span> <span class="hljs-number">93</span> <span class="hljs-number">5</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">1</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span> <span class="hljs-number">9</span></code></pre></div>
+<h3 id="样例输入-3"><a href="#样例输入-3" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs basic"><span class="hljs-number">2</span>
+<span class="hljs-symbol">10 </span><span class="hljs-number">4</span>
+<span class="hljs-symbol">3 </span><span class="hljs-number">5</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span>
+<span class="hljs-symbol">20 </span><span class="hljs-number">9</span>
+<span class="hljs-symbol">3 </span><span class="hljs-number">5</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">1</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span> <span class="hljs-number">9</span></code></pre></div>
 
-<h3 id="样例输出-3"><a href="#样例输出-3" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">36</span></code></pre></div>
+<h3 id="样例输出-3"><a href="#样例输出-3" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">3</span>
+<span class="hljs-number">6</span></code></pre></div>
 
 <h3 id="提示-3"><a href="#提示-3" class="headerlink" title="提示"></a>提示</h3><p>就是简单的装在问题</p>
 <div class="hljs"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
@@ -408,7 +432,13 @@
 <h3 id="输入-4"><a href="#输入-4" class="headerlink" title="输入"></a>输入</h3><p>多组测试用例。<br>第一行输入包含一个整数T（1&lt;=T&lt;=10），代表测试用例个数。</p>
 <p>接下来有T组测试用例。每组测试用例第一行为盾山承受盾牌的最大重量C(C&lt;10000)和小石头的个数N(N&lt;1000)。接下来的N行分别为小石头的重量Wi(1&lt;=Wi&lt;=100)和防御值Pi(1&lt;=Pi&lt;=3000000)。</p>
 <h3 id="输出-4"><a href="#输出-4" class="headerlink" title="输出"></a>输出</h3><p>每组测试用例对应一行输出，每行输出一个整数ans，代表可承受盾牌的最大防御值。</p>
-<h3 id="样例输入-4"><a href="#样例输入-4" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs basic"><span class="hljs-symbol">110 </span><span class="hljs-number">52</span> <span class="hljs-number">62</span> <span class="hljs-number">36</span> <span class="hljs-number">55</span> <span class="hljs-number">44</span> <span class="hljs-number">6</span></code></pre></div>
+<h3 id="样例输入-4"><a href="#样例输入-4" class="headerlink" title="样例输入"></a>样例输入</h3><div class="hljs"><pre><code class="hljs basic"><span class="hljs-number">1</span>
+<span class="hljs-symbol">10 </span><span class="hljs-number">5</span>
+<span class="hljs-symbol">2 </span><span class="hljs-number">6</span>
+<span class="hljs-symbol">2 </span><span class="hljs-number">3</span>
+<span class="hljs-symbol">6 </span><span class="hljs-number">5</span>
+<span class="hljs-symbol">5 </span><span class="hljs-number">4</span>
+<span class="hljs-symbol">4 </span><span class="hljs-number">6</span></code></pre></div>
 
 <h3 id="样例输出-4"><a href="#样例输出-4" class="headerlink" title="样例输出"></a>样例输出</h3><div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">15</span></code></pre></div>
 
