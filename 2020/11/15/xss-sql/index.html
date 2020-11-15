@@ -1,0 +1,935 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
+  <link rel="icon" type="image/png" href="/img/feiji.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="sunzy">
+  <meta name="keywords" content="">
+  <title>xss和sql注入简单环境的搭建 - 一路走到黑</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-15 16:14" pubdate>
+        2020年11月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">xss和sql注入简单环境的搭建</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 分钟前
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="xss和sql注入简单环境的搭建"><a href="#xss和sql注入简单环境的搭建" class="headerlink" title="xss和sql注入简单环境的搭建"></a>xss和sql注入简单环境的搭建</h1><p>以下环境都是基于PHP study搭建的，版本为 php 5.5.38+Apache</p>
+<a id="more"></a>
+
+<p>参考了dvwa的漏洞源码与攻击方式。</p>
+<h2 id="xss漏洞的搭建"><a href="#xss漏洞的搭建" class="headerlink" title="xss漏洞的搭建"></a>xss漏洞的搭建</h2><h3 id="1-网页源码"><a href="#1-网页源码" class="headerlink" title="1.网页源码"></a>1.网页源码</h3><div class="hljs"><pre><code class="hljs php+HTML">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv&#x3D;&quot;Content-Type&quot; content&#x3D;&quot;text&#x2F;html;charset&#x3D;utf-8&quot;&gt;
+		&lt;title&gt;xss&lt;&#x2F;title&gt;
+	&lt;&#x2F;head&gt;
+	&lt;body&gt;
+		&lt;center&gt;
+			
+			&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;
+				&lt;h6&gt;please input your name!&lt;&#x2F;h6&gt;
+				&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot; &#x2F;&gt;&lt;br &#x2F;&gt;
+				&lt;input type&#x3D;&#39;submit&#39; value&#x3D;&quot;submit&quot; &#x2F;&gt;
+			&lt;&#x2F;form&gt;
+			
+	
+&lt;?php
+  
+function SafeFilter (&amp;$arr) 
+&#123;
+   $ra&#x3D;Array(&#39;&#x2F;([\x00-\x08,\x0b-\x0c,\x0e-\x19])&#x2F;&#39;,&#39;&#x2F;script&#x2F;&#39;,&#39;&#x2F;javascript&#x2F;&#39;,&#39;&#x2F;vbscript&#x2F;&#39;,&#39;&#x2F;expression&#x2F;&#39;,&#39;&#x2F;applet&#x2F;&#39;
+   ,&#39;&#x2F;meta&#x2F;&#39;,&#39;&#x2F;xml&#x2F;&#39;,&#39;&#x2F;blink&#x2F;&#39;,&#39;&#x2F;link&#x2F;&#39;,&#39;&#x2F;style&#x2F;&#39;,&#39;&#x2F;embed&#x2F;&#39;,&#39;&#x2F;object&#x2F;&#39;,&#39;&#x2F;frame&#x2F;&#39;,&#39;&#x2F;layer&#x2F;&#39;,&#39;&#x2F;title&#x2F;&#39;,&#39;&#x2F;bgsound&#x2F;&#39;
+   ,&#39;&#x2F;base&#x2F;&#39;,&#39;&#x2F;onload&#x2F;&#39;,&#39;&#x2F;onunload&#x2F;&#39;,&#39;&#x2F;onchange&#x2F;&#39;,&#39;&#x2F;onsubmit&#x2F;&#39;,&#39;&#x2F;onreset&#x2F;&#39;,&#39;&#x2F;onselect&#x2F;&#39;,&#39;&#x2F;onblur&#x2F;&#39;,&#39;&#x2F;onfocus&#x2F;&#39;,
+   &#39;&#x2F;onabort&#x2F;&#39;,&#39;&#x2F;onkeydown&#x2F;&#39;,&#39;&#x2F;onkeypress&#x2F;&#39;,&#39;&#x2F;onkeyup&#x2F;&#39;,&#39;&#x2F;onclick&#x2F;&#39;,&#39;&#x2F;ondblclick&#x2F;&#39;,&#39;&#x2F;onmousedown&#x2F;&#39;,&#39;&#x2F;onmousemove&#x2F;&#39;
+   ,&#39;&#x2F;onmouseout&#x2F;&#39;,&#39;&#x2F;onmouseover&#x2F;&#39;,&#39;&#x2F;onmouseup&#x2F;&#39;,&#39;&#x2F;onunload&#x2F;&#39;);
+     
+   if (is_array($arr))
+   &#123;
+     foreach ($arr as $key &#x3D;&gt; $value) 
+     &#123;
+        if (!is_array($value))
+        &#123;
+          if (!get_magic_quotes_gpc())  &#x2F;&#x2F;不对magic_quotes_gpc转义过的字符使用addslashes(),避免双重转义。
+          &#123;
+             $value  &#x3D; addslashes($value); &#x2F;&#x2F;给单引号（&#39;）、双引号（&quot;）、反斜线（\）与 NUL（NULL 字符）  加上反斜线转义
+          &#125;
+          $value       &#x3D; preg_replace($ra,&#39;&#39;,$value);     &#x2F;&#x2F;删除非打印字符，粗暴式过滤xss可疑字符串
+          $arr[$key]     &#x3D; htmlentities(strip_tags($value)); &#x2F;&#x2F;去除 HTML 和 PHP 标记并转换为 HTML 实体
+        &#125;
+        else
+        &#123;
+          SafeFilter($arr[$key]);
+        &#125;
+     &#125;
+   &#125;
+&#125;
+&#x2F;&#x2F;php防注入和XSS攻击通用过滤
+$_POST    &amp;&amp; SafeFilter($_POST);
+
+			if (isset($_POST[&#39;username&#39;]))
+			&#123;
+				$s&#x3D;$_POST[&#39;username&#39;];
+				
+				echo $s;
+
+			&#125;
+			
+?&gt;
+	&lt;&#x2F;center&gt;
+		
+		&lt;&#x2F;script&gt;
+	&lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;</code></pre></div>
+
+<p>网页源码十分简单，就是用户输入所要查询的username，之后将其输入的内容打印出来。</p>
+<p>起初并没有对用户的输入进行处理，直接执行了<code>echo</code>，造成了xss漏洞的出现。</p>
+<h3 id="2-攻击效果"><a href="#2-攻击效果" class="headerlink" title="2.攻击效果"></a>2.攻击效果</h3><p>在输入栏中输入以下</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">alert(<span class="hljs-string">"xss"</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">1</span> <span class="hljs-attr">onerror</span>=<span class="hljs-string">alert(/xsss/)</span>&gt;</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/12/4f6rKtjU8sg7IoT.png" srcset="/img/loading.gif" alt="xss.png"></p>
+<p><img src="https://i.loli.net/2020/11/12/EAnVq5yv4ZWJo8z.png" srcset="/img/loading.gif" alt="xss1.png"></p>
+<h3 id="3-漏洞修复"><a href="#3-漏洞修复" class="headerlink" title="3.漏洞修复"></a>3.漏洞修复</h3><p>修复漏洞只需要对用户的输入内容进行检测和过滤，并将一些可能造成攻击的特殊字符进行转义，让其不起到原本的作用。</p>
+<p>过滤函数如下</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SafeFilter</span> <span class="hljs-params">(&amp;$arr)</span> </span>
+<span class="hljs-function"></span>&#123;
+   $ra=<span class="hljs-keyword">Array</span>(<span class="hljs-string">'/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/'</span>,<span class="hljs-string">'/script/'</span>,<span class="hljs-string">'/javascript/'</span>,<span class="hljs-string">'/vbscript/'</span>,<span class="hljs-string">'/expression/'</span>,<span class="hljs-string">'/applet/'</span>
+   ,<span class="hljs-string">'/meta/'</span>,<span class="hljs-string">'/xml/'</span>,<span class="hljs-string">'/blink/'</span>,<span class="hljs-string">'/link/'</span>,<span class="hljs-string">'/style/'</span>,<span class="hljs-string">'/embed/'</span>,<span class="hljs-string">'/object/'</span>,<span class="hljs-string">'/frame/'</span>,<span class="hljs-string">'/layer/'</span>,<span class="hljs-string">'/title/'</span>,<span class="hljs-string">'/bgsound/'</span>
+   ,<span class="hljs-string">'/base/'</span>,<span class="hljs-string">'/onload/'</span>,<span class="hljs-string">'/onunload/'</span>,<span class="hljs-string">'/onchange/'</span>,<span class="hljs-string">'/onsubmit/'</span>,<span class="hljs-string">'/onreset/'</span>,<span class="hljs-string">'/onselect/'</span>,<span class="hljs-string">'/onblur/'</span>,<span class="hljs-string">'/onfocus/'</span>,
+   <span class="hljs-string">'/onabort/'</span>,<span class="hljs-string">'/onkeydown/'</span>,<span class="hljs-string">'/onkeypress/'</span>,<span class="hljs-string">'/onkeyup/'</span>,<span class="hljs-string">'/onclick/'</span>,<span class="hljs-string">'/ondblclick/'</span>,<span class="hljs-string">'/onmousedown/'</span>,<span class="hljs-string">'/onmousemove/'</span>
+   ,<span class="hljs-string">'/onmouseout/'</span>,<span class="hljs-string">'/onmouseover/'</span>,<span class="hljs-string">'/onmouseup/'</span>,<span class="hljs-string">'/onunload/'</span>);
+     
+   <span class="hljs-keyword">if</span> (is_array($arr))
+   &#123;
+     <span class="hljs-keyword">foreach</span> ($arr <span class="hljs-keyword">as</span> $key =&gt; $value) <span class="hljs-comment">//循环语句，挨个检测</span>
+     &#123;
+        <span class="hljs-keyword">if</span> (!is_array($value))
+        &#123;
+          <span class="hljs-keyword">if</span> (!get_magic_quotes_gpc()) 
+          &#123;
+             $value  = addslashes($value); <span class="hljs-comment">//给单引号（'）、双引号（"）、反斜线（\）与 NUL（NULL 字符）  加上反斜线转义</span>
+          &#125;
+          $value       = preg_replace($ra,<span class="hljs-string">''</span>,$value);     <span class="hljs-comment">//删除非打印字符</span>
+          $arr[$key]     = htmlentities(strip_tags($value)); <span class="hljs-comment">//去除 HTML 和 PHP 标记并转换为 HTML 实体</span>
+        &#125;
+        <span class="hljs-keyword">else</span>
+        &#123;
+          SafeFilter($arr[$key]);
+        &#125;
+     &#125;
+   &#125;
+&#125;</code></pre></div>
+
+<p><strong>各个函数功能如下：</strong></p>
+<p><strong>magic_quotes_gpc</strong>函数在php中的作用是判断解析用户提示的数据，如包括有:post、get、cookie过来的数据增加转义字符“\”，以确保这些数据不会引起程序，特别是数据库语句因为特殊字符引起的污染而出现致命的错误</p>
+<p>在magic_quotes_gpc=On的情况下，如果输入的数据有</p>
+<p>单引号（’）、双引号（”）、反斜线（）与 NUL（NULL 字符）等字符都会被加上反斜线。</p>
+<p><strong>addslashes函数</strong></p>
+<p><img src="https://i.loli.net/2020/11/12/W7m2yOvok3g6ZXA.png" srcset="/img/loading.gif" alt="addslashes.png"></p>
+<p><strong>htmlentities()</strong> 函数把字符转换为 HTML 实体。</p>
+<h2 id="g’gsql注入环境搭建与攻击"><a href="#g’gsql注入环境搭建与攻击" class="headerlink" title="g’gsql注入环境搭建与攻击"></a>g’gsql注入环境搭建与攻击</h2><p>网页源码，最常见的登录页面，其中没有对用户名和密码进行过滤，就将其带入sql语句中查询造成了sql注入的出现。</p>
+<p>login.php源码</p>
+<div class="hljs"><pre><code class="hljs php+HTML">&lt;!DOCTYPE html&gt;
+
+&lt;html &gt;&lt;head&gt;&lt;meta http-equiv&#x3D;&quot;Content-Type&quot; content&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot;&gt;
+        &lt;title&gt;Sqli&lt;&#x2F;title&gt;
+&lt;&#x2F;head&gt;
+&lt;body&gt;
+
+&lt;body&gt;
+
+&lt;div class&#x3D;&quot;limiter&quot;&gt;
+    &lt;div class&#x3D;&quot;container-login100&quot;&gt;
+        &lt;div class&#x3D;&quot;wrap-login100 p-b-160 p-t-50&quot;&gt;
+            &lt;form class&#x3D;&quot;login100-form validate-form&quot; action&#x3D;&quot;check.php&quot; method&#x3D;&quot;post&quot;&gt;
+					&lt;span class&#x3D;&quot;login100-form-title p-b-43&quot;&gt;
+						Account Login
+					&lt;&#x2F;span&gt;
+
+                &lt;div class&#x3D;&quot;wrap-input100 rs1 validate-input&quot; data-validate&#x3D;&quot;Username is required&quot;&gt;
+                    &lt;input class&#x3D;&quot;input100&quot; type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;
+                    &lt;span class&#x3D;&quot;label-input100&quot;&gt;Username&lt;&#x2F;span&gt;
+                &lt;&#x2F;div&gt;
+
+
+                &lt;div class&#x3D;&quot;wrap-input100 rs2 validate-input&quot; data-validate&#x3D;&quot;Password is required&quot;&gt;
+                    &lt;input class&#x3D;&quot;input100&quot; type&#x3D;&quot;password&quot; name&#x3D;&quot;password&quot;&gt;
+                    &lt;span class&#x3D;&quot;label-input100&quot;&gt;Password&lt;&#x2F;span&gt;
+                &lt;&#x2F;div&gt;
+
+                &lt;div class&#x3D;&quot;container-login100-form-btn&quot;&gt;
+                    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;login100-form-btn&quot;&gt;
+                        Sign in
+                    &lt;&#x2F;button&gt;
+                &lt;&#x2F;div&gt;
+
+            &lt;&#x2F;form&gt;
+        &lt;&#x2F;div&gt;
+
+    &lt;&#x2F;a&gt;
+
+&lt;&#x2F;div&gt;
+
+&lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;</code></pre></div>
+
+<p>check.php源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$pwd=$_POST[<span class="hljs-string">'password'</span>];
+$uname=$_POST[<span class="hljs-string">'username'</span>];
+
+$mysqli = <span class="hljs-keyword">new</span> mysqli(<span class="hljs-string">'localhost'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'test'</span>);  <span class="hljs-comment">// 数据库服务器的主机名这里使用的本地主机，密码，使用的数据库名</span>
+<span class="hljs-keyword">if</span>(mysqli_connect_errno())&#123;
+    printf(<span class="hljs-string">"fail:%s&lt;br&gt;"</span>,mysqli_connect_error());
+    <span class="hljs-keyword">exit</span>();
+&#125;
+$result = $mysqli-&gt;query(<span class="hljs-string">"select * from users where username='$uname' and password='$pwd'"</span>);
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;TABLE border=1,width=400&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Password&lt;/th&gt;&lt;tr&gt;"</span>;
+
+<span class="hljs-keyword">if</span>($row=mysqli_fetch_row($result))
+&#123;
+	printf (<span class="hljs-string">"&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;"</span>,$row[<span class="hljs-number">1</span>],$row[<span class="hljs-number">2</span>]);
+       	<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"login success"</span>;
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"username or password error"</span>;
+&#125;
+<span class="hljs-comment">// echo "&lt;/TABLE&gt;";</span>
+<span class="hljs-comment">// echo "&lt;/div&gt;";</span>
+$mysqli-&gt;close();
+$result-&gt;close();
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>逻辑很简单，在login.php页面提交用户名和密码，将username和password发送到check.php页面连接数据库检查用户是否合法，用户名和密码都正确则，打印出用户名和密码。</p>
+<p>在数据库建立了一张users和flag表，便于注入。</p>
+<p>表中的内容如下</p>
+<p><img src="https://i.loli.net/2020/11/13/YACXPd9oOZvhfxN.png" srcset="/img/loading.gif" alt="sql1.png"></p>
+<p><img src="https://i.loli.net/2020/11/13/oTqy8WhX6CGwS9A.png" srcset="/img/loading.gif" alt="sql2.png"></p>
+<p><img src="https://i.loli.net/2020/11/13/ghDmGtqeQLCyNZz.png" srcset="/img/loading.gif" alt="sql3.png"></p>
+<h3 id="1-漏洞利用"><a href="#1-漏洞利用" class="headerlink" title="1.漏洞利用"></a>1.漏洞利用</h3><p>直接使用万能密码登陆</p>
+<div class="hljs"><pre><code class="hljs makefile"><span class="hljs-section">username:1' or 1=1 #</span>
+<span class="hljs-section">username:111</span></code></pre></div>
+
+<p>结果打印出了第一个用户的用户名和密码</p>
+<p><img src="https://i.loli.net/2020/11/13/omqb2AzDvC4w69g.png" srcset="/img/loading.gif" alt="sql4.png"></p>
+<p>这个结果也说名了是字符型注入，接下来利用改注入点获取flag</p>
+<h4 id="判断表有几列"><a href="#判断表有几列" class="headerlink" title="判断表有几列"></a>判断表有几列</h4><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span>
+页面显示正常，而改为<span class="hljs-number">4</span>的时候网页出现报错，说明了只有三列
+<span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">4</span><span class="hljs-comment">#</span></code></pre></div>
+
+
+
+<h4 id="判断显示位"><a href="#判断显示位" class="headerlink" title="判断显示位"></a>判断显示位</h4><div class="hljs"><pre><code class="hljs gauss">' <span class="hljs-built_in">union</span> <span class="hljs-built_in">select</span> <span class="hljs-number">1</span>,<span class="hljs-built_in">database</span>(),<span class="hljs-number">3</span><span class="hljs-meta">#</span></code></pre></div>
+
+
+
+<p>说明有两个显示位，选择其中一个位置进行注入即可。</p>
+<h4 id="获取表名"><a href="#获取表名" class="headerlink" title="获取表名"></a>获取表名</h4><div class="hljs"><pre><code class="hljs sql">' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name),<span class="hljs-number">3</span> <span class="hljs-keyword">from</span> information_schema.TABLES <span class="hljs-keyword">where</span> TABLE_SCHEMA=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/13/btQg6vFRZipUd1n.png" srcset="/img/loading.gif" alt="sql6.png"></p>
+<h4 id="获取列名"><a href="#获取列名" class="headerlink" title="获取列名"></a>获取列名</h4><div class="hljs"><pre><code class="hljs sql">' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(COLUMN_name),<span class="hljs-number">3</span> <span class="hljs-keyword">from</span> information_schema.COLUMNS <span class="hljs-keyword">where</span> TABLE_NAME=<span class="hljs-string">'flag'</span><span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/13/KlwToCWSGiau4FM.png" srcset="/img/loading.gif" alt="sql7.png"></p>
+<p>（fl4g是dvwa实验中建立没有删除，所以也显示出来了）</p>
+<h4 id="获取flag"><a href="#获取flag" class="headerlink" title="获取flag"></a>获取flag</h4><div class="hljs"><pre><code class="hljs sql">' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(flag),<span class="hljs-number">3</span> <span class="hljs-keyword">from</span> flag<span class="hljs-comment">#</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/13/wIQmSv7oCeXVWiR.png" srcset="/img/loading.gif" alt="sqlflag.png"></p>
+<h3 id="2-漏洞防御"><a href="#2-漏洞防御" class="headerlink" title="2.漏洞防御"></a>2.漏洞防御</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a><strong>方法一：</strong></h4><p>最简单的方法对用户名和密码的长度限制，一般用户名的长度不超过十五个字符，而密码的长度一般不超过16个字符长度，所以对用户输入限制长度是最有效的方法之一。因为一般的注入语句都是超过十六个字符的，想要在十六个字符之内构造出有效的注入语句是一件很难的事情。</p>
+<p>代码实现</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$pwd=$_POST[<span class="hljs-string">'password'</span>];
+$uname=$_POST[<span class="hljs-string">'username'</span>];
+$mysqli = <span class="hljs-keyword">new</span> mysqli(<span class="hljs-string">'localhost'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'test'</span>);  <span class="hljs-comment">// 数据库服务器的主机名这里使用的本地主机，密码，使用的数据库名</span>
+<span class="hljs-keyword">if</span>(mysqli_connect_errno())&#123;
+    printf(<span class="hljs-string">"fail:%s&lt;br&gt;"</span>,mysqli_connect_error());
+    <span class="hljs-keyword">exit</span>();
+&#125;
+$result = $mysqli-&gt;query(<span class="hljs-string">"select * from users where username='$uname' and password='$pwd'"</span>);
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;TABLE border=1,width=400&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Password&lt;/th&gt;&lt;tr&gt;"</span>;
+
+<span class="hljs-keyword">if</span>(strlen($pwd)&gt;=<span class="hljs-number">16</span>||strlen($uname)&gt;=<span class="hljs-number">15</span>)
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"It is too long."</span>;
+&#125;
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>($row=mysqli_fetch_row($result))
+&#123;
+	printf (<span class="hljs-string">"&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;"</span>,$row[<span class="hljs-number">1</span>],$row[<span class="hljs-number">2</span>]);
+       	<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"login success."</span>;
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"username or password error."</span>;
+&#125;
+<span class="hljs-comment">// echo "&lt;/TABLE&gt;";</span>
+<span class="hljs-comment">// echo "&lt;/div&gt;";</span>
+$mysqli-&gt;close();
+$result-&gt;close();
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a><strong>方法二</strong></h4><p>对用户输入进行检测和过滤，将其输入的可能产生恶意行为的代码删除或者转义，使其失去原来的功能。</p>
+<p>代码实现</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$pwd=$_POST[<span class="hljs-string">'password'</span>];
+$uname=$_POST[<span class="hljs-string">'username'</span>];
+<span class="hljs-comment">//echo "select * from admin where passward='$pwd' and name='$uname'&lt;br/&gt;";</span>
+<span class="hljs-comment">//echo "&lt;hr&gt;";</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inject_check</span><span class="hljs-params">($Sql_Str)</span> </span>&#123;<span class="hljs-comment">//自动过滤Sql的注入语句。</span>
+   $check=preg_match(<span class="hljs-string">'/select|from|where|if|database|order|insert|update|or|group_concat|\'|\\*|\*|\.\.\/|\.\/|union|and|ascii|substring|sleep/i'</span>,$Sql_Str);
+    <span class="hljs-keyword">if</span> ($check) &#123;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;script language="JavaScript"&gt;alert("hacker");&lt;/script&gt;'</span>;
+        <span class="hljs-keyword">exit</span>();
+    &#125;<span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">return</span> $Sql_Str;
+    &#125;
+&#125;
+$pwd=inject_check($pwd);
+$uname = inject_check($uname);
+$mysqli = <span class="hljs-keyword">new</span> mysqli(<span class="hljs-string">'localhost'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'test'</span>);  <span class="hljs-comment">// 数据库服务器的主机名这里使用的本地主机，密码，使用的数据库名</span>
+<span class="hljs-keyword">if</span>(mysqli_connect_errno())&#123;
+    printf(<span class="hljs-string">"fail:%s&lt;br&gt;"</span>,mysqli_connect_error());
+    <span class="hljs-keyword">exit</span>();
+&#125;
+$result = $mysqli-&gt;query(<span class="hljs-string">"select * from users where username='$uname' and password='$pwd'"</span>);
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;TABLE border=1,width=400&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Password&lt;/th&gt;&lt;tr&gt;"</span>;
+
+<span class="hljs-comment">// if(strlen($pwd)&gt;=16||strlen($uname)&gt;=15)</span>
+<span class="hljs-comment">// &#123;</span>
+<span class="hljs-comment">// 	echo "It is too long.";</span>
+<span class="hljs-comment">// &#125;</span>
+<span class="hljs-comment">// else </span>
+<span class="hljs-keyword">if</span>($row=mysqli_fetch_row($result))
+&#123;
+	printf (<span class="hljs-string">"&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;"</span>,$row[<span class="hljs-number">1</span>],$row[<span class="hljs-number">2</span>]);
+       	<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"login success."</span>;
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"username or password error."</span>;
+&#125;
+<span class="hljs-comment">// echo "&lt;/TABLE&gt;";</span>
+<span class="hljs-comment">// echo "&lt;/div&gt;";</span>
+$mysqli-&gt;close();
+$result-&gt;close();
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>过滤函数如下，其中将一般注入需要用到的函数和符号都过滤了。</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inject_check</span><span class="hljs-params">($Sql_Str)</span> </span>&#123;<span class="hljs-comment">//自动过滤Sql的注入语句。</span>
+    $check=preg_match(<span class="hljs-string">'/select|from|where|if|database|order|insert|update|or|group_concat|\'|\\*|\*|\.\.\/|\.\/|union|and|ascii|substring|sleep/i'</span>,$Sql_Str);
+    <span class="hljs-keyword">if</span> ($check) &#123;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;script language="JavaScript"&gt;alert("hacker");&lt;/script&gt;'</span>;
+        <span class="hljs-keyword">exit</span>();
+    &#125;<span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">return</span> $Sql_Str;
+    &#125;
+&#125;</code></pre></div>
+
+
+
+<h4 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a><strong>方法三</strong></h4><p>使用预编译语句</p>
+<p>代码如下</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$pwd=$_POST[<span class="hljs-string">'password'</span>];
+$uname=$_POST[<span class="hljs-string">'username'</span>];
+
+<span class="hljs-comment">// function inject_check($Sql_Str) &#123;//自动过滤Sql的注入语句。</span>
+<span class="hljs-comment">//     $check=preg_match('/select|from|where|if|database|order|insert|update|or|group_concat|\'|\\*|\*|\.\.\/|\.\/|union|and|ascii|substring|sleep/i',$Sql_Str);</span>
+<span class="hljs-comment">//     if ($check) &#123;</span>
+<span class="hljs-comment">//         echo '&lt;script language="JavaScript"&gt;alert("hacker");&lt;/script&gt;';</span>
+<span class="hljs-comment">//         exit();</span>
+<span class="hljs-comment">//     &#125;else&#123;</span>
+<span class="hljs-comment">//         return $Sql_Str;</span>
+<span class="hljs-comment">//     &#125;</span>
+<span class="hljs-comment">// &#125;</span>
+<span class="hljs-comment">// $pwd=inject_check($pwd);</span>
+<span class="hljs-comment">// $uname = inject_check($uname);</span>
+<span class="hljs-comment">// </span>
+
+$mysqli = <span class="hljs-keyword">new</span> mysqli(<span class="hljs-string">'localhost'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'root'</span>,<span class="hljs-string">'test'</span>);  <span class="hljs-comment">// 数据库服务器的主机名这里使用的本地主机，密码，使用的数据库名</span>
+<span class="hljs-keyword">if</span>(mysqli_connect_errno())&#123;
+    printf(<span class="hljs-string">"fail:%s&lt;br&gt;"</span>,mysqli_connect_error());
+    <span class="hljs-keyword">exit</span>();
+&#125;
+
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;TABLE border=1,width=400&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Password&lt;/th&gt;&lt;tr&gt;"</span>;
+$result =  $mysqli-&gt;prepare(<span class="hljs-string">"select * from users where username=? and password=?"</span>);
+
+$result-&gt;bind_param(<span class="hljs-string">'ss'</span>,$uname,$pwd);
+$result-&gt;execute();
+$result-&gt;store_result();
+$result-&gt;bind_result($id,$un,$pd); <span class="hljs-comment">//将查询到的变量绑定到三个自定义的变量中，输出时直接输出这三个变量即可。</span>
+<span class="hljs-keyword">if</span>($result-&gt;fetch())
+&#123;
+	printf(<span class="hljs-string">"&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;"</span>,$un,$pd);
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"username or password error."</span>;
+&#125;
+
+
+
+<span class="hljs-comment">// if(strlen($pwd)&gt;=16||strlen($uname)&gt;=15)</span>
+<span class="hljs-comment">// &#123;</span>
+<span class="hljs-comment">// 	echo "It is too long.";</span>
+<span class="hljs-comment">// &#125;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;/TABLE&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;/div&gt;"</span>;
+$result-&gt;close();
+$mysqli-&gt;close();
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>应用预编译语句后，再次输入注入语句后就不再起到注入作用，只是将其当成正常的查询过程，返回相应的结果。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A/">网安作业</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
+                    
+                      <a class="hover-with-bg" href="/tags/xss/">xss</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
+          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
+          placeholder: "说点什么吧~~~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "xss和sql注入简单环境的搭建&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
