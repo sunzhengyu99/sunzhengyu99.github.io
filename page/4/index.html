@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="sunzy">
   <meta name="keywords" content="">
-  <title>归档 - 一路走到黑</title>
+  <title>一路走到黑</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -43,7 +43,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -162,6 +162,10 @@
           </div>
 
           
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -171,51 +175,75 @@
     
       <div class="container nopadding-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 31 篇文章</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2020</p>
     
-    <a href="/2020/10/28/%E5%8D%8E%E4%B8%BA%E6%9D%AF/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">cumt华为杯</span>
-      <time style="float: right;">10-28</time>
-    </a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">迷宫问题</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/03/20/%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98/">
+          
+          
+            
+          
+          迷宫问题
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-03-20 18:07" pubdate>
+              2020-03-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/C/">C++</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/bfs/">bfs</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    </span>
+  </nav>
   
-    
-    <a href="/2020/10/08/buuoj-LFI/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">buuctf-LFI</span>
-      <time style="float: right;">10-08</time>
-    </a>
-  
-    
-    <a href="/2020/10/08/buuoj-upload/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">buuctf-upload</span>
-      <time style="float: right;">10-08</time>
-    </a>
-  
-    
-    <a href="/2020/10/08/buuoj-z7z8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">buuctf-z7z8</span>
-      <time style="float: right;">10-08</time>
-    </a>
-  
-    
-    <a href="/2020/10/05/buuoj/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">buuctf-sql注入</span>
-      <time style="float: right;">10-05</time>
-    </a>
-  
-</div>
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -331,7 +359,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "九层之台,起于垒土!&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

