@@ -233,13 +233,13 @@
     
     <tags>
       
-      <tag>ssrf</tag>
-      
       <tag>md5</tag>
       
-      <tag>unserialize</tag>
+      <tag>ssrf</tag>
       
       <tag>system</tag>
+      
+      <tag>unserialize</tag>
       
     </tags>
     
@@ -293,9 +293,9 @@
     
     <tags>
       
-      <tag>sql</tag>
-      
       <tag>md5</tag>
+      
+      <tag>sql</tag>
       
       <tag>php伪协议</tag>
       
@@ -523,15 +523,15 @@
     
     <tags>
       
+      <tag>md5</tag>
+      
+      <tag>sql</tag>
+      
       <tag>弱类型</tag>
       
       <tag>域名解析</tag>
       
       <tag>爆破</tag>
-      
-      <tag>sql</tag>
-      
-      <tag>md5</tag>
       
       <tag>脚本</tag>
       
@@ -587,9 +587,9 @@
     
     <tags>
       
-      <tag>弱类型</tag>
-      
       <tag>sql</tag>
+      
+      <tag>弱类型</tag>
       
       <tag>php</tag>
       
@@ -618,9 +618,9 @@
     
     <tags>
       
-      <tag>sql</tag>
-      
       <tag>md5</tag>
+      
+      <tag>sql</tag>
       
       <tag>代码审计</tag>
       
