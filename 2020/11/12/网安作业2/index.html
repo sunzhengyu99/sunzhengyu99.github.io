@@ -246,7 +246,7 @@
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h1 id="DVWA实验"><a href="#DVWA实验" class="headerlink" title="DVWA实验"></a>DVWA实验</h1><p>一下都是基于low级别的实验，为了方便叙述，提前在数据库中建了一个flag表</p>
+              <h1 id="DVWA实验"><a href="#DVWA实验" class="headerlink" title="DVWA实验"></a>DVWA实验</h1><p>一下都是基于low,mid,high级别的实验，为了方便叙述，提前在数据库中建了一个flag表</p>
 <h2 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h2><p>使用工具 ：bp</p>
 <p>使用材料：密码字典</p>
 <h3 id="bp的四种爆破攻击类型"><a href="#bp的四种爆破攻击类型" class="headerlink" title="bp的四种爆破攻击类型"></a>bp的四种爆破攻击类型</h3><h4 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h4><p>Sniper标签 这个是我们最常用的，Sniper是狙击手的意思。这个模式会使用单一的payload【就是导入字典的payload】组。它会针对每个position中$$位置设置payload。这种攻击类型适合对常见漏洞中的请求参数单独地进行测试。攻击中的请求总数应该是position数量和payload数量的乘积。</p>
@@ -254,12 +254,12 @@
 <h4 id="第三种："><a href="#第三种：" class="headerlink" title="第三种："></a>第三种：</h4><p>Pitchfork – 这一模式是使用多个payload组。对于定义的位置可以使用不同的payload组。攻击会同步迭代所有的payload组，把payload放入每个定义的位置中。比如：position中A处有a字典，B处有b字典，则a【1】将会对应b【1】进行attack处理，这种攻击类型非常适合那种不同位置中需要插入不同但相关的输入的情况。请求的数量应该是最小的payload组中的payload数量</p>
 <h4 id="第四种："><a href="#第四种：" class="headerlink" title="第四种："></a>第四种：</h4><p>Cluster bomb – 这种模式会使用多个payload组。每个定义的位置中有不同的payload组。攻击会迭代每个payload组，每种payload组合都会被测试一遍。比如：position中A处有a字典，B处有b字典，则两个字典将会循环搭配组合进行attack处理这种攻击适用于那种位置中需要不同且不相关或者未知的输入的攻击。攻击请求的总数是各payload组中payload数量的乘积。</p>
 <h3 id="low"><a href="#low" class="headerlink" title="low"></a>low</h3><p>1.抓包–&gt;ctrl+I –&gt;标记要爆破的参数，这里直接爆破password</p>
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint1.png" srcset="/img/loading.gif" alt="int1"></p>
+<p><img src="https://i.loli.net/2020/11/26/pEXImJf8eL1R7xq.png" srcset="/img/loading.gif" alt="int1.png"></p>
 <p>2.选择要加载的密码字典，可以使用自己准备的密码字典，也可以使用bp自带的密码字典，但是最重要的是要包含正确达到密码</p>
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint3.png" srcset="/img/loading.gif" alt="int3"></p>
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint2.png" srcset="/img/loading.gif" alt="int2"></p>
+<p><img src="https://i.loli.net/2020/11/26/7hkFZm134qy8auw.png" srcset="/img/loading.gif" alt="int3.png"></p>
+<p><img src="https://i.loli.net/2020/11/26/SY9gXKPaRDoJ16k.png" srcset="/img/loading.gif" alt="int2.png"></p>
 <p>3.开始爆破 ，根据响应包的长度筛选出正确密码的响应包，这里只有当密码为password的时候响应包的长度为4743,所以password就是争取密码。</p>
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CDesktop%5C%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A%5Cint4.png" srcset="/img/loading.gif" alt="int4"></p>
+<p><img src="https://i.loli.net/2020/11/26/GOsWwrvcobAxEpV.png" srcset="/img/loading.gif" alt="int4.png"></p>
 <h3 id="medium"><a href="#medium" class="headerlink" title="medium"></a>medium</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 
 <span class="hljs-keyword">if</span>( <span class="hljs-keyword">isset</span>( $_GET[ <span class="hljs-string">'Login'</span> ] ) ) &#123;

