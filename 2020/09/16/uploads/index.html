@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -255,7 +255,7 @@
 <div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (($_FILES[<span class="hljs-string">'upload_file'</span>][<span class="hljs-string">'type'</span>] == <span class="hljs-string">'image/jpeg'</span>) || ($_FILES[<span class="hljs-string">'upload_file'</span>][<span class="hljs-string">'type'</span>] == <span class="hljs-string">'image/png'</span>) || ($_FILES[<span class="hljs-string">'upload_file'</span>][<span class="hljs-string">'type'</span>] == <span class="hljs-string">'image/gif'</span>))</code></pre></div>
 
 <p>这段代码说明是对文件的<code>MIME</code>类型进行了过滤，直接上传 1.php 抓包后修改文件类型为 <code>&#39;image/jpeg&#39; ,&#39;image/png&#39;,&#39;image/gif&#39;</code>,这三个类型都为图片</p>
-<p><img src="/2020/09/16/uploads/2.png" srcset="/img/loading.gif" alt></p>
+<p>抓包修改MIME即可</p>
 <p>知识点补充：</p>
 <p> <strong>MIME类型对大小写不敏感，但是传统写法都是小写。</strong> </p>
 <div class="hljs"><pre><code class="hljs applescript"><span class="hljs-built_in">text</span>/plain
@@ -276,7 +276,6 @@ video/mp4
 <h2 id="pass3"><a href="#pass3" class="headerlink" title="pass3"></a>pass3</h2><div class="hljs"><pre><code class="hljs php">$deny_ext = <span class="hljs-keyword">array</span>(<span class="hljs-string">'.asp'</span>,<span class="hljs-string">'.aspx'</span>,<span class="hljs-string">'.php'</span>,<span class="hljs-string">'.jsp'</span>);</code></pre></div>
 
 <p>只禁止了.asp,.aspx,.php,.jsp后缀文件，可以使用php3,php5,php7,phtml等等后缀名绕过</p>
-<p><img src="/2020/09/16/uploads/3.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass4"><a href="#pass4" class="headerlink" title="pass4"></a>pass4</h2><p><strong>.htaccess</strong>文件的作用</p>
 <blockquote>
 <ul>
@@ -361,8 +360,6 @@ $msg = <span class="hljs-keyword">null</span>;
 <div class="hljs"><pre><code class="hljs php">$file_ext = strtolower($file_ext); <span class="hljs-comment">//转换为小写</span></code></pre></div>
 
 <p>这里就可以大小写绕过。将文件后缀名改为<code>.pHp , .PHP</code>等</p>
-<p><img src="/2020/09/16/uploads/6.png" srcset="/img/loading.gif" alt></p>
-<p><img src="/2020/09/16/uploads/6-1.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass7"><a href="#pass7" class="headerlink" title="pass7"></a>pass7</h2><div class="hljs"><pre><code class="hljs php">$is_upload = <span class="hljs-keyword">false</span>;
 $msg = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'submit'</span>])) &#123;
@@ -392,7 +389,7 @@ $msg = <span class="hljs-keyword">null</span>;
 
 <p>跟第六关对比发现少了这句话</p>
 <div class="hljs"><pre><code>$file_ext = trim($file_ext); //首尾去空</code></pre></div><p> <strong>利用Windows系统的文件名特性。文件名最后增加空格和点，写成<code>1.php .</code>，这个需要用burpsuite抓包修改，上传后保存在Windows系统上的文件名最后的一个<code>.</code>会被去掉，实际上保存的文件名就是1<code>.php</code></strong> </p>
-<p><img src="/2020/09/16/uploads/7.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/QsiotIUBjlkmYqc.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass8"><a href="#pass8" class="headerlink" title="pass8"></a>pass8</h2><div class="hljs"><pre><code class="hljs php">$is_upload = <span class="hljs-keyword">false</span>;
 $msg = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'submit'</span>])) &#123;
@@ -422,8 +419,7 @@ $msg = <span class="hljs-keyword">null</span>;
 
 <p>这段代码少了这句话，可以与第六关相同的做法</p>
 <p><code>$file_name = deldot($file_name);//删除文件名末尾的点</code></p>
-<p><img src="/2020/09/16/uploads/8.png" srcset="/img/loading.gif" alt></p>
-<p><img src="/2020/09/16/uploads/8-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/tyb45fg3MiCU1jG.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass9"><a href="#pass9" class="headerlink" title="pass9"></a>pass9</h2><div class="hljs"><pre><code class="hljs php">$is_upload = <span class="hljs-keyword">false</span>;
 $msg = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'submit'</span>])) &#123;
@@ -456,7 +452,7 @@ $msg = <span class="hljs-keyword">null</span>;
 
 <p> 采用Windows文件流特性绕过 </p>
 <p>将文件名改为 <code>1.php::$DATA</code>,但是实质上保存的文件还是1.php</p>
-<p><img src="/2020/09/16/uploads/9.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/XKUGAeVRzTxNW8Y.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass10"><a href="#pass10" class="headerlink" title="pass10"></a>pass10</h2><div class="hljs"><pre><code class="hljs php">$is_upload = <span class="hljs-keyword">false</span>;
 $msg = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'submit'</span>])) &#123;
@@ -486,9 +482,8 @@ $msg = <span class="hljs-keyword">null</span>;
 &#125;</code></pre></div>
 
 <p> 这一句代码是用来检测末尾是否是<code>.</code>，可以双写绕过。<br>抓包将文件名改为<code>1.php. .</code> （注意两点之间有空格） 前面去掉.然后检验.不存在，再去空格，留下php.，然后php.不属于$deny_ext数组中存在的，当然就直接提交了。因为windows自动去点，于是php后缀就出来了 </p>
-<img src="/2020/09/16/uploads/10.png" srcset="/img/loading.gif" style="zoom:50%;">
+<img src="https://i.loli.net/2020/11/30/wldCgUcOSKWPxMu.png" srcset="/img/loading.gif" style="zoom:50%;">
 
-<p><img src="/2020/09/16/uploads/10-1.png" srcset="/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -556,7 +551,7 @@ $msg = <span class="hljs-keyword">null</span>;
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -570,6 +565,9 @@ $msg = <span class="hljs-keyword">null</span>;
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -823,7 +821,43 @@ $msg = <span class="hljs-keyword">null</span>;
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

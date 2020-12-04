@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      733 字
+      728 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -249,19 +249,17 @@
               <h1 id="BJDCTF-web"><a href="#BJDCTF-web" class="headerlink" title="BJDCTF-web"></a>BJDCTF-web</h1><a id="more"></a>
 
 <h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy md5"></a>easy md5</h2><p>F12看到了提示，给出了sql语句</p>
-<p><img src="/2020/09/28/BJDCTF2020/md5-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/xmkWoepyYVCLaXt.png" srcset="/img/loading.gif" alt></p>
 <div class="hljs"><pre><code class="hljs pgsql">Hint: <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'admin'</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">password</span>=md5($pass,<span class="hljs-keyword">true</span>)</code></pre></div>
 
 <p>这里是将输入的密码进行了一次md5的加密</p>
-<p><strong>md5()函数介绍</strong></p>
-<p><img src="/2020/09/28/BJDCTF2020/md5.png" srcset="/img/loading.gif" alt></p>
 <p>这里的参数raw=true ，所以是将我们输入的密码加密16字符二进制格式，如果想完成注入，则md5值经过hex转成字符串后为 ‘or’…….这样的字符串，只要出现了or，且or后面的值为真即可完成注入。</p>
 <p><code>select * from &#39;admin&#39; where password=&#39; or &#39;sdaa</code></p>
 <p>这里经常使用的字符串是<strong>ffifdyop</strong>，该字符串md5加密后若raw参数为True时会返回 <strong>‘or’6&lt;trash&gt;</strong> (&lt;trash&gt;其实就是一些乱码和不可见字符，这里只要第一位是非零数字即可被判定为True，后面的&lt;trash&gt;会在MySQL将其转换成整型比较时丢掉)</p>
 <p>查询语句为</p>
 <p><code>select * from &#39;admin&#39; where password=&#39;or&#39;6&lt;trash&gt;&#39;</code>此查询语句结果为真</p>
 <p>提交 ffifdyop后会跳转到另外的页面，查看源码</p>
-<p><img src="/2020/09/28/BJDCTF2020/md5-2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/37xcmRjU2D951VZ.png" srcset="/img/loading.gif" alt></p>
 <p>这里直接利用md5()函数不能处理数组的特性，get提交 <code>?a[]=1&amp;b[]=2</code></p>
 <p>接下来还有一次跳转，直接post <code>param1[]=1&amp;param2[]=2</code>，拿到flag</p>
 <p><img src="/2020/09/28/BJDCTF2020/mdd5-3.png" srcset="/img/loading.gif" alt></p>
@@ -388,7 +386,7 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -402,6 +400,9 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -655,7 +656,43 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

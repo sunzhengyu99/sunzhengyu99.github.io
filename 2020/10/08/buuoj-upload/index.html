@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -258,15 +258,14 @@
 <div class="hljs"><pre><code class="hljs <FilesMatch">SetHandler application&#x2F;x-httpd-php
 &lt;&#x2F;FilesMatch&gt;</code></pre></div>
 
-<p><img src="/2020/10/08/buuoj-upload/1-2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/Hi3YGuQoWCzg1P2.png" srcset="/img/loading.gif" alt></p>
 <p>上传成功后，再上传包含一句话木马的 a.jpg文件，<code>.htaccess</code>文件的作用就是将指定类型的文件当作php文件运行</p>
 <p>所以表面上是jpg类型的文件，但是是当作php文件</p>
-<p><img src="/2020/10/08/buuoj-upload/1-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/83GHiZg5Ao7IbnF.png" srcset="/img/loading.gif" alt></p>
 <p>上传成功后，蚁剑访问<code>url+/upload/3af588e32ac72180588d18d5c3b470b4/a.jpg</code></p>
 <p>密码为：cmd</p>
 <h2 id="SUCTF-2019-CheckIn"><a href="#SUCTF-2019-CheckIn" class="headerlink" title="[SUCTF 2019]CheckIn"></a>[SUCTF 2019]CheckIn</h2><p>试着上传php文件，提示非法后缀名，继续修改后缀名，发现php3,php5,phtml等可执行文件后不可上传</p>
 <p>想到上传<code>.htacess</code>文件，但是也提示了非法后缀名，这个方法行不通了</p>
-<p><img src="/2020/10/08/buuoj-upload/2-4.png" srcset="/img/loading.gif" alt></p>
 <p>但是之前做upload-labs中还有一个上传<code>.user.ini</code>的文件</p>
 <p><code>.user.ini</code>是什么</p>
 <blockquote>
@@ -279,10 +278,10 @@
 <p><a href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener">传送门</a></p>
 <p><strong>开始做题</strong></p>
 <p>上传.user.ini文件</p>
-<p><img src="/2020/10/08/buuoj-upload/2-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/5zEkKtamYMgWoTh.png" srcset="/img/loading.gif" alt></p>
 <p>GIF89a是GIF文件内容开头的几个字符，其作用是为类绕过<code>exif_imagetype()</code></p>
 <p>上传1.gif</p>
-<p><img src="/2020/10/08/buuoj-upload/2-2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/6sJc1x7viwNqa3Y.png" srcset="/img/loading.gif" alt></p>
 <p>文件保存的路径已经给出，开始蚁剑链接的连接是</p>
 <div class="hljs"><pre><code class="hljs angelscript">url/uploads/<span class="hljs-number">04</span>b0951938d905b41348c1548f9c338b/<span class="hljs-number">1.</span>gif</code></pre></div>
 
@@ -290,7 +289,6 @@
 <p>后来链接index.php才连接上，这里想到了<code>.user.ini</code>作用，是让所有的php文件包含整个一句话木马，而这里文件路径存在一个index.php，所有说index.php中也存在这个一句话木马</p>
 <div class="hljs"><pre><code class="hljs llvm">/uploads/<span class="hljs-number">04</span>b<span class="hljs-number">0951938</span>d<span class="hljs-number">905</span>b<span class="hljs-number">41348</span><span class="hljs-keyword">c</span><span class="hljs-number">1548</span>f<span class="hljs-number">9</span><span class="hljs-keyword">c</span><span class="hljs-number">338</span>b/index.php</code></pre></div>
 
-<p><img src="/2020/10/08/buuoj-upload/2-3.png" srcset="/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -352,7 +350,7 @@
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -366,6 +364,9 @@
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -619,7 +620,43 @@
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

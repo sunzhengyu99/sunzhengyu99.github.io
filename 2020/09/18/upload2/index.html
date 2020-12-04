@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -272,7 +272,6 @@ $msg = <span class="hljs-keyword">null</span>;
 <p> <code>$file_name = str_ireplace($deny_ext,&quot;&quot;, $file_name);</code></p>
 <p>这段代码是将文件名中出现  <code>deny_ext</code>的后缀名替换为空</p>
 <p>可以双写绕过，即<code>1.pphphp</code></p>
-<p><img src="/2020/09/18/upload2/11.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass12"><a href="#pass12" class="headerlink" title="pass12"></a>pass12</h2><div class="hljs"><pre><code class="hljs php">$is_upload = <span class="hljs-keyword">false</span>;
 $msg = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'submit'</span>]))&#123;
@@ -296,13 +295,12 @@ $msg = <span class="hljs-keyword">null</span>;
 <p>这里用的<code>%00截断</code>，原理如下</p>
 <p><code>www.xxx.com/qq.jpg</code></p>
 <p><code>www.xxx.com/qq.php%00.jpg =&gt; www.xxx.com/qq.php</code>其后缀名为.jpg可以绕过检测，但是windows系统处理时不会处理%00之后的内容故保存的文件就是qq.php</p>
-<p><img src="/2020/09/18/upload2/12.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/TwSKHkqZFC78uRd.png" srcset="/img/loading.gif" alt></p>
 <h2 id="pass13"><a href="#pass13" class="headerlink" title="pass13"></a>pass13</h2><p>这题与上题利用的原理相同</p>
 <p>但是这里要使用 00的二进制形式</p>
 <p><img src="/2020/09/18/upload2/13.png" srcset="/img/loading.gif" alt></p>
 <p><img src="/2020/09/18/upload2/13-1.png" srcset="/img/loading.gif" alt></p>
-<h2 id="pass14"><a href="#pass14" class="headerlink" title="pass14"></a>pass14</h2><p><img src="/2020/09/18/upload2/14.png" srcset="/img/loading.gif" alt></p>
-<p>明确说了上传图片木马</p>
+<h2 id="pass14"><a href="#pass14" class="headerlink" title="pass14"></a>pass14</h2><p>明确说了上传图片木马</p>
 <div class="hljs"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getReailFileType</span><span class="hljs-params">($filename)</span></span>&#123;
     $file = fopen($filename, <span class="hljs-string">"rb"</span>);
     $bin = fread($file, <span class="hljs-number">2</span>); <span class="hljs-comment">//只读2字节</span>
@@ -329,9 +327,9 @@ $msg = <span class="hljs-keyword">null</span>;
 <p><strong>GIF89a</strong> 是GIF图片的文件头 ，是为了绕过gif文件的检查</p>
 <p><strong>图片木马的制作</strong></p>
 <p>桌面建立一个文本文件将其改为2.jpg，再建立一个改为1.php,其内容为你想添加的一句话木马</p>
-<p><img src="/2020/09/18/upload2/14-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/vXmVIJ3OEzcnrsL.png" srcset="/img/loading.gif" alt></p>
 <p><code>copy 2.jpg /b + 1.php /a webshell.jpg</code></p>
-<p><img src="/2020/09/18/upload2/14-2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/KWgpdyf8xoFqcMn.png" srcset="/img/loading.gif" alt></p>
 <p><strong>未完待续。。。</strong></p>
 
             </div>
@@ -394,7 +392,7 @@ $msg = <span class="hljs-keyword">null</span>;
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -408,6 +406,9 @@ $msg = <span class="hljs-keyword">null</span>;
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -661,7 +662,43 @@ $msg = <span class="hljs-keyword">null</span>;
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

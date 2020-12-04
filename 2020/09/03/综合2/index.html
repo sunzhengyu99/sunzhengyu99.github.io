@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：3 个月前
+                  本文最后更新于：2 天前
                 
               </p>
             
@@ -249,7 +249,7 @@
               <h1 id="NCTF-综合2"><a href="#NCTF-综合2" class="headerlink" title="NCTF-综合2"></a>NCTF-综合2</h1><a id="more"></a>
 
 <p>进入页面，没什么特别的地方，随便点点</p>
-<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/9Vf7JA3OWC68arb.png" srcset="/img/loading.gif" alt></p>
 <p>留言可以正常提交，本以为有xss,但是已经提示不是xss</p>
 <p>看到最下面有个网站说明   <a href="http://cms.nuptzj.cn/about.php?file=sm.txt" target="_blank" rel="noopener">本CMS说明</a>  ，有用的内容如下</p>
 <blockquote>
@@ -334,15 +334,15 @@ mysql_close($con);
 <p>3.对soid进行过滤后带入sql语句中查询</p>
 <p>于是抓包修改user-agent</p>
 <p>确定存在注入点</p>
-<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/KGcINOm5XAxVhDE.png" srcset="/img/loading.gif" alt></p>
 <p>由于之前提示了<strong>admin表结构 create table admin ( id integer, username text, userpass text, )</strong>  </p>
 <p>可直接写出查询语句</p>
 <div class="hljs"><pre><code class="hljs reasonml">(sselectelect<span class="hljs-comment">/**/</span>group<span class="hljs-constructor">_concat(<span class="hljs-params">userppassass</span>)</span><span class="hljs-comment">/**/</span>ffromrom<span class="hljs-comment">/**/</span>aadmindmin)</code></pre></div>
 
-<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/5.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/wMtHrAcuYVWOn91.png" srcset="/img/loading.gif" alt></p>
 <p>ASCII码转字符串结果为： fuckruntu </p>
 <p>登录</p>
-<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/6.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/qZmL6EeW8O3MsYX.png" srcset="/img/loading.gif" alt></p>
 <p> <strong><a href="http://cms.nuptzj.cn/about.php?file=xlcteam.php" target="_blank" rel="noopener">http://cms.nuptzj.cn/about.php?file=xlcteam.php</a></strong>  查看源码</p>
 <div class="hljs"><pre><code class="hljs php"> <span class="hljs-meta">&lt;?php</span> 
 $e = $_REQUEST[<span class="hljs-string">'www'</span>]; 
@@ -354,7 +354,6 @@ array_walk($arr, $e, <span class="hljs-string">''</span>);
 <p> 那怎么利用小马呢，数组的value中是|.*|e，这里用到了正则匹配的preg_replace()的一个漏洞：<br>参考<a href="https://www.jb51.net/article/38714.htm" target="_blank" rel="noopener">https://www.jb51.net/article/38714.htm</a><br>简单来说就是正则中/e(这里和|e效果一样) 修正符使 preg_replace() 将 replacement 参数当作 PHP 代码（在适当的逆向引用替换完之后）。提示：要确保 replacement 构成一个合法的 PHP 代码字符串，否则 PHP 会在报告在包含 preg_replace() 的行中出现语法解析错误。<br>所以我们可以传递preg_replace给www，这样array中的值就是第一个参数，键就是第二个参数，正好可以利用preg_replace的漏洞，然后会执行$_POST[‘wtf’]，就相当于一个一句话马了。<br>用菜刀连接： </p>
 <p>url:<a href="http://cms.nuptzj.cn/xlcteam.php?www=preg_replace" target="_blank" rel="noopener">http://cms.nuptzj.cn/xlcteam.php?www=preg_replace</a></p>
 <p>密码：wtf</p>
-<p><img src="/2020/09/03/%E7%BB%BC%E5%90%882/7.png" srcset="/img/loading.gif" alt></p>
 <p><strong>总结：算是一道比较难的题目了，涉及到知识点也很多，还需要多看看！！！</strong></p>
 
             </div>
@@ -419,7 +418,7 @@ array_walk($arr, $e, <span class="hljs-string">''</span>);
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -433,6 +432,9 @@ array_walk($arr, $e, <span class="hljs-string">''</span>);
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -686,7 +688,43 @@ array_walk($arr, $e, <span class="hljs-string">''</span>);
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

