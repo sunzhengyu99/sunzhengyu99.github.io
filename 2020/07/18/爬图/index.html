@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：3 个月前
+                  本文最后更新于：16 天前
                 
               </p>
             
@@ -252,7 +252,7 @@
 requests <span class="hljs-comment">#url请求</span>
 <span class="hljs-built_in">time</span>   <span class="hljs-comment">#时间</span>
 os     <span class="hljs-comment">#用于创建文件夹，保存图片</span></code></pre></div>
-<p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="/2020/07/18/%E7%88%AC%E5%9B%BE/picturelink.png" srcset="/img/loading.gif" alt="1"><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
+<p>##准备工作<br>1.首先访问该链接<br><code>https://www.vmgirls.com/</code><br>2.随便点击一个进入查看详情<br><code>https://www.vmgirls.com/13344.html</code><br>3.F12审查元素网查看页详情，主要查看图片链接的标签位置，写出正则表达式<br><img src="https://i.loli.net/2020/12/04/49X1BbloChqFsic.png" srcset="/img/loading.gif" alt="1"><br>该正则表达式为<code>findlinks = &#39;&lt;a href=&quot;(.*?)&quot; alt=&quot;.*?&quot; title=&quot;.*?&quot;&gt;&#39;</code></p>
 <h2 id="完整程序"><a href="#完整程序" class="headerlink" title="完整程序"></a>完整程序</h2><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
 <span class="hljs-comment">#@Time : 2020/7/16 13:36</span>
 <span class="hljs-comment">#@Author : sunzy</span>

