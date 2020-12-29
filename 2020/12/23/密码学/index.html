@@ -1,0 +1,1254 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
+  <link rel="icon" type="image/png" href="/img/feiji.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="sunzy">
+  <meta name="keywords" content="">
+  <title>密码学 - 一路走到黑</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-23 16:37" pubdate>
+        2020年12月23日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      67
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">密码学</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：6 天前
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <p>密码学实验课程设计</p>
+<h1 id="一、古典密码"><a href="#一、古典密码" class="headerlink" title="一、古典密码"></a>一、古典密码</h1><h2 id="仿射密码"><a href="#仿射密码" class="headerlink" title="仿射密码"></a>仿射密码</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>仿射加密在本质上还是一个置换密码：如果说移位密码是一个常数级别的置换，那么，仿射加密是一个一次级别的置换</p>
+<h3 id="加密原理"><a href="#加密原理" class="headerlink" title="加密原理"></a>加密原理</h3><p>假设X，Y，A，B是Z26整数环中的元素，A和B为密钥，X是原文，Y是密文</p>
+<p>加密函数：Y=（AX+B）%26</p>
+<p>解密函数：Y=（AX+B）%26，得到：X=（A的逆元）*（Y-B）%26</p>
+<p>原理很简单，代码实现也比较简单</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>各个函数作用</p>
+<div class="hljs"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">gcd</span><span class="hljs-params">(a,b)</span></span>  求<span class="hljs-selector-tag">a</span>,b的最大公因子
+<span class="hljs-function"><span class="hljs-title">findModReverse</span><span class="hljs-params">(a,m)</span></span>  计算a模m的逆元
+<span class="hljs-function"><span class="hljs-title">encode</span><span class="hljs-params">(a,b,s)</span></span>       仿射加密
+<span class="hljs-function"><span class="hljs-title">decode</span><span class="hljs-params">(a,b,s)</span></span>		仿射解密</code></pre></div>
+
+<p>利用扩展的欧几里得算法求逆元</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd</span><span class="hljs-params">(a,b)</span>:</span>  <span class="hljs-comment"># 求出最大公因数</span>
+    <span class="hljs-keyword">while</span> a!=<span class="hljs-number">0</span>:
+        a,b = b%a,a
+    <span class="hljs-keyword">return</span> b
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findModReverse</span><span class="hljs-params">(a,m)</span>:</span> <span class="hljs-comment">#扩展欧几里得算法求模逆</span>
+    <span class="hljs-keyword">if</span> gcd(a,m)!=<span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    u1,u2,u3 = <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,a
+    v1,v2,v3 = <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,m
+    <span class="hljs-keyword">while</span> v3!=<span class="hljs-number">0</span>:
+        q = u3//v3
+        v1,v2,v3,u1,u2,u3 = (u1-q*v1),(u2-q*v2),(u3-q*v3),v1,v2,v3
+    <span class="hljs-keyword">return</span> u1%m</code></pre></div>
+
+<p>完整代码如下</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd</span><span class="hljs-params">(a,b)</span>:</span>  <span class="hljs-comment"># 求出最大公因数</span>
+    <span class="hljs-keyword">while</span> a!=<span class="hljs-number">0</span>:
+        a,b = b%a,a
+    <span class="hljs-keyword">return</span> b
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findModReverse</span><span class="hljs-params">(a,m)</span>:</span> <span class="hljs-comment">#扩展欧几里得算法求模逆</span>
+    <span class="hljs-keyword">if</span> gcd(a,m)!=<span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    u1,u2,u3 = <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,a
+    v1,v2,v3 = <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,m
+    <span class="hljs-keyword">while</span> v3!=<span class="hljs-number">0</span>:
+        q = u3//v3
+        v1,v2,v3,u1,u2,u3 = (u1-q*v1),(u2-q*v2),(u3-q*v3),v1,v2,v3
+    <span class="hljs-keyword">return</span> u1%m
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encode</span><span class="hljs-params">(a,b,s)</span>:</span>
+    result = <span class="hljs-string">""</span>          <span class="hljs-comment"># 保存加密结果</span>
+    s = s.upper()		 <span class="hljs-comment"># 全部转换为大写，方便计算</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>,len(s)):
+        s2 = chr((a*(ord(s[i])<span class="hljs-number">-65</span>)+b)%<span class="hljs-number">26</span> + <span class="hljs-number">65</span>)  <span class="hljs-comment">#使用加密公式 Y=（AX+B）%26</span>
+        result = result +s2
+    print(result.lower())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decode</span><span class="hljs-params">(a,b,s)</span>:</span>
+    a1 = findModReverse(a,<span class="hljs-number">26</span>)
+    result = <span class="hljs-string">""</span>
+    s = s.upper()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(s)):
+        s2 = chr((a1 * (ord(s[i]) - <span class="hljs-number">65</span> - b)) % <span class="hljs-number">26</span> + <span class="hljs-number">65</span>) <span class="hljs-comment"># 使用解密公式X=（A的逆元）*（Y-B）%26</span>
+        result = result + s2
+    print(result.lower())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">s_decode</span><span class="hljs-params">(a,b,s)</span>:</span>
+    letter =<span class="hljs-string">'abcdefghijklmnopqrstuvwxyz'</span>
+    letter = letter.upper()
+    s = s.upper()
+    result = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>,len(letter)):
+            <span class="hljs-keyword">if</span> i == letter[(a*j+b)%<span class="hljs-number">26</span>]:
+                result = result+letter[j]
+    print(result.lower())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>										<span class="hljs-comment"># 主函数入口</span>
+    answer = input(<span class="hljs-string">f'请输入所需的操作：编码/E or 解码/D: '</span>)
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">if</span> answer.upper() == <span class="hljs-string">'E'</span>:
+            a = int(input(<span class="hljs-string">'请输入a:'</span>))
+            b = int(input(<span class="hljs-string">'请输入b:'</span>))
+            s = input(<span class="hljs-string">'请输入需要加密的字符:'</span>)
+            encode(a, b, s)
+        <span class="hljs-keyword">elif</span> answer.upper() == <span class="hljs-string">'D'</span>:
+            a = int(input(<span class="hljs-string">'请输入a:'</span>))
+            b = int(input(<span class="hljs-string">'请输入b:'</span>))
+            s = input(<span class="hljs-string">'请输入需要解密的字符：'</span>)
+            decode(a, b, s)  <span class="hljs-comment"># 利用逆元解密</span>
+            <span class="hljs-comment"># s_decode(a,b,s)   # 暴力枚举每一个字符</span>
+        <span class="hljs-keyword">else</span>:
+            print(<span class="hljs-string">'输入错误！'</span>)
+    <span class="hljs-keyword">except</span> KeyError:
+        print(<span class="hljs-string">'请勿输入空格！'</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    main()
+<span class="hljs-comment"># a = 7, b = 22</span>
+<span class="hljs-comment"># plain = firstthesentenceandthentheevidencesaidthequeen</span>
+<span class="hljs-comment"># crypto = falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj</span></code></pre></div>
+
+<p>加解密结果如图所示</p>
+<p><img src="https://i.loli.net/2020/12/23/CqbfOdNB3mxHDt4.png" srcset="/img/loading.gif" alt="image-20201223225306141"></p>
+<p><img src="https://i.loli.net/2020/12/23/CZHiL8cDjlUdvSw.png" srcset="/img/loading.gif" alt="image-20201223225317161"></p>
+<h3 id="破解仿射密码"><a href="#破解仿射密码" class="headerlink" title="破解仿射密码"></a>破解仿射密码</h3><p>这里使用了加解密中的 <code>gcd</code> <code>findModReverse</code>，找出26以内且与26互素的所有数的逆元，并存放在一个列表中</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findAllre</span><span class="hljs-params">()</span>:</span>    <span class="hljs-comment"># 找出所有小于26且与26互素的数</span>
+    re_all = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">26</span>):
+        <span class="hljs-keyword">if</span> gcd(i,<span class="hljs-number">26</span>) == <span class="hljs-number">1</span>:
+            res = findModReverse(i,<span class="hljs-number">26</span>)
+            re_all.append(res)
+    <span class="hljs-comment">#re_all.sort()</span>
+    <span class="hljs-keyword">return</span> re_all</code></pre></div>
+
+<p>完整代码如下</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd</span><span class="hljs-params">(a,b)</span>:</span>  <span class="hljs-comment"># 求出最大公因数</span>
+    <span class="hljs-keyword">while</span> a!=<span class="hljs-number">0</span>:
+        a,b = b%a,a
+    <span class="hljs-keyword">return</span> b
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findModReverse</span><span class="hljs-params">(a,m)</span>:</span> <span class="hljs-comment">#扩展欧几里得算法求模逆</span>
+    <span class="hljs-keyword">if</span> gcd(a,m)!=<span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    u1,u2,u3 = <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,a
+    v1,v2,v3 = <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,m
+    <span class="hljs-keyword">while</span> v3!=<span class="hljs-number">0</span>:
+        q = u3//v3
+        v1,v2,v3,u1,u2,u3 = (u1-q*v1),(u2-q*v2),(u3-q*v3),v1,v2,v3
+    <span class="hljs-keyword">return</span> u1%m
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findAllre</span><span class="hljs-params">()</span>:</span>    <span class="hljs-comment"># 找出所有小于26且与26互素的数</span>
+    re_all = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">26</span>):
+        <span class="hljs-keyword">if</span> gcd(i,<span class="hljs-number">26</span>) == <span class="hljs-number">1</span>:
+            res = findModReverse(i,<span class="hljs-number">26</span>)
+            re_all.append(res)
+    <span class="hljs-comment">#re_all.sort()</span>
+    <span class="hljs-keyword">return</span> re_all
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decode</span><span class="hljs-params">(s)</span>:</span>
+    re_all = findAllre()
+    <span class="hljs-keyword">for</span> k1 <span class="hljs-keyword">in</span> re_all:
+        <span class="hljs-keyword">for</span> k2 <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">26</span>):
+            result = <span class="hljs-string">""</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(s)):
+                s2 = chr(((int(k1) * (ord(s[i]) - <span class="hljs-number">97</span> - k2)) % <span class="hljs-number">26</span> + <span class="hljs-number">97</span>))
+                result = result + s2
+            print(<span class="hljs-string">"k1="</span> + str(findModReverse(k1,<span class="hljs-number">26</span>)) + <span class="hljs-string">", k2="</span> + str(k2) + <span class="hljs-string">" plaintext = "</span> + result)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+   <span class="hljs-comment"># criphertext = 'falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj'</span>
+    criphertext = input(<span class="hljs-string">"请输入要破解的密文: "</span>)
+    criphertext = criphertext.lower()
+    print(<span class="hljs-string">"---------"</span>*<span class="hljs-number">3</span>+<span class="hljs-string">"strat attck"</span>+<span class="hljs-string">"---------"</span>*<span class="hljs-number">3</span>)
+    decode(criphertext)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+     main()</code></pre></div>
+
+<p>效果如下</p>
+<img src="https://i.loli.net/2020/12/23/lrQLWVebkuphvTK.png" srcset="/img/loading.gif" alt="image-20201223170037595" style="zoom:67%;">
+
+<h2 id="维吉尼亚密码"><a href="#维吉尼亚密码" class="headerlink" title="维吉尼亚密码"></a>维吉尼亚密码</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p><strong>维吉尼亚密码</strong>（又译<strong>维热纳尔密码</strong>）是使用一系列<a href="https://baike.baidu.com/item/凯撒密码" target="_blank" rel="noopener">凯撒密码</a>组成密码字母表的加密算法，属于多表密码的一种简单形式。</p>
+<p>维吉尼亚密码曾多次被发明。该方法最早记录在<a href="https://baike.baidu.com/item/吉奥万·巴蒂斯塔·贝拉索" target="_blank" rel="noopener">吉奥万·巴蒂斯塔·贝拉索</a>（ Giovan Battista Bellaso）于1553年所著的书《吉奥万·巴蒂斯塔·贝拉索先生的密码》（<a href="https://baike.baidu.com/item/意大利语" target="_blank" rel="noopener">意大利语</a>：La cifra del. Sig. Giovan Battista Bellaso）中。然而，后来在19世纪时被误传为是<a href="https://baike.baidu.com/item/法国" target="_blank" rel="noopener">法国</a>外交官<a href="https://baike.baidu.com/item/布莱斯·德·维吉尼亚" target="_blank" rel="noopener">布莱斯·德·维吉尼亚</a>（Blaise De Vigenère）所创造，因此现在被称为“维吉尼亚密码”。</p>
+<p>维吉尼亚密码以其简单易用而著称，同时初学者通常难以破解，因而又被称为“不可破译的密码”。这也让很多人使用维吉尼亚密码来加密的目的就是为了将其破解。</p>
+<h3 id="2-加解密原理"><a href="#2-加解密原理" class="headerlink" title="2.加解密原理"></a>2.加解密原理</h3><p><img src="https://i.loli.net/2020/12/23/DFHntXC9Ysp6dyV.png" srcset="/img/loading.gif" alt="image-20201223225441528"></p>
+<p>加解密代码</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 将密钥处理成和密文/明文一样长</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_key</span><span class="hljs-params">(s,key)</span>:</span>
+    nkey = key
+    <span class="hljs-keyword">while</span> len(nkey) &lt; len(s):
+        nkey = nkey+key
+    nkey = nkey[:len(s)]
+    <span class="hljs-keyword">return</span> nkey
+
+<span class="hljs-comment"># 加密函数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encode</span><span class="hljs-params">(s,key)</span>:</span>
+    print(<span class="hljs-string">'加密后的结果： '</span>,end=<span class="hljs-string">''</span>)
+    s1 = s.upper()
+    key1 = solve_key(s, key)
+    key1 = key1.upper()
+
+    result = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>,len(s)):
+        s2 = chr(abs(((ord(s1[i])<span class="hljs-number">-65</span>)+(ord(key1[i])<span class="hljs-number">-65</span>)) % <span class="hljs-number">26</span>) + <span class="hljs-number">65</span>)
+        result = result + s2
+    print(result.lower())
+
+<span class="hljs-comment"># 解密函数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decode</span><span class="hljs-params">(s,key)</span>:</span>
+    print(<span class="hljs-string">'解密后的结果： '</span>, end=<span class="hljs-string">''</span>)
+    s1 = s.upper()
+    key1 = solve_key(s, key)
+    key1 = key1.upper()
+
+    result = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(s)):
+        s2 = chr(((ord(s1[i]) - <span class="hljs-number">65</span>) - (ord(key1[i]) - <span class="hljs-number">65</span>)) % <span class="hljs-number">26</span> + <span class="hljs-number">65</span>)
+        result = result + s2
+    print(result.lower())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+        <span class="hljs-comment"># 函数入口</span>
+        answer = input(<span class="hljs-string">f'请输入所需的操作：编码/E or 解码/D:  '</span>)
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-keyword">if</span> answer.upper() == <span class="hljs-string">'E'</span>:
+                key = input(<span class="hljs-string">'请输入密钥: '</span>)
+                key = <span class="hljs-string">""</span>.join(filter(str.isalpha, key))
+                s = input(<span class="hljs-string">'请输入明文: '</span>)
+                s = <span class="hljs-string">""</span>.join(filter(str.isalpha, s))  <span class="hljs-comment"># 将字符串中的非字母字符去掉</span>
+                <span class="hljs-comment"># print(s)</span>
+                encode(s, key)
+            <span class="hljs-keyword">elif</span> answer.upper() == <span class="hljs-string">'D'</span>:
+                key = input(<span class="hljs-string">'请输入密钥: '</span>)
+                key = <span class="hljs-string">""</span>.join(filter(str.isalpha, key))
+                s = input(<span class="hljs-string">'请输入密文: '</span>)
+                s = <span class="hljs-string">""</span>.join(filter(str.isalpha, s))
+                decode(s, key)
+            <span class="hljs-keyword">else</span>:
+                print(<span class="hljs-string">'输入错误！'</span>)
+        <span class="hljs-keyword">except</span> KeyError:
+            print(<span class="hljs-string">'请检查输入是否正确！'</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    main()</code></pre></div>
+
+
+
+
+
+<h1 id="二、序列密码"><a href="#二、序列密码" class="headerlink" title="二、序列密码"></a>二、序列密码</h1><h2 id="LFSR"><a href="#LFSR" class="headerlink" title="LFSR"></a>LFSR</h2><p>代码实现</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lsrf</span><span class="hljs-params">(inti, top)</span>:</span>
+    sum = <span class="hljs-number">0</span>
+    inti2 = <span class="hljs-string">"0"</span>*len(inti)
+    inti2 = list(inti2)
+    inti1 = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(inti)):
+        <span class="hljs-keyword">if</span> top[i] == <span class="hljs-string">"1"</span>:
+            sum += int(inti[i])
+    sum = sum % <span class="hljs-number">2</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(inti)):
+        <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
+            inti2[i] = str(sum)
+        <span class="hljs-keyword">else</span>:
+            inti2[i] = inti[i - <span class="hljs-number">1</span>]
+    inti1 = inti1.join(inti2)
+    <span class="hljs-keyword">return</span> inti1
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    inti_str = str(input(<span class="hljs-string">"请输入初始化序列："</span>))
+    inti_str = inti_str[::<span class="hljs-number">-1</span>]
+    inti_str_backup = inti_str
+    top = str(input(<span class="hljs-string">"请输入本原多项式："</span>))
+    top = top[::<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span> ** len(inti_str) + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">if</span> inti_str_backup == inti_str <span class="hljs-keyword">and</span> i != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i == <span class="hljs-number">2</span> ** len(inti_str) - <span class="hljs-number">1</span>:
+            print(<span class="hljs-string">"第&#123;0&#125;次"</span>.format(i), inti_str_backup)
+            print(<span class="hljs-string">"是本原多项式且周期是"</span> + str(i))
+            <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">elif</span> inti_str_backup == inti_str <span class="hljs-keyword">and</span> i != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i != <span class="hljs-number">2</span> ** len(inti_str) - <span class="hljs-number">1</span>:
+            print(<span class="hljs-string">"第&#123;0&#125;次"</span>.format(i), inti_str_backup)
+            print(<span class="hljs-string">"不是本原多项式且周期是"</span> + str(i))
+            <span class="hljs-keyword">break</span>
+        print(<span class="hljs-string">"第&#123;0&#125;次"</span>.format(i), inti_str_backup)
+        inti_str_backup = lsrf(inti_str_backup, top)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    main()</code></pre></div>
+
+<p>选择本原多项式和初始序列如下</p>
+<div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">100000000001000000</span>
+<span class="hljs-number">011100010100100101</span></code></pre></div>
+
+<p>程序运行结果</p>
+<p><img src="https://i.loli.net/2020/12/23/gfbRGZ57piKChWS.png" srcset="/img/loading.gif" alt="image-20201223222649800"></p>
+<h2 id="RC4"><a href="#RC4" class="headerlink" title="RC4"></a>RC4</h2><p>完整代码</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> base64
+
+<span class="hljs-comment"># S盒初始化置换,Key为密钥</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Rc4_init</span><span class="hljs-params">(S, Key)</span>:</span>
+    j = <span class="hljs-number">0</span>
+    Key = Key.encode(<span class="hljs-string">'UTF-8'</span>)
+    Key = hashlib.md5(Key).hexdigest()  <span class="hljs-comment"># 长度为32的字符串</span>
+    tmp = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+        S.append(i)
+        tmp.append(Key[i % len(Key)])
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+        j = (j + S[i] + ord(tmp[i])) % <span class="hljs-number">256</span>
+        S[i], S[j] = S[j], S[i]             <span class="hljs-comment"># 交换S[i],S[j]</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rc4_Encode</span><span class="hljs-params">(S, plaintext)</span>:</span>
+    i = j = <span class="hljs-number">0</span>
+    result = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> plaintext:
+        i = (i + <span class="hljs-number">1</span>) % <span class="hljs-number">256</span>
+        j = (j + S[i]) % <span class="hljs-number">256</span>
+        S[i], S[j] = S[j], S[i]
+        t = (S[i] + S[j]) % <span class="hljs-number">256</span>
+        k = chr(ord(a) ^ S[(S[i] + S[j]) % <span class="hljs-number">256</span>])
+        result += k
+    result = base64.b64encode(result.encode(<span class="hljs-string">'UTF-8'</span>))
+    result = result.decode()
+    <span class="hljs-keyword">return</span> result
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rc4_Decode</span><span class="hljs-params">(S, criphtext)</span>:</span>
+    i = j = <span class="hljs-number">0</span>
+    criphtext = base64.b64decode(criphtext)
+    criphtext = str(criphtext.decode())
+    result = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> criphtext:
+        i = (i + <span class="hljs-number">1</span>) % <span class="hljs-number">256</span>
+        j = (j + S[i]) % <span class="hljs-number">256</span>
+        S[i], S[j] = S[j], S[i]
+        t = (S[i] + S[j]) % <span class="hljs-number">256</span>
+        k = chr(ord(a) ^ S[t])
+        result += k
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+        order = input(<span class="hljs-string">"请输入指令,加密/E,解密/D :"</span>)
+        <span class="hljs-keyword">if</span> order.upper() ==<span class="hljs-string">'E'</span>:
+            plaintext = input(<span class="hljs-string">'请输入明文: '</span>)
+            key = input(<span class="hljs-string">"请输入密钥: "</span>)
+            s = []
+            Rc4_init(s, key)
+            cryphtext = rc4_Encode(s, plaintext)
+            print(<span class="hljs-string">"密文为: "</span>, cryphtext)
+            print(<span class="hljs-string">'\n'</span>)
+
+        <span class="hljs-keyword">else</span>:
+            cryphtext = input(<span class="hljs-string">"请输入密文: "</span>)
+            key = input(<span class="hljs-string">"请输入密钥: "</span>)
+            s = []
+            Rc4_init(s, key)
+            plaintext = rc4_Decode(s, cryphtext)
+            print(<span class="hljs-string">"明文为: "</span>, plaintext)
+            print(<span class="hljs-string">'\n'</span>)
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    main()</code></pre></div>
+
+
+
+<h1 id="三、DES"><a href="#三、DES" class="headerlink" title="三、DES"></a>三、DES</h1><p>DEC_ECB模式</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 两字符进行异或运算</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xor</span><span class="hljs-params">(str1, str2)</span>:</span>
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(str1)):
+        xor_res = int(str1[i], <span class="hljs-number">10</span>)^int(str2[i], <span class="hljs-number">10</span>)
+        <span class="hljs-keyword">if</span> xor_res == <span class="hljs-number">1</span>:
+            res += <span class="hljs-string">'1'</span>
+        <span class="hljs-keyword">else</span>:
+            res += <span class="hljs-string">'0'</span>
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># 处理字符串，将每个字符串都转成八位二进制数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">str_process</span><span class="hljs-params">(str)</span>:</span>
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> str:
+        tmp = bin(ord(i))[<span class="hljs-number">2</span>:]
+        tmp = (<span class="hljs-number">8</span> - len(tmp)) * <span class="hljs-string">'0'</span> + tmp  <span class="hljs-comment"># 不够八位则在前面补 0</span>
+        res += tmp
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># PC-1盒处理</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">key_change_1</span><span class="hljs-params">(str)</span>:</span>
+    change_table = [<span class="hljs-number">57</span>,<span class="hljs-number">49</span>,<span class="hljs-number">41</span>,<span class="hljs-number">33</span>,<span class="hljs-number">25</span>,<span class="hljs-number">17</span>,<span class="hljs-number">9</span>,<span class="hljs-number">1</span>,
+                 <span class="hljs-number">58</span>,<span class="hljs-number">50</span>,<span class="hljs-number">42</span>,<span class="hljs-number">34</span>,<span class="hljs-number">26</span>,<span class="hljs-number">18</span>,<span class="hljs-number">10</span>,
+                 <span class="hljs-number">2</span>,<span class="hljs-number">59</span>,<span class="hljs-number">51</span>,<span class="hljs-number">43</span>,<span class="hljs-number">35</span>,<span class="hljs-number">27</span>,<span class="hljs-number">19</span>,<span class="hljs-number">11</span>,
+                 <span class="hljs-number">3</span>,<span class="hljs-number">60</span>,<span class="hljs-number">52</span>,<span class="hljs-number">44</span>,<span class="hljs-number">36</span>,<span class="hljs-number">63</span>,<span class="hljs-number">55</span>,<span class="hljs-number">47</span>,
+                 <span class="hljs-number">39</span>,<span class="hljs-number">31</span>,<span class="hljs-number">23</span>,<span class="hljs-number">15</span>,<span class="hljs-number">7</span>,<span class="hljs-number">62</span>,<span class="hljs-number">54</span>,<span class="hljs-number">46</span>,
+                 <span class="hljs-number">38</span>,<span class="hljs-number">30</span>,<span class="hljs-number">22</span>,<span class="hljs-number">14</span>,<span class="hljs-number">6</span>,<span class="hljs-number">61</span>,<span class="hljs-number">53</span>,<span class="hljs-number">45</span>,
+                 <span class="hljs-number">37</span>,<span class="hljs-number">29</span>,<span class="hljs-number">21</span>,<span class="hljs-number">13</span>,<span class="hljs-number">5</span>,<span class="hljs-number">28</span>,<span class="hljs-number">20</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>]
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> change_table:
+        res += str[i<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># PC-2盒处理</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">key_change_2</span><span class="hljs-params">(str)</span>:</span>
+    change_table = [<span class="hljs-number">14</span>,<span class="hljs-number">17</span>,<span class="hljs-number">11</span>,<span class="hljs-number">24</span>,<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-number">28</span>,
+                 <span class="hljs-number">15</span>,<span class="hljs-number">6</span>,<span class="hljs-number">21</span>,<span class="hljs-number">10</span>,<span class="hljs-number">23</span>,<span class="hljs-number">19</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>,
+                 <span class="hljs-number">26</span>,<span class="hljs-number">8</span>,<span class="hljs-number">16</span>,<span class="hljs-number">7</span>,<span class="hljs-number">27</span>,<span class="hljs-number">20</span>,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>,
+                 <span class="hljs-number">41</span>,<span class="hljs-number">52</span>,<span class="hljs-number">31</span>,<span class="hljs-number">37</span>,<span class="hljs-number">47</span>,<span class="hljs-number">55</span>,<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,
+                 <span class="hljs-number">51</span>,<span class="hljs-number">45</span>,<span class="hljs-number">33</span>,<span class="hljs-number">48</span>,<span class="hljs-number">44</span>,<span class="hljs-number">49</span>,<span class="hljs-number">39</span>,<span class="hljs-number">56</span>,
+                 <span class="hljs-number">34</span>,<span class="hljs-number">53</span>,<span class="hljs-number">46</span>,<span class="hljs-number">42</span>,<span class="hljs-number">50</span>,<span class="hljs-number">36</span>,<span class="hljs-number">29</span>,<span class="hljs-number">32</span>]
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> change_table:
+        res += str[i<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">return</span> res
+
+
+<span class="hljs-comment"># 循环左移</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">left_run</span><span class="hljs-params">(str, num)</span>:</span>
+    tmp_str = str[num:len(str)]
+    tmp_str = tmp_str+str[<span class="hljs-number">0</span>:num]
+    <span class="hljs-keyword">return</span> tmp_str
+
+
+<span class="hljs-comment"># 生成16个子密钥</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">key_gen</span><span class="hljs-params">(str)</span>:</span>
+    key_list = []
+    key_change_res = key_change_1(str)
+    key_c = key_change_res[<span class="hljs-number">0</span>:<span class="hljs-number">28</span>]
+    key_d = key_change_res[<span class="hljs-number">28</span>:]
+    num = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">17</span>): <span class="hljs-comment">#共16轮</span>
+        key_c = left_run(key_c, num[i])
+        key_d = left_run(key_d, num[i])
+        key_yiwei = key_c + key_d
+        key_res = key_change_2(key_yiwei)
+        key_list.append(key_res)
+    <span class="hljs-keyword">return</span> key_list
+
+<span class="hljs-comment"># IP盒处理</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">begin_change</span><span class="hljs-params">(str)</span>:</span>
+    change_table = [<span class="hljs-number">58</span>,<span class="hljs-number">50</span>,<span class="hljs-number">42</span>,<span class="hljs-number">34</span>,<span class="hljs-number">26</span>,<span class="hljs-number">18</span>,<span class="hljs-number">10</span>,<span class="hljs-number">2</span>,
+                   <span class="hljs-number">60</span>,<span class="hljs-number">52</span>,<span class="hljs-number">44</span>,<span class="hljs-number">36</span>,<span class="hljs-number">28</span>,<span class="hljs-number">20</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>,
+                   <span class="hljs-number">62</span>,<span class="hljs-number">54</span>,<span class="hljs-number">46</span>,<span class="hljs-number">38</span>,<span class="hljs-number">30</span>,<span class="hljs-number">22</span>,<span class="hljs-number">14</span>,<span class="hljs-number">6</span>,
+                   <span class="hljs-number">64</span>,<span class="hljs-number">56</span>,<span class="hljs-number">48</span>,<span class="hljs-number">40</span>,<span class="hljs-number">32</span>,<span class="hljs-number">24</span>,<span class="hljs-number">16</span>,<span class="hljs-number">8</span>,
+                   <span class="hljs-number">57</span>,<span class="hljs-number">49</span>,<span class="hljs-number">41</span>,<span class="hljs-number">33</span>,<span class="hljs-number">25</span>,<span class="hljs-number">17</span>,<span class="hljs-number">9</span>,<span class="hljs-number">1</span>,
+                   <span class="hljs-number">59</span>,<span class="hljs-number">51</span>,<span class="hljs-number">43</span>,<span class="hljs-number">35</span>,<span class="hljs-number">27</span>,<span class="hljs-number">19</span>,<span class="hljs-number">11</span>,<span class="hljs-number">3</span>,
+                   <span class="hljs-number">61</span>,<span class="hljs-number">53</span>,<span class="hljs-number">45</span>,<span class="hljs-number">37</span>,<span class="hljs-number">29</span>,<span class="hljs-number">21</span>,<span class="hljs-number">13</span>,<span class="hljs-number">5</span>,
+                   <span class="hljs-number">63</span>,<span class="hljs-number">55</span>,<span class="hljs-number">47</span>,<span class="hljs-number">39</span>,<span class="hljs-number">31</span>,<span class="hljs-number">23</span>,<span class="hljs-number">15</span>,<span class="hljs-number">7</span>]
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> change_table:
+        res += str[i<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">return</span> res
+
+
+<span class="hljs-comment"># E盒处理  32位-&gt;48位</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">E_box</span><span class="hljs-params">(str)</span>:</span>
+    change_table = [<span class="hljs-number">32</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,
+                    <span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,
+                    <span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,
+                    <span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,
+                    <span class="hljs-number">22</span>,<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>,<span class="hljs-number">26</span>,<span class="hljs-number">27</span>,
+                    <span class="hljs-number">28</span>,<span class="hljs-number">29</span>,<span class="hljs-number">28</span>,<span class="hljs-number">29</span>,<span class="hljs-number">30</span>,<span class="hljs-number">31</span>,<span class="hljs-number">32</span>,<span class="hljs-number">1</span>]
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> change_table:
+        res += str[i<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># s盒处理   48位-&gt;32位</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">S_box</span><span class="hljs-params">(str)</span>:</span>
+    j = <span class="hljs-number">0</span>
+    s_list = [[<span class="hljs-number">14</span>,<span class="hljs-number">4</span>,<span class="hljs-number">13</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">15</span>,<span class="hljs-number">11</span>,<span class="hljs-number">8</span>,<span class="hljs-number">3</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">12</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">0</span>,<span class="hljs-number">7</span>,<span class="hljs-number">0</span>,<span class="hljs-number">15</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">14</span>,<span class="hljs-number">2</span>,<span class="hljs-number">13</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">12</span>,<span class="hljs-number">11</span>,<span class="hljs-number">9</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">14</span>,<span class="hljs-number">8</span>,<span class="hljs-number">13</span>,<span class="hljs-number">6</span>,<span class="hljs-number">2</span>,<span class="hljs-number">11</span>,<span class="hljs-number">15</span>,<span class="hljs-number">12</span>,<span class="hljs-number">9</span>,<span class="hljs-number">7</span>,<span class="hljs-number">3</span>,<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">15</span>,<span class="hljs-number">12</span>,<span class="hljs-number">8</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">1</span>,<span class="hljs-number">7</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>,<span class="hljs-number">3</span>,<span class="hljs-number">14</span>,<span class="hljs-number">10</span>,<span class="hljs-number">0</span>,<span class="hljs-number">6</span>,<span class="hljs-number">13</span>],
+              [<span class="hljs-number">15</span>,<span class="hljs-number">1</span>,<span class="hljs-number">8</span>,<span class="hljs-number">14</span>,<span class="hljs-number">6</span>,<span class="hljs-number">11</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">7</span>,<span class="hljs-number">2</span>,<span class="hljs-number">13</span>,<span class="hljs-number">12</span>,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">10</span>,<span class="hljs-number">3</span>,<span class="hljs-number">13</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">15</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">14</span>,<span class="hljs-number">12</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">11</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">14</span>,<span class="hljs-number">7</span>,<span class="hljs-number">11</span>,<span class="hljs-number">10</span>,<span class="hljs-number">4</span>,<span class="hljs-number">13</span>,<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">8</span>,<span class="hljs-number">12</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">15</span>,<span class="hljs-number">13</span>,<span class="hljs-number">8</span>,<span class="hljs-number">10</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">15</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>,<span class="hljs-number">11</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">12</span>,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">14</span>,<span class="hljs-number">9</span>],
+              [<span class="hljs-number">10</span>,<span class="hljs-number">0</span>,<span class="hljs-number">9</span>,<span class="hljs-number">14</span>,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>,<span class="hljs-number">15</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">12</span>,<span class="hljs-number">7</span>,<span class="hljs-number">11</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">13</span>,<span class="hljs-number">7</span>,<span class="hljs-number">0</span>,<span class="hljs-number">9</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">10</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">5</span>,<span class="hljs-number">14</span>,<span class="hljs-number">12</span>,<span class="hljs-number">11</span>,<span class="hljs-number">15</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">15</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">11</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">12</span>,<span class="hljs-number">5</span>,<span class="hljs-number">10</span>,<span class="hljs-number">14</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">13</span>,<span class="hljs-number">0</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">15</span>,<span class="hljs-number">14</span>,<span class="hljs-number">3</span>,<span class="hljs-number">11</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">12</span>],
+              [<span class="hljs-number">7</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>,<span class="hljs-number">15</span>,<span class="hljs-number">13</span>,<span class="hljs-number">8</span>,<span class="hljs-number">11</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">15</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">2</span>,<span class="hljs-number">12</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">14</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">0</span>,<span class="hljs-number">12</span>,<span class="hljs-number">11</span>,<span class="hljs-number">7</span>,<span class="hljs-number">13</span>,<span class="hljs-number">15</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">14</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>,<span class="hljs-number">15</span>,<span class="hljs-number">0</span>,<span class="hljs-number">6</span>,<span class="hljs-number">10</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">7</span>,<span class="hljs-number">2</span>,<span class="hljs-number">14</span>],
+              [<span class="hljs-number">2</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">7</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-number">15</span>,<span class="hljs-number">13</span>,<span class="hljs-number">0</span>,<span class="hljs-number">14</span>,<span class="hljs-number">9</span>,<span class="hljs-number">14</span>,<span class="hljs-number">11</span>,<span class="hljs-number">2</span>,<span class="hljs-number">12</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">13</span>,<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">15</span>,<span class="hljs-number">10</span>,<span class="hljs-number">3</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">11</span>,<span class="hljs-number">10</span>,<span class="hljs-number">13</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">15</span>,<span class="hljs-number">9</span>,<span class="hljs-number">12</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">14</span>,<span class="hljs-number">11</span>,<span class="hljs-number">8</span>,<span class="hljs-number">12</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">14</span>,<span class="hljs-number">2</span>,<span class="hljs-number">13</span>,<span class="hljs-number">6</span>,<span class="hljs-number">15</span>,<span class="hljs-number">0</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>],
+              [<span class="hljs-number">12</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">15</span>,<span class="hljs-number">9</span>,<span class="hljs-number">2</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">0</span>,<span class="hljs-number">13</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">14</span>,<span class="hljs-number">7</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>,<span class="hljs-number">10</span>,<span class="hljs-number">15</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>,<span class="hljs-number">12</span>,<span class="hljs-number">9</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">0</span>,<span class="hljs-number">11</span>,<span class="hljs-number">3</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">12</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">0</span>,<span class="hljs-number">4</span>,<span class="hljs-number">10</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">11</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">12</span>,<span class="hljs-number">9</span>,<span class="hljs-number">5</span>,<span class="hljs-number">15</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">14</span>,<span class="hljs-number">1</span>,<span class="hljs-number">7</span>,<span class="hljs-number">6</span>,<span class="hljs-number">0</span>,<span class="hljs-number">8</span>,<span class="hljs-number">13</span>],
+              [<span class="hljs-number">4</span>,<span class="hljs-number">11</span>,<span class="hljs-number">2</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">0</span>,<span class="hljs-number">8</span>,<span class="hljs-number">13</span>,<span class="hljs-number">3</span>,<span class="hljs-number">12</span>,<span class="hljs-number">9</span>,<span class="hljs-number">7</span>,<span class="hljs-number">5</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,<span class="hljs-number">13</span>,<span class="hljs-number">0</span>,<span class="hljs-number">11</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">14</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">12</span>,<span class="hljs-number">2</span>,<span class="hljs-number">15</span>,<span class="hljs-number">8</span>,<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">11</span>,<span class="hljs-number">13</span>,<span class="hljs-number">12</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">14</span>,<span class="hljs-number">10</span>,<span class="hljs-number">15</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">2</span>,<span class="hljs-number">6</span>,<span class="hljs-number">11</span>,<span class="hljs-number">13</span>,<span class="hljs-number">8</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">10</span>,<span class="hljs-number">7</span>,<span class="hljs-number">9</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">15</span>,<span class="hljs-number">14</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">12</span>],
+              [<span class="hljs-number">13</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">15</span>,<span class="hljs-number">11</span>,<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,<span class="hljs-number">9</span>,<span class="hljs-number">3</span>,<span class="hljs-number">14</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">12</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">15</span>,<span class="hljs-number">13</span>,<span class="hljs-number">8</span>,<span class="hljs-number">10</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">12</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">11</span>,<span class="hljs-number">0</span>,<span class="hljs-number">14</span>,<span class="hljs-number">9</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>,<span class="hljs-number">11</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">9</span>,<span class="hljs-number">12</span>,<span class="hljs-number">14</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">6</span>,<span class="hljs-number">10</span>,<span class="hljs-number">13</span>,<span class="hljs-number">15</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">8</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">14</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">10</span>,<span class="hljs-number">8</span>,<span class="hljs-number">13</span>,<span class="hljs-number">15</span>,<span class="hljs-number">12</span>,<span class="hljs-number">9</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">11</span>]
+              ]
+    res = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(str), <span class="hljs-number">6</span>):
+        begin_s = str[i:i + <span class="hljs-number">6</span>]
+        row = int(begin_s[<span class="hljs-number">0</span>] + begin_s[<span class="hljs-number">5</span>], <span class="hljs-number">2</span>)  <span class="hljs-comment">#第一位和第六位作为行</span>
+        col = int(begin_s[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>], <span class="hljs-number">2</span>)             <span class="hljs-comment">#中间四位作为列</span>
+        index = s_list[j][row * <span class="hljs-number">16</span> + col]
+        num = bin(index)[<span class="hljs-number">2</span>:]                   <span class="hljs-comment">#将匹配的数字转换位二进制数</span>
+        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">4</span> - len(num)):       <span class="hljs-comment">#不够4位则补0</span>
+            num = <span class="hljs-string">"0"</span> + num
+        res += num
+        j = j + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># p盒处理   置换操作</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">P_box</span><span class="hljs-params">(str)</span>:</span>
+    res = <span class="hljs-string">""</span>
+    change_table = [<span class="hljs-number">16</span>,<span class="hljs-number">7</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">29</span>,<span class="hljs-number">12</span>,<span class="hljs-number">28</span>,<span class="hljs-number">17</span>,
+                    <span class="hljs-number">1</span>,<span class="hljs-number">15</span>,<span class="hljs-number">23</span>,<span class="hljs-number">26</span>,<span class="hljs-number">5</span>,<span class="hljs-number">18</span>,<span class="hljs-number">31</span>,<span class="hljs-number">10</span>,
+                    <span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">24</span>,<span class="hljs-number">14</span>,<span class="hljs-number">32</span>,<span class="hljs-number">27</span>,<span class="hljs-number">3</span>,<span class="hljs-number">9</span>,
+                    <span class="hljs-number">19</span>,<span class="hljs-number">13</span>,<span class="hljs-number">30</span>,<span class="hljs-number">6</span>,<span class="hljs-number">22</span>,<span class="hljs-number">11</span>,<span class="hljs-number">4</span>,<span class="hljs-number">25</span>]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> change_table:
+        res += str[i - <span class="hljs-number">1</span>]
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-comment"># F函数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">F_function</span><span class="hljs-params">(str, key)</span>:</span>  <span class="hljs-comment"># R(32位)-&gt;E盒(48位)-&gt;与key的子密钥异或-&gt;S盒-&gt;P置换</span>
+    str_e_res = E_box(str)            <span class="hljs-comment"># 将 E 异或 S  P 集合到一个函数种，便于调用</span>
+    xor_res = xor(str_e_res, key)
+    str_s_res = S_box(xor_res)
+    str_p_res = P_box(str_s_res)
+    <span class="hljs-keyword">return</span> str_p_res
+
+<span class="hljs-comment"># 逆IP盒</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">IP_re</span><span class="hljs-params">(str)</span>:</span>
+    res = <span class="hljs-string">""</span>
+    ip_list = [<span class="hljs-number">40</span>,<span class="hljs-number">8</span>,<span class="hljs-number">48</span>,<span class="hljs-number">16</span>,<span class="hljs-number">56</span>,<span class="hljs-number">24</span>,<span class="hljs-number">64</span>,<span class="hljs-number">32</span>,
+               <span class="hljs-number">39</span>,<span class="hljs-number">7</span>,<span class="hljs-number">47</span>,<span class="hljs-number">15</span>,<span class="hljs-number">55</span>,<span class="hljs-number">23</span>,<span class="hljs-number">63</span>,<span class="hljs-number">31</span>,
+               <span class="hljs-number">38</span>,<span class="hljs-number">6</span>,<span class="hljs-number">46</span>,<span class="hljs-number">14</span>,<span class="hljs-number">54</span>,<span class="hljs-number">22</span>,<span class="hljs-number">62</span>,<span class="hljs-number">30</span>,
+               <span class="hljs-number">37</span>,<span class="hljs-number">5</span>,<span class="hljs-number">45</span>,<span class="hljs-number">13</span>,<span class="hljs-number">53</span>,<span class="hljs-number">21</span>,<span class="hljs-number">61</span>,<span class="hljs-number">29</span>,
+               <span class="hljs-number">36</span>,<span class="hljs-number">4</span>,<span class="hljs-number">44</span>,<span class="hljs-number">12</span>,<span class="hljs-number">52</span>,<span class="hljs-number">20</span>,<span class="hljs-number">60</span>,<span class="hljs-number">28</span>,
+               <span class="hljs-number">35</span>,<span class="hljs-number">3</span>,<span class="hljs-number">43</span>,<span class="hljs-number">11</span>,<span class="hljs-number">51</span>,<span class="hljs-number">19</span>,<span class="hljs-number">59</span>,<span class="hljs-number">27</span>,
+               <span class="hljs-number">34</span>,<span class="hljs-number">2</span>,<span class="hljs-number">42</span>,<span class="hljs-number">10</span>,<span class="hljs-number">50</span>,<span class="hljs-number">18</span>,<span class="hljs-number">58</span>,<span class="hljs-number">26</span>,
+               <span class="hljs-number">33</span>,<span class="hljs-number">1</span>,<span class="hljs-number">41</span>,<span class="hljs-number">9</span>,<span class="hljs-number">49</span>,<span class="hljs-number">17</span>,<span class="hljs-number">57</span>,<span class="hljs-number">25</span> ]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ip_list:
+        res += str[i<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">return</span> res
+
+
+<span class="hljs-comment"># DES加密操作</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">DESencode</span><span class="hljs-params">(text, key)</span>:</span>
+    text_bin = str_process(text)     <span class="hljs-comment"># 将字符转换为二进制数</span>
+    text_IP = begin_change(text_bin)  <span class="hljs-comment"># 明文初始置换</span>
+    key_bin = str_process(key)      <span class="hljs-comment"># 将密钥转换位二进制数</span>
+    key_list = key_gen(key_bin) <span class="hljs-comment"># key_lsst 数组中存放着十六个子密钥</span>
+
+    text_left = text_IP[<span class="hljs-number">0</span>:<span class="hljs-number">32</span>]     <span class="hljs-comment"># R0</span>
+    text_right = text_IP[<span class="hljs-number">32</span>:]     <span class="hljs-comment"># L0</span>
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">15</span>):      <span class="hljs-comment"># 十五轮加密</span>
+
+        mes_tmp = text_right     <span class="hljs-comment"># 临时变量用于左右两部分交换</span>
+        text_right = xor(F_function(text_right, key_list[i]) , text_left) <span class="hljs-comment">#F 函数的作用 R(32位)-&gt;E盒(48位)-&gt;与key的子密钥异或(32位)-&gt;S盒(32位)-&gt;P置换(32位)</span>
+        text_left = mes_tmp
+    fin_right = text_right       <span class="hljs-comment"># 第十六轮加密</span>
+    fin_left = xor(F_function(text_right, key_list[<span class="hljs-number">15</span>]), text_left)
+    criph_text = fin_left + fin_right
+    criph_text = IP_re(criph_text)     <span class="hljs-comment">#  IP逆置换</span>
+    <span class="hljs-keyword">return</span> criph_text
+
+<span class="hljs-comment"># 针对一组的解密程序</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">DESdecode</span><span class="hljs-params">(text, key)</span>:</span>  <span class="hljs-comment">#密文直接输64位2进制</span>
+    key_bin = str_process(key)    <span class="hljs-comment"># 将密钥转换为二进制数</span>
+    key_list = key_gen(key_bin)   <span class="hljs-comment"># 生成的十六个子密钥</span>
+    text = begin_change(text)   <span class="hljs-comment"># 先初始值换 与加密过程相反</span>
+    cipher_left = text[<span class="hljs-number">0</span>:<span class="hljs-number">32</span>]    <span class="hljs-comment"># R16</span>
+    cipher_right = text[<span class="hljs-number">32</span>:]    <span class="hljs-comment"># L16</span>
+    i = <span class="hljs-number">15</span>
+    <span class="hljs-keyword">while</span> i &gt; <span class="hljs-number">0</span>:                <span class="hljs-comment"># 十五轮加密 反过来</span>
+        cipher_tmp = cipher_right   <span class="hljs-comment">#设置一个临时变量用于后面的交换</span>
+        cipher_right = xor(cipher_left, F_function(cipher_right, key_list[i]))    <span class="hljs-comment"># F 函数的作用 R(32位)-&gt;E盒(48位)-&gt;与key的子密钥异或(32位)-&gt;S盒(32位)-&gt;P置换(32位)</span>
+                                                                                  <span class="hljs-comment"># F 函数处理完后与L(32位)异或</span>
+        cipher_left = cipher_tmp    <span class="hljs-comment"># 左右交换完成</span>
+        i = i - <span class="hljs-number">1</span>
+    left_text = xor(cipher_left, F_function(cipher_right, key_list[<span class="hljs-number">0</span>])) <span class="hljs-comment"># 一</span>
+    right_text = cipher_right                                           <span class="hljs-comment"># 二 三 这三步是第十六轮加密</span>
+    plain_bin = left_text + right_text                                  <span class="hljs-comment">#</span>
+    plain_bin = IP_re(plain_bin)                                        <span class="hljs-comment">#</span>
+    plain_text = <span class="hljs-string">""</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(plain_bin), <span class="hljs-number">8</span>):
+        plain_text += chr(int(plain_bin[i:i + <span class="hljs-number">8</span>], <span class="hljs-number">2</span>))
+    <span class="hljs-keyword">return</span> plain_text
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Divide_text</span><span class="hljs-params">(order,text,key)</span>:</span>    <span class="hljs-comment"># 将明文或者明文分组 明文分成8个字符一组，密文则分成64bit一组</span>
+    block_text = []
+    res = <span class="hljs-string">""</span>
+    length = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> order == <span class="hljs-string">"E"</span>:
+        length = <span class="hljs-number">8</span>
+    <span class="hljs-keyword">else</span>:
+        length = <span class="hljs-number">64</span>
+    i = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> text[i:i+length] != <span class="hljs-string">""</span>:
+        block_text.append(text[i:i+length])
+        i += length
+
+    <span class="hljs-keyword">if</span> order == <span class="hljs-string">'E'</span>:
+        <span class="hljs-keyword">if</span> len(block_text[<span class="hljs-number">-1</span>]) != <span class="hljs-number">8</span>:       <span class="hljs-comment"># 最后一组明文如果不够八个字符则添加 + 补齐八个  否则程序会报错</span>
+            block_text[<span class="hljs-number">-1</span>] = block_text[<span class="hljs-number">-1</span>] + <span class="hljs-string">'+'</span> * (<span class="hljs-number">8</span> - len(block_text[<span class="hljs-number">-1</span>]))
+        <span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> block_text:             <span class="hljs-comment"># 分别对每组加密</span>
+            res += DESencode(text, key)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> block_text:             <span class="hljs-comment"># 对密文解密</span>
+            res += DESdecode(text, key)
+    <span class="hljs-keyword">return</span> res
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+        plaintext = <span class="hljs-string">''</span>
+        ciphertext = <span class="hljs-string">''</span>
+        key = <span class="hljs-string">''</span>
+        order = input(<span class="hljs-string">"加密请按E,解密请按D:"</span>)
+        <span class="hljs-keyword">if</span> order == <span class="hljs-string">'E'</span>:
+            plaintext = input(<span class="hljs-string">"请输入明文："</span>)
+            key = input(<span class="hljs-string">"请输入密钥："</span>)
+            ciphertext = Divide_text(order, plaintext, key)
+            print(<span class="hljs-string">"密文是："</span>)
+            print(ciphertext)
+        <span class="hljs-keyword">else</span>:
+            ciphertext = input(<span class="hljs-string">"请输入密文："</span>)
+            key = input(<span class="hljs-string">"请输入密钥："</span>)
+            plaintext = Divide_text(order, ciphertext, key)
+            print(<span class="hljs-string">"明文是："</span>)
+            print(plaintext)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    main()</code></pre></div>
+
+
+
+<p>DES_CBC模式</p>
+<p>只需要修改ECB模式中的 Divide_text 部分</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Divide_text</span><span class="hljs-params">(order,text,key)</span>:</span>    <span class="hljs-comment"># 将明文或者明文分组 明文分成8个字符一组，密文则分成64bit一组</span>
+    block_text = []
+    IV = <span class="hljs-string">'aaaaaaaa'</span>                 <span class="hljs-comment"># 初始化向量</span>
+    IV_bin = str_process(IV)
+    res = <span class="hljs-string">""</span>
+    length = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> order == <span class="hljs-string">"E"</span>:
+        length = <span class="hljs-number">8</span>
+    <span class="hljs-keyword">else</span>:
+        length = <span class="hljs-number">64</span>
+    i = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> text[i:i+length] != <span class="hljs-string">""</span>:
+        block_text.append(text[i:i+length])
+        i += length
+    tmp = <span class="hljs-string">""</span>
+    <span class="hljs-comment"># 加密</span>
+    <span class="hljs-keyword">if</span> order == <span class="hljs-string">'E'</span>:
+        <span class="hljs-keyword">if</span> len(block_text[<span class="hljs-number">-1</span>]) != <span class="hljs-number">8</span>:       <span class="hljs-comment"># 最后一组明文如果不够八个字符则添加 + 补齐八个  否则程序会报错</span>
+            block_text[<span class="hljs-number">-1</span>] = block_text[<span class="hljs-number">-1</span>] + <span class="hljs-string">'+'</span> * (<span class="hljs-number">8</span> - len(block_text[<span class="hljs-number">-1</span>]))
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(block_text)):             <span class="hljs-comment"># 分别对每组加密</span>
+            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span> :
+                tmp = DESencode(block_text[i],key, IV_bin)
+                res += tmp
+            <span class="hljs-keyword">else</span>:
+                tmp = DESencode(block_text[i],key,tmp)
+                res += tmp
+    <span class="hljs-comment"># 解密</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(block_text)):
+            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
+                tmp = block_text[i]
+                res += DESdecode(block_text[i], key, IV_bin)
+            <span class="hljs-keyword">else</span>:
+                res += DESdecode(block_text[i], key, tmp)
+                tmp = block_text[i]
+    <span class="hljs-keyword">return</span> res</code></pre></div>
+
+
+
+<h1 id="四、RSA"><a href="#四、RSA" class="headerlink" title="四、RSA"></a>四、RSA</h1><h1 id="五、MD5"><a href="#五、MD5" class="headerlink" title="五、MD5"></a>五、MD5</h1><h1 id="六、综合实验"><a href="#六、综合实验" class="headerlink" title="六、综合实验"></a>六、综合实验</h1>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81/">古典密码</a>
+                    
+                      <a class="hover-with-bg" href="/tags/DES/">DES</a>
+                    
+                      <a class="hover-with-bg" href="/tags/RSA/">RSA</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MD5/">MD5</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/29/rcm/">
+                        <span class="hidden-mobile">rce</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
+          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
+          placeholder: "说点什么吧~~~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: false,
+          serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "密码学&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
