@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
+  <link rel="icon" type="image/png" href="/img/feiji.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="sunzy">
+  <meta name="keywords" content="">
+  <title>cumtfinal - 一路走到黑</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-11 22:04" pubdate>
+        2021年1月11日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      897 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">cumtfinal</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 分钟前
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <p>web每做出来，还是太菜了，还是要多做题</p>
+<a id="more"></a>
+
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="ez-js"><a href="#ez-js" class="headerlink" title="ez_js"></a>ez_js</h2><p>F12在source中看到main.js，将其中的内容复制在控制台中运行，运行完后控制台会关闭，再次打开控制台，会看到一个</p>
+<p><img src="https://i.loli.net/2020/12/26/aVC6ymt8Sn9rARU.png" srcset="/img/loading.gif" alt="img"></p>
+<p>打开之后看到还是js代码，但是可以看到</p>
+<p><img src="https://i.loli.net/2020/12/26/5nWCd6tuAkPh4U2.png" srcset="/img/loading.gif" alt="image-20201226115939345"></p>
+<p>在其中找到flag的其他部分，拼接起来即可</p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RSA签到"><a href="#RSA签到" class="headerlink" title="RSA签到"></a>RSA签到</h2><p>没啥难的，就是找到解密的网站即可</p>
+<p>几个网站如下</p>
+<blockquote>
+<p><a href="http://www.atoolbox.net/Tool.php?Id=937" target="_blank" rel="noopener">http://www.atoolbox.net/Tool.php?Id=937</a></p>
+<p><a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=jiantou" target="_blank" rel="noopener">https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=jiantou</a></p>
+<p><a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=huaduo" target="_blank" rel="noopener">https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=huaduo</a></p>
+</blockquote>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># n:    807862607863494903203347547751222668477246136996519972166847</span>
+<span class="hljs-comment"># c:    6525071913169990474785757170304035615411828876052879070297</span>
+<span class="hljs-comment"># e:    65537</span>
+
+<span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> *
+n=<span class="hljs-number">807862607863494903203347547751222668477246136996519972166847</span>
+p=<span class="hljs-number">780900790334269659443297956843</span>
+q=<span class="hljs-number">1034526559407993507734818408829</span>
+e=<span class="hljs-number">65537</span>
+c=<span class="hljs-number">6525071913169990474785757170304035615411828876052879070297</span>
+d=inverse(e,(p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>))
+m=pow(c,d,p*q)
+print(long2str(m))</code></pre></div>
+
+
+
+<h2 id="简单的密码学"><a href="#简单的密码学" class="headerlink" title="简单的密码学"></a>简单的密码学</h2><p>离散对数攻击</p>
+<p>脚本如下</p>
+<div class="hljs"><pre><code class="hljs python">m = <span class="hljs-number">45930439493588458217814199095166325056793804285450102007731089001050571514856332627851425138364361016243889773238664380678029627984235001868004334568770697</span>
+c = <span class="hljs-number">5057805883715955343508948629802682033540608675113624374337084633322875196538392521768197949724904990019045804655058020268973563802830621371118940310488041</span>
+n = <span class="hljs-number">2</span> ** <span class="hljs-number">514</span>
+
+<span class="hljs-keyword">import</span> sympy
+<span class="hljs-keyword">import</span> binascii
+flag=sympy.discrete_log(<span class="hljs-number">2</span>**<span class="hljs-number">514</span>,c,m)
+
+print(binascii.unhexlify(hex(flag)[<span class="hljs-number">2</span>:]))</code></pre></div>
+
+
+
+<h2 id="名字不重要"><a href="#名字不重要" class="headerlink" title="名字不重要"></a>名字不重要</h2><p>懂得都懂，是原题</p>
+<div class="hljs"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.anquanke.com<span class="hljs-regexp">/post/i</span>d<span class="hljs-regexp">/200545</span></code></pre></div>
+
+
+
+<h2 id="名字没想好"><a href="#名字没想好" class="headerlink" title="名字没想好"></a>名字没想好</h2><p>第一部分</p>
+<div class="hljs"><pre><code class="hljs python">gift= <span class="hljs-number">12255978148467209895405401462014060633654138661175100957121874362221982957915022396069673248235108357771688051303453363643967834593066030782680214462115370497967778055593927850150182758869847946921291057362002616022538712593775400754634332361618945061055025544419655001567836482206750906414655010614360056137481173664901476116870144816992211793902146834987166288769615612767704010592138813256140678199511291489394523989294805910740127557682458229594376211232977501267410539674224065875285801753027816046254818608535462445306054117075379711073762930279723764342988824053970592468109679774789092077979655857748513636834</span>
+<span class="hljs-keyword">import</span> gmpy2
+e=<span class="hljs-number">103738</span>
+c=<span class="hljs-number">7357116532209949285136310518084676100522798730487701269950303460540634127932201594120600757671807456790592531487713433579926404640474277692592102315472760853853767347752080563508622523821339163225554653816787201616233932746815764392729597579461985789538131853246938443458331139199802764554726447278501492140335824365867574318693890007499638038064582031311613039571335453968072426153706431456149868515230310567240569544961967582304893471240728585336273245259533905230737876248875784828430507371662455796543123714325161987112223947057481814610592300979207673818538093532100233028106442070524965861451563388404227738574</span>
+n=<span class="hljs-number">24511956296934419790810802924028121267308277322350201914243748724443965915830044792139346496470216715543376102606906727287935669186132061565360428924230740995935556111187855700300365517739695893842582114724005232045077425187550801509268664723237890122110051088839310003135672964413501812829310021228720112275276180469100308793523051405119335989674132224715582989624204590983857159312466387546505666052162775188773736419909262619409755848412558718676873188073997893894862353873441073313610102773845304906678909624700529896455885309546409645526387707907518497436045821973310653257012148438207441605902771515486273283273</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    phi=gift*i
+    pq=n+<span class="hljs-number">1</span>-phi
+    p_q=gmpy2.iroot(pq**<span class="hljs-number">2</span><span class="hljs-number">-4</span>*n,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">if</span> gmpy2.is_prime((pq+p_q)//<span class="hljs-number">2</span>):
+        p=(pq+p_q)//<span class="hljs-number">2</span>
+        q=pq-p
+        <span class="hljs-keyword">break</span>
+new_e=e//<span class="hljs-number">2</span>
+new_d=gmpy2.invert(new_e,(p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>))
+m_2=gmpy2.powmod(c,new_d,n)
+m=gmpy2.iroot(m_2,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]
+<span class="hljs-keyword">import</span> binascii
+print(binascii.unhexlify(hex(m)[<span class="hljs-number">2</span>:]))
+<span class="hljs-comment"># CUMTCTF&#123;now_you_get</span></code></pre></div>
+
+
+
+<p>第二部分</p>
+<p>很明显给的p和q是相邻的素数</p>
+<p>解题思路：<br>1.题目给了 e,d,c三个值，所以由公式 e<em>d=1 mod (q-1)</em>(p-1) 得到 (e<em>d-1)=k \</em> (q-1)<em>(p-1) (设k为整数)<br>2.<strong>分析题目可知p,q接近，p*q为2048位，</strong><br>**所以(p-1)\</em>(q-1)&lt;=2048<strong>计算可知 *<em>e\</em>d-1</strong> 是 <strong>2063</strong> 位的，所以K的取值范围为（pow(2,14),pow(2,15)）</p>
+<p>3.通过爆破K的值，可以得到(p-1)*(q-1) 的值，对phi 开平方，进而求得p,q。这里涉及的算法我通过举例来论证。</p>
+<p><img src="https://i.loli.net/2020/12/26/QthA21K5VIOybrg.png" srcset="/img/loading.gif" alt="image-20201226123419558"></p>
+<p>脚本如下</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> sympy <span class="hljs-keyword">import</span> *
+<span class="hljs-comment">#from libnum import *</span>
+<span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *
+e = <span class="hljs-number">0x10001</span>
+d = <span class="hljs-number">19275778946037899718035455438175509175723911466127462154506916564101519923603308900331427601983476886255849200332374081996442976307058597390881168155862238533018621944733299208108185814179466844504468163200369996564265921022888670062554504758512453217434777820468049494313818291727050400752551716550403647148197148884408264686846693842118387217753516963449753809860354047619256787869400297858568139700396567519469825398575103885487624463424429913017729585620877168171603444111464692841379661112075123399343270610272287865200880398193573260848268633461983435015031227070217852728240847398084414687146397303110709214913</span>
+c = <span class="hljs-number">5382723168073828110696168558294206681757991149022777821127563301413483223874527233300721180839298617076705685041174247415826157096583055069337393987892262764211225227035880754417457056723909135525244957935906902665679777101130111392780237502928656225705262431431953003520093932924375902111280077255205118217436744112064069429678632923259898627997145803892753989255615273140300021040654505901442787810653626524305706316663169341797205752938755590056568986738227803487467274114398257187962140796551136220532809687606867385639367743705527511680719955380746377631156468689844150878381460560990755652899449340045313521804</span>
+d = <span class="hljs-number">14519297697723031496224953772301033569165883208616356699837703756220717249229195213146695656923357394378868735444167631602696573904678412172248043414276910206086892084385988564720914312238316434518024995169814463252129242492227202678878240875905293369168263909256455159691392124769949072754243536472227070447391890140409479709945084894060833468804156778720190688101601664725009609222256314873780002770605127043596912060811904733471592387441742111474341938658516761896926403628885365926903655309306738689809023277824030268579979837642613499180913999651379232105756338399243024739524553588216117189742912479604441636257</span>
+c = <span class="hljs-number">23574157314515030841894399693996910252287747536395985840285410194536546768646580704111053676040921830550019965767796038280932469005359270920519250763405535872475345625907947986452218739530197421244240070129909526493952916306821311836861766221812155261751444946282559677005557815746813525162411907545113665605490915464367483833005576787591204417525937745572210195816236947103271664048065491627347939268785403334419989160034526164012966888952162714736497312282011026789187871221751240709801544484784941178786820290118585681595783245449236394480319395321877182096839866054466492123200354772280398476167002177544154960579</span>
+<span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(pow(<span class="hljs-number">2</span>, <span class="hljs-number">14</span>), pow(<span class="hljs-number">2</span>, <span class="hljs-number">15</span>)):
+    <span class="hljs-keyword">if</span> (e * d - <span class="hljs-number">1</span>) % k == <span class="hljs-number">0</span>:
+        phi = (e * d - <span class="hljs-number">1</span>) // k
+        P1 = iroot(phi, <span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 对(q-1)*(p-1)开平方</span>
+        p = nextprime(P1)  <span class="hljs-comment"># 获取素数P</span>
+        q_1 = phi // (p - <span class="hljs-number">1</span>)  <span class="hljs-comment"># 得到(q-1)</span>
+        q = q_1 + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> (isprime(q)):  <span class="hljs-comment"># 对q进行素性检测</span>
+            <span class="hljs-keyword">break</span>
+
+n = p * q
+m = pow(c, d, n)
+m = long_to_bytes(m).decode()
+
+<span class="hljs-comment"># _the_full_flag!@#$%!!!&#125;</span></code></pre></div>
+
+
+
+
+
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p>文本.txt-&gt;base64-&gt;佛曰-&gt;维吉尼亚密码</p>
+<div class="hljs"><pre><code class="hljs smali">5L2b5puw77ya5ZOG576v5Yal6IiN5oCv6Iul6JiH5Y2z5oCv5a+G5qCX5L6E6YKj5oCv5aSa55qk5pWF5L6E562J5a+m5ZCJ5Zad5LiK5rOi5oCb57y96Ky55Yal5aSi5q6/5ZG85L+x5a+G6YO95puw6YKj5a+G5oGQ57y95puz5L+x6Iul5L6E5a+G5a+G6JeQ6Iez5Yal56SZ5ZOG5pyJ56mG5qeD5qWe55qk5qCX55qk5a+G5oGQ5Lul572w44CC5oCv6Ku46YGu6Iez5L6E5pm65ZGQ5q27
+
+佛曰：哆羯冥舍怯若蘇即怯密栗侄那怯多皤故侄等實吉喝上波怛缽謹冥夢殿呼俱密都曰那密恐缽曳俱若侄密密藐至冥礙哆有穆槃楞皤栗皤密恐以罰。怯諸遮至侄智呐死
+
+RFMRHNS&#123;Tlsw_Xctc_Tn!!&#125;</code></pre></div>
+
+<p>文本2.txt-&gt;base64-&gt;音符解密</p>
+<p><img src="https://i.loli.net/2020/12/26/7HhyMQeb5U89PDA.png" srcset="/img/loading.gif" alt="image-20201226121406802"></p>
+<p>之后维吉尼亚解密</p>
+<h2 id="内存取证"><a href="#内存取证" class="headerlink" title="内存取证"></a>内存取证</h2><p>用到的命令如下</p>
+<div class="hljs"><pre><code class="hljs lsl">volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw  imageinfo
+
+volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw --profile=Win7SP1x64 pslist
+
+volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw --profile=Win7SP1x64 filescan | grep -E 'txt|png|jpg|gif|zip|rar|<span class="hljs-number">7</span>z|pdf|doc'
+
+volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw  --profile=Win7SP1x64 printkey -K <span class="hljs-string">"SAM\Domains\Account\Users\Names"</span>
+
+volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw  --profile=Win7SP1x64  hashdump -y <span class="hljs-number">0xfffff8a000024010</span> -s <span class="hljs-number">0xfffff8a000b7d010</span>
+
+volatility -f WIN<span class="hljs-number">-6</span>G0M6M15T07<span class="hljs-number">-20201222</span><span class="hljs-number">-120531.</span>raw  --profile=Win7SP1x64  hivelist</code></pre></div>
+
+<p>file.txt中的内容如下</p>
+<div class="hljs"><pre><code class="hljs q">ZmxhZ+WJjeWNiuauteS4um1kNSjnlKjmiLflkI065a+G56CBKe+<span class="hljs-number">8</span>iGN1bXTnlKjmiLfvvIkK5ZCO5Y2K5q615Li65LqM57u056CB5a2X56ymbWQ1CuS4pOerr21kNei/
+m+ihjHNoYTHljbPkuLpmbGFn44CC
+
+flag前半段为<span class="hljs-built_in">md5</span>(用户名:密码)（cumt用户）
+后半段为二维码字符<span class="hljs-built_in">md5</span>
+两端<span class="hljs-built_in">md5</span>进行sha1即为flag。</code></pre></div>
+
+
+
+<p><img src="https://i.loli.net/2020/12/26/rMwvzaDybIdjsPh.png" srcset="/img/loading.gif" alt="image-20201226091631647"></p>
+<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">Administrator</span><span class="hljs-selector-pseudo">:500</span><span class="hljs-selector-pseudo">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-selector-pseudo">:31d6cfe0d16ae931b73c59d7e0c089c0</span>:::
+<span class="hljs-selector-tag">Guest</span><span class="hljs-selector-pseudo">:501</span><span class="hljs-selector-pseudo">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-selector-pseudo">:31d6cfe0d16ae931b73c59d7e0c089c0</span>:::
+<span class="hljs-selector-pseudo">:1000</span><span class="hljs-selector-pseudo">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-selector-pseudo">:31d6cfe0d16ae931b73c59d7e0c089c0</span>:::
+<span class="hljs-selector-tag">cumt</span><span class="hljs-selector-pseudo">:1002</span><span class="hljs-selector-pseudo">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-selector-pseudo">:771bae3633234ef91354c68c6d7dded3</span>:::
+<span class="hljs-selector-tag">ctf</span><span class="hljs-selector-pseudo">:1003</span><span class="hljs-selector-pseudo">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-selector-pseudo">:700ec8a682f6e41418007992fc604c77</span>:::</code></pre></div>
+
+<p>cumt的秘密md5解密后为 everyone</p>
+<p>扫描二位码内容为lovecumt</p>
+<p><img src="https://i.loli.net/2020/12/26/tHOhSIlDm2kb18U.png" srcset="/img/loading.gif" alt="image-20201226120433772"></p>
+<p>flag是</p>
+<div class="hljs"><pre><code class="hljs isbl"><span class="hljs-variable">CUMTCTF</span>&#123;<span class="hljs-function"><span class="hljs-title">sha1</span>(<span class="hljs-title">md5</span>(<span class="hljs-variable">cumt</span>:<span class="hljs-variable">everyone</span>)+<span class="hljs-title">md5</span>(<span class="hljs-variable">lovecumt</span>))&#125;</span>
+<span class="hljs-function"><span class="hljs-variable">CUMTCTF</span>&#123;<span class="hljs-number">474</span><span class="hljs-variable">e781ec985094b88fde2f6ecb975b82f90e4a9</span>&#125;</span></code></pre></div>
+
+
+
+<p>​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/ctf/">ctf</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/23/%E5%AF%86%E7%A0%81%E5%AD%A6/">
+                        <span class="hidden-mobile">密码学</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
+          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
+          placeholder: "说点什么吧~~~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: false,
+          serverURLs: "",
+          master: "4cd096660a71d786a2a4d9d0bb4e8996",
+          friends: "b275f0fc8103331da645a878cf60f841",
+          tagMeta: ["博主","友人","访客"],
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "cumtfinal&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: true,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+<div class="text-center py-1">   
+  <div>
+    <span>Copyright © 2020</span></a>
+    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
+     <span>my blog</span></a>    <br>
+  </div>
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

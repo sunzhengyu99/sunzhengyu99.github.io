@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：6 天前
+                  本文最后更新于：5 天前
                 
               </p>
             
@@ -407,7 +407,10 @@
 <h2 id="维吉尼亚密码"><a href="#维吉尼亚密码" class="headerlink" title="维吉尼亚密码"></a>维吉尼亚密码</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p><strong>维吉尼亚密码</strong>（又译<strong>维热纳尔密码</strong>）是使用一系列<a href="https://baike.baidu.com/item/凯撒密码" target="_blank" rel="noopener">凯撒密码</a>组成密码字母表的加密算法，属于多表密码的一种简单形式。</p>
 <p>维吉尼亚密码曾多次被发明。该方法最早记录在<a href="https://baike.baidu.com/item/吉奥万·巴蒂斯塔·贝拉索" target="_blank" rel="noopener">吉奥万·巴蒂斯塔·贝拉索</a>（ Giovan Battista Bellaso）于1553年所著的书《吉奥万·巴蒂斯塔·贝拉索先生的密码》（<a href="https://baike.baidu.com/item/意大利语" target="_blank" rel="noopener">意大利语</a>：La cifra del. Sig. Giovan Battista Bellaso）中。然而，后来在19世纪时被误传为是<a href="https://baike.baidu.com/item/法国" target="_blank" rel="noopener">法国</a>外交官<a href="https://baike.baidu.com/item/布莱斯·德·维吉尼亚" target="_blank" rel="noopener">布莱斯·德·维吉尼亚</a>（Blaise De Vigenère）所创造，因此现在被称为“维吉尼亚密码”。</p>
 <p>维吉尼亚密码以其简单易用而著称，同时初学者通常难以破解，因而又被称为“不可破译的密码”。这也让很多人使用维吉尼亚密码来加密的目的就是为了将其破解。</p>
-<h3 id="2-加解密原理"><a href="#2-加解密原理" class="headerlink" title="2.加解密原理"></a>2.加解密原理</h3><p><img src="https://i.loli.net/2020/12/23/DFHntXC9Ysp6dyV.png" srcset="/img/loading.gif" alt="image-20201223225441528"></p>
+<h3 id="2-加解密原理"><a href="#2-加解密原理" class="headerlink" title="2.加解密原理"></a>2.加解密原理</h3><img src="https://i.loli.net/2020/12/23/DFHntXC9Ysp6dyV.png" srcset="/img/loading.gif" alt="image-20201223225441528" style="zoom:67%;">
+
+
+
 <p>加解密代码</p>
 <div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 将密钥处理成和密文/明文一样长</span>
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_key</span><span class="hljs-params">(s,key)</span>:</span>
@@ -543,7 +546,7 @@
         j = (j + S[i]) % <span class="hljs-number">256</span>
         S[i], S[j] = S[j], S[i]
         t = (S[i] + S[j]) % <span class="hljs-number">256</span>
-        k = chr(ord(a) ^ S[(S[i] + S[j]) % <span class="hljs-number">256</span>])
+        k = chr(ord(a) ^ S[t])
         result += k
     result = base64.b64encode(result.encode(<span class="hljs-string">'UTF-8'</span>))
     result = result.decode()
@@ -919,12 +922,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2021/01/11/cumtfinal/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cumtfinal</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/11/29/rcm/">
-                        <span class="hidden-mobile">rce</span>
+                      <a href="/2020/11/30/adworld/">
+                        <span class="hidden-mobile">adworld</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
